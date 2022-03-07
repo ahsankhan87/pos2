@@ -7,7 +7,7 @@ var Transaction = function () {
         var oTable = table.dataTable({
             
             "ajax":{
-                    "url": site_url+"/trans/C_sales/get_sales_JSON",
+                    "url": site_url+"/pos/C_sales/get_sales_JSON",
                     "dataSrc": ""
                 },
             
@@ -25,15 +25,12 @@ var Transaction = function () {
                 $('td:eq(4)', nRow).html(parseFloat(aData['net_amount']).toFixed(2));
                 $('td:eq(4)', nRow).addClass('text-right');
 
-                $('td:eq(5)', nRow).html('<a href="'+site_url+'/trans/C_sales/editSales/' + aData['invoice_no'] + 
+                $('td:eq(5)', nRow).html('<a href="'+site_url+'/pos/C_sales/editSales/' + aData['invoice_no'] + 
                                 '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | <a href="'+
-                                site_url+'/trans/C_sales/receipt/' + aData['invoice_no'] + 
-                                '" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a>'
-                                // DELETE SALES BUTTON
-                                // +' | <a href="'+
-                                // site_url+'/trans/C_sales/delete/' + aData['invoice_no'] +  
-                                // '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>'
-                                );
+                                site_url+'/pos/C_sales/receipt/' + aData['invoice_no'] + 
+                                '" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a> | <a href="'+
+                                site_url+'/pos/C_sales/delete/' + aData['invoice_no'] +  
+                                '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>');
                             
                             return nRow;
                         },
@@ -165,7 +162,7 @@ var sample_estimate = function () {
         var oTable = table.dataTable({
             
             "ajax":{
-                    "url": site_url+"/trans/C_estimate/get_estimate_JSON",
+                    "url": site_url+"/pos/C_estimate/get_estimate_JSON",
                     "dataSrc": ""
                 },
             
@@ -180,17 +177,17 @@ var sample_estimate = function () {
                         
                     ],
             "createdRow": function( nRow, aData, iDisplayIndex ) {
-                            //<a href="'+site_url+'/trans/C_estimate/editestimate/' + aData['invoice_no'] + 
+                            //<a href="'+site_url+'/pos/C_estimate/editestimate/' + aData['invoice_no'] + 
                             //'" title="Edit estimate" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | 
                             $('td:eq(3)', nRow).html(parseFloat(aData['net_amount']).toFixed(2));
                             $('td:eq(3)', nRow).addClass('text-right');
             
                                 $('td:eq(4)', nRow).html('<a href="'+
-                                site_url+'/trans/C_sales/index/cash/'
+                                site_url+'/pos/C_sales/index/cash/'
                                 + aData['customer_id'] +'/' + aData['invoice_no'] + '" title="Transfer to sales" >Transfer</a> | <a href="'+
-                                site_url+'/trans/C_estimate/receipt/' + aData['invoice_no'] + 
+                                site_url+'/pos/C_estimate/receipt/' + aData['invoice_no'] + 
                                 '" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a> | <a href="'+
-                                site_url+'/trans/C_estimate/delete/' + aData['invoice_no'] +  
+                                site_url+'/pos/C_estimate/delete/' + aData['invoice_no'] +  
                                 '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>');
                             
                             return nRow;

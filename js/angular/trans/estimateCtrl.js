@@ -29,7 +29,7 @@ app.controller('estimateProductCtrl', function($scope,$http,$timeout) {
         $scope.customer_currency_name = '';
         $scope.customer_currency_symbol = '';
         
-        $http.get(site_url+'/trans/C_estimate/getCustomerCurrencyJSON/'+customer_id).then(function(response){
+        $http.get(site_url+'/pos/C_estimate/getCustomerCurrencyJSON/'+customer_id).then(function(response){
         
         if(response.data.length > 0)
         {
@@ -60,7 +60,7 @@ app.controller('estimateProductCtrl', function($scope,$http,$timeout) {
         $scope.customer_currency_name = '';
         $scope.customer_currency_symbol = '';
         
-        $http.get(site_url+'/trans/C_receivings/getSupplierCurrencyJSON/'+supplier_id).then(function(response){
+        $http.get(site_url+'/pos/C_receivings/getSupplierCurrencyJSON/'+supplier_id).then(function(response){
         
         if(response.data.length > 0)
         {
@@ -210,7 +210,7 @@ app.controller('estimateProductCtrl', function($scope,$http,$timeout) {
                  ///////
                  
                  
-                 var file = site_url+'/trans/C_estimate/saleProducts';
+                 var file = site_url+'/pos/C_estimate/saleProducts';
                  
                 // fields in key-value pairs
                 $http.post(file, $scope.invoice).then(function (response) {
@@ -224,10 +224,10 @@ app.controller('estimateProductCtrl', function($scope,$http,$timeout) {
                    if(response.data.invoice_no == 'no-posting-type')
                    {
                      alert('Please assign posting type to customer otherwise amount will not be post to accounts');
-                     window.location = site_url+"/trans/C_estimate";
+                     window.location = site_url+"/pos/C_estimate";
                    }else
                    {
-                      window.location = site_url+"/trans/C_estimate/receipt/"+response.data.invoice_no; 
+                      window.location = site_url+"/pos/C_estimate/receipt/"+response.data.invoice_no; 
                       console.log(response.data);
                    }
                    

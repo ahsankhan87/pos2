@@ -14,7 +14,7 @@
         ?>
 
         <p>
-            <?php echo anchor('trans/C_estimate/index/estimate', lang('add_new'), 'class="btn btn-success hidden-print"'); ?>
+            <?php echo anchor('pos/C_estimate/index/estimate', lang('add_new'), 'class="btn btn-success hidden-print"'); ?>
         </p>
 
 
@@ -50,7 +50,7 @@
                         //        {
                         //            echo '<tr>';
                         //            //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                        //            //echo '<td><a href="'.site_url('trans/C_estimate/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
+                        //            //echo '<td><a href="'.site_url('pos/C_estimate/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
                         //            echo '<td>'.$sno++.'</td>';
                         //            echo '<td>'.$list['invoice_no'].'</td>';
                         //            echo '<td>'.date('d-m-Y',strtotime($list['sale_date'])).'</td>';

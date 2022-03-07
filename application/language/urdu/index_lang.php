@@ -91,8 +91,8 @@ $lang['number'] = 'نمبر';
 //POS
 $lang['customer']='کسٹمر';
 $lang['customers']='کسٹمرز';
-$lang['supplier']='سپلائر';
-$lang['suppliers']='سپلائرز';
+$lang['vendor']='سپلائر';
+$lang['vendors']='سپلائرز';
 $lang['bank']='بینک';
 $lang['banks']='بینکوں';
 $lang['employee']='ملازم';

@@ -14,8 +14,8 @@
         ?>
         <div class="row">
             <div class="col-md-6">
-                <?php echo anchor('pos/Suppliers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" id="sample_editable_1_new"'); ?>
-                <?php echo anchor('pos/Suppliers/SupplierImport', 'Import Suppliers', 'class="btn btn-success"'); ?>
+                <?php echo anchor('trans/Suppliers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" id="sample_editable_1_new"'); ?>
+                <?php echo anchor('trans/Suppliers/SupplierImport', 'Import Suppliers', 'class="btn btn-success"'); ?>
             </div>
         </div>
         <br>
@@ -66,7 +66,7 @@
                                 // echo '<td><img src="'.base_url('images/supplier-images/thumbs/'.$list['supplier_image']).'" width="40" height="40"/></td>';
                                 //echo '<td>'.$list['account_code'].'</td>';
                                 //echo '<td><a href="'.site_url('accounts/C_ledgers/ledgerDetail/'. $ledger_id).'">'.$name.'</a> </td>';
-                                echo '<td><a href="' . site_url('pos/Suppliers/supplierDetail/' . $list['id']) . '">' . $list['name'] . ' </a><a href="mailto:' . $list['email'] . '"><i class="fa fa-envelope-o fa-fw"></i></a></td>';
+                                echo '<td><a href="' . site_url('trans/Suppliers/supplierDetail/' . $list['id']) . '">' . $list['name'] . ' </a><a href="mailto:' . $list['email'] . '"><i class="fa fa-envelope-o fa-fw"></i></a></td>';
                                 if (@$_SESSION['multi_currency'] == 1) {
                                     echo '<td>' . $this->M_currencies->get_currencyName($list['currency_id']) . '</td>';
                                 }
@@ -90,14 +90,14 @@
 
 
 
-                                //echo '<td><a href="'.site_url('pos/Suppliers/paymentModal/'. $list['id']).'" class="btn btn-warning btn-sm">Make Payment</a></td>';
+                                //echo '<td><a href="'.site_url('trans/Suppliers/paymentModal/'. $list['id']).'" class="btn btn-warning btn-sm">Make Payment</a></td>';
                                 // echo '<td><button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#supplier-payment-Modal">Make Payment</button></td>';
 
                                 echo '<td>';
                                 //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                             ?>
-                                <?php echo anchor('pos/Suppliers/edit/' . $list['id'], '<i class="fa fa-pencil-square-o fa-fw"></i>', 'title="Edit"'); ?> |
-                                <a href="<?php echo site_url('pos/Suppliers/delete/' . $list['id'] . '/' . $op_balance_dr . '/' . $op_balance_cr) ?>" onclick="return confirm('Are you sure you want to permanent delete supplier and his account transactions?')" title="Permanent Delete"><i class="fa fa-trash-o fa-fw"></i></a>
+                                <?php echo anchor('trans/Suppliers/edit/' . $list['id'], '<i class="fa fa-pencil-square-o fa-fw"></i>', 'title="Edit"'); ?> |
+                                <a href="<?php echo site_url('trans/Suppliers/delete/' . $list['id'] . '/' . $op_balance_dr . '/' . $op_balance_cr) ?>" onclick="return confirm('Are you sure you want to permanent delete supplier and his account transactions?')" title="Permanent Delete"><i class="fa fa-trash-o fa-fw"></i></a>
 
                         <?php
                                 echo '</td>';

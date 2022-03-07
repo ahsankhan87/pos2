@@ -28,7 +28,7 @@ class C_sales extends MY_Controller{
         //$data['taxes'] = $this->M_taxes->get_activetaxes();
         
         $this->load->view('templates/header',$data);
-        $this->load->view('pos/sales/v_salesProduct',$data);
+        $this->load->view('pos/sales/v_sales',$data);
         $this->load->view('templates/footer');
     }
     
@@ -1261,7 +1261,7 @@ class C_sales extends MY_Controller{
         if($redirect === true)
         {
             $this->session->set_flashdata('message','Entry Deleted');
-            redirect('trans/C_sales/allSales','refresh');
+            redirect('pos/C_sales/allSales','refresh');
         }
         
     }

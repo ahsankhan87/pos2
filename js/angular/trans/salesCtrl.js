@@ -47,7 +47,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
         $scope.customer_currency_name = '';
         $scope.customer_currency_symbol = '';
         
-        $http.get(site_url+'/trans/C_sales/getCustomerCurrencyJSON/'+customer_id).then(function(response){
+        $http.get(site_url+'/pos/C_sales/getCustomerCurrencyJSON/'+customer_id).then(function(response){
         
         if(response.data.length > 0)
         {
@@ -78,7 +78,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
         $scope.customer_currency_name = '';
         $scope.customer_currency_symbol = '';
         
-        $http.get(site_url+'/trans/C_receivings/getSupplierCurrencyJSON/'+supplier_id).then(function(response){
+        $http.get(site_url+'/pos/C_receivings/getSupplierCurrencyJSON/'+supplier_id).then(function(response){
         
         if(response.data.length > 0)
         {
@@ -105,7 +105,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
     {   
         if(invoice_no)
            {
-                $http.get(site_url+'/trans/C_estimate/getEstimateItemsJSON/'+invoice_no).then(function(response){
+                $http.get(site_url+'/pos/C_estimate/getEstimateItemsJSON/'+invoice_no).then(function(response){
 
                 //console.log(response);
                 $timeout(function(){
@@ -169,7 +169,6 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
     //call the clear cart function to clear all product
     $scope.clearCart();
     
-    var sno = 0;
     //add product by barcode in sales form
     $scope.addItemByBarcode = function (barcode){
             $timeout(function () {
@@ -185,9 +184,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
             alert('Product is not in stock, Please Purchase Product');
        }else //ADD PR0DUCT TOTHE CART
        {
-        sno++;
         $scope.invoice.items.push({
-                sno:sno,
                 item_id: parseInt(returnData[0].item_id),
                 quantity: parseFloat(1),
                 item_qty:parseFloat(returnData[0].quantity),
@@ -217,6 +214,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
     //$scope.inventory_acc_amount = array();
    //$scope.inventory_acc_code = array();
     //Add product to Sales cart
+    
     $scope.addItem = function(item_id,size_id) {
                 
         //search product using product id
@@ -229,10 +227,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
             alert('Product is not in stock, Please Purchase Product');
        }else //ADD PR0DUCT TOTHE CART
        {
-         
-         sno++;
          $scope.invoice.items.push({
-                sno:sno,
                 item_id: parseInt(returnData[0].item_id),
                 quantity: parseFloat(1),
                 item_qty:parseFloat(returnData[0].quantity),
@@ -303,7 +298,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                     };
                  ///////
                  
-                var file = site_url+'/trans/C_sales/saleProducts';
+                var file = site_url+'/pos/C_sales/saleProducts';
                  
                 // fields in key-value pairs
                 $http.post(file, $scope.invoice).then(function (response) {
@@ -317,10 +312,10 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                    if(response.data.invoice_no == 'no-posting-type')
                    {
                      alert('Please assign posting type to customer otherwise amount will not be post to accounts');
-                     window.location = site_url+"/trans/C_sales";
+                     window.location = site_url+"/pos/C_sales";
                    }else
                    {
-                      window.location = site_url+"/trans/C_sales/receipt/"+response.data.invoice_no; 
+                      window.location = site_url+"/pos/C_sales/receipt/"+response.data.invoice_no; 
                       console.log(response.data);
                    }
                    
@@ -343,9 +338,8 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
     
     
      //delete item from cart
-    $scope.removeItem = function(item) {
-        // $scope.invoice.items.splice(index, 1);
-        $scope.invoice.items.splice($scope.invoice.items.indexOf(item), 1);
+    $scope.removeItem = function(index) {
+        $scope.invoice.items.splice(index, 1);
     },
     
     //get discount of the cart products ONLY BY VALUES

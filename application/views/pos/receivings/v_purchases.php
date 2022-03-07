@@ -203,7 +203,7 @@
 			</thead>
 			<tbody>
             
-			 <tr ng:repeat="item in invoice.items | orderBy:'-sno'">
+			 <tr ng:repeat="item in invoice.items">
                 <td><input type="text" ng:model="item.name" class="form-control" readonly="" /></td> 
                 <!-- <td><?php  echo form_dropdown('sizes_ID',$sizesDDL,'ng:model="item.size_id"','class="form-control" ng:model="item.size_id" readonly=""');?></td>           -->
                 <td><input type="number" ng:model="item.quantity" min="0" class="form-control" autocomplete="off" /></td>
@@ -228,7 +228,7 @@
                 <td ng-if="!item.service">{{((item.quantity * item.cost_price) + (item.quantity * item.cost_price)*item.tax_rate/100) | currency:home_currency_symbol:2}}</td>
                 
                 <td>
-                    <a href ng:click="removeItem(item)" title="Remove"><i class="fa fa-trash-o fa-1x" style="color:red;"></i></a>
+                    <a href ng:click="removeItem($index)" title="Remove"><i class="fa fa-trash-o fa-1x" style="color:red;"></i></a>
                 </td>
             </tr>
             <tr>
@@ -268,9 +268,9 @@
                     <td></td>
             </tr>
           <tr>
-            <!-- <td colspan="8">
+            <td colspan="8">
                 <input type="file" name="file" id="file" ng:model="file" />
-            </td> -->
+            </td>
           </tr>  
           <tr>
             <td colspan="8"><button ng-click="purchaseProducts();"  ng-disabled="cart_loader" class="btn btn-success">Save</button>

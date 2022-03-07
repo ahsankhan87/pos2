@@ -19,16 +19,16 @@
             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
             <ul class="dropdown-menu" role="menu">
                 <li>
-                    <?php echo anchor('trans/C_sales/index/cash', lang('cash') . ' ' . lang('sales'), 'class="hidden-print"'); ?>
+                    <?php echo anchor('pos/C_sales/index/cash', lang('cash') . ' ' . lang('sales'), 'class="hidden-print"'); ?>
                 </li>
                 <li>
-                    <?php echo anchor('trans/C_sales/index/credit', lang('credit') . ' ' . lang('sales'), 'class="hidden-print"'); ?>
+                    <?php echo anchor('pos/C_sales/index/credit', lang('credit') . ' ' . lang('sales'), 'class="hidden-print"'); ?>
                 </li>
                 <li>
-                    <?php echo anchor('trans/C_sales/index/cashReturn', lang('cash') . ' ' . lang('return'), 'class="hidden-print"'); ?>
+                    <?php echo anchor('pos/C_sales/index/cashReturn', lang('cash') . ' ' . lang('return'), 'class="hidden-print"'); ?>
                 </li>
                 <li>
-                    <?php echo anchor('trans/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="hidden-print"'); ?>
+                    <?php echo anchor('pos/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="hidden-print"'); ?>
                 </li>
             </ul>
         </div>
@@ -69,7 +69,7 @@
                         //        {
                         //            echo '<tr>';
                         //            //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                        //            //echo '<td><a href="'.site_url('trans/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
+                        //            //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
                         //            echo '<td>'.$sno++.'</td>';
                         //            echo '<td>'.$list['invoice_no'].'</td>';
                         //            echo '<td>'.date('d-m-Y',strtotime($list['sale_date'])).'</td>';

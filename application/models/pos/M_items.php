@@ -432,7 +432,7 @@ class M_items extends CI_Model{
      
     function deleteItem($id,$inventory_acc_code,$total_cost,$size_id)
     {
-        //$query = $this->db->update('pos_items',array('deleted'=>1),array('item_id'=>$id));
+        $query = $this->db->update('pos_items',array('deleted'=>1),array('item_id'=>$id));
         $query = $this->db->update('pos_items_detail',array('deleted'=>1,'barcode'=>$id),array('item_id'=>$id,'size_id'=>$size_id));
         
        $inventory_account = $this->M_groups->get_groups($inventory_acc_code,$_SESSION['company_id']);

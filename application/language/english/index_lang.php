@@ -90,8 +90,8 @@ $lang['number'] = 'No.';
 //POS
 $lang['customer']='Customer';
 $lang['customers']='Customers';
-$lang['supplier']='Supplier';
-$lang['suppliers']='Suppliers';
+$lang['vendor']='Vendor';
+$lang['vendors']='Vendors';
 $lang['bank']='Bank';
 $lang['banks']='Banks';
 $lang['employee']='Employee';

@@ -94,7 +94,6 @@
                                         <th>Cr Amount</th>
                                         <th>Balance</th>
                                         <th width="20%">Narration</th>
-										<th></th>
                                     </tr>
                                 </thead>';
                                 
@@ -131,7 +130,6 @@
 //                                    else{ $account = '';}
                                     
                                     echo '<td>'.round($balance,2).'</td>';
-                                    echo '<td></td>';
                                     echo '<td></td>';
                                     //echo '<td>'.anchor('accounts/C_ledgers/edit/'.$list['id'],'Edit'). ' | ';
                                     //echo  anchor('accounts/C_ledgers/delete/'.$list['id'],' Delete'). '</td>';
@@ -187,9 +185,7 @@
 //                                    else{ $account = '';}
 //                                    
                                     echo '<td>'.round($balance,2).'</td>';
-                                   	echo '<td>'.$list['narration'].'</td>';
-								   	echo '<td><a href="'. site_url($langs.'/accounts/C_entries/edit/' . $list['invoice_no']) .'" title="Edit"><i class="fa fa-pencil fa-fw"></i></a> </td>';
-                        			
+                                   echo '<td>'.$list['narration'].'</td>';
                                     //echo '<td>'.anchor('accounts/C_ledgers/edit/'.$list['id'],'Edit'). ' | ';
                                     //echo  anchor('accounts/C_ledgers/delete/'.$list['id'],' Delete'). '</td>';
                                     echo '</tr>';
@@ -204,7 +200,6 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-								<th></th>
                                 </tr>
                                 </tfoot>
                                 </table>';

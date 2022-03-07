@@ -37,7 +37,7 @@ $attributes = array('class' => 'form-horizontal', 'role' => 'form','enctype'=>"m
 
 echo validation_errors();
 
-echo form_open($langs.'/pos/Suppliers/create',$attributes);
+echo form_open($langs.'/trans/Suppliers/create',$attributes);
 
 ?>
 
@@ -129,19 +129,19 @@ echo form_open($langs.'/pos/Suppliers/create',$attributes);
   </div>
 </div>
 
-<div class="form-group">
-  <label class="control-label col-md-3" for="also">Also Customer:</label>
-  <div class="col-md-4">
-    <input type="checkbox" class="form-control" name="also_customer" value="1" />
+<!--<div class="form-group">-->
+<!--  <label class="control-label col-md-3" for="also">Also Customer:</label>-->
+<!--  <div class="col-md-4">-->
+<!--    <input type="checkbox" class="form-control" name="also_customer" value="1" />-->
     
-  </div>
-</div>
-<div class="form-group">
-  <label class="control-label col-md-3" for="">Sale Posting Type:<span class="required">* </span></label>
-  <div class="col-md-4">
-    <?php echo form_dropdown('sale_posting_type_id',$salesPostingTypeDDL,'','class="form-control"'); ?>
-  </div>
-</div>
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--  <label class="control-label col-md-3" for="">Sale Posting Type:<span class="required">* </span></label>-->
+<!--  <div class="col-md-4">-->
+<!--    <?php echo form_dropdown('sale_posting_type_id',$salesPostingTypeDDL,'','class="form-control"'); ?>-->
+<!--  </div>-->
+<!--</div>-->
 
 </div>
 

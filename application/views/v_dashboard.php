@@ -15,7 +15,6 @@
 			<div class="details">
 				<div class="title">
 					 <?php echo lang('daily_sales'); ?>
-					 
 				</div>
 				<div class="numbers">
 					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($today_sale,3); ?>
@@ -403,7 +402,7 @@
 				<div id="site_statistics_content" class="display-none" style="display: block;">
                 <style>
                     #canvas-holder{width:100%;}                    
-                    /* #expense_chart tr{  } */
+                    #expense_chart tr{  }
                 </style>
 				    
                 <div id="canvas-holder" class="center-block">

@@ -29,7 +29,7 @@ foreach($supplier as $values):
 $attributes = array('class' => 'form-horizontal', 'role' => 'form', 'enctype'=>"multipart/form-data");
 //form Validation errors
 echo validation_errors();
-echo form_open('pos/Suppliers/edit',$attributes);
+echo form_open('trans/Suppliers/edit',$attributes);
 
 
 echo form_hidden('id',$values['id']);

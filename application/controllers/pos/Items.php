@@ -94,6 +94,15 @@ class Items extends MY_Controller{
         echo json_encode($data['items']);
         //$this->load->view('pos/items/getItems',$data);
     }
+
+    //get all items for purchases
+    function productDDL()
+    {
+        $data['items'] = $this->M_items->get_activeItems();
+        
+        echo json_encode($data['items']);
+        //$this->load->view('pos/items/getItems',$data);
+    }
     
     function create()
     {

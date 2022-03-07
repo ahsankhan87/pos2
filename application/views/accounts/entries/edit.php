@@ -114,7 +114,6 @@
 		<!-- END VALIDATION STATES-->
 	</div>
 </div>
-	<h4><strong> Invoice No: {{invoice_no}}</strong></h4>
     <form name="entryFrom" novalidate="">
         <table class="table table-bordered table-hover">
 			<thead>
@@ -130,8 +129,8 @@
 			<tbody>
             
 			 <tr ng:repeat="item in entries.items">
-                <td>{{item.title}}
-                    <small ng-if="item.ref_id != 0 || item.isCust == 1">({{item.ref_name}}) </small>
+                <td>{{item.title}} 
+                    <small ng-if="item.ref_id != 0">({{item.ref_name}})</small>
                 </td>
                 <td><input type="number" ng:model="item.dr_amount"  min="0" class="form-control" autocomplete="off" /></td>
                     

@@ -1,5 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// CodeIgniter i18n library by Jérôme Jaglale
+// http://maestric.com/en/doc/php/codeigniter_i18n
+// version 10 - May 10, 2012
+
 class MY_Controller extends CI_Controller {
 	
 	public function __construct() {
@@ -8,7 +12,7 @@ class MY_Controller extends CI_Controller {
         
         //check for language
 		$this->session->set_userdata('lang',$this->lang->lang());	
-        //$chk_admin = $this->uri->segment(2);
+         //$chk_admin = $this->uri->segment(2);
         
         //check the admin user or public website
         //if(strtolower($chk_admin) == 'admin')
