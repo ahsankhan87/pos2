@@ -65,7 +65,7 @@
 <div id="cart_body">
     <?php echo form_open('pos/C_sales/update_cart'); ?>
 
-    <table class="table table-striped">
+    <table class="table table-striped table-bordered" id="sale_table">
         <thead>
             <tr>
                 <th></th>
@@ -78,31 +78,22 @@
             </tr>
         </thead>
         <tbody class="create_table">
-            <tr>
+            <!-- <tr>
                 <td><?php echo $i; ?></td>
                 <td>
-                    <select class="form-control select2me product_id0" name="product_id[]">
+                    <select class="form-control product_id" name="product_id[]">
+                        <?php foreach($itemDDL as $values): ?>
+                            <option><?php echo $values["name"] ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </td>
                 <td><input type="text" name="qty[]" class="form-control qty" id="qty0" style="width: 50px;"></td>
                 <td><input type="text" name="unit_price[]" class="form-control unit_price" id="unit_price0" style="width: 100px;"></td>
                 <td><input type="text" name="discount[]" class="form-control discount" id="discount0" style="width: 100px;"></td>
                 <td></td>
-                <td><?php echo anchor('pos/C_sales/destroyCart/', 'Destroy', 'class="btn btn-danger btn-xs"'); ?></td>
-            </tr>
-            <tr>
-                <th><?php echo $i; ?></th>
-                <td>
-                    <select class="form-control select2me product_id1" name="product_id[]">
-                    </select>
-                </td>
-                <td><input type="text" name="qty[]" class="form-control qty" id="qty0" style="width: 50px;"></td>
-                <td><input type="text" name="unit_price[]" class="form-control unit_price" id="unit_price0" style="width: 100px;"></td>
-                <td><input type="text" name="discount[]" class="form-control discount" id="discount0" style="width: 100px;"></td>
-                <td></td>
-                <td><?php echo anchor('pos/C_sales/destroyCart/', 'Destroy', 'class="btn btn-danger btn-xs"'); ?></td>
-            </tr>
-
+                <td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td>
+            </tr> -->
+            
         </tbody>
         <tfoot>
             
@@ -124,37 +115,40 @@
 <script>
  $(document).ready(function() {
  
- const site_url = '<?php echo site_url($langs); ?>/';
- const path = '<?php echo base_url(); ?>';
+    const site_url = '<?php echo site_url($langs); ?>/';
+    const path = '<?php echo base_url(); ?>';
     
- 
-    /////////////ADD NEW LINES IN JOURNAL ENTRY
-    let counter = 1;//counter is used for id of the debit / credit textbox to enable and disable 8 textboxs already used so start from 8 here
+    /////////////ADD NEW LINES
+    let counter = 0;//counter is used for id of the debit / credit textbox to enable and disable 8 textboxs already used so start from 8 here
     $('.add_new').on('click',function(event){
         event.preventDefault();
-        //productDDL();
         counter++;
-        var div = '<tr><td>'+counter+'</td><td><select  class="form-control select2me product_id'+counter+'" name="product_id[]"></select></td>'+
+        productDDL(counter);
+        
+        var div = '<tr><td>'+counter+'</td><td><select  class="form-control product_id" id="product_id_'+counter+'" name="product_id[]"></select></td>'+
                 '<td style="text-align: right;"><input type="text" class="form-control qty" id="qty'+counter+'" name="qty[]" autocomplete="off"></td>'+
                 '<td style="text-align: right;"><input type="text" class="form-control unit_price" id="unit_price'+counter+'" name="unit_price[]" autocomplete="off"></td>'+
-                '<td style="text-align: right;"><input type="text" class="form-control discount" name="discount[]"  ></td></tr>';
+                '<td style="text-align: right;"><input type="text" class="form-control discount" name="discount[]"  ></td>'+
+                '<td></td>'+
+                '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
         $('.create_table').append(div);
         
-        debit_keypress();
-        credit_keypress();
-        //SELECT 2 DROPDOWN LIST
-    //$('.select2').select2();
+        //SELECT 2 DROPDOWN LIST   
+        $('#product_id_'+counter).select2();
+   
     ///
     });
-    //$( ".add_new" ).trigger( "click" );//ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
+    $( ".add_new" ).trigger( "click" );//ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
     
     /////////////////////////////////
-
+    $("#sale_table").on("click", "#removeItem", function() {
+        $(this).closest("tr").remove();
+    });
     ///////////////////
-    productDDL();
+    // productDDL();
     ////////////////////////
     //GET product DROPDOWN LIST
-    function productDDL() {
+    function productDDL(index = 0) {
     
         let product_ddl = '';
         $.ajax({
@@ -173,7 +167,7 @@
                     
                 });
 
-                $('.product_id').html(product_ddl);
+                $('#product_id_'+index).html(product_ddl);
                 
             },
             error: function (xhr, ajaxOptions, thrownError) {

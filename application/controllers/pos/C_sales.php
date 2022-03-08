@@ -20,11 +20,11 @@ class C_sales extends MY_Controller{
 
         $data['estimate_no'] = $estimate_no; // Estimate invoice no.
         
-        //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
+        $data['itemDDL'] = $this->M_items->get_activeItems();
         $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
-        $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
+        //$data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
-        $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
+        //$data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
         //$data['taxes'] = $this->M_taxes->get_activetaxes();
         
         $this->load->view('templates/header',$data);
