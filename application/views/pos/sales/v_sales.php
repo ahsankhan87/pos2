@@ -98,7 +98,9 @@
         <tfoot>
             
             <tr>
-                <td><a href="#" class="btn btn-info add_new" name="add_new">Add lines</a>
+                <td>
+                    <a href="#" class="btn btn-default add_new" name="add_new">Add lines</a>
+                    <a href="#" class="btn btn-default clear_all" name="clear_all">Clear all</a>
                 </td>
                 <td colspan="3"></td>
                 <td class="right"><strong>Total</strong></td>
