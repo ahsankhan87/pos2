@@ -4,7 +4,7 @@
 
         <label class="control-label col-sm-2" for="">Select Customer:</label>
         <div class="col-sm-4">
-            <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control"'); ?>
+            <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?>
         </div>
 
         <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
