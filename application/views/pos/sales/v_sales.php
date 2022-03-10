@@ -32,7 +32,7 @@
                     <th>Discount</th>
                     <th>VAT</th>
                     <th>Sub-Total</th>
-                    <th>Remove</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="create_table">
@@ -40,16 +40,28 @@
 
             </tbody>
             <tfoot>
-
                 <tr>
-                    <td colspan="5">
-                        <a href="#" class="btn btn-default add_new" name="add_new">Add lines</a>
-                        <a href="#" class="btn btn-default clear_all" name="clear_all">Clear all</a>
-                    </td>
-                    <td class="right"><strong>Total</strong></td>
-                    <td class="right"><span id="net_total"></span></td>
-                    <td class="right"></td>
-
+                    <th colspan="5">
+                        <a href="#" class="btn btn-default btn-sm add_new" name="add_new">Add lines</a>
+                        <a href="#" class="btn btn-default btn-sm clear_all" name="clear_all">Clear all</a>
+                    </th><th class="text-right" >Sub Total</th>
+                    <th class="text-right" id="sub_total">0</th>
+                    <th><input type="hidden" name="sub_total" value="0"></th>
+                </tr>
+                <tr>
+                    <th class="text-right" colspan="6">Discount</th>
+                    <th class="text-right" id="total_discount">0</th>
+                    <th><input type="hidden" name="total_discount" value=""></th>
+                </tr>
+                <tr>
+                    <th class="text-right" colspan="6">Tax</th>
+                    <th class="text-right" id="total_tax">0</th>
+                    <th><input type="hidden" name="total_tax" value=""></th>
+                </tr>
+                <tr>
+                    <th class="text-right" colspan="6">Total</th>
+                    <th class="text-right" id="net_total">0</th>
+                    <th><input type="hidden" name="net_total" value=""></th>
                 </tr>
             </tfoot>
         </table>
@@ -74,12 +86,13 @@
             counter++;
             productDDL(counter);
             
-            var div = '<tr><td>' + counter + '</td><td width="25%"><select  class="form-control product_id" id="product_id_' + counter + '" name="product_id[]"></select></td>' +
-                '<td class="text-right" width="5%"><input type="number" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
+            var div = '<tr><td>' + counter + '</td>'+
+                '<td width="25%"><select  class="form-control product_id" id="product_id_' + counter + '" name="product_id[]"></select></td>' +
+                '<td class="text-right" width="10%"><input type="number" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
                 '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" autocomplete="off"></td>' +
-                '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '"name="discount[]" value="0"  ></td>' +
-                '<td></td>' +
-                '<td class=""><input type="text" class="form-control text-right total" id="total_' + counter + '" readonly="" /></td>' +
+                '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value="0"  ></td>' +
+                '<td class="" id=""></td>' +
+                '<td class="total" id="total_' + counter + '"></td>' +
                 '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
             $('.create_table').append(div);
 
@@ -92,36 +105,45 @@
                 var qty = parseInt($(this).val());
                 var price = parseFloat($('#unitprice_'+ curId).val());
                 var discount = parseInt($('#discount_'+ curId).val());
-                $('#total_'+ curId).val((qty * price ? qty * price - discount : 0).toFixed(2));
-                
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_'+ curId).text(total);
+
+                calc_gtotal();
             });
             $(".unit_price").on("keyup change", function(e) {
                 var curId = this.id.split("_")[1];
                 var qty = parseInt($('#qty_'+ curId).val());
                 var discount = parseInt($('#discount_'+ curId).val());
                 var price = parseFloat($(this).val());
-                $('#total_'+ curId).val((qty * price ? qty * price - discount : 0).toFixed(2));
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_'+ curId).text(total);
                 
+                calc_gtotal();
             });
             $(".discount").on("keyup change", function(e) {
                 var curId = this.id.split("_")[1];
                 var qty = parseInt($('#qty_'+ curId).val());
                 var price = parseFloat($('#unitprice_'+ curId).val());
                 var discount = parseFloat($(this).val());
-                $('#total_'+ curId).val((qty * price ? qty * price - discount : 0).toFixed(2));
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_'+ curId).text(total);
                 
+                calc_gtotal();
             });
 
+            
         });
         $(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
 
         /////////////////////////////////
         $("#sale_table").on("click", "#removeItem", function() {
             $(this).closest("tr").remove();
+            calc_gtotal();
         });
         
         $(".clear_all").on("click", function() {
             counter=0;
+            calc_gtotal();
             $('#net_total').html(parseInt('0').toFixed(2));
             $("#sale_table > tbody").empty();
         }); 
@@ -159,12 +181,37 @@
         ///////////////////
         /////////////ADD NEW LINES END HERE
         
-        $('.qty').change(function() {
-            var qty = parseInt($('.qty').val());
-            var price = parseFloat($('.unit_price').val());
-            $('#net_total').html((qty * price ? qty * price : 0).toFixed(2));
+        // $('.qty').change(function() {
+        //     var qty = parseInt($('.qty').val());
+        //     var price = parseFloat($('.unit_price').val());
+        //     $('#net_total').html('<h2 class="text-right">'+(qty * price ? qty * price : 0).toFixed(2)+'</h2>');
             
-        });
+        // });
         
+    function calc_gtotal(){
+        var total =0;
+        var total_discount = 0;
+        var total_tax = 0;
+        
+        $('.total').each(function() {
+            total += parseFloat($(this).text());
+        });
+        // $('.tax').each(function() {
+        //     total_tax += parseFloat($(this).text());
+        // });
+        // $('.discount').each(function() {
+        //     total_discount += parseFloat($(this).text());
+        // });
+        
+        $('#net_total').text(parseFloat(total).toFixed(2));
+        //$('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
+        //$('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
+        //$('#total_tax').text(parseFloat(total_tax).toLocaleString('en-US'));
+        console.log(total);
+    }
+    
+
     });
+
+    
 </script>
