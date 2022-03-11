@@ -70,7 +70,7 @@
         						<div class="form-group">
         							<label class="control-label col-md-3">Location</label>
         							<div class="col-md-9">
-        								<?php echo form_dropdown('location_id',$locationDDL,$values['location_id'],'class="form-control select2me"'); ?>
+        								<?php echo form_dropdown('location_code',$locationDDL,$values['location_code'],'class="form-control select2me"'); ?>
         							</div>
         						</div>
         					</div>

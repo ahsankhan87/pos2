@@ -21,15 +21,15 @@ class M_items extends CI_Model{
             
             //$this->db->order_by('item_id','asc');
             $option = array('deleted'=>0,'company_id'=> $_SESSION['company_id']);
-            $query = $this->db->get_where('pos_items',$option);
+            $query = $this->db->get_where('pos_items_detail',$option);
             $data = $query->result_array();
             return $data;
         }
         
         //$this->db->order_by('item_id','asc');
-        $options = array('item_id'=> $id,'company_id'=> $_SESSION['company_id']);
+        $options = array('id'=> $id,'company_id'=> $_SESSION['company_id']);
         
-        $query = $this->db->get_where('pos_items',$options);
+        $query = $this->db->get_where('pos_items_detail',$options);
         $data = $query->result_array();
         return $data;
     }
@@ -38,19 +38,17 @@ class M_items extends CI_Model{
     public function get_low_stock_items()
     {
         
-        $this->db->select('A.item_id,A.service,A.category_id, A.name,B.inventory_acc_code,B.barcode,B.size_id,B.unit_id,
-        C.name as size,B.color_id,B.quantity,B.cost_price, B.avg_cost,B.unit_price,B.re_stock_level');
-        $this->db->join('pos_items_detail AS B','A.item_id = B.item_id','left');
-        $this->db->join('pos_sizes as C','B.size_id = C.id','left');
+        $this->db->select('A.id AS item_id,A.service,B.category_id, B.name,B.inventory_acc_code,B.barcode,B.size_id,B.unit_id,
+        B.quantity,B.cost_price, B.avg_cost,B.unit_price,B.re_stock_level');
         
         $this->db->where('B.quantity <= B.re_stock_level');
         
-        $query = $this->db->get_where('pos_items AS A', array('A.deleted'=>0,'B.deleted'=>0,'A.company_id'=> $_SESSION['company_id']));
+        $query = $this->db->get_where('pos_items_detail AS B', array('B.deleted'=>0,'B.company_id'=> $_SESSION['company_id']));
         $data = $query->result_array();
         return $data;
     }
     
-    function getItemDropDown($item_type=null)
+    function getItemDropDown($item_type=null)//item type = service or purchased
     {
         $data = array();;
         $data[0] = "--Please Select--";
@@ -59,11 +57,9 @@ class M_items extends CI_Model{
         {
             $this->db->where('A.item_type',$item_type);
         }
-        
-        $this->db->join('pos_items AS B','A.item_id = B.item_id','left');
-        
-        $query = $this->db->get_where('pos_items_detail AS A', array('B.deleted'=>0,'A.deleted'=>0,
-        'B.company_id'=> $_SESSION['company_id']));
+       
+        $query = $this->db->get_where('pos_items_detail AS A', array('A.deleted'=>0,
+        'A.company_id'=> $_SESSION['company_id']));
         
         if ($query->num_rows() > 0)
         {
@@ -71,7 +67,7 @@ class M_items extends CI_Model{
             {
                 // $category = $this->M_category->get_CatNameByItem($row['item_id']);//get the category of single item
                 // $data[$row['item_id']] = $row['name'] . ($category == '' ? '' : ' - '.$category);//and if category is not empty it will add it with item i.e used in purchases and sales product DDL
-                $data[$row['item_id']] = $row['name'];//and if category is not empty it will add it with item i.e used in purchases and sales product DDL
+                $data[$row['id']] = $row['name'];//and if category is not empty it will add it with item i.e used in purchases and sales product DDL
             }
         }
         $query->free_result();
@@ -84,14 +80,14 @@ class M_items extends CI_Model{
     {
         if($item_id === FALSE)
         {
-            $this->db->order_by('item_id','desc');
-            $query = $this->db->get_where('pos_items', array('deleted'=>0,'company_id'=> $_SESSION['company_id']));
+            $this->db->order_by('id','desc');
+            $query = $this->db->get_where('pos_items_detail', array('deleted'=>0,'company_id'=> $_SESSION['company_id']));
             $data = $query->result_array();
             return $data;
         }
         
-        $options = array('item_id'=> $item_id, 'deleted'=>0,'company_id'=> $_SESSION['company_id']);
-        $query = $this->db->get_where('pos_items',$options);
+        $options = array('id'=> $item_id, 'deleted'=>0,'company_id'=> $_SESSION['company_id']);
+        $query = $this->db->get_where('pos_items_detail',$options);
         $data = $query->result_array();
         return $data;
     }
@@ -99,17 +95,17 @@ class M_items extends CI_Model{
     public function get_allItemsforJSON()
     {
         //$this->db->order_by('B.item_id','desc');
-        $this->db->select('B.item_id,B.category_id, B.name,B.service,A.barcode,A.inventory_acc_code,A.picture,
-        A.size_id,A.color_id,A.item_type,A.unit_id,A.quantity,A.avg_cost,A.cost_price,A.unit_price,A.re_stock_level,
-        A.inventory_acc_code,A.wip_acc_code,
-        A.tax_id,T.name as tax_name,T.rate as tax_rate, U.name as unit_name');
-        $this->db->join('pos_items AS B','A.item_id = B.item_id','left');
-        $this->db->join('pos_taxes AS T','T.id = A.tax_id','left');
+        $this->db->select('A.id AS item_id,A.category_id,A.name,A.barcode,A.inventory_acc_code,A.picture,
+        A.item_type,A.unit_id,A.quantity,A.avg_cost,A.cost_price,A.unit_price,A.re_stock_level,
+        A.inventory_acc_code,A.wip_acc_code,A.tax_id,
+        U.name as unit_name');
+        // $this->db->join('pos_items AS B','A.item_id = B.item_id','left');
+        // $this->db->join('pos_taxes AS T','T.id = A.tax_id','left');
         // $this->db->join('pos_sizes as C','A.size_id = C.id','left');
         $this->db->join('pos_units as U','A.unit_id = U.id','left');
         // $this->db->join('pos_locations as L','A.location_id = L.id','left');
         
-        $query = $this->db->get_where('pos_items_detail AS A', array('B.deleted'=>0,'A.deleted'=>0,'B.company_id'=> $_SESSION['company_id']));
+        $query = $this->db->get_where('pos_items_detail AS A', array('A.deleted'=>0,'A.company_id'=> $_SESSION['company_id']));
         $data = $query->result_array();
         return $data;
     
@@ -119,14 +115,11 @@ class M_items extends CI_Model{
     public function get_allItems()
     {
         //$this->db->order_by('A.item_id','desc');
-        $this->db->select('A.item_id,A.service,A.category_id, A.name,B.inventory_acc_code,B.barcode,B.size_id,B.unit_id,
-        C.name as size,B.color_id,B.quantity,B.cost_price, B.avg_cost,B.unit_price,B.re_stock_level,
-        B.tax_id,T.name as tax_name,T.rate as tax_rate,B.inventory_acc_code,B.wip_acc_code');
-        $this->db->join('pos_items_detail AS B','A.item_id = B.item_id','left');
-        $this->db->join('pos_taxes AS T','T.id = B.tax_id','left');
-        $this->db->join('pos_sizes as C','B.size_id = C.id','left');
+        $this->db->select('B.id AS item_id,B.category_id, B.name,B.inventory_acc_code,B.barcode,B.size_id,B.unit_id,
+        B.quantity,B.cost_price, B.avg_cost,B.unit_price,B.re_stock_level,
+        B.tax_id,B.inventory_acc_code,B.wip_acc_code');
         
-        $query = $this->db->get_where('pos_items AS A', array('A.deleted'=>0,'B.deleted'=>0,'A.company_id'=> $_SESSION['company_id']));
+        $query = $this->db->get_where('pos_items_detail AS B', array('B.deleted'=>0,'B.company_id'=> $_SESSION['company_id']));
         $data = $query->result_array();
         return $data;
     
@@ -135,7 +128,7 @@ class M_items extends CI_Model{
     public function get_ItemName($item_id)
     {
         $options = array('item_id'=> $item_id, 'deleted'=>0,'company_id'=> $_SESSION['company_id']);
-        $query = $this->db->get_where('pos_items',$options);
+        $query = $this->db->get_where('pos_items_detail',$options);
         
         if($item_name = $query->row())
         {
@@ -169,7 +162,7 @@ class M_items extends CI_Model{
         
         $this->db->like('name',$search);
         $options = array('deleted'=>0,'company_id'=> $_SESSION['company_id']);
-        $query = $this->db->get_where('pos_items',$options);
+        $query = $this->db->get_where('pos_items_detail',$options);
         $data = $query->result_array();
         return $data;
     }
@@ -178,186 +171,70 @@ class M_items extends CI_Model{
         {
             $this->db->trans_start(); 
             
-            $service = $this->input->post('service',true);
-            $brand = $this->input->post('brand',true);
             $desc = $this->input->post('description',true);
+            $name = $this->input->post('name',true);
+            $category_id = $this->input->post('category_id',true);
             $unit_id = ($this->input->post('unit_id',true) == '' ? 0 : $this->input->post('unit_id',true));
             $tax_id = $this->input->post('tax_id',true);
             $item_type = $this->input->post('item_type',true);
-             
-            //$capital_acc_code = $this->input->post('capital_acc_code',true);
+            $location_code = $this->input->post('location_code',true);
+            $reorder_level=$this->input->post('reorder_level',true);
             $inventory_acc_code = $this->input->post('inventory_acc_code',true);
             $wip_acc_code = ($this->input->post('wip_acc_code',true) == '' ? 0 : $this->input->post('wip_acc_code',true));
             $initial_qty_single = ($this->input->post('initial_qty_single',true) == '' ? 0 : $this->input->post('initial_qty_single',true));
             $cost_price = ($this->input->post('cost_price',true) == '' ? 0 : $this->input->post('cost_price',true));
             $unit_price = ($this->input->post('unit_price',true) == '' ? 0 : $this->input->post('unit_price',true));
-            
-            //this qty is for sizes
-            $initial_qty = ($this->input->post('initial_qty',true) == '' ? array() : $this->input->post('initial_qty',true));
-            $size_cost_price = ($this->input->post('size_cost_price',true) == '' ? array() : $this->input->post('size_cost_price',true));
-            $size_unit_price = ($this->input->post('size_unit_price',true) == '' ? array() : $this->input->post('size_unit_price',true));
-            
-            $data = array(
-            'company_id'=> $_SESSION['company_id'],
-            'name' => $this->input->post('name',true),
-            //'item_number' => $this->input->post('item_number',true),
-            'category_id' => $this->input->post('category_id',true),
-            //'item_type' => $this->input->post('item_type',true),
-            'service' => (isset($service) ? 1 : 0),
-            //'brand' => (isset($brand) ? $brand : ''),
-            'description' => (isset($desc) ? $desc : ''),
-            //'unit_price' => $this->input->post('unit_price',true),
-            //'quantity' => $this->input->post('quantity',true),
-            
-            );
-            
-            $query_item_insert = $this->db->insert('pos_items', $data);
-            $new_item_id = $this->db->insert_id();
-            $item_code = 'it'.$new_item_id;
-            
-            $data1 = array(
-            'company_id'=> $_SESSION['company_id'],
-            'item_id' => $new_item_id,
-            
-            );
-            $this->db->insert('pos_items_company', $data1);
-            
-            $sizes = $this->input->post('sizes',true);
-            $barcode = ($this->input->post('barcode',true) == '' ? $new_item_id : $this->input->post('barcode',true));
-            
-            $filter_initial_qty = array_filter($initial_qty);//remove empty value from array
-            $filter_size_cost_price = array_filter($size_cost_price);//remove empty value from array
-            $filter_size_unit_price = array_filter($size_unit_price);//remove empty value from array
-            
-            unset($initial_qty);
-            unset($size_cost_price);
-            unset($size_unit_price);
-            
-            $initial_qty = array_values($filter_initial_qty);//then reindex array
-            $size_cost_price = array_values($filter_size_cost_price);//then reindex array
-            $size_unit_price = array_values($filter_size_unit_price);//then reindex array
-            //var_dump($sizes);
-            //var_dump($size_cost_price);
-            
-            if($service ==1)
-            {
-            ///IF SERVICES
+            $date = date("Y-m-d H:m:i");
+            $barcode = ($this->input->post('barcode',true));
+            $item_code= ($this->input->post('item_code',true));
+           
             $option_data = array(
-                'item_id'=>$new_item_id,
-                'unit_price' =>$this->input->post('unit_price',true),
+                'name'=>$name,
+                'barcode'=>$barcode,
+                'category_id'=>$category_id,
+                'item_code'=>$item_code,
+                'item_type'=>$item_type,
+                'quantity'=>$initial_qty_single,
+                'avg_cost'=>$cost_price,
+                'cost_price' =>$cost_price, //actually this price is NEW cost price
+                'unit_price' =>$unit_price,
                 'tax_id' => $tax_id,
-                'unit_id' => $unit_id,
-                'barcode'=>$new_item_id,
-                'item_type'=>'service'
+                're_stock_level' => $reorder_level,
+                'unit_id' =>$unit_id,
+                'location_code' =>$location_code,
+                "picture" =>$_FILES['upload_pic']['name'],
+                'inventory_acc_code'=>$inventory_acc_code,
+                'wip_acc_code'=>$wip_acc_code,
+                'description'=>$desc,
+                'company_id'=>$_SESSION['company_id'],
+                'date_created'=>$date,
                 );
-            $this->db->insert('pos_items_detail', $option_data);
-                    
-                     //for logging
-                    $msg = $this->input->post('name'). ' Service';
-                    $this->M_logs->add_log($msg,"Product","Added","POS");
-                    // end logging
-                    
-            ////
-            ///IF PRODUCT HAVE SIZES, QTY AND BARCODE THEN INSERT
-            }elseif($sizes > 0)
-            {
-                $total_cost =0;
+
+                $query_item_insert = $this->db->insert('pos_items_detail', $option_data);
                 
-                $i = 0;
-                foreach($sizes as $size=>$values)
-                {
-                    $cost_price = (isset($size_cost_price[$i]) ? $size_cost_price[$i] : 0);
-                    $unit_price = (isset($size_unit_price[$i]) ? $size_unit_price[$i] : 0);
-                    $qty = (isset($initial_qty[$i]) ? $initial_qty[$i] : 0);
-                    
-                    $option_data = array(
-                    'item_id'=>$new_item_id,
-                    'item_code'=>$item_code,
-                    'barcode'=>$barcode[$i],
-                    'quantity'=>$qty,
-                    'color_id' =>0,
-                    'unit_id' =>$unit_id,
-                    'size_id' =>$values,
-                    'cost_price' =>$cost_price, //actually this price is NEW cost price
-                    'unit_price' => $unit_price,
-                    'tax_id' => $tax_id,
-                    'location_id' =>$this->input->post('location_id',true),
-                    'avg_cost'=>$cost_price,
-                    're_stock_level' => $this->input->post('reorder_level',true),
-                    "picture" =>$_FILES['upload_pic']['name'],
-                    'inventory_acc_code'=>$inventory_acc_code,
-                    'wip_acc_code'=>$wip_acc_code,
-                    'item_type'=>$item_type
+                $new_item_id = $this->db->insert_id();
+                
+                $total_cost = $cost_price*$initial_qty_single;
+                
+                //ADD ITEM DETAIL IN INVENTORY TABLE    
+                  $data1= array(
+                    'trans_item'=>$new_item_id,
+                    'trans_date'=>$date,
+                    'trans_comment'=>'Initial Quantity',
+                    'trans_inventory' => $initial_qty_single,
+                    'company_id'=> $_SESSION['company_id'],
+                    'trans_user'=>$_SESSION['user_id'],
+                    'cost_price'=>$cost_price,
+                    'unit_price'=>$unit_price,
                     );
-                    $this->db->insert('pos_items_detail', $option_data);
                     
-                    $total_cost +=$cost_price*$qty;
-                    
-                    //ADD ITEM DETAIL IN INVENTORY TABLE    
-                      $data1= array(
-                        'trans_item'=>$new_item_id,
-                        'trans_comment'=>'Initial Quantity',
-                        'trans_inventory' => $qty,
-                        'company_id'=> $_SESSION['company_id'],
-                        'trans_user'=>$_SESSION['user_id'],
-                        'cost_price'=>$cost_price,
-                        'unit_price'=>$unit_price,
-                        );
-                        
-                      $this->db->insert('pos_inventory', $data1);
-                      //////////////
-          
-                    //for logging
-                    $msg = $this->input->post('name'). ' Qty('. $qty.')';
-                    $this->M_logs->add_log($msg,"Product","Added","POS");
-                    // end logging
-                    
-                    $i++;
-                }
-            }else{ //IF NO SIZE IS GIVEN THEN INSERT 0 SIZE
-                $option_data = array(
-                    'item_id'=>$new_item_id,
-                    'barcode'=>$barcode,
-                    'item_code'=>$item_code,
-                    'quantity'=>$initial_qty_single,
-                    'color_id' =>0,
-                    'unit_id' =>$unit_id,
-                    'size_id' =>0,
-                    'cost_price' =>$cost_price, //actually this price is NEW cost price
-                    'unit_price' =>$unit_price,
-                    'tax_id' => $tax_id,
-                    'location_id' =>$this->input->post('location_id',true),
-                    'avg_cost'=>$cost_price,
-                    're_stock_level' => $this->input->post('reorder_level',true),
-                    "picture" =>$_FILES['upload_pic']['name'],
-                    'inventory_acc_code'=>$inventory_acc_code,
-                    'wip_acc_code'=>$wip_acc_code,
-                    'item_type'=>$item_type
-                    );
-                    $this->db->insert('pos_items_detail', $option_data);
-                    
-                    $total_cost = $cost_price*$initial_qty_single;
-                    
-                    //ADD ITEM DETAIL IN INVENTORY TABLE    
-                      $data1= array(
-                        'trans_item'=>$new_item_id,
-                        'trans_comment'=>'Initial Quantity',
-                        'trans_inventory' => $initial_qty_single,
-                        'company_id'=> $_SESSION['company_id'],
-                        'trans_user'=>$_SESSION['user_id'],
-                        'cost_price'=>$cost_price,
-                        'unit_price'=>$unit_price,
-                        );
-                        
-                      $this->db->insert('pos_inventory', $data1);
-                      //////////////
-          
-                    //for logging
-                    $msg = $this->input->post('name'). ' Qty('.$initial_qty_single.')';
-                    $this->M_logs->add_log($msg,"Product","Added","POS");
-                    // end logging
-            }
-            
+                  $this->db->insert('pos_inventory', $data1);
+                  //////////////
+      
+                //for logging
+                $msg = $this->input->post('name'). ' Qty('.$initial_qty_single.')';
+                $this->M_logs->add_log($msg,"Product","Added","POS");
+                // end logging
             
            if(isset($inventory_acc_code))
            {
@@ -370,64 +247,58 @@ class M_items extends CI_Model{
            }
            
            $this->db->trans_complete();
-            return $query_item_insert;
+           return $query_item_insert;
         }
         
      function updateItems($new_picture = null)
      {
             
-            $service = $this->input->post('service',true);
+        $desc = $this->input->post('description',true);
+        $name = $this->input->post('name',true);
+        $category_id = $this->input->post('category_id',true);
+        $unit_id = ($this->input->post('unit_id',true) == '' ? 0 : $this->input->post('unit_id',true));
+        $tax_id = $this->input->post('tax_id',true);
+        $item_type = $this->input->post('item_type',true);
+        $location_code = $this->input->post('location_code',true);
+        $reorder_level=$this->input->post('reorder_level',true);
+        //$inventory_acc_code = $this->input->post('inventory_acc_code',true);
+        //$wip_acc_code = ($this->input->post('wip_acc_code',true) == '' ? 0 : $this->input->post('wip_acc_code',true));
+        //$initial_qty_single = ($this->input->post('initial_qty_single',true) == '' ? 0 : $this->input->post('initial_qty_single',true));
+        $cost_price = ($this->input->post('cost_price',true) == '' ? 0 : $this->input->post('cost_price',true));
+        $unit_price = ($this->input->post('unit_price',true) == '' ? 0 : $this->input->post('unit_price',true));
+        $date = date("Y-m-d H:m:i");
+        $barcode = ($this->input->post('barcode',true));
+        $item_code= ($this->input->post('item_code',true));
+
+        $option_data = array(
+        'name'=>$name,
+        'barcode'=>$barcode,
+        'category_id'=>$category_id,
+        'item_code'=>$item_code,
+        'item_type'=>$item_type,
+        //'quantity'=>$initial_qty_single,
+        'avg_cost'=>$cost_price,
+        'cost_price' =>$cost_price, //actually this price is NEW cost price
+        'unit_price' =>$unit_price,
+        'tax_id' => $tax_id,
+        're_stock_level' => $reorder_level,
+        'unit_id' =>$unit_id,
+        'location_code' =>$location_code,
+        "picture" =>$_FILES['upload_pic']['name'],
+        // 'inventory_acc_code'=>$inventory_acc_code,
+        //'wip_acc_code'=>$wip_acc_code,
+        'description'=>$desc,
+        'date_updated'=>$date,
+        "picture" =>$new_picture,
+        );
+
+        $this->db->update('pos_items_detail',$option_data,array('id'=>$this->input->post('id')));
+        
+            //for logging
+            $msg = $this->input->post('name'). ' ID('.$this->input->post('id').')';
+            $this->M_logs->add_log($msg,"Product","Updated","POS");
+            // end logging
             
-            $data = array(
-            'company_id'=> $_SESSION['company_id'],
-            'name' => $this->input->post('name',true),
-            //'brand' => $this->input->post('brand',true),
-            'item_number' => $this->input->post('item_number',true),
-            'category_id' => $this->input->post('category_id',true),
-            //'item_type' => $this->input->post('item_type',true),
-            'description' => $this->input->post('description',true),
-            );
-            $this->db->update('pos_items', $data, array('item_id'=>$this->input->post('item_id')));
-            
-            if($service == 1)
-            {
-                ///IF SERVICES
-                $option_data = array(
-                    'unit_price' =>$this->input->post('unit_price',true),
-                    'cost_price' =>$this->input->post('cost_price',true),
-                    'tax_id' => $this->input->post('tax_id',true),
-                    'unit_id' =>$this->input->post('unit_id',true),
-                    'barcode'=>$this->input->post('item_id'),
-                    );
-                $this->db->update('pos_items_detail',$option_data,array('id'=>$this->input->post('id')));
-                ////
-                
-                    //for logging
-                    $msg = $this->input->post('name'). ' Service';
-                    $this->M_logs->add_log($msg,"Product","Updated","POS");
-                    // end logging
-            }else
-            {
-                $option_data = array(
-                //'barcode'=>$this->input->post('barcode',true),
-                //'quantity'=>$qty[$i],
-                'unit_id' =>$this->input->post('unit_id',true),
-                'barcode'=>$this->input->post('barcode',true),
-                //'size_id' =>$this->input->post('size_id',true),
-                'unit_price' =>$this->input->post('unit_price',true),
-                'tax_id' => $this->input->post('tax_id',true),
-                //'avg_cost' =>$this->input->post('avg_cost',true),
-                'location_id' =>$this->input->post('location_id',true),
-                're_stock_level' => $this->input->post('reorder_level',true),
-                "picture" =>$new_picture,
-                );
-                $this->db->update('pos_items_detail',$option_data,array('id'=>$this->input->post('id')));
-                
-                    //for logging
-                    $msg = $this->input->post('name'). ' ID('.$this->input->post('id').')';
-                    $this->M_logs->add_log($msg,"Product","Updated","POS");
-                    // end logging
-            }
      }
      
     function deleteItem($id,$inventory_acc_code,$total_cost,$size_id)

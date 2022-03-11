@@ -25,7 +25,7 @@ var initGetAllProducts = function () {
                     ],
             "createdRow": function( nRow, aData, iDisplayIndex ) {
                             $('td:eq(0)', nRow).html('<a href="'+site_url+'/pos/Items/item_transactions/' + aData['item_id'] + '">' +
-                                aData['name'] + ' '+(aData['size'] = 'null' ? '' : aData['size'])+ '</a>');
+                                aData['name'] + '</a>');
                             
                             var total_cost = (aData['quantity']*aData['avg_cost']);
                             
@@ -42,14 +42,14 @@ var initGetAllProducts = function () {
                                 
                                 $('td:eq(6)', nRow).html('<a href="'+site_url+'/pos/Items/editService/' + aData['item_id'] + 
                                     '" title=\'Edit\'><i class=\'fa fa-pencil-square-o fa-fw\'></i></a><a href="'+site_url+'/pos/Items/delete/' + 
-                                    aData['item_id'] + '/' + aData['inventory_acc_code'] + '/' + total_cost + '/' + aData['size_id'] + 
+                                    aData['item_id'] + '/' + aData['inventory_acc_code'] + '/' + total_cost  + 
                                     '" onclick="return confirm(\'Are you sure you want to delete?\')"; title=\'Make Inactive\'><i class=\'fa fa-trash-o fa-fw\'></i></a>');
                             }else{
                                 // $('td:eq(2)', nRow).html('<div>Product</div>');
                                 
-                                $('td:eq(6)', nRow).html('<a href="'+site_url+'/pos/Items/edit/' + aData['item_id'] + '/' + aData['size_id'] + 
+                                $('td:eq(6)', nRow).html('<a href="'+site_url+'/pos/Items/edit/' + aData['item_id'] + 
                                     '"><i class=\'fa fa-pencil-square-o fa-fw\'></i></a><a href="'+site_url+'/pos/Items/delete/' + 
-                                    aData['item_id'] + '/' + aData['inventory_acc_code'] + '/' + total_cost + '/' + aData['size_id'] + 
+                                    aData['item_id'] + '/' + aData['inventory_acc_code'] + '/' + total_cost + 
                                     '" onclick="return confirm(\'Are you sure you want to delete?\')"; title=\'Make Inactive\'><i class=\'fa fa-trash-o fa-fw\'></i></a>');
                             
                                 }

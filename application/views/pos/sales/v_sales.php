@@ -92,7 +92,7 @@
                 '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" autocomplete="off"></td>' +
                 '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value="0"  ></td>' +
                 '<td class="" id=""></td>' +
-                '<td class="total" id="total_' + counter + '"></td>' +
+                '<td class="text-right total" id="total_' + counter + '"></td>' +
                 '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
             $('.create_table').append(div);
 
@@ -181,36 +181,33 @@
         ///////////////////
         /////////////ADD NEW LINES END HERE
         
-        // $('.qty').change(function() {
-        //     var qty = parseInt($('.qty').val());
-        //     var price = parseFloat($('.unit_price').val());
-        //     $('#net_total').html('<h2 class="text-right">'+(qty * price ? qty * price : 0).toFixed(2)+'</h2>');
+        function calc_gtotal(){
+            var total =0;
+            var total_discount = 0;
+            var total_tax = 0;
             
-        // });
+            $('.total').each(function() {
+                total += parseFloat($(this).text());
+            });
+            
+            // $('.tax').each(function() {
+            //     total_tax += parseFloat($(this).text());
+            // });
+            // $('.discount').each(function() {
+            //     total_discount += parseFloat($(this).text());
+            // });
+            
+            $('#net_total').text(parseFloat(total).toFixed(2));
+            //$('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
+            //$('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
+            //$('#total_tax').text(parseFloat(total_tax).toLocaleString('en-US'));
+            // console.log(total);
+        }
         
-    function calc_gtotal(){
-        var total =0;
-        var total_discount = 0;
-        var total_tax = 0;
-        
-        $('.total').each(function() {
-            total += parseFloat($(this).text());
+        $('#customer_id').on('change', function(event) {
+            // event.preventDefault();
+            console.log($(this).val());
         });
-        // $('.tax').each(function() {
-        //     total_tax += parseFloat($(this).text());
-        // });
-        // $('.discount').each(function() {
-        //     total_discount += parseFloat($(this).text());
-        // });
-        
-        $('#net_total').text(parseFloat(total).toFixed(2));
-        //$('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
-        //$('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
-        //$('#total_tax').text(parseFloat(total_tax).toLocaleString('en-US'));
-        console.log(total);
-    }
-    
-
     });
 
     
