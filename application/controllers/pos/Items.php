@@ -19,7 +19,7 @@ class Items extends MY_Controller{
         $data['main'] = lang('listof').' ' .lang('products');
         
        
-        $data['items']= $this->M_items->get_allItems();
+        $data['items']= $this->M_items->get_activeItems();
         //$data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
         //$data['supplierDDL']= $this->M_suppliers->getSupplierDropDown();
         
@@ -89,19 +89,25 @@ class Items extends MY_Controller{
     //get all items for purchases
     function get_allItems()
     {
-        $data['items'] = $this->M_items->get_allItems();
+        ini_set('max_execution_time', 0); 
+        ini_set('memory_limit','100240M');
         
-        echo json_encode($data['items']);
-        //$this->load->view('pos/items/getItems',$data);
+        echo json_encode($this->M_items->get_allItems());
+        
     }
 
     //get all items for purchases
     function productDDL()
     {
-        $data['items'] = $this->M_items->get_activeItems();
+        ini_set('max_execution_time', 0); 
+        ini_set('memory_limit','100240M');
         
-        echo json_encode($data['items']);
-        //$this->load->view('pos/items/getItems',$data);
+        echo json_encode($this->M_items->get_activeItems());
+        
+    }
+    function getSelected_items($item_id)
+    {
+        echo json_encode($this->M_items->getSelected_items($item_id));
     }
     
     function create()
@@ -442,18 +448,10 @@ class Items extends MY_Controller{
             
             $total_cost = ($rs['quantity']*$rs['avg_cost']);
      
-        if($rs['service'] == 1)
-        {
-            $outp .= "\"<a href='".site_url($lang['langs'])."/pos/Items/editService/".$rs['item_id']."'><i class='fa fa-pencil-square-o fa-fw'></i></a>";
-            
         
-        }else { 
             
-            $outp .= "\"<a href='".site_url($lang['langs'])."/pos/Items/edit/".$rs['item_id'].'/'.$rs['size_id']."'><i class='fa fa-pencil-square-o fa-fw'></i></a>";
-            
-            }
-        
-            $outp .= "<a href='".site_url($lang['langs'])."/pos/Items/delete/".$rs['item_id'].'/'.$rs['inventory_acc_code'].'/'.$total_cost.'/'.$rs['size_id']."' title='Make Inactive'><i class='fa fa-trash-o fa-fw'></i></a>\"]";
+            $outp .= "\"<a href='".site_url($lang['langs'])."/pos/Items/edit/".$rs['item_id']."'><i class='fa fa-pencil-square-o fa-fw'></i></a>";
+            $outp .= "<a href='".site_url($lang['langs'])."/pos/Items/delete/".$rs['item_id'].'/'.$rs['inventory_acc_code'].'/'.$total_cost.'/'."' title='Make Inactive'><i class='fa fa-trash-o fa-fw'></i></a>\"]";
              
         }
             

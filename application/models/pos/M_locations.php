@@ -46,7 +46,10 @@ class M_locations extends CI_Model{
     {
         $data = array(  'company_id'=> $_SESSION['company_id'],
                         'name'=>$_POST['name'],
-                        'status'=>$_POST['status']
+                        'status'=>$_POST['status'],
+                        'status'=>$_POST['status'],
+                        'status'=>$_POST['status'],
+                        'status'=>$_POST['status'],
                      );
                   
         $this->db->insert('pos_locations',$data);      
@@ -88,7 +91,7 @@ class M_locations extends CI_Model{
     {
         $data = array();
         $data[0] = "--Please Select--";
-        $this->db->select('id,name');
+        $this->db->select('code,name');
         
         $query = $this->db->get_where('pos_locations',array('status'=>'active','company_id'=> $_SESSION['company_id']));
         
@@ -96,7 +99,7 @@ class M_locations extends CI_Model{
         {
             foreach($query->result_array() as $row)
             {
-                $data[$row['id']] = $row['name'];
+                $data[$row['code']] = $row['name'];
             }
         }
         return $data;

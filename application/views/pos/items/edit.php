@@ -51,6 +51,7 @@
                                     </div>
                                 </div>
         					<!--/span-->
+							
         				</div>
         				<!--/row-->
                         
@@ -88,13 +89,14 @@
         							</div>
         						</div>
         					</div>
-        					<!--/span
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3">Product Brand</label>
+        							<label class="control-label col-md-3">Item Type</label>
         							<div class="col-md-9">
-        								<input type="text" class="form-control" name="brand" value="<?php echo $values['brand'] ?>" placeholder="Product Brand">
-        								
+										<?php 
+											$data = array('purchased' =>'Purchased','service'=>'Service');//,'manufactured'=>'Manufactured' 
+											echo form_dropdown('item_type',$data,$values['item_type'],'class="form-control item_type"'); ?>
+										</div>
         							</div>
         						</div>
         					</div>

@@ -37,19 +37,22 @@ class C_locations extends MY_Controller{
             if($this->form_validation->run()) 
             {
                 $data = array(  'company_id'=> $_SESSION['company_id'],
-                        'name'=>$_POST['name'],
-                        'status'=>$_POST['status']
+                        'name'=>$this->input->post('name'),
+                        'status'=>$this->input->post('status'),
+                        'code'=>$this->input->post('code'),
+                        'user_id'=>$_SESSION['user_id'],
+                        'date_created'=>date("Y-m-d H:m:i"),
                      );
                 
                 if($this->db->insert('pos_locations',$data)) {
-                    $this->session->set_flashdata('message','location Added');
+                    $this->session->set_flashdata('message','Location Added');
                 }else{
                     $data['flash_message'] = false;
                 }
             
             //$this->M_locations->add_location();
             
-            redirect('pos/C_locations/index','refresh');
+            redirect('pos/C_locations','refresh');
             }
         }
         
@@ -75,20 +78,24 @@ class C_locations extends MY_Controller{
             //after form Validation run
             if($this->form_validation->run()) 
             {
-                $data = array(  'company_id'=> $_SESSION['company_id'],
-                        'name'=>$_POST['name'],
-                        'status'=>$_POST['status']
+                $data = array(  
+                        'company_id'=> $_SESSION['company_id'],
+                        'name'=>$this->input->post('name'),
+                        'status'=>$this->input->post('status'),
+                        'code'=>$this->input->post('code'),
+                        'user_id'=>$_SESSION['user_id'],
+                        'date_created'=>date("Y-m-d H:m:i"),
                      );
                 
                 if($this->db->update('pos_locations',$data,array('id'=>$_POST['id']))) {
-                    $this->session->set_flashdata('message','location Updated');
+                    $this->session->set_flashdata('message','Location Updated');
                 }else{
                     $data['flash_message'] = false;
                 }
                 
             //$this->M_locations->update_location();
             //$this->session->set_flashdata('message','location Updated');
-            redirect('pos/C_locations/index','refresh');
+            redirect('pos/C_locations','refresh');
         }
         }
         

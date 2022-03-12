@@ -89,7 +89,7 @@
         							<label class="control-label col-md-3"><span class="required">* </span> Item Type </label>
         							<div class="col-md-9">
 									<?php 
-										$data = array('purchased' =>'Purchased','manufactured'=>'Manufactured' );
+										$data = array('purchased' =>'Purchased','service'=>'Service' );//,'manufactured'=>'Manufactured'
 										echo form_dropdown('item_type',$data,set_value('item_type'),'class="form-control item_type"'); ?>
         							</div>
         						</div>

@@ -31,6 +31,7 @@
                         <thead class="flip-content">
                             <tr>
                                 <th>ID</th>
+                                <th>Code</th>
                                 <th><?php echo lang('name'); ?></th>
                                 <th><?php echo lang('status'); ?></th>
                                 <th><?php echo lang('action'); ?></th>
@@ -42,6 +43,7 @@
                         foreach ($locations as $key => $list) {
                             echo '<tr>';
                             echo '<td>' . $list['id'] . '</td>';
+                            echo '<td>' . $list['code'] . '</td>';
                             echo '<td>' . $list['name'] . '</td>';
                             echo '<td>' . $list['status'] . '</td>';
 

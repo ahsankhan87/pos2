@@ -14,7 +14,7 @@
 window.onload = function() { window.print(); }
 
 window.onafterprint = function(e){
-    window.location = '<?php echo site_url('trans/C_sales/index/cash') ?>';
+    //window.location = '<?php echo site_url('pos/C_sales/index/cash') ?>';
 };
 </script>
 <style>
@@ -121,7 +121,7 @@ window.onafterprint = function(e){
                 
                 echo '<tr>';
                 //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                echo '<td>'.$this->M_items->get_ItemName($list['item_id']).' '.$this->M_sizes->get_sizeName($list['size_id']).'</td>';
+                echo '<td>'.$this->M_items->get_ItemName($list['item_id']).'</td>';
                 echo '<td>'.round($list['quantity_sold'],2).' '.$this->M_units->get_unitName($list['unit_id']).'</td>';
                 //echo '<td>'.$list['unit'].'</td>';
                 echo '<td class="text-right">'.round($list['item_unit_price'],2).'</td>';

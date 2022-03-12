@@ -19,14 +19,14 @@ class M_items extends CI_Model{
                 $this->db->offset($offset);
             }
             
-            //$this->db->order_by('item_id','asc');
+            //$this->db->order_by('id','asc');
             $option = array('deleted'=>0,'company_id'=> $_SESSION['company_id']);
             $query = $this->db->get_where('pos_items_detail',$option);
             $data = $query->result_array();
             return $data;
         }
         
-        //$this->db->order_by('item_id','asc');
+        //$this->db->order_by('id','asc');
         $options = array('id'=> $id,'company_id'=> $_SESSION['company_id']);
         
         $query = $this->db->get_where('pos_items_detail',$options);
@@ -65,8 +65,8 @@ class M_items extends CI_Model{
         {
             foreach ($query->result_array() as $row)
             {
-                // $category = $this->M_category->get_CatNameByItem($row['item_id']);//get the category of single item
-                // $data[$row['item_id']] = $row['name'] . ($category == '' ? '' : ' - '.$category);//and if category is not empty it will add it with item i.e used in purchases and sales product DDL
+                // $category = $this->M_category->get_CatNameByItem($row['id']);//get the category of single item
+                // $data[$row['id']] = $row['name'] . ($category == '' ? '' : ' - '.$category);//and if category is not empty it will add it with item i.e used in purchases and sales product DDL
                 $data[$row['id']] = $row['name'];//and if category is not empty it will add it with item i.e used in purchases and sales product DDL
             }
         }
@@ -80,12 +80,12 @@ class M_items extends CI_Model{
     {
         if($item_id === FALSE)
         {
-            $this->db->order_by('id','desc');
             $query = $this->db->get_where('pos_items_detail', array('deleted'=>0,'company_id'=> $_SESSION['company_id']));
             $data = $query->result_array();
             return $data;
         }
         
+        $this->db->order_by('id','desc');
         $options = array('id'=> $item_id, 'deleted'=>0,'company_id'=> $_SESSION['company_id']);
         $query = $this->db->get_where('pos_items_detail',$options);
         $data = $query->result_array();
@@ -103,7 +103,7 @@ class M_items extends CI_Model{
         // $this->db->join('pos_taxes AS T','T.id = A.tax_id','left');
         // $this->db->join('pos_sizes as C','A.size_id = C.id','left');
         $this->db->join('pos_units as U','A.unit_id = U.id','left');
-        // $this->db->join('pos_locations as L','A.location_id = L.id','left');
+        // $this->db->join('pos_locations as L','A.location_code = L.code','left');
         
         $query = $this->db->get_where('pos_items_detail AS A', array('A.deleted'=>0,'A.company_id'=> $_SESSION['company_id']));
         $data = $query->result_array();
@@ -127,7 +127,7 @@ class M_items extends CI_Model{
     
     public function get_ItemName($item_id)
     {
-        $options = array('item_id'=> $item_id, 'deleted'=>0,'company_id'=> $_SESSION['company_id']);
+        $options = array('id'=> $item_id, 'deleted'=>0,'company_id'=> $_SESSION['company_id']);
         $query = $this->db->get_where('pos_items_detail',$options);
         
         if($item_name = $query->row())
@@ -149,9 +149,12 @@ class M_items extends CI_Model{
         return $data;  
     }
     
-    public function getItemsOptions($item_id)
+    public function getSelected_items($item_id)
     {
-        $query = $this->db->get_where('pos_items_detail',array('item_id'=>$item_id));
+        $this->db->select("A.unit_price,A.cost_price,A.item_type,A.tax_id,T.name AS tax,T.rate AS tax_rate");
+
+        $this->db->join('pos_taxes AS T','T.id = A.tax_id','left');
+        $query = $this->db->get_where('pos_items_detail A',array('A.id'=>$item_id));
         
         $data = $query->result_array();
         return $data;
@@ -207,6 +210,7 @@ class M_items extends CI_Model{
                 'wip_acc_code'=>$wip_acc_code,
                 'description'=>$desc,
                 'company_id'=>$_SESSION['company_id'],
+                'user_id'=>$_SESSION['user_id'],
                 'date_created'=>$date,
                 );
 
@@ -287,6 +291,7 @@ class M_items extends CI_Model{
         "picture" =>$_FILES['upload_pic']['name'],
         // 'inventory_acc_code'=>$inventory_acc_code,
         //'wip_acc_code'=>$wip_acc_code,
+        'user_id'=>$_SESSION['user_id'],
         'description'=>$desc,
         'date_updated'=>$date,
         "picture" =>$new_picture,
@@ -303,8 +308,8 @@ class M_items extends CI_Model{
      
     function deleteItem($id,$inventory_acc_code,$total_cost,$size_id)
     {
-        $query = $this->db->update('pos_items',array('deleted'=>1),array('item_id'=>$id));
-        $query = $this->db->update('pos_items_detail',array('deleted'=>1,'barcode'=>$id),array('item_id'=>$id,'size_id'=>$size_id));
+        //$query = $this->db->update('pos_items',array('deleted'=>1),array('id'=>$id));
+        $query = $this->db->update('pos_items_detail',array('deleted'=>1,'barcode'=>$id),array('id'=>$id));
         
        $inventory_account = $this->M_groups->get_groups($inventory_acc_code,$_SESSION['company_id']);
        $inventory_dr_balance = abs(@$inventory_account[0]['op_balance_dr']);
@@ -329,48 +334,14 @@ class M_items extends CI_Model{
         return $this->db->update('pos_items',$data,$where);
     }
     
-    //items options mean i.e size and colors etc
-    function get_itemOptions($id)
-    {
-        $data = array();
-        //$this->db->select('colors_id');
-        $query = $this->db->get_where('pos_items_detail',array('id'=>$id));
-        
-        foreach($query->result_array() as $values)
-        {
-            if($values['color_id'] == 0 AND $values['size_id'] == 0)
-            {
-                $data['Color'] = 0;
-                $data['Size'] = 0;
-            }
-            else
-            {
-                $data['Color'] = $values['color_id'];
-                $data['Size'] = $values['size_id'];
-            }
-            
-            
-        }        
-        return $data;
-    }
-    
+   
     //get the total qty of all the colors and sizes of single item.
     //if you want to get total stock only against item then give only item id and leave color and size id.
-    public function total_stock($item_id =0, $color_id  = -1, $size_id=-1)
+    public function total_stock($item_id =0)
     {
         $this->db->select_sum('quantity');
         
-        if($color_id != -1)
-        {
-            $this->db->where('color_id',$color_id);
-        }
-        
-        if($size_id != -1)
-        {
-            $this->db->where('size_id',$size_id);
-        }
-        
-        $query = $this->db->get_where('pos_items_detail',array('item_id'=>$item_id));
+        $query = $this->db->get_where('pos_items_detail',array('id'=>$item_id));
         if($total = $query->row())
         {
             return $total->quantity;
@@ -380,9 +351,9 @@ class M_items extends CI_Model{
         
     }
      //check the item option i.e item_id, color and size if exist
-    public function checkItemOptions($item_id = 0, $color_id =0, $size_id=0)
+    public function is_item_exist($item_id = 0)
     {
-        $query = $this->db->get_where('pos_items_detail',array('color_id'=>$color_id,'size_id'=>$size_id,'item_id'=>$item_id));
+        $query = $this->db->get_where('pos_items_detail',array('id'=>$item_id));
         
         if($query->num_rows() > 0)
         {
@@ -399,7 +370,7 @@ class M_items extends CI_Model{
     function getAvgCost($item_id,$new_costPrice,$new_qty,$color_id=0, $size_id=0,$type='receive')
     {
         //get old item cost price and qty.
-        $options = array('item_id'=> $item_id,'color_id'=>$color_id,'size_id'=>$size_id);
+        $options = array('id'=> $item_id,'color_id'=>$color_id,'size_id'=>$size_id);
         
         $query = $this->db->get_where('pos_items_detail',$options);
         if($row = $query->row())
@@ -417,7 +388,7 @@ class M_items extends CI_Model{
         }   
         
         //IF SERVICE THEN RETUEN ZERO
-        $options = array('item_id'=> $item_id);
+        $options = array('id'=> $item_id);
         $this->db->select('service');
         $query = $this->db->get_where('pos_items',$options);
         $row = $query->row();
@@ -470,7 +441,7 @@ class M_items extends CI_Model{
     {
         $data = array();
         $this->db->select('colors_id');
-        $query = $this->db->get_where('pos_item_colors',array('item_id'=>$id));
+        $query = $this->db->get_where('pos_item_colors',array('id'=>$id));
         
         foreach($query->result_array() as $values)
         {
@@ -483,7 +454,7 @@ class M_items extends CI_Model{
     {
         $data= array();
         $this->db->select('size_id');
-        $query = $this->db->get_where('pos_item_sizes',array('item_id'=>$id));
+        $query = $this->db->get_where('pos_item_sizes',array('id'=>$id));
         
         foreach($query->result_array() as $values)
         {

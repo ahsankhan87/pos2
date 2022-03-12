@@ -9,7 +9,14 @@ foreach($update_location as $row)
 {
 ?>
 <div class="form-group">
-  <label class="control-label col-sm-2" for="Name">location Name:<span class="required">* </span></label>
+  <label class="control-label col-sm-2" for="Code">Location Code:<span class="required">* </span></label>
+  <div class="col-sm-10">
+    <input type="text" class="form-control" id="Code" name="code" value="<?php echo $row['code']; ?>"  placeholder="Location Code" />
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="control-label col-sm-2" for="Name">Location Name:<span class="required">* </span></label>
   <div class="col-sm-10">
     <input type="text" class="form-control" id="name" value="<?php echo $row['name']; ?>" name="name" placeholder="location Name" />
   </div>
