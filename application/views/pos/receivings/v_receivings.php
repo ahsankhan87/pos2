@@ -1,193 +1,318 @@
-<div class="row">
-    <div class="col-sm-12">
-        <h1 class="page-header lead"><?php echo $main; ?></h1>
-    </div>
-    <!-- /.col-sm-12 -->
-</div>
-<!-- /.row -->
+<form id="sale_form" action="">
+    <div class="row">
+        <div class="col-sm-6">
 
-<?php
-if($this->session->flashdata('success_msg'))
-{
-    echo "<div class='alert alert-success'>";
-    echo $this->session->flashdata('success_msg');
-    echo '</div>';
-}
-if($this->session->flashdata('error'))
-{
-    echo "<div class='alert alert-danger fade in'>";
-    echo  $this->session->flashdata('error');
-    echo "</div>";
-}
-?>
+            <label class="control-label col-sm-2" for="">Select Supplier:</label>
+            <div class="col-sm-4">
+                <?php echo form_dropdown('supplier_id', $supplierDDL, '', 'id="supplier_id" class="form-control select2me"'); ?>
+            </div>
 
-<div class="row">
-    <div class="col-sm-12">
-  
-<?php 
-$attributes = array('class' => 'form-horizontal', 'role' => 'form','enctype'=>"multipart/form-data");
-    echo form_open('pos/C_receivings/addCart',$attributes); ?>
-    
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="">Select Product:</label>
-      <div class="col-sm-4">
-        <?php echo form_dropdown('item_id',$itemDDL,'','class="form-control"') ?>
-      </div>
-      </div>
-      
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="">Purchase Quantity:</label>
-      <div class="col-sm-4">
-          
-       <input type="number" class="form-control" id="qty" name="quantity" placeholder="Quantity"/>
-    
-      </div>
-    </div>
-      
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="">Discount in Percent:</label>
-      <div class="col-sm-4">
-         <input type="number" class="form-control" id="discount_percent" name="discount_percent" placeholder="Discount Percent"/>
-    
-      </div>
-    </div>
-    
-    <div class="form-group" id="color-panel-btn">
-      <label class="control-label col-sm-2" for=""> </label>
-      <div class="col-sm-4">
-        <div class="btn btn-primary" id="color-btn" title="If you have product color then select color otherwise add new color or leave empty">Select Product Color</div>
-      </div>
-    </div>
-    
-    <div class="form-group" id="color-panel" style="display:none">
-      <label class="control-label col-sm-2" for="">Select Color:</label>
-      <div class="col-sm-4">
-        <?php echo form_dropdown('colorsDDL',$colors,'','class="form-control"'); ?>
-        <?php echo anchor('pos/colors','Add New','class="btn btn-info btn-xs"'); ?>
-      </div>
-    </div>
-    
-    <div class="form-group" id="size-panel-btn">
-      <label class="control-label col-sm-2" for=""> </label>
-      <div class="col-sm-4">
-        <div class="btn btn-primary" id="size-btn" title="If you have product size then select size otherwise add new size or leave empty">Select Product Size</div>
-      </div>
-    </div>
-    
-    <div class="form-group" id="size-panel"  style="display:none">
-      <label class="control-label col-sm-2" for="">Select Size:</label>
-      <div class="col-sm-4">
-            <?php  echo form_dropdown('sizesDDL',$sizes,'','class="form-control"');?>
-            <?php echo anchor('pos/sizes','Add New','class="btn btn-info btn-xs"'); ?>
-      </div>
-      </div>
-    
+            <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
+            </div>
+            
+        </div>
+        <!-- /.col-sm-12 -->
+        
+        <div class="col-sm-6 text-right">
+            <div id="top_net_total"></div>
+            
+        </div>
 
-<input type="submit" name="add_item" class="btn btn-success" value="Add Product" />
+    </div>
+    <hr />
+    <?php $i = 1; ?>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <table class="table table-striped table-bordered" id="sale_table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Cost Price</th>
+                        <th>Discount</th>
+                        <th>Tax</th>
+                        <th>Sub-Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="create_table">
+
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
+                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
+                        </th>
+                        <th class="text-right">Sub Total</th>
+                        <th class="text-right" id="sub_total">0.00</th>
+                        <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="6">Discount</th>
+                        <th class="text-right" id="total_discount">0.00</th>
+                        <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="6">Tax</th>
+                        <th class="text-right" id="total_tax">0.00</th>
+                        <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th colspan="5"><?php echo form_submit('', 'Save', 'class="btn btn-success"'); ?></th>
+                        <th class="text-right" >Grand Total</th>
+                        <th class="text-right lead" id="net_total">0.00</th>
+                        <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <p></p>
+
+        </div>
+        
+    </div><!-- close main_div here -->
 </form>
 
-<?php echo form_close(); ?>
+<script>
+    $(document).ready(function() {
 
-</div>
-</div>
+        const site_url = '<?php echo site_url($langs); ?>/';
+        const path = '<?php echo base_url(); ?>';
+        const curr_symbol = "<?php echo $_SESSION["home_currency_symbol"]; ?>";
+        const curr_code = "<?php echo $_SESSION["home_currency_code"]; ?>";
 
-<hr />
+        /////////////ADD NEW LINES
+        let counter = 0; //counter is used for id of the debit / credit textbox to enable and disable 8 textboxs already used so start from 8 here
+        $('.add_new').on('click', function(event) {
+            event.preventDefault();
+            counter++;
+            productDDL(counter);
+
+            var div = '<tr><td>' + counter + '</td>' +
+                '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
+                '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
+                '<td class="text-right"><input type="number" class="form-control cost_price" id="costprice_' + counter + '" name="cost_price[]" autocomplete="off">' +
+                '<input type="hidden" unit_price" id="unitprice_' + counter + '" name="unit_price[]">'+
+                '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>'+
+                '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>'+
+                '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>'+
+                '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
+                '<td class="text-right tax" id="tax_' + counter + '"></td>' +
+                '<td class="text-right total" id="total_' + counter + '"></td>' +
+                '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
+            $('.create_table').append(div);
+
+            //SELECT 2 DROPDOWN LIST   
+            $('#productid_' + counter).select2();
+            ///
+
+            //GET TOTAL WHEN QTY CHANGE
+            $(".qty").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($(this).val());
+                var price = parseFloat($('#costprice_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+            //GET TOTAL WHEN UNIT PRICE CHANGE
+            $(".cost_price").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var price = parseFloat($(this).val());
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+            //GET TOTAL WHEN DISCOUNT CHANGE
+            $(".discount").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var price = parseFloat($('#costprice_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+
+            ////// LOAD COST PRICE, UNIT PRICE, TAX WHEN PRODUCT DROPDOWN CHANGE
+            $('.product_id').on('change', function(event) {
+                // event.preventDefault();
+                var curId = this.id.split("_")[1];
+                var productid = $(this).val();
+                var qty = parseFloat($('#qty_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var tax_rate = 0;
+                var unit_price = 0;
+
+                $.ajax({
+                    url: site_url + "pos/Items/getSelected_items/" + productid,
+                    type: 'GET',
+                    dataType: 'json', // added data type
+                    success: function(data) {
+
+                        tax_rate = (parseFloat(data[0].tax_rate) ? parseFloat(data[0].tax_rate) : 0);
+                        unit_price = parseFloat(data[0].unit_price);
+                        tax = unit_price * tax_rate / 100;
+                        $('#unitprice_' + curId).val(data[0].unit_price);
+                        $('#costprice_' + curId).val(data[0].cost_price);
+                        $('#itemtype_' + curId).val(data[0].item_type);
+                        $('#taxid_' + curId).val(data[0].tax_id);
+                        $('#taxrate_' + curId).val(data[0].tax_rate);
+                        $('#tax_' + curId).text(tax.toFixed(2));
+
+                        var total = (qty * unit_price ? qty * unit_price - discount : 0).toFixed(2);
+                        $('#total_' + curId).text(total);
+
+                        //console.log((tax ? tax : 0));
+                        calc_gtotal();
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(thrownError);
+                    }
+                });
 
 
-<?php if($this->cart->contents()){ ?>
+            });
 
-<div id="">
-<?php echo form_open('pos/C_receivings/update_cart'); ?>
+        });
+        $(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
 
-<table class="table table-striped">
-<thead>
-<tr>
-  <th>Qty</th>
-  <th>Product Description</th>
-  <th>Cost Price</th>
-  <th>Unit Price</th>
-  <th>Discount</th>
-  <th>Sub-Total</th>
-  <th>Remove</th>
-</tr>
-</thead>
-<?php $i = 1; ?>
-<tbody>
-<?php foreach ($this->cart->contents() as $items): ?>
+        /////////////////////////////////
+        $("#sale_table").on("click", "#removeItem", function() {
+            $(this).closest("tr").remove();
+            calc_gtotal();
+        });
 
-	<?php echo form_hidden('rowid[]', $items['rowid']); ?>
+        ////////// CLEAR ALL TABLE
+        $(".clear_all").on("click", function() {
+            clearall();
+        });
+        
+        function clearall()
+        {
+            counter = 0;
+            calc_gtotal();
+            $('#sub_total').html(parseFloat('0').toFixed(2));
+            $('#total_discount').html(parseFloat('0').toFixed(2));
+            $('#total_tax').html(parseFloat('0').toFixed(2));
+            $('#net_total').html(parseFloat('0').toFixed(2));
+            $("#sale_table > tbody").empty();
+            
+            $('#supplier_id').val('').trigger('change');
+            $(".add_new").trigger("click");//add new line
+        }
 
-	<tr>
-	  <td><?php echo form_input(array('name' => 'qty[]','type'=>'number', 'value' => $items['qty'], 'id'=>'qty', 'style="width: 50px;"' => '')); ?></td>
-	  <td>
-		<strong><?php echo $items['name']; ?></strong>
-      
-        <?php echo '<br />'.(!isset($items['item_qty']) ? '<em style="color:red;">0' : '<em style="color:green;">'.$items['item_qty']) . " qty in stock</em>"; ?>
-		
-        	<?php if ($this->cart->has_options($items['rowid']) == TRUE): ?>
+        ///////////////////
+        // productDDL();
+        ////////////////////////
+        //GET product DROPDOWN LIST
+        function productDDL(index = 0) {
 
-				<p>
-					<?php foreach ($this->cart->product_options($items['rowid']) as $option_name => $option_value): ?>
+            let product_ddl = '';
+            $.ajax({
+                url: site_url + "pos/Items/productDDL/"+false+'/service',
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    product_ddl += '<option value="0">Select Product</option>';
 
-						<?php 
-                        
-                       if($option_value != 0)//if item have no options i.e color and size then dont show below code
-                        {  
-                            if($option_name == 'color')
+                    $.each(data, function(index, value) {
+
+                        product_ddl += '<option value="' + value.id + '">' + value.name + '</option>';
+
+                    });
+
+                    $('#productid_' + index).html(product_ddl);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ///////////////////
+        /////////////ADD NEW LINES END HERE
+
+        function calc_gtotal() {
+            var total = 0;
+            var total_discount = 0;
+            var total_tax = 0;
+            var net_total = 0;
+
+            $('.total').each(function() {
+                total += parseFloat($(this).text());
+            });
+
+            $('.tax').each(function() {
+                total_tax += parseFloat($(this).text());
+            });
+            $('.discount').each(function() {
+                total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
+            });
+
+            net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
+
+            //ASSIGN VALUE TO TEXTBOXES
+            $('#sub_total_txt').val(parseFloat(total));
+            $('#total_discount_txt').val(parseFloat(total_discount));
+            $('#total_tax_txt').val(parseFloat(total_tax));
+            $('#net_total_txt').val(parseFloat(net_total));
+            /////////////
+
+            $('#top_net_total').html('Grand Total:<h2 style="margin:0">'+parseFloat(net_total).toLocaleString('en-US', 2)+'</h2>');
+            $('#net_total').text(parseFloat(net_total).toLocaleString('en-US', 2));
+            $('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
+            $('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
+            $('#total_tax').text(parseFloat(total_tax).toLocaleString('en-US'));
+            //console.log(total_discount);
+        }
+
+        $("form").on("submit", function(e) {
+            var formValues = $(this).serialize();
+            console.log(formValues);
+            // alert(formValues);
+            // return false;
+           
+            var confirmSale = confirm('Are you absolutely sure you want to sale?');
+           
+            if (confirmSale) {
+                
+                if(formValues.length > 0)
+                {
+                   $.ajax({
+                        type: "POST",
+                        url: site_url + "trans/C_receivings/purchaseProducts",
+                        data: formValues,
+                        success: function(data) {
+                            if(data == '1')
                             {
-                                //get color and size name using option id's 
-                                $color = $this->m_colors->get_color($option_value);
-                                echo '<strong>'. $option_name . ':</strong> '. @$color[0]['name'] . '<br />'; 
+                                toastr.success("Invoice saved successfully",'Success');
+                                
                             }
-                            if($option_name == 'size')
-                            {
-                                $size = $this->M_sizes->get_size($option_value);
-                                echo '<strong>'. $option_name . ':</strong> '. @$size[0]['name'] . '<br />'; 
-                            }
-                         }
-                        ?>
+                            clearall();
+                            console.log(data);
+                        }
+                    });
+                }
+            }
+            e.preventDefault();
+        });
 
-					<?php endforeach; ?>
-				</p>
-
-			<?php endif; ?>
-
-	  </td>
-      
-      <td><?php echo forM_input(array('name' => 'cost_price[]', 'value' => $items['price'], 'type'=>'number', 'style="width: 100px;"' => '')); ?></td>
-	  <td>$<?php echo $this->cart->format_number($items['unit_price']); ?></td>
-      <td><?php echo $this->cart->format_number($items['discount_percent']); ?>%</td>
-      <?php $discount = ($items['subtotal']*$items['discount_percent']/100); //calculate discount and subtract from subtotal amount ?>
-      <td>$<?php echo $this->cart->format_number($items['subtotal']-$discount); ?></td>
-      <td><?php echo anchor('pos/C_receivings/removeCart/'.$items['rowid'],'<i class="fa fa-trash-o fa-1x" style="color:red;"></i>'); ?></a></td>
-	</tr>
-    
-<?php @$discount_total += $discount; //add total discount of the cart and subtract from total amount ?>
-
-<?php $i++; ?>
-
-<?php endforeach; ?>
-
-<?php @$discount = $discount_total; ?>
-
-<tr>
-  <td colspan="4"></td>
-  <td class="right"><strong>Total</strong></td>
-  <td class="right">&dollar;<?php echo $this->cart->format_number($this->cart->total()-$discount); ?></td>
-  <td><?php echo anchor('pos/C_receivings/destroyCart/','Destroy','class="btn btn-danger btn-xs"'); ?></td>
-</tr>
-</tbody>
-</table>
-
-<p><?php echo form_submit('', 'Update your Cart','class="btn btn-success" title="If you make any changes in cart the you MUST update you cart"'); ?></p>
-<?php echo form_close(); ?>
-
-<?php echo form_open('pos/C_receivings/checkout'); ?>
-
-
-      
-<p><?php echo form_submit('', 'Checkout','class="btn btn-primary"'); ?></p>
-
-<?php echo form_close(); ?>
-</div><!-- close main_div here -->
-<?php } //cart centent if close ?>
+    });
+</script>

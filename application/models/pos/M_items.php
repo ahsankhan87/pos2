@@ -76,8 +76,13 @@ class M_items extends CI_Model{
         
     //get active property if id is provided then one record will be loaded.
     //this property will show on front page.
-    public function get_activeItems($item_id = FALSE)
+    public function get_activeItems($item_id = FALSE,$item_type=null)
     {
+        if($item_type != null)
+        {
+            $this->db->where('item_type',$item_type);
+        }
+       
         if($item_id === FALSE)
         {
             $query = $this->db->get_where('pos_items_detail', array('deleted'=>0,'company_id'=> $_SESSION['company_id']));
@@ -367,10 +372,10 @@ class M_items extends CI_Model{
     }
     
     //get avg cost of the product using below formula
-    function getAvgCost($item_id,$new_costPrice,$new_qty,$color_id=0, $size_id=0,$type='receive')
+    function getAvgCost($item_id,$new_costPrice,$new_qty,$type='receive')
     {
         //get old item cost price and qty.
-        $options = array('id'=> $item_id,'color_id'=>$color_id,'size_id'=>$size_id);
+        $options = array('id'=> $item_id);
         
         $query = $this->db->get_where('pos_items_detail',$options);
         if($row = $query->row())
@@ -386,17 +391,6 @@ class M_items extends CI_Model{
             $old_qty = 0;
             //////
         }   
-        
-        //IF SERVICE THEN RETUEN ZERO
-        $options = array('id'=> $item_id);
-        $this->db->select('service');
-        $query = $this->db->get_where('pos_items',$options);
-        $row = $query->row();
-        if($row->service)
-        {
-            return 0;
-        }
-        ////////////
         
             $old_cost = ($oldCost_price*$old_qty);
             

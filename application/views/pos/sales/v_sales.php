@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col-sm-6">
 
-
             <label class="control-label col-sm-2" for="">Select Customer:</label>
             <div class="col-sm-4">
                 <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?>
@@ -12,15 +11,20 @@
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
-
+            
         </div>
         <!-- /.col-sm-12 -->
+        
+        <div class="col-sm-6 text-right">
+            <div id="top_net_total"></div>
+            
+        </div>
+
     </div>
     <hr />
     <?php $i = 1; ?>
     <div class="row">
         <div class="col-sm-12">
-
 
             <table class="table table-striped table-bordered" id="sale_table">
                 <thead>
@@ -30,7 +34,7 @@
                         <th>Qty</th>
                         <th>Sale/Unit Price</th>
                         <th>Discount</th>
-                        <th>VAT%</th>
+                        <th>Tax</th>
                         <th>Sub-Total</th>
                         <th></th>
                     </tr>
@@ -60,17 +64,18 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" colspan="6">Total</th>
-                        <th class="text-right" id="net_total">0.00</th>
+                        <th colspan="5"><?php echo form_submit('', 'Save', 'class="btn btn-success"'); ?></th>
+                        <th class="text-right" >Grand Total</th>
+                        <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
                     </tr>
                 </tfoot>
             </table>
 
-            <p><?php echo form_submit('', 'Save', 'class="btn btn-success"'); ?></p>
+            <p></p>
 
         </div>
-        <div class="message_form"></div>
+        
     </div><!-- close main_div here -->
 </form>
 
@@ -270,6 +275,7 @@
             $('#net_total_txt').val(parseFloat(net_total));
             /////////////
 
+            $('#top_net_total').html('Grand Total:<h2 style="margin:0">'+parseFloat(net_total).toLocaleString('en-US', 2)+'</h2>');
             $('#net_total').text(parseFloat(net_total).toLocaleString('en-US', 2));
             $('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
             $('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
