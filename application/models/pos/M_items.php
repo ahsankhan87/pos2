@@ -27,9 +27,11 @@ class M_items extends CI_Model{
         }
         
         //$this->db->order_by('id','asc');
-        $options = array('id'=> $id,'company_id'=> $_SESSION['company_id']);
+        // $this->db->select('A.id AS item_id,B.name,B.unit_id,B.item_type
+        // B.quantity,B.cost_price, B.avg_cost,B.unit_price');
+        $options = array('B.id'=> $id,'B.deleted'=>0,'B.company_id'=> $_SESSION['company_id']);
         
-        $query = $this->db->get_where('pos_items_detail',$options);
+        $query = $this->db->get_where('pos_items_detail B',$options);
         $data = $query->result_array();
         return $data;
     }
@@ -100,8 +102,8 @@ class M_items extends CI_Model{
     public function get_allItemsforJSON()
     {
         //$this->db->order_by('B.item_id','desc');
-        $this->db->select('A.id AS item_id,A.category_id,A.name,A.barcode,A.inventory_acc_code,A.picture,
-        A.item_type,A.unit_id,A.quantity,A.avg_cost,A.cost_price,A.unit_price,A.re_stock_level,
+        $this->db->select('A.id AS item_id,A.name,
+        A.item_type,A.unit_id,A.quantity,A.avg_cost,A.cost_price,A.unit_price,
         A.inventory_acc_code,A.wip_acc_code,A.tax_id,
         U.name as unit_name');
         // $this->db->join('pos_items AS B','A.item_id = B.item_id','left');
@@ -120,7 +122,7 @@ class M_items extends CI_Model{
     public function get_allItems()
     {
         //$this->db->order_by('A.item_id','desc');
-        $this->db->select('B.id AS item_id,B.category_id, B.name,B.inventory_acc_code,B.barcode,B.size_id,B.unit_id,
+        $this->db->select('B.id AS item_id,B.category_id, B.name,B.inventory_acc_code,B.barcode,B.unit_id,
         B.quantity,B.cost_price, B.avg_cost,B.unit_price,B.re_stock_level,
         B.tax_id,B.inventory_acc_code,B.wip_acc_code');
         
@@ -156,9 +158,9 @@ class M_items extends CI_Model{
     
     public function getSelected_items($item_id)
     {
-        $this->db->select("A.unit_price,A.cost_price,A.item_type,A.tax_id,T.name AS tax,T.rate AS tax_rate");
-
+        $this->db->select("A.name,A.unit_price,A.cost_price,A.item_type,A.tax_id,T.name AS tax,T.rate AS tax_rate");
         $this->db->join('pos_taxes AS T','T.id = A.tax_id','left');
+        
         $query = $this->db->get_where('pos_items_detail A',array('A.id'=>$item_id));
         
         $data = $query->result_array();

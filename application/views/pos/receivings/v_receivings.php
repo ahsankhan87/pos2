@@ -225,6 +225,7 @@
             $.ajax({
                 url: site_url + "pos/Items/productDDL/"+false+'/service',
                 type: 'GET',
+                cache: true,
                 dataType: 'json', // added data type
                 success: function(data) {
                     //console.log(data);
