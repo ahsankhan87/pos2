@@ -78,7 +78,7 @@ class C_receivings extends MY_Controller
             if (count((array)$this->input->post('product_id')) > 0) {
                 $this->db->trans_start();
                 //GET PREVIOISE INVOICE NO  
-                @$prev_invoice_no = $this->M_sales->getMAXSaleInvoiceNo();
+                @$prev_invoice_no = $this->M_receivings->getMAXPurchaseInvoiceNo();
                 //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
                 //$new_invoice_no = 'POS'.date("Ymd").$number;
                 $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1

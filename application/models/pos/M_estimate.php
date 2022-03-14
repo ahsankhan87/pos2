@@ -43,7 +43,7 @@ class m_estimate extends CI_Model{
         }
         
         $this->db->select('s.sale_id,s.invoice_no,s.sale_date,(s.total_amount+s.total_tax) AS net_amount,
-        s.customer_id,s.employee_id,s.delivery_date,s.advance,e.first_name as emp,c.store_name as customer');
+        s.customer_id,s.employee_id,s.delivery_date,e.first_name as emp,c.store_name as customer');
         $this->db->join('pos_customers as c','c.id = s.customer_id','left');
         $this->db->join('pos_employees as e','e.id = s.employee_id','left');
         

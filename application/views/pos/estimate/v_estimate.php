@@ -1,245 +1,318 @@
-<div ng-controller="estimateProductCtrl" ng-init="getAllProduct();">
-    <input type="hidden" ng-model="home_currency_symbol" ng-init="home_currency_symbol='<?php echo @$_SESSION['home_currency_symbol']; ?>'" />
-    <div class='row'>
-        <div class='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
-            <table class="table table-bordered table-hover">
+<form id="sale_form" action="">
+    <div class="row">
+        <div class="col-sm-6">
 
+            <label class="control-label col-sm-2" for="">Select Customer:</label>
+            <div class="col-sm-4">
+                <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?>
+            </div>
+
+            <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
+            </div>
+            
+        </div>
+        <!-- /.col-sm-12 -->
+        
+        <div class="col-sm-6 text-right">
+            <div id="top_net_total"></div>
+            
+        </div>
+
+    </div>
+    <hr />
+    <?php $i = 1; ?>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <table class="table table-striped table-bordered" id="sale_table">
                 <thead>
                     <tr>
-                        <td colspan="4"><input ng-change="addItemByBarcode(barcode)" autofocus ng-trim="true" ng-model="barcode" type="text" placeholder="Paste Barcode" class="form-control">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4"><input type="search" ng:model="search" placeholder="Search Products" class="form-control" /></td>
-                    </tr>
-                    <tr>
-                        <th>Size</th>
-                        <th>Products</th>
+                        <th>#</th>
+                        <th>Product</th>
                         <th>Qty</th>
+                        <th>Sale/Unit Price</th>
+                        <th>Discount</th>
+                        <th>Tax</th>
+                        <th>Sub-Total</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="create_table">
 
-                    <tr ng-show="loader">
-                        <td colspan="4" class="text-center"><img src="<?php echo base_url('images/wait.gif'); ?>" width="30" height="30" title="Loading" alt="Loading" /></td>
-                    </tr>
-                    <tr ng:repeat="item in products | filter:search | limitTo:30">
-
-                        <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"><small>{{item.size}}</small></td>
-                        <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"><a href="#"><small>{{item.name}} {{item.expiry_date}}</small></a></td>
-                        <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"><small>{{item.quantity}}</small></td>
-                        <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"> <i class="fa fa-plus fa-1x" style="color:green;"></i></td>
-
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class='col-xs-12 col-sm-9 col-md-9 col-lg-9'>
-            <?php
-            echo '<input type="hidden" name="saleType" ng-model="saleType" ng-init="saleType=\'estimate\'" value="estimate"/>';
-            echo '<input type="hidden" name="register_mode" ng-model="register_mode" ng-init="register_mode=\'estimate\'" value="estimate"/>';
-
-            ?>
-
-            <div class="row">
-                <div class="form-group">
-                    <?php //var_dump($customersDDL); 
-                    ?>
-
-                    <label class="control-label col-sm-2" for="">Customer</label>
-                    <div class="col-sm-4" ng-init="customer_id='<?php echo $customer_id; ?>'">
-                        <select class="form-control <?php echo ($customer_id == '' ? 'select2me' : '') ?>" ng-change="getCustomerCurrency(customer_id)" ng:model="customer_id">
-                            <?php
-                            foreach ($customersDDL as $key => $values) :
-                                echo '<option value="' . $key . '">';
-                                echo $values;
-                                echo '</option>';
-                            endforeach;
-                            ?>
-                        </select>
-
-                        <?php echo anchor('pos/C_customers/create', 'Add New <i class="fa fa-plus"></i>', ''); ?>
-                    </div>
-
-                    <label class="control-label col-sm-2" for="">Sale Date</label>
-                    <div class="col-sm-4">
-                        <input type="date" ng-model="sale_date" class="form-control" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="form-group">
-                    <?php //var_dump($supplier_cust); 
-                    ?>
-                    <label class="control-label col-sm-2" for="">Employee</label>
-                    <div class="col-sm-4" ng-init="emp_id=''">
-                        <select class="form-control select2me" ng:model="emp_id">
-                            <option value="">Select Employee</option>
-                            <?php
-                            foreach ($emp_DDL as $key => $values) :
-                                echo '<option value="' . $key . '">';
-                                echo $values;
-                                echo '</option>';
-                            endforeach;
-                            ?>
-                        </select>
-                    </div>
-
-                    <label class="control-label col-sm-2" for="">Delivery Date</label>
-                    <div class="col-sm-4">
-                        <input type="date" ng-model="delivery_date" class="form-control" />
-                    </div>
-
-                </div>
-
-                <?php if ($supplier_cust) { ?>
-                    <div class="form-group">
-                        <?php //var_dump($supplier_cust); 
-                        ?>
-                        <label class="control-label col-sm-2" for="">Supplier</label>
-                        <div class="col-sm-4" ng-init="supplier_id=''">
-                            <select class="form-control select2me" ng-change="getsupplierCurrency(supplier_id)" ng:model="supplier_id">
-                                <option value="">Select Supplier</option>
-                                <?php
-                                foreach ($supplier_cust as $key => $values) :
-                                    echo '<option value="' . $values['id'] . '" selected="selected">';
-                                    echo $values['name'];
-                                    echo '</option>';
-                                endforeach;
-                                ?>
-                            </select>
-
-                        </div>
-
-                    </div>
-                <?php } ?>
-
-            </div>
-
-            <table class="table table-bordered table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th width="38%">Item Name</th>
-                        <th width="15%">Quantity</th>
-                        <th width="15%">Sale Price</th>
-                        <th width="15%">Disc</th>
-                        <th width="15%">Tax</th>
-                        <th width="15%">Total</th>
-                        <th width="5%"><a href ng:click="clearCart()" title="Clear All"><i class="fa fa-trash-o fa-1x" style="color:red;"></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr ng:repeat="item in invoice.items" ng-init="subForm='cellForm'+$index">
-
-                        <td>
-
-                            <input type="text" ng:model="item.name" class="form-control" readonly="" />
-                        </td>
-
-                        <!-- IF SERVICE PRODUCT THEN NO MAX QTY FILED-->
-                        <td ng-form="cellForm" ng-if="item.service || register_mode == 'return'">
-
-                            <input type="number" name="quantity" ng:model="item.quantity" min="0" max="" required="" class="form-control" autocomplete="off" />
-                            <div ng-show="cellForm.$dirty && cellForm.$invalid">
-                                <small class="has-error" ng-show="cellForm.$error.required" style="color:red">Required!</small>
-                                <small class="has-error" ng-show="cellForm.$error.number" style="color:red">Not valid number!</small>
-                                <small class="has-error" ng-show="cellForm.$error.max" style="color:red">Exceed Stock!</small>
-                            </div>
-
-                        </td>
-
-                        <!-- IF NOT SERVICE PRODUCT THEN INCLUDE MAX QTY FILED-->
-                        <td ng-form="cellForm" ng-if="!item.service && register_mode !== 'return'">
-
-                            <input type="number" name="quantity" ng:model="item.quantity" min="0" max="{{item.item_qty}}" required="" class="form-control" autocomplete="off" />
-                            <div ng-show="cellForm.$dirty && cellForm.$invalid">
-                                <small class="has-error" ng-show="cellForm.$error.required" style="color:red">Required!</small>
-                                <small class="has-error" ng-show="cellForm.$error.number" style="color:red">Not valid number!</small>
-                                <small class="has-error" ng-show="cellForm.$error.max" style="color:red">Exceed Stock!</small>
-                            </div>
-
-                        </td>
-                        <!--<td><input type="text" ng:model="item.unit" class="form-control" autocomplete="off" /></td>-->
-
-                        <input type="hidden" ng:model="item.cost_price" min="0" class="form-control" autocomplete="off" />
-                        <td><input type="number" ng:model="item.unit_price" min="0" class="form-control" autocomplete="off" /></td>
-                        <td><input type="number" ng:model="item.discount_value" min="0" class="form-control" autocomplete="off" /></td>
-                        <td>
-                            <small>{{(((item.quantity * item.unit_price)- item.discount_value)*item.tax_rate/100)}}</small>
-                            <br /><span style="font-size: 8px;">{{item.tax_name}}</span>
-                        </td>
-                        <td>{{(((item.quantity * item.unit_price) - item.discount_value) + (((item.quantity * item.unit_price)- item.discount_value)*item.tax_rate/100)) | currency:home_currency_symbol}}</td>
-                        <td>
-                            <a href ng:click="removeItem($index)"><i class="fa fa-trash-o fa-1x" style="color:red;"></i></a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td colspan="4" rowspan="5" ng-init="description=''"><textarea ng:model="description" rows="6" class="form-control" placeholder="Comments" cols="5"></textarea> </td>
-                        <td><small>
-                                <!-- Sub Total: -->
-                            </small></td>
-                        <td class="">
-                            <!-- {{total() | currency:home_currency_symbol}} -->
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><small>Total Disc:</small></td>
-                        <td ng-init="discount=0">
-                            <!--<input type="number" ng:model="discount" min="0" class="form-control" autocomplete="off" /> -->
-                            {{Tdiscount_value() | currency:home_currency_symbol}}
-
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><small>Total Tax:</small></td>
-                        <td>
-                            {{total_tax() | currency:home_currency_symbol}}
-                            <input type="hidden" name="total_tax" ng:model="total_tax" ng-value="{{total_tax()}}" />
-                        </td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td><small>Advance:</small></td>
-                        <td ng-init="advance=0"><input type="number" ng:model="advance" class="form-control" autocomplete="off" /></td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td><small>Net:</small><br />
-
-                        </td>
-                        <td>
-                            <!-- Total Value discount
-                    {{(total()-discount) | currency:home_currency_symbol}} -->
-
-                            <!-- Total discount percent -->
-                            {{(total()-Tdiscount_value()-advance) | currency:home_currency_symbol}}
-
-                        </td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="6"><button type="submit" ng-click="saleProducts();" ng-disabled="cart_loader && SaleForm.$dirty && SaleForm.$invalid" class="btn btn-success">Save</button>
-                            <img src="<?php echo base_url('images/wait.gif'); ?>" ng-show="cart_loader" width="30" height="30" title="Loading" alt="Loading" />
-                        </td>
-                        <td></td>
-                    </tr>
 
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
+                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
+                        </th>
+                        <th class="text-right">Sub Total</th>
+                        <th class="text-right" id="sub_total">0.00</th>
+                        <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="6">Discount</th>
+                        <th class="text-right" id="total_discount">0.00</th>
+                        <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="6">Tax</th>
+                        <th class="text-right" id="total_tax">0.00</th>
+                        <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th colspan="5"><?php echo form_submit('', 'Save', 'class="btn btn-success"'); ?></th>
+                        <th class="text-right" >Grand Total</th>
+                        <th class="text-right lead" id="net_total">0.00</th>
+                        <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
+                    </tr>
+                </tfoot>
             </table>
 
-            </form>
-        </div>
-    </div>
+            <p></p>
 
-</div><!-- /. ng-controller = 'product ctrl' -->
+        </div>
+        
+    </div><!-- close main_div here -->
+</form>
+
+<script>
+    $(document).ready(function() {
+
+        const site_url = '<?php echo site_url($langs); ?>/';
+        const path = '<?php echo base_url(); ?>';
+        const curr_symbol = "<?php echo $_SESSION["home_currency_symbol"]; ?>";
+        const curr_code = "<?php echo $_SESSION["home_currency_code"]; ?>";
+
+        /////////////ADD NEW LINES
+        let counter = 0; //counter is used for id of the debit / credit textbox to enable and disable 8 textboxs already used so start from 8 here
+        $('.add_new').on('click', function(event) {
+            event.preventDefault();
+            counter++;
+            productDDL(counter);
+
+            var div = '<tr><td>' + counter + '</td>' +
+                '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
+                '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
+                '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" autocomplete="off">' +
+                '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]">'+
+                '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>'+
+                '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>'+
+                '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>'+
+                '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
+                '<td class="text-right tax" id="tax_' + counter + '"></td>' +
+                '<td class="text-right total" id="total_' + counter + '"></td>' +
+                '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
+            $('.create_table').append(div);
+
+            //SELECT 2 DROPDOWN LIST   
+            $('#productid_' + counter).select2();
+            ///
+
+            //GET TOTAL WHEN QTY CHANGE
+            $(".qty").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($(this).val());
+                var price = parseFloat($('#unitprice_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+            //GET TOTAL WHEN UNIT PRICE CHANGE
+            $(".unit_price").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var price = parseFloat($(this).val());
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+            //GET TOTAL WHEN DISCOUNT CHANGE
+            $(".discount").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var price = parseFloat($('#unitprice_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+
+            ////// LOAD COST PRICE, UNIT PRICE, TAX WHEN PRODUCT DROPDOWN CHANGE
+            $('.product_id').on('change', function(event) {
+                // event.preventDefault();
+                var curId = this.id.split("_")[1];
+                var productid = $(this).val();
+                var qty = parseFloat($('#qty_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var tax_rate = 0;
+                var unit_price = 0;
+
+                $.ajax({
+                    url: site_url + "pos/Items/getSelected_items/" + productid,
+                    type: 'GET',
+                    dataType: 'json', // added data type
+                    success: function(data) {
+
+                        tax_rate = (parseFloat(data[0].tax_rate) ? parseFloat(data[0].tax_rate) : 0);
+                        unit_price = parseFloat(data[0].unit_price);
+                        tax = unit_price * tax_rate / 100;
+                        $('#unitprice_' + curId).val(data[0].unit_price);
+                        $('#costprice_' + curId).val(data[0].cost_price);
+                        $('#itemtype_' + curId).val(data[0].item_type);
+                        $('#taxid_' + curId).val(data[0].tax_id);
+                        $('#taxrate_' + curId).val(data[0].tax_rate);
+                        $('#tax_' + curId).text(tax.toFixed(2));
+
+                        var total = (qty * unit_price ? qty * unit_price - discount : 0).toFixed(2);
+                        $('#total_' + curId).text(total);
+
+                        //console.log((tax ? tax : 0));
+                        calc_gtotal();
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(thrownError);
+                    }
+                });
+
+
+            });
+
+        });
+        $(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
+
+        /////////////////////////////////
+        $("#sale_table").on("click", "#removeItem", function() {
+            $(this).closest("tr").remove();
+            calc_gtotal();
+        });
+
+        ////////// CLEAR ALL TABLE
+        $(".clear_all").on("click", function() {
+            clearall();
+        });
+        
+        function clearall()
+        {
+            counter = 0;
+            calc_gtotal();
+            $('#sub_total').html(parseFloat('0').toFixed(2));
+            $('#total_discount').html(parseFloat('0').toFixed(2));
+            $('#total_tax').html(parseFloat('0').toFixed(2));
+            $('#net_total').html(parseFloat('0').toFixed(2));
+            $("#sale_table > tbody").empty();
+            
+            $('#customer_id').val('').trigger('change');
+            $(".add_new").trigger("click");//add new line
+        }
+
+        ///////////////////
+        // productDDL();
+        ////////////////////////
+        //GET product DROPDOWN LIST
+        function productDDL(index = 0) {
+
+            let product_ddl = '';
+            $.ajax({
+                url: site_url + "pos/Items/productDDL",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    product_ddl += '<option value="0">Select Product</option>';
+
+                    $.each(data, function(index, value) {
+
+                        product_ddl += '<option value="' + value.id + '">' + value.name + '</option>';
+
+                    });
+
+                    $('#productid_' + index).html(product_ddl);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ///////////////////
+        /////////////ADD NEW LINES END HERE
+
+        function calc_gtotal() {
+            var total = 0;
+            var total_discount = 0;
+            var total_tax = 0;
+            var net_total = 0;
+
+            $('.total').each(function() {
+                total += parseFloat($(this).text());
+            });
+
+            $('.tax').each(function() {
+                total_tax += parseFloat($(this).text());
+            });
+            $('.discount').each(function() {
+                total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
+            });
+
+            net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
+
+            //ASSIGN VALUE TO TEXTBOXES
+            $('#sub_total_txt').val(parseFloat(total));
+            $('#total_discount_txt').val(parseFloat(total_discount));
+            $('#total_tax_txt').val(parseFloat(total_tax));
+            $('#net_total_txt').val(parseFloat(net_total));
+            /////////////
+
+            $('#top_net_total').html('Grand Total:<h2 style="margin:0">'+parseFloat(net_total).toLocaleString('en-US', 2)+'</h2>');
+            $('#net_total').text(parseFloat(net_total).toLocaleString('en-US', 2));
+            $('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
+            $('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
+            $('#total_tax').text(parseFloat(total_tax).toLocaleString('en-US'));
+            //console.log(total_discount);
+        }
+
+        $("form").on("submit", function(e) {
+            var formValues = $(this).serialize();
+            //console.log(formValues);
+            // alert(formValues);
+            // return false;
+           
+            var confirmSale = confirm('Are you absolutely sure you want to sale?');
+           
+            if (confirmSale) {
+                
+                if(formValues.length > 0)
+                {
+                   $.ajax({
+                        type: "POST",
+                        url: site_url + "pos/C_estimate/saleProducts",
+                        data: formValues,
+                        success: function(data) {
+                            if(data == '1')
+                            {
+                                toastr.success("Estimate saved successfully",'Success');
+                                
+                            }
+                            clearall();
+                            console.log(data);
+                        }
+                    });
+                }
+            }
+            e.preventDefault();
+        });
+
+    });
+</script>

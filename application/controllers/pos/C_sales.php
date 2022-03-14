@@ -122,7 +122,6 @@ class C_sales extends MY_Controller
     public function saleProducts()
     {
         $total_amount = 0;
-        $total_cost_amount = 0;
         $discount = 0;
         $unit_price = 0;
         $cost_price = 0;
@@ -144,6 +143,7 @@ class C_sales extends MY_Controller
                 $sale_date = $this->input->post("sale_date");
                 $customer_id = $this->input->post("customer_id");
                 $emp_id = ''; //$this->input->post("emp_id");
+                $unit_id = '';//$this->input->post("unit_id");
                 $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
@@ -200,7 +200,7 @@ class C_sales extends MY_Controller
                             'quantity_sold' => ($register_mode == 'sale' ? $qty : -$qty), //if sales return then insert amount in negative
                             'item_cost_price' => ($register_mode == 'sale' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
                             'item_unit_price' => ($register_mode == 'sale' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
-                            'unit_id' => '',
+                            'unit_id' => $unit_id,
                             'company_id' => $company_id,
                             //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
                             'discount_value' => $this->input->post('discount')[$key],

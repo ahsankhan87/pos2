@@ -83,7 +83,10 @@ class M_receivings extends CI_Model{
     
     function getMAXPurchaseInvoiceNo()
     {   
-        $this->db->order_by('receiving_id','desc');
+        // $this->db->order_by('receiving_id','desc');
+        // $this->db->where('company_id', $_SESSION['company_id']);
+        $this->db->order_by('CAST(SUBSTR(invoice_no,2) AS UNSIGNED) DESC');
+        $this->db->select('SUBSTR(invoice_no,2) as invoice_no');
         $this->db->where('company_id', $_SESSION['company_id']);
         $query = $this->db->get('pos_receivings',1);
         return $query->row()->invoice_no;
