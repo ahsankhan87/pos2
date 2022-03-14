@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2022 at 06:33 AM
+-- Generation Time: Mar 14, 2022 at 07:48 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pos_db`
+-- Database: `pos_2_db`
 --
 
 -- --------------------------------------------------------
@@ -164,7 +164,7 @@ INSERT INTO `acc_groups` (`id`, `parent_code`, `account_type_id`, `account_code`
 (248, 10, 1, '1001', 'Cash on Hand', 'ہاتھ پر نقد', 'النقد في الصندوق', 'cash_hand', '0.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
 (249, 10, 1, '1002', 'Cash at Bank', 'بینک پر کیش', 'النقدية في البنك', 'cashatbank', '0.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
 (250, 10, 1, '1003', 'Accounts Receivable', 'وصولی اکاؤنٹس', 'الحسابات المستحقة', 'accounts_receivable', '0.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
-(251, 10, 1, '1004', 'Inventory', 'انوینٹری', 'المخزون', 'inventory', '0.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
+(251, 10, 1, '1004', 'Inventory', 'انوینٹری', 'المخزون', 'inventory', '125600.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
 (252, 20, 3, '2000', 'Accounts Payable', 'واجب الادا کھاتہ', 'حسابات قابلة للدفع', 'accounts_payable', '0.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
 (253, 30, 2, '3000', 'Capital', 'کیپٹل', 'عاصمة', 'capital', '0.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
 (254, 30, 2, '3001', 'Retained Earnings', 'برقرار رکھا کمائی', 'الأرباح المحتجزة', 'retained_earnings', '0.00', '0.00', 'detail', '3', 21, '2017-10-20 15:10:42'),
@@ -527,25 +527,6 @@ CREATE TABLE `logs` (
   `company_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`id`, `date`, `module`, `host_ip`, `user`, `url`, `user_agent`, `message_title`, `message_desc`, `company_id`) VALUES
-(1, '2022-01-07 11:25:54', 'Admin', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', 'admin User logged in by admin', 21),
-(2, '2022-01-07 11:26:18', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', 'Cash at Bank group updated by admin', 21),
-(3, '2022-01-07 11:26:29', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', 'Inventory group updated by admin', 21),
-(4, '2022-01-07 11:27:02', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', ' Sales Report Retrieved by admin', 21),
-(5, '2022-01-07 11:27:05', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', ' Purchase Report Retrieved by admin', 21),
-(6, '2022-01-07 11:27:07', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', ' Trail Balance Report Retrieved by admin', 21),
-(7, '2022-01-07 11:27:10', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', ' Pofit & Loss Report Retrieved by admin', 21),
-(8, '2022-01-07 11:27:12', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', ' Balance Sheet Retrieved by admin', 21),
-(9, '2022-01-07 11:27:14', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', ' Annual Report Retrieved by admin', 21),
-(10, '2022-01-07 11:28:14', 'admin', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', 'user id 13 User Deleted by admin', 21),
-(11, '2022-01-07 11:28:18', 'admin', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', 'user id 22 User Deleted by admin', 21),
-(12, '2022-01-07 11:28:23', 'admin', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', 'user id 23 User Deleted by admin', 21),
-(13, '2022-01-07 11:28:28', 'Accounts', '::1', 'admin', '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.11', '', ' Fiscal year retrieved by admin', 21);
-
 -- --------------------------------------------------------
 
 --
@@ -697,12 +678,12 @@ CREATE TABLE `modules` (
 --
 
 INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES
-(1, 0, 'Dashboard', 'Dashboard', 'ڈیش بورڈ', 'لوحة القيادة', 'icon-home', '#', '', 'active'),
-(2, 0, 'pos', 'Invoices', 'POS', 'POS', 'fa fa-list', '#', '', 'active'),
-(3, 0, 'accounts', 'Accounts', 'اکاؤنٹس', 'حسابات', 'fa fa-th-large', '#', '', 'active'),
-(4, 0, 'trans', 'Expenses', 'لین دین', 'الحركه', 'fa fa-exchange', '#', '', 'active'),
-(5, 0, 'reports', 'Reports', 'رپورٹیں', 'تقارير', 'fa fa-bar-chart-o fa', '#', '', 'active'),
-(6, 0, 'settings', 'Settings', 'ترتیبات', 'الإعدادات', 'fa fa-bar-chart-o fa', '#', '', 'inactive'),
+(1, 0, 'Dashboard', 'Dashboard', 'ڈیش بورڈ', 'لوحة القيادة', 'icon-home', '#', '10', 'active'),
+(2, 0, 'pos', 'Invoices', 'POS', 'POS', 'fa fa-list', '#', '10', 'active'),
+(3, 0, 'accounts', 'Accounts', 'اکاؤنٹس', 'حسابات', 'fa fa-th-large', '#', '20', 'active'),
+(4, 0, 'trans', 'Expenses', 'لین دین', 'الحركه', 'fa fa-exchange', '#', '15', 'active'),
+(5, 0, 'reports', 'Reports', 'رپورٹیں', 'تقارير', 'fa fa-bar-chart-o fa', '#', '25', 'active'),
+(6, 0, 'settings', 'Settings', 'ترتیبات', 'الإعدادات', 'fa fa-bar-chart-o fa', '#', '30', 'inactive'),
 (7, 2, 'Categories', 'Categories', 'اقسام', 'التصنيفات', 'fa fa-table fa-fw', 'Categories', '10', 'inactive'),
 (8, 4, 'Suppliers', 'Vendors', 'دکاندار', 'الموردين', 'fa fa-table fa-fw', 'Suppliers', '20', 'active'),
 (9, 2, 'Items', 'Products & Services', 'مصنوعات اور خدمات', 'المنتجات والخدمات', 'fa fa-files-o fa-fw', 'Items', '40', 'active'),
@@ -733,7 +714,7 @@ INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar
 (34, 33, 'C_workcenters', 'Work Centers', 'کام کے مراکز', 'مراكز العمل', '', 'C_workcenters', '10', 'active'),
 (35, 33, 'C_workorders', 'Work Orders', 'کام کے احکامات', 'طلبات العمل', '', 'C_workorders', '20', 'active'),
 (36, 33, 'C_billofmaterial', 'Bill of Material', 'اشیا کا حساب', 'فاتورة المواد', '', 'C_billofmaterial', '15', 'active'),
-(37, 2, 'C_estimate', 'Estimates / Quotation', 'فروخت', 'اقتباس', 'fa fa-files-o fa-fw', 'C_estimate/allestimate', '25', 'active'),
+(37, 2, 'C_estimate', 'Estimates', 'فروخت', 'اقتباس', 'fa fa-files-o fa-fw', 'C_estimate/allestimate', '25', 'active'),
 (38, 4, 'C_purchaseOrders', 'Purchase Orders', 'خریداری', 'أمر شراء', 'fa fa-edit fa-fw', 'C_purchaseOrders/allPurchaseorders', '10', 'active'),
 (39, 4, 'C_sales', 'Sales v2', 'فروخت v2', 'مبيعات v2', 'fa fa-files-o fa-fw', 'C_sales/allSalesv2', '21', 'inactive');
 
@@ -761,15 +742,6 @@ CREATE TABLE `pos_banking` (
   `isBank` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `pos_banking`
---
-
-INSERT INTO `pos_banking` (`id`, `bank_acc_code`, `cash_acc_code`, `bank_account_no`, `bank_name`, `acc_holder_name`, `bank_branch`, `creation_on`, `status`, `company_id`, `op_balance_dr`, `op_balance_cr`, `exchange_rate`, `currency_id`, `isBank`) VALUES
-(1, '1002', '1001', '', 'Meezan bank', '', '', '2019-03-24 18:38:44', 1, 21, '50.6700', '0.0000', NULL, NULL, 1),
-(2, '1002', '1001', '', 'MCB bank', '', '', '2020-09-02 18:42:12', 1, 21, '0.0000', '0.0000', NULL, NULL, 1),
-(3, '1002', '1001', '', 'MCB bank', '', '', '2020-09-30 18:10:53', 1, 21, '0.0000', '0.0000', NULL, NULL, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -792,23 +764,6 @@ CREATE TABLE `pos_bank_payments` (
   `entry_id` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `pos_bank_payments`
---
-
-INSERT INTO `pos_bank_payments` (`id`, `invoice_no`, `bank_id`, `account_code`, `dueTo_acc_code`, `ref_account_id`, `debit`, `credit`, `narration`, `creation_date`, `date`, `company_id`, `entry_id`) VALUES
-(1, 'JV1', 2705, '1003', '1003', 0, 0.0000, 2000.0000, '', '2020-06-01 19:30:58', '2020-06-01', 21, 97),
-(2, 'JV1', 1, '1002', '1002', 0, 2000.0000, 0.0000, '', '2020-06-01 19:30:58', '2020-06-01', 21, 97),
-(3, 'W1', 1, '1002', '1001', 0, 0.0000, 500.0000, 'withdrawl', '2020-06-03 16:52:33', '2020-06-03', 21, 0),
-(4, 'C11', 1, '1002', '1003', 0, 600.0000, 0.0000, '', '2020-06-03 16:54:58', '2020-06-03', 21, 126),
-(5, 'C12', 1, '1002', '1003', 0, 400.0000, 0.0000, '', '2020-06-03 16:55:31', '2020-06-02', 21, 127),
-(6, 'C13', 1, '1002', '1003', 0, 1000.0000, 0.0000, '', '2020-06-03 16:55:57', '2020-06-03', 21, 128),
-(7, 'C14', 1, '1002', '1003', 0, 5000.0000, 0.0000, '', '2020-06-03 16:58:54', '2020-05-31', 21, 129),
-(8, 'W15', 2, '1002', '1001', 0, 0.0000, 5000.0000, '', '2020-09-02 18:42:22', '2020-09-02', 21, 0),
-(9, 'P23', 1, '1002', '1002', 0, 0.0000, 444.0000, ' ', '2020-11-01 13:59:00', '2020-11-01', 21, 986),
-(10, 'P24', 3, '2000', '2000', 0, 0.0000, 500.0000, ' ', '2020-11-01 14:12:26', '2020-11-01', 21, 988),
-(11, 'P24', 3, '2000', '2000', 0, 0.0000, 1000.0000, ' ', '2020-11-01 14:12:26', '2020-11-01', 21, 990);
-
 -- --------------------------------------------------------
 
 --
@@ -824,15 +779,6 @@ CREATE TABLE `pos_categories` (
   `status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `parent_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `pos_categories`
---
-
-INSERT INTO `pos_categories` (`id`, `company_id`, `name`, `short_desc`, `long_desc`, `status`, `parent_id`) VALUES
-(1, 21, 'Cat 1', '', '    ', 'active', 0),
-(2, 21, 'Cat 2', '', '    ', 'active', 0),
-(3, 21, 'Apple', '', '    ', 'active', 0);
 
 -- --------------------------------------------------------
 
@@ -1041,7 +987,7 @@ CREATE TABLE `pos_customers` (
   `passport_expiry_date` date DEFAULT NULL,
   `father_name` text COLLATE utf8_unicode_ci,
   `emp_id` int(11) NOT NULL,
-  `vat_no` varchar(100) NULL
+  `vat_no` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1147,13 +1093,6 @@ CREATE TABLE `pos_emp_area` (
   `status` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `company_id` int(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `pos_emp_area`
---
-
-INSERT INTO `pos_emp_area` (`id`, `name`, `description`, `created_on`, `status`, `company_id`) VALUES
-(1, 'kohat road', 'asdf', '2018-09-29 17:04:41', 'active', 21);
 
 -- --------------------------------------------------------
 
@@ -1384,8 +1323,8 @@ CREATE TABLE `pos_estimate` (
   `currency_id` int(10) NOT NULL DEFAULT '0',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `supplier_id` int(20) DEFAULT '0',
-  `delivery_date` datetime NOT NULL,
-  `advance` decimal(10,0) NOT NULL
+  `is_taxable` tinyint(1) NOT NULL,
+  `delivery_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1406,16 +1345,13 @@ CREATE TABLE `pos_estimate_items` (
   `item_cost_price` decimal(15,4) NOT NULL,
   `item_unit_price` decimal(15,4) NOT NULL,
   `discount_percent` int(11) NOT NULL DEFAULT '0',
-  `size_id` int(255) NOT NULL,
-  `color_id` int(255) NOT NULL,
-  `service` tinyint(1) NOT NULL,
   `unit_id` int(20) DEFAULT NULL,
   `currency_id` int(10) DEFAULT NULL,
-  `exchange_rate` decimal(10,5) DEFAULT NULL,
   `company_id` int(20) NOT NULL,
   `discount_value` decimal(10,4) DEFAULT NULL,
   `tax_id` int(20) NOT NULL DEFAULT '0',
-  `tax_rate` int(20) NOT NULL DEFAULT '0'
+  `tax_rate` int(20) NOT NULL DEFAULT '0',
+  `inventory_acc_code` varchar(20) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1472,50 +1408,16 @@ CREATE TABLE `pos_inventory` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pos_items`
---
-
-CREATE TABLE `pos_items` (
-  `item_id` int(10) NOT NULL,
-  `company_id` int(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `category_id` int(255) NOT NULL,
-  `item_type` varchar(100) NOT NULL,
-  `brand` varchar(100) NOT NULL,
-  `item_number` varchar(255) DEFAULT NULL,
-  `deleted` int(1) NOT NULL DEFAULT '0',
-  `sku` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `service` tinyint(1) NOT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pos_items_company`
---
-
-CREATE TABLE `pos_items_company` (
-  `id` int(255) NOT NULL,
-  `item_id` int(255) NOT NULL,
-  `company_id` int(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pos_items_detail`
 --
 
 CREATE TABLE `pos_items_detail` (
   `id` int(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `barcode` varchar(256) NOT NULL,
-  `item_id` int(255) NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
   `item_code` varchar(20) DEFAULT NULL,
   `item_type` varchar(50) NOT NULL,
-  `size_id` int(255) NOT NULL DEFAULT '0',
-  `color_id` int(255) NOT NULL DEFAULT '0',
   `quantity` double(15,2) NOT NULL,
   `avg_cost` decimal(20,4) NOT NULL,
   `cost_price` decimal(20,4) NOT NULL,
@@ -1523,11 +1425,16 @@ CREATE TABLE `pos_items_detail` (
   `tax_id` int(20) DEFAULT '0',
   `re_stock_level` double(20,2) NOT NULL,
   `unit_id` int(20) NOT NULL,
-  `location_id` int(100) NOT NULL,
+  `location_code` varchar(100) DEFAULT NULL,
   `picture` varchar(50) DEFAULT NULL,
   `inventory_acc_code` varchar(20) NOT NULL,
   `deleted` tinyint(1) DEFAULT '0',
-  `wip_acc_code` varchar(20) NOT NULL
+  `wip_acc_code` varchar(20) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `description` text,
+  `date_created` datetime DEFAULT NULL,
+  `date_updated` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1540,7 +1447,10 @@ CREATE TABLE `pos_locations` (
   `id` int(100) NOT NULL,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   `status` enum('active','inactive') COLLATE utf8_unicode_ci NOT NULL,
-  `company_id` int(100) NOT NULL
+  `company_id` int(100) NOT NULL,
+  `code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1642,7 +1552,7 @@ CREATE TABLE `pos_receivings` (
   `receiving_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `company_id` int(255) NOT NULL,
   `supplier_id` int(10) DEFAULT NULL COMMENT 'ledger_id',
-  `supplier_invoice_no` varchar(200) NOT NULL,
+  `supplier_invoice_no` varchar(200) DEFAULT NULL,
   `employee_id` int(10) NOT NULL DEFAULT '0',
   `user_id` int(100) NOT NULL,
   `comment` text NOT NULL,
@@ -1680,6 +1590,7 @@ CREATE TABLE `pos_receivings_items` (
   `item_cost_price` decimal(15,4) NOT NULL,
   `item_unit_price` double(15,4) NOT NULL,
   `discount_percent` int(11) NOT NULL DEFAULT '0',
+  `discount_value` decimal(18,0) DEFAULT NULL,
   `size_id` int(255) NOT NULL,
   `color_id` int(255) NOT NULL,
   `unit_id` int(20) DEFAULT NULL,
@@ -1768,12 +1679,8 @@ CREATE TABLE `pos_sales_items` (
   `item_cost_price` decimal(15,4) NOT NULL,
   `item_unit_price` decimal(15,4) NOT NULL,
   `discount_percent` int(11) NOT NULL DEFAULT '0',
-  `size_id` int(255) NOT NULL,
-  `color_id` int(255) NOT NULL,
-  `service` tinyint(1) NOT NULL,
   `unit_id` int(20) DEFAULT NULL,
   `currency_id` int(10) DEFAULT NULL,
-  `exchange_rate` decimal(10,5) DEFAULT NULL,
   `company_id` int(20) NOT NULL,
   `discount_value` decimal(10,4) DEFAULT NULL,
   `tax_id` int(20) NOT NULL DEFAULT '0',
@@ -1896,14 +1803,6 @@ CREATE TABLE `pos_units` (
 -- (See below for the actual view)
 --
 CREATE TABLE `sale_report` (
-`category` varchar(255)
-,`item_id` int(10)
-,`name` varchar(255)
-,`company_id` int(255)
-,`invoice_no` varchar(20)
-,`quantity_sold` decimal(15,2)
-,`item_cost_price` decimal(15,4)
-,`item_unit_price` decimal(15,4)
 );
 
 -- --------------------------------------------------------
@@ -1937,7 +1836,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `company_id`, `created_on`, `
 --
 DROP TABLE IF EXISTS `sale_report`;
 
-CREATE VIEW `sale_report`  AS  select `cat`.`name` AS `category`,`i`.`item_id` AS `item_id`,`i`.`name` AS `name`,`i`.`company_id` AS `company_id`,`st`.`invoice_no` AS `invoice_no`,`st`.`quantity_sold` AS `quantity_sold`,`st`.`item_cost_price` AS `item_cost_price`,`st`.`item_unit_price` AS `item_unit_price` from (`pos_categories` `cat` left join (`pos_items` `i` left join `pos_sales_items` `st` on((`i`.`item_id` = `st`.`item_id`))) on((`cat`.`id` = `i`.`category_id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sale_report`  AS  select `cat`.`name` AS `category`,`i`.`item_id` AS `item_id`,`i`.`name` AS `name`,`i`.`company_id` AS `company_id`,`st`.`invoice_no` AS `invoice_no`,`st`.`quantity_sold` AS `quantity_sold`,`st`.`item_cost_price` AS `item_cost_price`,`st`.`item_unit_price` AS `item_unit_price` from (`pos_categories` `cat` left join (`pos_items` `i` left join `pos_sales_items` `st` on((`i`.`item_id` = `st`.`item_id`))) on((`cat`.`id` = `i`.`category_id`))) ;
 
 --
 -- Indexes for dumped tables
@@ -2194,33 +2093,13 @@ ALTER TABLE `pos_inventory`
   ADD KEY `invoice_no` (`invoice_no`);
 
 --
--- Indexes for table `pos_items`
---
-ALTER TABLE `pos_items`
-  ADD PRIMARY KEY (`item_id`),
-  ADD KEY `company_id` (`company_id`),
-  ADD KEY `company_id_2` (`company_id`),
-  ADD KEY `name` (`name`),
-  ADD KEY `sku` (`sku`);
-
---
--- Indexes for table `pos_items_company`
---
-ALTER TABLE `pos_items_company`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `item_id` (`item_id`),
-  ADD KEY `company_id` (`company_id`);
-
---
 -- Indexes for table `pos_items_detail`
 --
 ALTER TABLE `pos_items_detail`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `item_id` (`item_id`),
   ADD KEY `cost_price` (`cost_price`,`unit_price`),
   ADD KEY `avg_cost` (`avg_cost`),
-  ADD KEY `item_code` (`item_code`),
-  ADD KEY `size_id` (`size_id`);
+  ADD KEY `item_code` (`item_code`);
 
 --
 -- Indexes for table `pos_locations`
@@ -2393,7 +2272,7 @@ ALTER TABLE `companies`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `mfg_bom`
 --
@@ -2428,22 +2307,22 @@ ALTER TABLE `mfg_wo_requirements`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT for table `pos_banking`
 --
 ALTER TABLE `pos_banking`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pos_bank_payments`
 --
 ALTER TABLE `pos_bank_payments`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pos_categories`
 --
 ALTER TABLE `pos_categories`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pos_colors`
 --
@@ -2483,7 +2362,7 @@ ALTER TABLE `pos_employee_payments`
 -- AUTO_INCREMENT for table `pos_emp_area`
 --
 ALTER TABLE `pos_emp_area`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pos_emp_modules`
 --
@@ -2509,16 +2388,6 @@ ALTER TABLE `pos_eventcalendar`
 --
 ALTER TABLE `pos_inventory`
   MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `pos_items`
---
-ALTER TABLE `pos_items`
-  MODIFY `item_id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `pos_items_company`
---
-ALTER TABLE `pos_items_company`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pos_items_detail`
 --
@@ -2603,7 +2472,7 @@ ALTER TABLE `pos_units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
