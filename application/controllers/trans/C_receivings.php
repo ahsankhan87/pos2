@@ -377,10 +377,7 @@ class C_receivings extends MY_Controller
 
                 //////
 
-                $this->db->trans_complete();
-
-
-                echo '{"invoice_no":"' . $new_invoice_no . '"}'; //redirect to receipt page using this $new_invoice_no 
+                // echo '{"invoice_no":"' . $new_invoice_no . '"}'; //redirect to receipt page using this $new_invoice_no 
 
 
                 ////////////////////////////
@@ -388,6 +385,7 @@ class C_receivings extends MY_Controller
 
                 // Posting type  end if 
             } //posting type if
+            $this->db->trans_complete();
             echo '1';
         } //end post if
     }

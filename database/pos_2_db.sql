@@ -1798,13 +1798,6 @@ CREATE TABLE `pos_units` (
 
 -- --------------------------------------------------------
 
---
--- Stand-in structure for view `sale_report`
--- (See below for the actual view)
---
-CREATE TABLE `sale_report` (
-);
-
 -- --------------------------------------------------------
 
 --

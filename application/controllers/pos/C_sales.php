@@ -185,7 +185,7 @@ class C_sales extends MY_Controller
                 ////////
 
                 foreach ($this->input->post('product_id') as $key => $value) {
-
+                    
                     if ($value != 0) {
                         $item_id  = htmlspecialchars(trim($value));
                         $qty = $this->input->post('qty')[$key];
@@ -419,12 +419,12 @@ class C_sales extends MY_Controller
                     }
                 }
 
-                $this->db->trans_complete();
-
+                
                 /////////////////////////////
                 //      ACCOUNTS CLOSED ..///
                 /////////////////////////////
             } //posting type if
+            $this->db->trans_complete();
             echo '1';
         } //end post if
     }
