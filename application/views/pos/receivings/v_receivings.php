@@ -210,7 +210,7 @@
             $('#total_tax').html(parseFloat('0').toFixed(2));
             $('#net_total').html(parseFloat('0').toFixed(2));
             $("#sale_table > tbody").empty();
-            
+            $('#top_net_total').html('');
             $('#supplier_id').val('').trigger('change');
             $(".add_new").trigger("click");//add new line
         }
