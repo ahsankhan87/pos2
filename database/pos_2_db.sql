@@ -679,7 +679,7 @@ CREATE TABLE `modules` (
 
 INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES
 (1, 0, 'Dashboard', 'Dashboard', 'ڈیش بورڈ', 'لوحة القيادة', 'icon-home', '#', '10', 'active'),
-(2, 0, 'pos', 'Invoices', 'POS', 'POS', 'fa fa-list', '#', '10', 'active'),
+(2, 0, 'pos', 'Sales', 'Sales', 'Sales', 'fa fa-list', '#', '10', 'active'),
 (3, 0, 'accounts', 'Accounts', 'اکاؤنٹس', 'حسابات', 'fa fa-th-large', '#', '20', 'active'),
 (4, 0, 'trans', 'Expenses', 'لین دین', 'الحركه', 'fa fa-exchange', '#', '15', 'active'),
 (5, 0, 'reports', 'Reports', 'رپورٹیں', 'تقارير', 'fa fa-bar-chart-o fa', '#', '25', 'active'),
@@ -687,12 +687,12 @@ INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar
 (7, 2, 'Categories', 'Categories', 'اقسام', 'التصنيفات', 'fa fa-table fa-fw', 'Categories', '10', 'inactive'),
 (8, 4, 'Suppliers', 'Vendors', 'دکاندار', 'الموردين', 'fa fa-table fa-fw', 'Suppliers', '20', 'active'),
 (9, 2, 'Items', 'Products & Services', 'مصنوعات اور خدمات', 'المنتجات والخدمات', 'fa fa-files-o fa-fw', 'Items', '40', 'active'),
-(10, 2, 'Colors', 'Colors', 'رنگ', 'الألوان', 'fa fa-files-o fa-fw', 'Colors', '50', 'inactive'),
 (11, 2, 'Sizes', 'Sizes', 'سائز', 'الأحجام', 'fa fa-edit fa-fw', 'Sizes', '60', 'inactive'),
 (12, 4, 'C_receivings', 'Purchases', 'خریداری', 'المشتريات', 'fa fa-edit fa-fw', 'C_receivings/allPurchases', '10', 'active'),
-(13, 2, 'C_sales', 'Sales', 'فروخت', 'مبيعات', 'fa fa-files-o fa-fw', 'C_sales/allSales', '20', 'active'),
+(12, 4, 'C_receivings', 'Bill', 'خریداری', 'المشتريات', 'fa fa-edit fa-fw', 'C_receivings/index/credit', '12', 'active'),
+(13, 2, 'C_sales', 'Sales Receipt', 'فروخت', 'مبيعات', 'fa fa-files-o fa-fw', 'C_sales/allSales', '20', 'active'),
 (14, 3, 'C_groups', 'Chart of Accounts', 'اکاؤنٹس کا چارٹ', 'جدول الحسابات', 'fa fa-files-o fa-fw', 'C_groups', '10', 'active'),
-(15, 3, 'C_ledgers', 'Ledgers', '', '', 'fa fa-files-o fa-fw', 'C_ledgers', '20', 'inactive'),
+(15, 3, 'C_sales', 'Invoices', '', '', 'fa fa-files-o fa-fw', 'C_sales//index/credit', '20', 'active'),
 (16, 3, 'C_entries', 'Journal Entries', 'جرنل اندراج', 'إدخالات دفتر اليومية', 'fa fa-files-o fa-fw', 'C_entries', '30', 'active'),
 (17, 5, 'C_salesreport', 'Sales Report', 'فروخت رپورٹ', 'تقرير المبيعات', 'fa fa-files-o fa-fw', 'C_salesreport', '10', 'active'),
 (18, 5, 'C_receivingsreport', 'Purchase Report', ' خریداری رپورٹ', 'تقرير الشراء', 'fa fa-files-o fa-fw', 'C_receivingsreport', '20', 'active'),
@@ -1824,16 +1824,6 @@ INSERT INTO `users` (`id`, `username`, `password`, `company_id`, `created_on`, `
 
 -- --------------------------------------------------------
 
---
--- Structure for view `sale_report`
---
-DROP TABLE IF EXISTS `sale_report`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sale_report`  AS  select `cat`.`name` AS `category`,`i`.`item_id` AS `item_id`,`i`.`name` AS `name`,`i`.`company_id` AS `company_id`,`st`.`invoice_no` AS `invoice_no`,`st`.`quantity_sold` AS `quantity_sold`,`st`.`item_cost_price` AS `item_cost_price`,`st`.`item_unit_price` AS `item_unit_price` from (`pos_categories` `cat` left join (`pos_items` `i` left join `pos_sales_items` `st` on((`i`.`item_id` = `st`.`item_id`))) on((`cat`.`id` = `i`.`category_id`))) ;
-
---
--- Indexes for dumped tables
---
 
 --
 -- Indexes for table `account_types`

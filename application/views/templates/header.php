@@ -89,7 +89,7 @@ var path = '<?php echo base_url(); ?>';</script>
 <?php ($url3 == "C_sales" || $url3=="C_receivings" || $url3=="C_estimate" || $url3=="C_purchaseOrders" ? $sidebar=" page-sidebar-fixed page-sidebar-closed" : $sidebar="");
       ($url1 == "ur" || $url1 == 'ar' ? $sidebar.=" page-sidebar-reversed" : $sidebar.="");  
  ?>
-<body class="page-header-fixed <?php echo $sidebar; ?> animated fadeIn"  style="">
+<body class="page-header-fixed <?php //echo $sidebar; ?> animated fadeIn"  style="">
 
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-fixed-top">
