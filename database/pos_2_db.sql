@@ -685,7 +685,7 @@ INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar
 (5, 0, 'reports', 'Reports', 'رپورٹیں', 'تقارير', 'fa fa-bar-chart-o fa', '#', '25', 'active'),
 (6, 0, 'settings', 'Settings', 'ترتیبات', 'الإعدادات', 'fa fa-bar-chart-o fa', '#', '30', 'inactive'),
 (7, 2, 'Categories', 'Categories', 'اقسام', 'التصنيفات', 'fa fa-table fa-fw', 'Categories', '10', 'inactive'),
-(8, 4, 'Suppliers', 'Vendors', 'دکاندار', 'الموردين', 'fa fa-table fa-fw', 'Suppliers', '20', 'active'),
+(8, 4, 'C_suppliers', 'Vendors', 'دکاندار', 'الموردين', 'fa fa-table fa-fw', 'C_suppliers', '20', 'active'),
 (9, 2, 'Items', 'Products & Services', 'مصنوعات اور خدمات', 'المنتجات والخدمات', 'fa fa-files-o fa-fw', 'Items', '40', 'active'),
 (11, 2, 'Sizes', 'Sizes', 'سائز', 'الأحجام', 'fa fa-edit fa-fw', 'Sizes', '60', 'inactive'),
 (12, 4, 'C_receivings', 'Purchases', 'خریداری', 'المشتريات', 'fa fa-edit fa-fw', 'C_receivings/allPurchases', '10', 'active'),

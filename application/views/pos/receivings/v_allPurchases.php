@@ -12,7 +12,7 @@
             echo '</div>';
         }
         ?>
-        <p>
+        <!-- <p>
         <div class="btn-group">
             <button type="button" class="btn btn-success"><?php echo lang('new') . ' ' . lang('transaction') ?></button>
             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
@@ -31,10 +31,10 @@
                 </li>
             </ul>
         </div>
-        <!-- /btn-group -->
-
-        </p>
-
+        
+        </p> -->
+        <?php echo anchor('trans/C_receivings/index/cash', 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); ?>
+        
 
         <div class="portlet">
             <div class="portlet-title">

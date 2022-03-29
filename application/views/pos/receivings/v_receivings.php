@@ -4,7 +4,9 @@
 
             <label class="control-label col-sm-2" for="">Select Supplier:</label>
             <div class="col-sm-4">
-                <?php echo form_dropdown('supplier_id', $supplierDDL, '', 'id="supplier_id" class="form-control select2me"'); ?>
+                <select name="supplier_id" id="supplier_id" class="form-control select2me"></select>
+                <!-- <?php echo form_dropdown('supplier_id', $supplierDDL, '', 'id="supplier_id" class="form-control select2me"'); ?> -->
+                <?php echo anchor('#', 'Add New <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#supplierModal"'); ?>
             </div>
 
             <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
@@ -78,6 +80,68 @@
         
     </div><!-- close main_div here -->
 </form>
+<!-- Modal -->
+<div class="modal fade" id="supplierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add new Suppleir</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="supplierForm" action="">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="Posting">Posting Type:</label>
+                        <div class="col-sm-9">
+                            <?php
+                            $salesPostingTypeDDL = $this->M_postingTypes->get_purchasePostingTypesDDL();
+                            echo form_dropdown('posting_type_id', $salesPostingTypeDDL, '', 'id="posting_type_id" class="form-control" required=""'); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email">Name:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="name" id="first_name" placeholder="Enter Name" required="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email">Store Name:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="store_name" id="store_name" placeholder="Enter Store Name" required="">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email">Email:</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="phone_no">Phone No:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Enter phone no">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="website">Website:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="website" id="website" placeholder="Enter website">
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -284,7 +348,7 @@
             //console.log(total_discount);
         }
 
-        $("form").on("submit", function(e) {
+        $("#sale_form").on("submit", function(e) {
             var formValues = $(this).serialize();
             console.log(formValues);
             // alert(formValues);
@@ -315,5 +379,68 @@
             e.preventDefault();
         });
 
+        ////
+        supplierDDL();
+        ////////////////////////
+        //GET supplier DROPDOWN LIST
+        function supplierDDL() {
+
+        let supplier_ddl = '';
+        $.ajax({
+            url: site_url + "trans/C_suppliers/get_activeSuppliers",
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function(data) {
+                console.log(data);
+                let i = 0;
+                supplier_ddl += '<option value="0">Select Supplier</option>';
+
+                $.each(data, function(index, value) {
+
+                    supplier_ddl += '<option value="' + value.id + '">' + value.name + '</option>';
+
+                });
+
+                $('#supplier_id').html(supplier_ddl);
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+        }
+        ///////////////////
+        $("#supplierForm").submit(function(event) {
+            // Stop form from submitting normally
+            event.preventDefault();
+
+            /* Serialize the submitted form control values to be sent to the web server with the request */
+            var formValues = $(this).serialize();
+
+            //console.log($('#item_id').val());
+
+            if ($('#posting_type_id').val() == 0) {
+                toastr.error("Please select posting_type_id", 'Error!');
+            } else if ($('#first_name').val() == 0) {
+                toastr.error("Please enter name", 'Error!');
+            } else {
+                // Send the form data using post
+                $.post(site_url + "trans/C_suppliers/create/", formValues, function(data) {
+                    // Display the returned data in browser
+                    //$("#result").html(data);
+                    toastr.success("Data saved successfully", 'Success');
+                    console.log(data);
+                    $('#supplierModal').modal('toggle');
+                    supplierDDL();
+                    // setTimeout(function() {
+                    //     location.reload();
+                    // }, 2000);
+
+                });
+            }
+        });
+        /////
     });
+
 </script>
