@@ -14,9 +14,9 @@ body, body {
   border-color: transparent;
 }
 /* logo page */
-.login {
-  /* background-color: #eef5f7 !important; */
-}
+/* .login {
+  background-color: #eef5f7 !important;
+} */
 
 .login .logo {
   margin: 0 auto;   
@@ -208,7 +208,7 @@ body, body {
   }
 
   .login .content {
-    padding1: 20px; 
+    /* padding: 20px;  */
     width: 280px;
   }
 
