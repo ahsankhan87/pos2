@@ -157,7 +157,7 @@
 					<?php echo lang('cashonhand'); ?>
 				</div>
 				<div class="numbers">
-				<?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($cash_hand,2); ?>
+				<?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round((double)$cash_hand,2); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-warning" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100">
