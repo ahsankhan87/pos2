@@ -31,9 +31,10 @@
 <body class="login">
 <!-- BEGIN LOGO -->
 <div class="logo animated bounceIn">
-	<a href="<?php echo base_url(); ?>">
-	<img src="<?php echo base_url(); ?>assets/img/logo.png" alt="">
-	</a>
+	<h1 class="form-title">GuvenFi</h1>
+	<!-- <a href="<?php echo base_url(); ?>">
+	<img src="<?php echo base_url(); ?>assets/img/logo.png" alt="Logo">
+	</a> -->
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
@@ -95,7 +96,7 @@
 		<div class="form-actions">
 			<label class="checkbox">
 			<!-- <div class="checker"><span><input type="checkbox" name="remember" value="1"></span></div> Remember me </label> -->
-			<button type="submit" class="btn btn-info pull-right">
+			<button type="submit" class="btn btn-info signin-button">
 			Login </button>
 		</div>
         

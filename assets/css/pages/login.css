@@ -1,10 +1,21 @@
 /***
 Login page
 ***/
-
+body, body {
+  color: rgb(26, 48, 72);
+  font-family: "Source Sans Pro", sans-serif;
+  background-color: #eef5f7 !important;;
+  display: flex;
+  flex-flow: column;
+}
+*, ::after, ::before {
+  border-width: 0;
+  border-style: solid;
+  border-color: transparent;
+}
 /* logo page */
 .login {
-  background-color: #fdfdfd !important;
+  /* background-color: #eef5f7 !important; */
 }
 
 .login .logo {
@@ -15,25 +26,70 @@ Login page
 }  
 
 .login .content {
-  background-color:rgb(66, 65, 65); 
+  background-color:#fff;
+  background: #FFF;
+    box-shadow: 0px 2px 15px rgb(0 0 0 / 10%);
+    border-radius: 4px;
+    transition-property: height;
+    transition: all ease .3s;
+    margin-bottom: 24px; 
+    min-width: 360px;
+    
+    /* padding: 32px; */
+    
   width: 360px;
   margin: 0 auto; 
   margin-bottom: 0px;
   padding: 30px;  
   padding-top: 20px;  
   padding-bottom: 15px;  
-  border-radius: 4px;
+  border-radius: 4px; 
+}
+.signin-button {
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 90px 90px 90px 90px;
+  padding: 12px 42px 12px 42px;
+  background-color: #0D71C8;
+  color: #fff;
+  transition: all ease .3s;
+  width: 100%;
+}
+
+.mi-v4-textinput-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  z-index: 3;
+  display: block;
+  color: rgb(41, 47, 51);
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 32px;
+  width: 100%;
+  margin-bottom: 0px;
+  border: 1px solid #BACAD0;
+  border-radius: 2px;
+  background-color: transparent;
+  height: 32px;
+  padding: 7px;
+  cursor: text;
 }
 
 .login .content h3 {
-  color: #ccc;
+  /* color: #ccc; */
+  color:rgb(15, 27, 49) !important;
 }
 .login .content h4  {
-  color: #555;
+  /* color: #555; */
+  color:rgb(15, 27, 49) !important;
 }
 
 .login .content p {
-  color: #ccc;
+  /* color: #ccc; */
+  color:rgb(15, 27, 49) !important;
 }
 
 .login .content .login-form,
@@ -51,18 +107,18 @@ Login page
 }
 
 .login .content .form-title {
-  font-weight: 300;
+  font-weight: 600 !important;
   margin-bottom: 25px;
 }
 
 .login .content .form-actions {
-  background-color: rgb(66, 65, 65);
+  /* background-color: rgb(66, 65, 65); */
   clear: both;
   border: 0px;
-  border-bottom: 1px solid #222;
-  padding: 0px 30px 25px 30px;
+  /* border-bottom: 1px solid #222; */
+  /* padding: 0px 30px 25px 30px;
   margin-left: -30px;
-  margin-right: -30px;
+  margin-right: -30px; */
 }
 
 .login .content .form-actions .checkbox {
@@ -84,7 +140,7 @@ Login page
 
 .login .content .form-actions .checkbox {
   margin-top: 8px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .login .content .form-actions .btn {
