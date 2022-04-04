@@ -147,12 +147,14 @@ class C_sales extends MY_Controller
                 $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = ''; //($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $narration = ($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'sale'; //$this->input->post("register_mode");
                 $saleType = 'cash';
                 $is_taxable =  1; //$this->input->post("is_taxable");
                 $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
-
+                $due_date = $this->input->post("due_date");
+                $business_address = $this->input->post("business_address");
+                
                 //if tax amount is checked or 1 then tax will be dedected otherwise not deducted from total amount
                 if ($is_taxable == 1) {
                     //total net amount 
@@ -179,6 +181,8 @@ class C_sales extends MY_Controller
                     'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     'is_taxable' => $is_taxable,
+                    'due_date'=>$due_date,
+                    'business_address'=>$business_address,
                 );
                 $this->db->insert('pos_sales', $data);
                 $sale_id = $this->db->insert_id();

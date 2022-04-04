@@ -1569,7 +1569,9 @@ CREATE TABLE `pos_receivings` (
   `currency_id` int(10) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total_tax` decimal(10,3) NOT NULL,
-  `file` varchar(200) DEFAULT NULL
+  `file` varchar(200) DEFAULT NULL,
+  `due_date` date NULL,
+  `business_address` text NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1628,7 +1630,9 @@ CREATE TABLE `pos_sales` (
   `currency_id` int(10) NOT NULL DEFAULT '0',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `supplier_id` int(20) DEFAULT '0',
-  `is_taxable` tinyint(1) NOT NULL
+  `is_taxable` tinyint(1) NOT NULL,
+  `due_date` date NULL,
+  `business_address` text NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

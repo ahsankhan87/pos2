@@ -1,12 +1,12 @@
 <form id="sale_form" action="">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-10">
 
             <label class="control-label col-sm-2" for="">Select Customer:</label>
             <div class="col-sm-4">
                 <select id="customer_id" name="customer_id" class="form-control select2me"></select>
                 <!-- <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?> -->
-                <?php echo anchor('#', 'Add New <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
+                <br><?php echo anchor('#', 'Add New <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
             </div>
 
             <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
@@ -17,8 +17,29 @@
         </div>
         <!-- /.col-sm-12 -->
         
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-2 text-right">
             <div id="top_net_total"></div>
+            
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
+
+            <label class="control-label col-sm-2" for="">Business Address:</label>
+            <div class="col-sm-4">
+                <textarea name="business_address" id="business_address" class="form-control" ></textarea>
+            </div>
+
+            <label class="control-label col-sm-2" for="due_date">Due Date:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo date("Y-m-d") ?>" />
+            </div>
+            
+        </div>
+        <!-- /.col-sm-12 -->
+        
+        <div class="col-sm-2 text-right">
             
         </div>
 
@@ -43,25 +64,26 @@
                 </thead>
                 <tbody class="create_table">
 
-
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="5">
+                        <th colspan="5" rowspan="3">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
                             <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
+                            <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea>
                         </th>
                         <th class="text-right">Sub Total</th>
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" colspan="6">Discount</th>
+                    
+                        <th class="text-right" >Discount</th>
                         <th class="text-right" id="total_discount">0.00</th>
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" colspan="6">Tax</th>
+                        <th class="text-right">Tax</th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
@@ -73,8 +95,6 @@
                     </tr>
                 </tfoot>
             </table>
-
-            <p></p>
 
         </div>
         
@@ -148,9 +168,10 @@
 
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
+        const date = '<?php echo date("Y-m-d") ?>';
         const curr_symbol = "<?php echo $_SESSION["home_currency_symbol"]; ?>";
         const curr_code = "<?php echo $_SESSION["home_currency_code"]; ?>";
-
+console.log(date);
         /////////////ADD NEW LINES
         let counter = 0; //counter is used for id of the debit / credit textbox to enable and disable 8 textboxs already used so start from 8 here
         $('.add_new').on('click', function(event) {
@@ -268,6 +289,7 @@
         function clearall()
         {
             counter = 0;
+            const  date = new Date();
             calc_gtotal();
             $('#sub_total').html(parseFloat('0').toFixed(2));
             $('#total_discount').html(parseFloat('0').toFixed(2));
@@ -276,6 +298,11 @@
             $("#sale_table > tbody").empty();
             $('#top_net_total').html('');
             $('#customer_id').val('').trigger('change');
+            
+            $('#business_address').val('');
+            $('#description').val('');
+            $('#due_date').val();
+
             $(".add_new").trigger("click");//add new line
         }
 
