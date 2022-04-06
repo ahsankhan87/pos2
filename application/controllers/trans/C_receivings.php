@@ -94,12 +94,14 @@ class C_receivings extends MY_Controller
                 $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = ''; //($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $narration = ($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'receive'; //$this->input->post("register_mode");
                 $purchaseType = 'cash';
                 $is_taxable =  1; //$this->input->post("is_taxable");
                 $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
-
+                $due_date = $this->input->post("due_date");
+                $business_address = $this->input->post("business_address");
+                
                 //if tax amount is checked or 1 then tax will be dedected otherwise not deducted from total amount
                 //total net amount 
                 $total_amount =  ($this->input->post("sub_total") - $discount) - $total_tax_amount;
@@ -122,7 +124,8 @@ class C_receivings extends MY_Controller
                     'currency_id' => $currency_id,
                     'total_amount' => ($register_mode == 'receive' ? $total_amount : -$total_amount), //return will be in minus amount
                     'total_tax' => ($register_mode == 'receive' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
-
+                    'due_date'=>$due_date,
+                    'business_address'=>$business_address,
                 );
                 $this->db->insert('pos_receivings', $data);
                 $receiving_id = $this->db->insert_id();

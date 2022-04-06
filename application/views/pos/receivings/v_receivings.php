@@ -1,6 +1,6 @@
 <form id="sale_form" action="">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-10">
 
             <label class="control-label col-sm-2" for="">Select Supplier:</label>
             <div class="col-sm-4">
@@ -17,11 +17,30 @@
         </div>
         <!-- /.col-sm-12 -->
         
-        <div class="col-sm-6 text-right">
+        <div class="col-sm-2 text-right">
             <div id="top_net_total"></div>
             
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
 
+            <label class="control-label col-sm-2" for="">Business Address:</label>
+            <div class="col-sm-4">
+                <textarea name="business_address" id="business_address" class="form-control" ></textarea>
+            </div>
+
+            <label class="control-label col-sm-2" for="due_date">Due Date:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo date("Y-m-d") ?>" />
+            </div>
+            
+        </div>
+        <!-- /.col-sm-12 -->
+        
+        <div class="col-sm-2 text-right">
+            
+        </div>
     </div>
     <hr />
     <?php $i = 1; ?>
@@ -47,21 +66,22 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="5">
+                        <th colspan="5" rowspan="3">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
                             <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
+                            <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea>
                         </th>
                         <th class="text-right">Sub Total</th>
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" colspan="6">Discount</th>
+                        <th class="text-right">Discount</th>
                         <th class="text-right" id="total_discount">0.00</th>
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" colspan="6">Tax</th>
+                        <th class="text-right" >Tax</th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
