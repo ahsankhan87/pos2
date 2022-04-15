@@ -154,7 +154,8 @@ class C_sales extends MY_Controller
                 $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
                 $due_date = $this->input->post("due_date");
                 $business_address = $this->input->post("business_address");
-                
+                $bank_id = $this->input->post("bank_id");
+
                 //if tax amount is checked or 1 then tax will be dedected otherwise not deducted from total amount
                 if ($is_taxable == 1) {
                     //total net amount 
@@ -273,21 +274,53 @@ class C_sales extends MY_Controller
                 if ($saleType == 'cash' && $register_mode == 'sale') {
                     //Search for sales and cash ledger account for account entry
                     //if invoice is cash then entry will be cash debit and sales credit and vice versa
-                    $dr_ledger_id = $posting_type_code[0]['cash_acc_code'];
+                    if($bank_id != 0 && isset($bank_id))
+                    {
+                        $get_banks = $this->M_banking->get_activeBanking($bank_id);
+                        $dr_ledger_id = $posting_type_code[0]['bank_acc_code'];
+                    }else{
+                        $dr_ledger_id = $posting_type_code[0]['cash_acc_code'];
+                    }
+                    
                     $cr_ledger_id = $posting_type_code[0]['sales_acc_code'];
 
-                    $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
+                    $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
 
                     ///////////////
                     //TAX JOURNAL ENTRY
                     if ($total_tax_amount > 0) {
-                        $tax_dr_ledger_id = $posting_type_code[0]['cash_acc_code'];
+                        
+                        if($bank_id != 0 && isset($bank_id))
+                        {
+                            $tax_dr_ledger_id = $posting_type_code[0]['bank_acc_code'];
+                        }else{
+                            $tax_dr_ledger_id = $posting_type_code[0]['cash_acc_code'];
+                        }
+                   
                         $tax_cr_ledger_id = $posting_type_code[0]['salestax_acc_code'];
 
                         $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
                     }
                     ////////////////
-
+                    
+                    ///Bank entry
+                    if($bank_id != 0 && isset($bank_id))
+                    {
+                        $data = array(
+                            'bank_id' => $bank_id,
+                            'account_code' => $get_banks[0]["bank_acc_code"],
+                            'dueTo_acc_code' => $get_banks[0]["cash_acc_code"],
+                            'date' => $sale_date,
+                            'debit'=>0,
+                            'credit'=>$total_amount,
+                            'invoice_no' => $new_invoice_no,
+                            'entry_id' => $entry_id,
+                            'narration' => $narration,
+                            'company_id'=> $_SESSION['company_id']
+                            );
+                        $this->db->insert('pos_bank_payments', $data); 
+                    }
+                    ///
                 }
 
                 //if Sales is on credit 
@@ -320,7 +353,25 @@ class C_sales extends MY_Controller
                         //////////////// tax
 
                     }
-
+                    ///
+                    ///Bank entry
+                    if($bank_id != 0 && isset($bank_id))
+                    {
+                        $get_banks = $this->M_banking->get_activeBanking($bank_id);
+                        $data = array(
+                            'bank_id' => $bank_id,
+                            'account_code' => $get_banks[0]["bank_acc_code"],
+                            'dueTo_acc_code' => $get_banks[0]["cash_acc_code"],
+                            'date' => $sale_date,
+                            'debit'=>0,
+                            'credit'=>$total_amount,
+                            'invoice_no' => $new_invoice_no,
+                            'entry_id' => $entry_id,
+                            'narration' => $narration,
+                            'company_id'=> $_SESSION['company_id']
+                            );
+                        $this->db->insert('pos_bank_payments', $data); 
+                    }
                     ///
                 }
                 //SALES RETURN DEBITED AND

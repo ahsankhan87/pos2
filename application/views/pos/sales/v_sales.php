@@ -26,9 +26,9 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Business Address:</label>
+            <label class="control-label col-sm-2" for="">Deposit To:</label>
             <div class="col-sm-4">
-                <textarea name="business_address" id="business_address" class="form-control" ></textarea>
+                <select name="bank_id" id="bank_id" class="form-control select2me"></select>
             </div>
 
             <label class="control-label col-sm-2" for="due_date">Due Date:</label>
@@ -36,6 +36,22 @@
                 <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
             
+        </div>
+        <!-- /.col-sm-12 -->
+        
+        <div class="col-sm-2 text-right">
+            
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
+
+            <label class="control-label col-sm-2" for="">Business Address:</label>
+            <div class="col-sm-4">
+                <textarea name="business_address" id="business_address" class="form-control" ></textarea>
+            </div>
+
         </div>
         <!-- /.col-sm-12 -->
         
@@ -467,5 +483,38 @@ console.log(date);
             }
         });
         /////
+
+        ////
+        banksDDL();
+        ////////////////////////
+        //GET banks DROPDOWN LIST
+        function banksDDL() {
+
+        let banks_ddl = '';
+        $.ajax({
+            url: site_url + "pos/C_banking/get_active_banks_JSON",
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function(data) {
+                console.log(data);
+                let i = 0;
+                banks_ddl += '<option value="0">Select Bank</option>';
+
+                $.each(data, function(index, value) {
+
+                    banks_ddl += '<option value="' + value.id + '">' + value.bank_name+ '</option>';
+
+                });
+
+                $('#bank_id').html(banks_ddl);
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+        }
+        ///////////////////
     });
 </script>

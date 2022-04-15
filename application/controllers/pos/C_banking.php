@@ -28,6 +28,11 @@ class C_banking extends MY_Controller{
         print_r(json_encode($this->M_banking->get_activeBankByAccCode($acc_code)));
     }
     
+    function get_active_banks_JSON($id=false)
+    {
+        print_r(json_encode($this->M_banking->get_activeBanking($id)));
+    }
+    
     function withDrawCash()
     {
         $bank_id = $this->input->post('bank_id',true);

@@ -7,7 +7,7 @@
 <!-- BEGIN FOOTER -->
 <div class="footer">
 	<div class="footer-inner">
-		 <?php echo date("Y"); ?> &copy; kasbook.com Time: {elapsed_time}. Memory: {memory_usage}
+		 <?php echo date("Y"); ?> &copy; guvenfi.com Time: {elapsed_time}. Memory: {memory_usage}
 	</div>
 	<div class="footer-tools">
 		<span class="go-top">
