@@ -14,8 +14,8 @@
         ?>
         <div class="row">
             <div class="col-md-6">
-                <?php echo anchor('trans/Suppliers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" id="sample_editable_1_new"'); ?>
-                <?php echo anchor('trans/Suppliers/SupplierImport', 'Import Suppliers', 'class="btn btn-success"'); ?>
+                <?php echo anchor('trans/C_suppliers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" id="sample_editable_1_new"'); ?>
+                <?php echo anchor('trans/C_suppliers/SupplierImport', 'Import Suppliers', 'class="btn btn-success"'); ?>
             </div>
         </div>
         <br>
@@ -96,8 +96,8 @@
                                 echo '<td>';
                                 //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                             ?>
-                                <?php echo anchor('trans/Suppliers/edit/' . $list['id'], '<i class="fa fa-pencil-square-o fa-fw"></i>', 'title="Edit"'); ?> |
-                                <a href="<?php echo site_url('trans/Suppliers/delete/' . $list['id'] . '/' . $op_balance_dr . '/' . $op_balance_cr) ?>" onclick="return confirm('Are you sure you want to permanent delete supplier and his account transactions?')" title="Permanent Delete"><i class="fa fa-trash-o fa-fw"></i></a>
+                                <?php echo anchor('trans/C_suppliers/edit/' . $list['id'], '<i class="fa fa-pencil-square-o fa-fw"></i>', 'title="Edit"'); ?> |
+                                <a href="<?php echo site_url('trans/C_suppliers/delete/' . $list['id'] . '/' . $op_balance_dr . '/' . $op_balance_cr) ?>" onclick="return confirm('Are you sure you want to permanent delete supplier and his account transactions?')" title="Permanent Delete"><i class="fa fa-trash-o fa-fw"></i></a>
 
                         <?php
                                 echo '</td>';

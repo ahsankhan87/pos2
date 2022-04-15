@@ -29,7 +29,7 @@ foreach($supplier as $values):
 $attributes = array('class' => 'form-horizontal', 'role' => 'form', 'enctype'=>"multipart/form-data");
 //form Validation errors
 echo validation_errors();
-echo form_open('trans/Suppliers/edit',$attributes);
+echo form_open('trans/C_suppliers/edit',$attributes);
 
 
 echo form_hidden('id',$values['id']);
@@ -113,7 +113,7 @@ echo form_hidden('id',$values['id']);
   </div>
 </div>
 
-<div class="form-group">
+<!-- <div class="form-group">
   <label class="control-label col-md-3" for="also">Also Customer:</label>
   <div class="col-md-4">
     <?php echo form_checkbox('also_customer',1,$values['also_customer'],'class="form-control"') ?>
@@ -124,7 +124,7 @@ echo form_hidden('id',$values['id']);
   <div class="col-md-4">
     <?php echo form_dropdown('sale_posting_type_id',$salesPostingTypeDDL,$values['sale_posting_type_id'],'class="form-control"'); ?>
   </div>
-</div>
+</div> -->
 
 </div>
 

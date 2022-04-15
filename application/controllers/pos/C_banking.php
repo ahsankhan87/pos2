@@ -115,10 +115,10 @@ class C_banking extends MY_Controller{
                     
                     //$bank_id = $this->db->insert_id();
                     $bank_acc_code = $this->input->post('bank_acc_code', true);
-                    $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
+                    (double) $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
                     
-                    $op_balance_dr = $this->input->post('op_balance_dr', true)/$exchange_rate;
-                    $op_balance_cr = $this->input->post('op_balance_cr', true)/$exchange_rate;
+                    $op_balance_dr = (double) $this->input->post('op_balance_dr', true)/$exchange_rate;
+                    $op_balance_cr = (double) $this->input->post('op_balance_cr', true)/$exchange_rate;
                     
                     $bank_account = $this->M_groups->get_groups($bank_acc_code,$_SESSION['company_id']);
                        $bank_dr_balance = abs($bank_account[0]['op_balance_dr']);

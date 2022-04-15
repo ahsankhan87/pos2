@@ -314,7 +314,8 @@ console.log(date);
             $("#sale_table > tbody").empty();
             $('#top_net_total').html('');
             $('#customer_id').val('').trigger('change');
-            
+            $('#bank_id').val('').trigger('change');
+
             $('#business_address').val('');
             $('#description').val('');
             $('#due_date').val();

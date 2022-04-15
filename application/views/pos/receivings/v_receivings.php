@@ -309,6 +309,8 @@
             $("#sale_table > tbody").empty();
             $('#top_net_total').html('');
             $('#supplier_id').val('').trigger('change');
+            $('#bank_id').val('').trigger('change');
+            
             $(".add_new").trigger("click");//add new line
         }
 

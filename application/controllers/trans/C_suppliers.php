@@ -293,12 +293,12 @@ class C_suppliers extends MY_Controller{
         $this->db->trans_complete();   
           
            $this->session->set_flashdata('message','Amount Paid Successfully');
-           redirect('pos/C_suppliers/supplierDetail/'.$supplier_id,'refresh');
+           redirect('trans/C_suppliers/supplierDetail/'.$supplier_id,'refresh');
         }
         else
         {
            $this->session->set_flashdata('error','Not Paid!. Please Enter Amount OR It seem that you did not assign posting account type to supplier');
-           redirect('pos/C_suppliers/supplierDetail/'.$supplier_id,'refresh');
+           redirect('trans/C_suppliers/supplierDetail/'.$supplier_id,'refresh');
         }
     }
     
@@ -388,7 +388,7 @@ class C_suppliers extends MY_Controller{
                 
                 $this->db->trans_complete();
                  
-                redirect('pos/C_suppliers/index','refresh');
+                redirect('trans/C_suppliers/index','refresh');
             
             
             }
@@ -456,9 +456,9 @@ class C_suppliers extends MY_Controller{
                     $op_balance_cr = (float)$this->input->post('op_balance_cr', true)/$exchange_rate;
                     
                     
-                    $op_balance_dr_old = $this->input->post('op_balance_dr_old', true)/$exchange_rate;
+                    $op_balance_dr_old = (double)$this->input->post('op_balance_dr_old', true)/$exchange_rate;
                     
-                    $op_balance_cr_old = $this->input->post('op_balance_cr_old', true)/$exchange_rate;
+                    $op_balance_cr_old = (double)$this->input->post('op_balance_cr_old', true)/$exchange_rate;
                     
                     
                     $posting_type_code =$this->M_postingTypes->get_purchasePostingTypes($this->input->post('posting_type_id',true));
@@ -493,7 +493,7 @@ class C_suppliers extends MY_Controller{
              
              $this->db->trans_complete();   
                 
-             redirect('pos/C_suppliers/index','refresh');
+             redirect('trans/C_suppliers/index','refresh');
             //////////////////////////////////
             
             }
@@ -634,19 +634,19 @@ class C_suppliers extends MY_Controller{
                 if(!$this->email->send())
                 {
                     $this->session->set_flashdata('error',$this->email->print_debugger(array('headers')));
-                    redirect('pos/C_suppliers/supplierDetail/'.$supplier_id,'refresh');
+                    redirect('trans/C_suppliers/supplierDetail/'.$supplier_id,'refresh');
                 }else{
                     $this->session->set_flashdata('message','email sent to '.$supplier[0]['name'].' successfully.');
-                    redirect('pos/C_suppliers/supplierDetail/'.$supplier_id,'refresh'); 
+                    redirect('trans/C_suppliers/supplierDetail/'.$supplier_id,'refresh'); 
                 }
         
             }else{//company email
                 $this->session->set_flashdata('error','Company email not available');
-                redirect('pos/C_suppliers/supplierDetail/'.$supplier_id,'refresh'); 
+                redirect('trans/C_suppliers/supplierDetail/'.$supplier_id,'refresh'); 
             }
         }else{//company email
             $this->session->set_flashdata('error','Supplier email not available');
-            redirect('pos/C_suppliers/supplierDetail/'.$supplier_id,'refresh'); 
+            redirect('trans/C_suppliers/supplierDetail/'.$supplier_id,'refresh'); 
         }
     }
     function delete($id,$op_balance_dr=0,$op_balance_cr=0)
@@ -655,7 +655,7 @@ class C_suppliers extends MY_Controller{
         $this->M_suppliers->deleteSupplier($id,$op_balance_dr,$op_balance_cr);
         
         $this->session->set_flashdata('message','Supplier Deleted');
-        redirect('pos/C_suppliers/index','refresh');
+        redirect('trans/C_suppliers/index','refresh');
     }
     
     function inactivate($id,$op_balance_dr,$op_balance_cr) // it will inactive the page
@@ -665,14 +665,14 @@ class C_suppliers extends MY_Controller{
         $this->db->trans_complete();   
         
         $this->session->set_flashdata('message','Supplier Deleted');
-        redirect('pos/C_suppliers/index','refresh');
+        redirect('trans/C_suppliers/index','refresh');
     }
     
     function activate($id) // it will active 
     {
         $this->M_suppliers->activate($id);
         $this->session->set_flashdata('message','Supplier Activated');
-        redirect('pos/C_suppliers/index','refresh');
+        redirect('trans/C_suppliers/index','refresh');
     }
     
     public function SupplierImport()
@@ -701,7 +701,7 @@ class C_suppliers extends MY_Controller{
         if(!$this->upload->do_upload('upload_items_import')){
             
                 $this->session->set_flashdata('error',$this->upload->display_errors());
-                redirect('pos/C_suppliers/SupplierImport','refresh');
+                redirect('trans/C_suppliers/SupplierImport','refresh');
             }
             else
             {
@@ -773,7 +773,7 @@ class C_suppliers extends MY_Controller{
                         }
                         
                         @unlink($upload_data['full_path']); //DELETE FILE
-                        redirect('pos/C_suppliers/index','refresh');
+                        redirect('trans/C_suppliers/index','refresh');
               
             }
     }
@@ -851,19 +851,19 @@ class C_suppliers extends MY_Controller{
                         }
                         
                         @unlink($target_file);
-                        redirect('pos/C_suppliers/index','refresh');
+                        redirect('trans/C_suppliers/index','refresh');
                         
                       }else{
                          //sprint_r($errors);
                          //return $errors;
                          $this->session->set_flashdata('error',$errors);
-                         redirect('pos/C_suppliers/SupplierImport','refresh');
+                         redirect('trans/C_suppliers/SupplierImport','refresh');
                       }
                    }
                    else
                    {
                         $this->session->set_flashdata('error','Please select excel file to upload');
-                        redirect('pos/C_suppliers/SupplierImport','refresh');
+                        redirect('trans/C_suppliers/SupplierImport','refresh');
                    }
                 //upload an image options
                  ////////////////////////

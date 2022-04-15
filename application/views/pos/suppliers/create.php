@@ -37,7 +37,7 @@ $attributes = array('class' => 'form-horizontal', 'role' => 'form','enctype'=>"m
 
 echo validation_errors();
 
-echo form_open($langs.'/trans/Suppliers/create',$attributes);
+echo form_open($langs.'/trans/C_suppliers/create',$attributes);
 
 ?>
 
