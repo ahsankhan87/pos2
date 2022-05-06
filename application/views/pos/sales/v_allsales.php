@@ -33,7 +33,7 @@
             </ul>
         </div>
         </p> -->
-        <?php echo anchor('pos/C_sales/index/cash', 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); ?>
+        <?php echo anchor('pos/C_sales/index/'.$sale_type, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); ?>
                 
 
         <div class="portlet">
@@ -50,49 +50,48 @@
             </div>
             <div class="portlet-body flip-scroll">
 
-                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_sales">
+                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_1">
                     <thead class="flip-content">
                         <tr>
-                            <!-- <th>S.No</th> -->
+                            <th>S.No</th>
                             <th>Inv #</th>
                             <th><?php echo lang('date') ?></th>
                             <th><?php echo lang('customer') ?></th>
-                            <th><?php echo lang('account') ?></th>
+                            <!-- <th><?php echo lang('account') ?></th> -->
                             <th class="text-right"><?php echo lang('amount') ?></th>
-                            <th class="hidden-print"><?php echo lang('action') ?></th>
+                            <!-- <th class="hidden-print"><?php echo lang('action') ?></th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        //$sno = 1;
-                        //        foreach($sales as $key => $list)
-                        //        {
-                        //            echo '<tr>';
-                        //            //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                        //            //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
-                        //            echo '<td>'.$sno++.'</td>';
-                        //            echo '<td>'.$list['invoice_no'].'</td>';
-                        //            echo '<td>'.date('d-m-Y',strtotime($list['sale_date'])).'</td>';
-                        //            $name = $this->M_customers->get_CustomerName($list['customer_id']);
-                        //            echo '<td>'.@$name.'</td>';
-                        //            echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
-                        //            
-                        //            echo '<td>'. $this->M_sales->get_totalCostBysaleID($list['invoice_no']). '</td>';
-                        //            //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
-                        //         } 
-                        //            
-                        //            echo '</tbody>';
-                        //echo '<tfoot>
-                        //                    <tr>
-                        //                        <th></th><th></th><th></th>
-                        //                        <th></th><th></th>
-                        //                        <th></th>
-                        //                
-                        //                    </tr>
-                        //                </tfoot>';
-
+                        $sno = 1;
+                               foreach($sales as $key => $list)
+                               {
+                                   echo '<tr>';
+                                   //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
+                                   //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
+                                   echo '<td>'.$sno++.'</td>';
+                                   echo '<td>'.$list['invoice_no'].'</td>';
+                                   echo '<td>'.date('d-m-Y',strtotime($list['sale_date'])).'</td>';
+                                   $name = $this->M_customers->get_CustomerName($list['customer_id']);
+                                   echo '<td>'.@$name.'</td>';
+                                //    echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
+                                   
+                                   echo '<td class="text-right">'. number_format($this->M_sales->get_totalCostBysaleID($list['invoice_no']),2). '</td>';
+                                   //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
+                                   echo '</tr>';
+                                } 
+                                   
+                                   echo '</tbody>';
                         ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th><th></th>
+                            <th></th><th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

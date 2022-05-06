@@ -33,49 +33,6 @@ class C_sales extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    public function sales_v2($saleType = '', $customer_id = '', $estimate_no = '')
-    {
-        $data = array('langs' => $this->session->userdata('lang'));
-
-        $data['title'] = ucfirst($saleType) . ' ' . lang('sales');
-        $data['main'] = ucfirst($saleType) . ' ' . lang('sales');
-
-        $data['customer_id'] = $customer_id;
-        $data['saleType'] = $saleType;
-
-        $data['estimate_no'] = $estimate_no; // Estimate invoice no.
-
-        //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
-        //$data['customersDDL'] = $this->M_customers->getCustomerDropDown();
-        //$data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
-        //$data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
-        //$data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
-        //$data['taxes'] = $this->M_taxes->get_activetaxes();
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/hotel/v_sales_hotel', $data);
-        $this->load->view('templates/footer');
-    }
-    public function allSalesv2()
-    {
-        $data = array('langs' => $this->session->userdata('lang'));
-        $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last month"));
-        $to_date = FY_END_DATE; //date("Y-m-d");
-        $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
-
-        $data['title'] = lang('sales') . ' ' . $fiscal_dates;
-        $data['main'] = lang('sales');
-
-
-        $data['main_small'] = $fiscal_dates;
-
-        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date);
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/hotel/v_allsales_v2', $data);
-        $this->load->view('templates/footer');
-    }
-
     public function allSales()
     {
         $data = array('langs' => $this->session->userdata('lang'));
@@ -85,11 +42,31 @@ class C_sales extends MY_Controller
 
         $data['title'] = lang('sales') . ' ' . $fiscal_dates;
         $data['main'] = lang('sales');
-
+        $data['sale_type'] = "cash";
 
         $data['main_small'] = $fiscal_dates;
 
-        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date);
+        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date,'cash');
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pos/sales/v_allsales', $data);
+        $this->load->view('templates/footer');
+    }
+ 
+    public function allInvoices()//credit all sales
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+        $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last month"));
+        $to_date = FY_END_DATE; //date("Y-m-d");
+        $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
+
+        $data['title'] = lang('sales') . ' ' . $fiscal_dates;
+        $data['main'] = lang('sales');
+        $data['sale_type'] = "credit";
+
+        $data['main_small'] = $fiscal_dates;
+
+        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date,'credit');
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_allsales', $data);
@@ -114,10 +91,147 @@ class C_sales extends MY_Controller
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/v_editSalesProduct', $data);
+        $this->load->view('pos/sales/v_sales', $data);
         $this->load->view('templates/footer');
     }
 
+    public function sale_transaction()
+    {
+        $total_amount = 0;
+        $discount = 0;
+        $unit_price = 0;
+        $cost_price = 0;
+
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            if (count((array)$this->input->post('product_id')) > 0) {
+                $this->db->trans_start();
+                //GET PREVIOISE INVOICE NO  
+                @$prev_invoice_no = $this->M_sales->getMAXSaleInvoiceNo();
+                //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                //$new_invoice_no = 'POS'.date("Ymd").$number;
+                $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                $new_invoice_no = 'S' . $number;
+
+                //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
+                $user_id = $_SESSION['user_id'];
+                $company_id = $_SESSION['company_id'];
+                $sale_date = $this->input->post("sale_date");
+                $customer_id = $this->input->post("customer_id");
+                $emp_id = ''; //$this->input->post("emp_id");
+                $unit_id = '';//$this->input->post("unit_id");
+                $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
+                $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
+                $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
+                $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $register_mode = 'sale'; //$this->input->post("register_mode");
+                $saleType = 'cash';
+                $is_taxable =  1; //$this->input->post("is_taxable");
+                $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
+                $due_date = $this->input->post("due_date");
+                $business_address = $this->input->post("business_address");
+                $bank_id = $this->input->post("bank_id");
+
+                foreach ($this->input->post('account_id') as $key => $value) :
+                    
+                        $item_id  = htmlspecialchars(trim($value));
+                        $qty = $this->input->post('qty')[$key];
+                        $unit_price = $this->input->post('unit_price')[$key];
+                        $cost_price = $this->input->post('cost_price')[$key];
+                        $total_amount = (double)($qty*$unit_price);
+                        $narration = $this->input->post('description')[$key];
+                   
+                    $dr_amount = $total_amount;
+                    $cr_amount = $total_amount;
+                    
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $_SESSION['user_id'],
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $value, //account_id,
+                        'date' => $sale_date,
+                        //'amount' => $dr_amount,
+                        //'ref_account_id' => $ref_id,
+                        'debit' => $dr_amount,
+                        'credit' => $cr_amount,
+                        'invoice_no' => $new_invoice_no,
+                        'narration' => $narration,
+                        'company_id' => $_SESSION['company_id'],
+                        
+
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+
+                    if (isset($isCust) && !empty($ref_id)) {
+                        //POST IN cusmoter payment table
+                        //$this->M_customers->addCustomerPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,0,$entry_id);
+
+                        $data = array(
+                            'customer_id' => $ref_id,
+                            'account_code' => $account,
+                            'dueTo_acc_code' => $account,
+                            'date' => ($tran_date == null ? date('Y-m-d') : $tran_date),
+                            'debit' => $dr_amount,
+                            'credit' => $cr_amount,
+                            'invoice_no' => $new_invoice_no,
+                            'entry_id' => $entry_id,
+                            'narration' => $narration,
+                            'exchange_rate' => ($exchange_rate == null ? 0 : $exchange_rate),
+                            'company_id' => $_SESSION['company_id']
+                        );
+                        $this->db->insert('pos_customer_payments', $data);
+
+                        ///
+                    }
+                    if (isset($isSupp) && !empty($ref_id)) {
+                        //POST IN cusmoter payment table
+                        //$this->M_suppliers->addsupplierPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,0,$entry_id);
+
+                        $data = array(
+                            'supplier_id' => $ref_id,
+                            'account_code' => $account,
+                            'dueTo_acc_code' => $account,
+                            'date' => ($tran_date == null ? date('Y-m-d') : $tran_date),
+                            'debit' => $dr_amount,
+                            'credit' => $cr_amount,
+                            'invoice_no' => $new_invoice_no,
+                            'entry_id' => $entry_id,
+                            'narration' => $narration,
+                            'exchange_rate' => ($exchange_rate == null ? 0 : $exchange_rate),
+                            'company_id' => $_SESSION['company_id'],
+
+                        );
+                        $this->db->insert('pos_supplier_payments', $data);
+
+                        ///
+                    }
+                    if (isset($isBank) && !empty($ref_id)) {
+                        //POST IN cusmoter payment table
+                        //$this->M_banking->addBankPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,$entry_id);
+                        //addBankPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id='',$narration='',$new_invoice_no='',$tran_date=null,$entry_id=0)
+                        $data = array(
+                            'bank_id' => $ref_id,
+                            'account_code' => $account,
+                            'dueTo_acc_code' => $account,
+                            'date' => ($tran_date == null ? date('Y-m-d') : $tran_date),
+                            'debit' => $dr_amount,
+                            'credit' => $cr_amount,
+                            'invoice_no' => $new_invoice_no,
+                            'entry_id' => $entry_id,
+                            'narration' => $narration,
+                            'company_id' => $_SESSION['company_id']
+                        );
+                        $this->db->insert('pos_bank_payments', $data);
+                        ///
+                    }
+
+                endforeach;
+            } //check product count
+            $this->db->trans_complete();
+            echo '1';
+        }
+    }
     //sale the projuct angularjs
     public function saleProducts()
     {
@@ -147,7 +261,7 @@ class C_sales extends MY_Controller
                 $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = ($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'sale'; //$this->input->post("register_mode");
                 $saleType = 'cash';
                 $is_taxable =  1; //$this->input->post("is_taxable");
@@ -196,7 +310,8 @@ class C_sales extends MY_Controller
                         $qty = $this->input->post('qty')[$key];
                         $unit_price = $this->input->post('unit_price')[$key];
                         $cost_price = $this->input->post('cost_price')[$key];
-
+                        $description = $this->input->post('description')[$key];
+                        
                         $data = array(
                             'sale_id' => $sale_id,
                             'invoice_no' => $new_invoice_no,
@@ -206,6 +321,7 @@ class C_sales extends MY_Controller
                             'item_cost_price' => ($register_mode == 'sale' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
                             'item_unit_price' => ($register_mode == 'sale' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
                             'unit_id' => $unit_id,
+                            'description' => $description,
                             'company_id' => $company_id,
                             //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
                             'discount_value' => $this->input->post('discount')[$key],
@@ -221,7 +337,6 @@ class C_sales extends MY_Controller
                         $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
                         // end logging
 
-                   
                         //CHECK SERVICE IF SERVICE THEN DO NOT UPDATE QTY
                         if (trim($this->input->post('item_type')[$key]) != "service") {
                             if ($this->M_items->is_item_exist($item_id)) {
@@ -954,8 +1069,8 @@ class C_sales extends MY_Controller
         $data['Company'] = $this->M_companies->get_companies($company_id);
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/v_receipt_small', $data);
-        //  $this->load->view('pos/sales/v_receipt',$data);
+        //$this->load->view('pos/sales/v_receipt_small', $data);
+        $this->load->view('pos/sales/v_receipt',$data);
         $this->load->view('templates/footer');
     }
 

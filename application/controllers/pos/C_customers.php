@@ -474,7 +474,7 @@ class C_customers extends MY_Controller{
         {
             
             //form Validation
-            $this->form_validation->set_rules('posting_type_id', 'Posting Type', 'required');
+            //$this->form_validation->set_rules('posting_type_id', 'Posting Type', 'required');
             //$this->form_validation->set_rules('store_name', 'Company Name', 'required');
             $this->form_validation->set_rules('first_name', 'First Name', 'required');
             

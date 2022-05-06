@@ -8,7 +8,7 @@ class m_sales extends CI_Model{
         
     }
     
-    function get_sales($sales_id = FALSE, $from_date = null, $to_date=null)
+    function get_sales($sales_id = FALSE, $from_date = null, $to_date=null,$sale_type=null)
     {
         if($from_date != null)
         {
@@ -18,6 +18,11 @@ class m_sales extends CI_Model{
         if($to_date != null)
         {
             $this->db->where('sale_date <=',$to_date);
+        }
+        
+        if($sale_type != null)
+        {
+            $this->db->where('account',$sale_type);
         }
         
         if($sales_id == FALSE)
@@ -86,8 +91,8 @@ class m_sales extends CI_Model{
     function get_sales_items($new_invoice_no)//for receipt
     {
        $this->db->select('A.sale_date,A.sale_time,A.amount_due,A.register_mode,A.employee_id,A.discount_value as total_discount,A.customer_id,
-       A.currency_id,A.description,A.invoice_no,A.account,A.is_taxable,
-       B.unit_id,B.item_id,B.item_unit_price,B.item_cost_price,B.quantity_sold,
+       A.currency_id,A.description,A.invoice_no,A.account,A.is_taxable,A.business_address,
+       B.unit_id,B.item_id,B.item_unit_price,B.item_cost_price,B.quantity_sold,B.description as item_desc,
        B.discount_percent,B.discount_value,B.tax_rate,B.tax_id,B.inventory_acc_code');
        $this->db->join('pos_sales_items as B','A.sale_id = B.sale_id');
        $query = $this->db->get_where('pos_sales as A',array('A.invoice_no'=>$new_invoice_no,'A.company_id'=> $_SESSION['company_id']));

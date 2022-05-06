@@ -67,7 +67,7 @@
                         <th>Product</th>
                         <th>Qty</th>
                         <th>Cost Price</th>
-                        <th>Discount</th>
+                        <th>Description</th>
                         <th>Tax</th>
                         <th>Sub-Total</th>
                         <th></th>
@@ -82,7 +82,7 @@
                         <th colspan="5" rowspan="3">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
                             <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
-                            <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea>
+                            <!-- <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea> -->
                         </th>
                         <th class="text-right">Sub Total</th>
                         <th class="text-right" id="sub_total">0.00</th>
@@ -125,14 +125,14 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="supplierForm" action="">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label col-sm-3" for="Posting">Posting Type:</label>
                         <div class="col-sm-9">
                             <?php
                             $salesPostingTypeDDL = $this->M_postingTypes->get_purchasePostingTypesDDL();
                             echo form_dropdown('posting_type_id', $salesPostingTypeDDL, '', 'id="posting_type_id" class="form-control" required=""'); ?>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="email">Name:</label>
@@ -189,24 +189,28 @@
         $('.add_new').on('click', function(event) {
             event.preventDefault();
             counter++;
-            productDDL(counter);
+            // productDDL(counter);
+            accountsDDL(counter);
 
             var div = '<tr><td>' + counter + '</td>' +
-                '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
+                // '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
+                '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]"></select></td>' +
                 '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
                 '<td class="text-right"><input type="number" class="form-control cost_price" id="costprice_' + counter + '" name="cost_price[]" autocomplete="off">' +
                 '<input type="hidden" unit_price" id="unitprice_' + counter + '" name="unit_price[]">'+
                 '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>'+
                 '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>'+
                 '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>'+
-                '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
+                // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
+                '<td class="text-right"><input type="text" class="form-control description" id="description_' + counter + '" name="description[]" value=""  ></td>' +
                 '<td class="text-right tax" id="tax_' + counter + '"></td>' +
                 '<td class="text-right total" id="total_' + counter + '"></td>' +
                 '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
             $('.create_table').append(div);
 
             //SELECT 2 DROPDOWN LIST   
-            $('#productid_' + counter).select2();
+            // $('#productid_' + counter).select2();
+            $('#accountid_' + counter).select2();
             ///
 
             //GET TOTAL WHEN QTY CHANGE
@@ -214,7 +218,7 @@
                 var curId = this.id.split("_")[1];
                 var qty = parseFloat($(this).val());
                 var price = parseFloat($('#costprice_' + curId).val());
-                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var discount = 0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
                 var total = (qty * price ? qty * price - discount : 0).toFixed(2);
                 $('#total_' + curId).text(total);
 
@@ -224,7 +228,7 @@
             $(".cost_price").on("keyup change", function(e) {
                 var curId = this.id.split("_")[1];
                 var qty = parseFloat($('#qty_' + curId).val());
-                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var discount =0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
                 var price = parseFloat($(this).val());
                 var total = (qty * price ? qty * price - discount : 0).toFixed(2);
                 $('#total_' + curId).text(total);
@@ -236,7 +240,7 @@
                 var curId = this.id.split("_")[1];
                 var qty = parseFloat($('#qty_' + curId).val());
                 var price = parseFloat($('#costprice_' + curId).val());
-                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var discount = 0;//(parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
                 var total = (qty * price ? qty * price - discount : 0).toFixed(2);
                 $('#total_' + curId).text(total);
 
@@ -249,7 +253,7 @@
                 var curId = this.id.split("_")[1];
                 var productid = $(this).val();
                 var qty = parseFloat($('#qty_' + curId).val());
-                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var discount =0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
                 var tax_rate = 0;
                 var unit_price = 0;
 
@@ -347,7 +351,38 @@
             });
         }
         ///////////////////
-        /////////////ADD NEW LINES END HERE
+        ////////////////////////
+        //GET Accounts DROPDOWN LIST
+        function accountsDDL(index = 0) {
+
+            let accounts_ddl = '';
+            $.ajax({
+                url: site_url + "accounts/C_groups/get_detailAccountsJSON/",
+                type: 'GET',
+                cache: true,
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    accounts_ddl += '<option value="0">Select Account</option>';
+
+                    $.each(data, function(index, value) {
+
+                        accounts_ddl += '<option value="' + value.id + '">' + value.title + '</option>';
+
+                    });
+
+                    $('#accountid_' + index).html(accounts_ddl);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+            }
+            ///////////////////
+            /////////////ADD NEW LINES END HERE
 
         function calc_gtotal() {
             var total = 0;

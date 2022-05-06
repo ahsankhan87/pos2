@@ -330,7 +330,7 @@ class C_suppliers extends MY_Controller{
             if(@$_SESSION['multi_currency'] == 1){
             $this->form_validation->set_rules('currency_id', 'Currency', 'required');
             }
-            $this->form_validation->set_rules('posting_type_id', 'Posting Type', 'required');
+            //$this->form_validation->set_rules('posting_type_id', 'Posting Type', 'required');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">�</a><strong>', '</strong></div>');
             
             //after form Validation run

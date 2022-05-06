@@ -94,7 +94,7 @@ class C_receivings extends MY_Controller
                 $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = ($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'receive'; //$this->input->post("register_mode");
                 $purchaseType = 'cash';
                 $is_taxable =  1; //$this->input->post("is_taxable");
@@ -139,7 +139,8 @@ class C_receivings extends MY_Controller
                         $qty = $this->input->post('qty')[$key];
                         $unit_price = $this->input->post('unit_price')[$key];
                         $cost_price = $this->input->post('cost_price')[$key];
-
+                        $description = $this->input->post('description')[$key];
+                        
                         $data = array(
                             'receiving_id' => $receiving_id,
                             'invoice_no' => $new_invoice_no,
@@ -149,6 +150,7 @@ class C_receivings extends MY_Controller
                             'item_cost_price' => ($register_mode == 'receive' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
                             'item_unit_price' => ($register_mode == 'receive' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
                             'unit_id' => $this->input->post('unit_id')[$key],
+                            'description'=>$description,
                             'company_id' => $company_id,
                             //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
                             'discount_value' => $this->input->post('discount')[$key],

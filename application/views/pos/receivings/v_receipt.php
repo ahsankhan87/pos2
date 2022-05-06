@@ -1,10 +1,58 @@
 <button class="hidden-print"><a href="#" onclick="window.print()" title="print">Print</a></button>
 <button class="hidden-print"><a href="<?php echo site_url('trans/C_receivings/allPurchases') ?>">Purchases</a></button <!-- BEGIN PAGE CONTENT-->
+<style>
+    .invoice{
+        background-color: #fff;
+        border: solid 3px #0d83dd;
+        padding: 10px;
+    }
+    .invoice-header{
+        background-color: #0d83dd;
+        padding: 10px;
+        margin:-10px -10px 0 -10px;
+
+    }  
+    .invoice-header{
+        color: #a9d0ec;
+    }    
+
+    .grey{
+        color: gray;
+    }
+    .blue-title{
+        color: #0d83dd;
+    }
+    
+    .table thead tr{
+        border-top:#0d83dd solid 3px;
+    }
+    .item-desc{
+        font-size: 11px;
+        color: grey;
+    }
+</style>
+
 <div class="invoice">
+    <div class="invoice-header">
+        <div class="row">
+            <div class="col-sm-4 col-xs-4">
+                <h1>INVOICE</h1>
+            </div>
+            <div class="col-sm-5 col-xs-5">
+
+            </div>
+            <div class="col-sm-3 col-xs-3">
+                <h3><?php echo $Company[0]['name']; ?></h3>
+                <span class="text-capitalize"><?php echo $Company[0]['address']; ?></span><br />
+                <span class=""><?php echo $Company[0]['contact_no']; ?></span>
+            </div>
+        </div>
+    </div> 
+    
+    <br>
     <div class="row invoice-logo">
-        <div class="col-sm-2 col-xs-2 invoice-logo-space">
-            <?php
-            if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
+        <!-- <div class="col-sm-2 col-xs-2 invoice-logo-space">
+            <?php if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
                 echo '<img src="' . base_url('images/company/thumb/' . $Company[0]['image']) . '" width="100" height="100" class="img-rounded" alt="picture"/>';
             } else {
 
@@ -12,29 +60,40 @@
             }
             ?>
 
+        </div> -->
+        <div class="col-sm-4 col-xs-4">
+            <div class="grey">Billed To</div>
+            <div>
+                <?php $supplier =  @$this->M_suppliers->get_suppliers(@$receivings_items[0]['supplier_id']); ?>
+                <?php echo @$supplier[0]['name']; ?><br />
+                <?php echo @$supplier[0]['address']; ?> <br />
+                <?php echo @$supplier[0]['mobile_no']; ?><br />
+            </div>
         </div>
-
-        <div class="col-sm-4 col-xs-4 text-capitalize">
-
-            <h3><?php echo $Company[0]['name']; ?></h3>
-            <span class="text-capitalize"><?php echo $Company[0]['address']; ?></span><br />
-            <span class=""><?php echo $Company[0]['contact_no']; ?></span>
+        <div class="col-sm-2 col-xs-2">
+            <div class="grey">Invoice Number</div>
+            <div class=""><?php echo $invoice_no ?></div>
+            <br>
+            <div class="grey">Date of Issue</div>
+            <div class=""><?php echo date('m/d/Y', strtotime(@$receivings_items[0]['receiving_date'])) ?></div>
+            
         </div>
         <div class="col-sm-6 col-xs-6">
             <p>
-                <?php echo strtoupper(@$receivings_items[0]['account']) . ' ' . strtoupper(@$receivings_items[0]['register_mode']) . ' INVOICE'; ?> <br>
-                #<?php echo $invoice_no; ?> / <?php echo date('d, M Y', strtotime(@$receivings_items[0]['receiving_date'])); ?>
-                <span>User: <?php echo @$this->M_users->get_activeUsers(@$receivings_items[0]['user_id'])[0]['name']; ?><br />
-                    <?php echo lang('name'); ?>:&nbsp;<?php echo @$this->M_suppliers->get_supplierName(@$receivings_items[0]['supplier_id']); ?>
+                <!-- TAX INVOICE <br> -->
+                
+                <span style="font-size: 26px; color:grey">Invoice Total<br />
+                    <php echo $total; ?>
                 </span>
             </p>
         </div>
     </div>
+    <br><br>
 
     <div class="row">
         <div class="col-xs-12">
-            <table class="table table-striped table-bordered table-hover table-condensed">
-                <thead>
+            <table class="table table-striped table-hover">
+                <thead class="blue-title">
                     <tr>
                         <th>
                             #
@@ -121,16 +180,16 @@
         <div class="col-xs-4 invoice-block">
             <ul class="list-unstyled amounts">
                 <li>
-                    <strong>Sub Total:</strong> <?php echo $symbol . round($total, 2); ?>
+                    <strong class="blue-title">Sub Total:</strong> <?php echo $symbol . round($total, 2); ?>
                 </li>
                 <li>
-                    <strong>Discount:</strong> <?php echo $discount_total = round(@$receivings_items[0]['discount_value'], 2); ?>
+                    <strong class="blue-title">Discount:</strong> <?php echo $discount_total = round(@$receivings_items[0]['discount_value'], 2); ?>
                 </li>
                 <li>
-                    <strong>Total Tax:</strong> <?php echo $symbol . round($total_tax_amount, 2); ?>
+                    <strong class="blue-title">Total Tax:</strong> <?php echo $symbol . round($total_tax_amount, 2); ?>
                 </li>
                 <li>
-                    <strong>Grand Total:</strong> <?php echo $symbol . round($total - $discount_total + $total_tax_amount, 2); ?>
+                    <strong class="blue-title">Grand Total:</strong> <?php echo $symbol . round($total - $discount_total + $total_tax_amount, 2); ?>
                 </li>
             </ul>
         </div>
@@ -182,7 +241,7 @@ It is completely on our discretion to accept any return or not.
         </tbody>
     </table> -->
 
-    <br />
-    <div class="text-left">Powered by: <i>khybersoft.com</i> </div>
+    <!-- <br />
+    <div class="text-left">Powered by: <i>khybersoft.com</i> </div> -->
 </div>
 <!-- END PAGE CONTENT-->

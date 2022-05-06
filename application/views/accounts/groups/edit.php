@@ -46,7 +46,7 @@
 								<input type="text" name="title" data-required="1" value="<?php echo $row['title']; ?>" class="form-control"/>
 							</div>
 						</div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
 							<label class="control-label col-md-3">Urdu Title <span class="required">
 							* </span>
 							</label>
@@ -73,7 +73,7 @@
 							<div class="col-md-4">
                                 <input type="number" name="op_balance_cr"  value="<?php echo $row['op_balance_cr']; ?>" class="form-control"/>
 							</div>
-						</div>
+						</div> -->
                         <div class="form-group">
 							<label class="control-label col-md-3">Type <span class="required">
 							* </span>

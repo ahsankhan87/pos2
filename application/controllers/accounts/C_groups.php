@@ -65,15 +65,15 @@ class C_groups extends MY_Controller{
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
             //form validation
-            $this->form_validation->set_rules('name', 'Name', 'required');
+            //$this->form_validation->set_rules('name', 'Name', 'required');
             $this->form_validation->set_rules('title', 'Title', 'required');
-            $this->form_validation->set_rules('title_ur', 'Title UR', 'required');
+            //$this->form_validation->set_rules('title_ur', 'Title UR', 'required');
             $this->form_validation->set_rules('parent_code', 'Parent Code', 'required');
             //$this->form_validation->set_rules('account_code', 'Account Code', 'required');
             $this->form_validation->set_rules('type', 'type', 'required');
             $this->form_validation->set_rules('level', 'Level', 'required');
             $this->form_validation->set_rules('account_type_id', 'Account Type', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -88,14 +88,14 @@ class C_groups extends MY_Controller{
                 $dr_amount = $this->input->post('type',true);
                 $data = array(
                 'company_id'=> $_SESSION['company_id'],
-                'name' => $this->input->post('name',true),
+                //'name' => $this->input->post('name',true),
                 'title' => $this->input->post('title',true),
-                'title_ur' => $this->input->post('title_ur',true),
+                //'title_ur' => $this->input->post('title_ur',true),
                 'parent_code' => $this->input->post('parent_code',true),
                 'account_code' => $max_acc_code,
                 'type' => $this->input->post('type',true),
-                'op_balance_dr' => $this->input->post('op_balance_dr',true),
-                'op_balance_cr' => $this->input->post('op_balance_cr',true),
+                //'op_balance_dr' => $this->input->post('op_balance_dr',true),
+                // 'op_balance_cr' => $this->input->post('op_balance_cr',true),
                 'level' => $this->input->post('level',true),
                 'account_type_id' => $this->input->post('account_type_id',true),
                 'date_created' => date('Y-m-d H:i:s')
@@ -138,15 +138,15 @@ class C_groups extends MY_Controller{
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
             //form validation
-            $this->form_validation->set_rules('name', 'Name', 'required');
+            // $this->form_validation->set_rules('name', 'Name', 'required');
             $this->form_validation->set_rules('title', 'Title', 'required');
-            $this->form_validation->set_rules('title_ur', 'Title UR', 'required');
+            // $this->form_validation->set_rules('title_ur', 'Title UR', 'required');
             $this->form_validation->set_rules('parent_code', 'Parent Code', 'required');
             //$this->form_validation->set_rules('account_code', 'Account Code', 'required');
             $this->form_validation->set_rules('type', 'type', 'required');
             $this->form_validation->set_rules('level', 'Level', 'required');
             $this->form_validation->set_rules('account_type_id', 'Account Type', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -154,13 +154,13 @@ class C_groups extends MY_Controller{
                
                 $data = array(
                 'company_id'=> $_SESSION['company_id'],
-                'name' => $this->input->post('name',true),
+                // 'name' => $this->input->post('name',true),
                 'title' => $this->input->post('title',true),
-                'title_ur' => $this->input->post('title_ur',true),
+                // 'title_ur' => $this->input->post('title_ur',true),
                 'parent_code' => $this->input->post('parent_code',true),
                 'account_code' => $this->input->post('account_code',true),
-                'op_balance_dr' => $this->input->post('op_balance_dr',true),
-                'op_balance_cr' => $this->input->post('op_balance_cr',true),
+                // 'op_balance_dr' => $this->input->post('op_balance_dr',true),
+                // 'op_balance_cr' => $this->input->post('op_balance_cr',true),
                 'type' => $this->input->post('type',true),
                 'level' => $this->input->post('level',true),
                 'account_type_id' => $this->input->post('account_type_id',true),
