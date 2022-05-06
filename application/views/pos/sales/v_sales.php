@@ -104,7 +104,8 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php echo form_submit('', 'Save', 'class="btn btn-success"'); ?></th>
+                        <th colspan="5"><?php echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
+                        <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?></th>
                         <th class="text-right" >Grand Total</th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
@@ -427,8 +428,9 @@ console.log(date);
 
         $("#sale_form").on("submit", function(e) {
             var formValues = $(this).serialize();
-            console.log(formValues);
+            //console.log(formValues);
             // alert(formValues);
+            var submit_btn = document.activeElement.id;
             // return false;
            
             var confirmSale = confirm('Are you absolutely sure you want to sale?');
@@ -445,13 +447,20 @@ console.log(date);
                             if(data == '1')
                             {
                                 toastr.success("Invoice saved successfully",'Success');
-                                
+                                if(submit_btn == 'close')
+                                {
+                                    window.location.href = site_url+"pos/C_sales/allSales";
+                                }
+                            }else{
+                                toastr.error("Invoice not saved successfully",'Error');
                             }
                             clearall();
                             console.log(data);
                         }
                     });
-                }
+                }else{
+                        toastr.warning("Please select item",'Warning');
+                    }
             }
             e.preventDefault();
         });
