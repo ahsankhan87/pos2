@@ -31,10 +31,10 @@
 <body class="login">
 <!-- BEGIN LOGO -->
 <div class="logo animated bounceIn">
-	<h1 class="form-title">GuvenFi</h1>
-	<!-- <a href="<?php echo base_url(); ?>">
-	<img src="<?php echo base_url(); ?>assets/img/logo.png" alt="Logo">
-	</a> -->
+	<!-- <h1 class="form-title">GuvenFi</h1> -->
+	<a href="<?php echo base_url(); ?>">
+	<img src="<?php echo base_url(); ?>assets/img/logo.png" width="200" height="100" alt="Logo">
+	</a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->

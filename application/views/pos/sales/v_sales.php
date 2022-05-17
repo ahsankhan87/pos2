@@ -188,7 +188,7 @@
         const date = '<?php echo date("Y-m-d") ?>';
         const curr_symbol = "<?php echo $_SESSION["home_currency_symbol"]; ?>";
         const curr_code = "<?php echo $_SESSION["home_currency_code"]; ?>";
-console.log(date);
+        // console.log(date);
         /////////////ADD NEW LINES
         let counter = 0; //counter is used for id of the debit / credit textbox to enable and disable 8 textboxs already used so start from 8 here
         $('.add_new').on('click', function(event) {
