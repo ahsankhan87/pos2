@@ -492,7 +492,7 @@ class C_customers extends MY_Controller{
             {
                 $data = array(
                 'company_id'=> $_SESSION['company_id'],
-                'posting_type_id' => $this->input->post('posting_type_id', true),
+                'posting_type_id' => 0,//$this->input->post('posting_type_id', true),
                 'first_name' => $this->input->post('first_name', true),
                 'last_name' => $this->input->post('last_name', true),
                 'middle_name' => $this->input->post('middle_name', true),
@@ -519,11 +519,13 @@ class C_customers extends MY_Controller{
             
                 if($this->db->insert('pos_customers', $data)) {
                     
-                    $customer_id = $this->db->insert_id();
-                    $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
-                    
-                    $op_balance_dr = (float)$this->input->post('op_balance_dr', true)/$exchange_rate;
-                    $op_balance_cr = (float)$this->input->post('op_balance_cr', true)/$exchange_rate;
+                    if((float)$this->input->post('op_balance_dr') > 0 || (float)$this->input->post('op_balance_cr') > 0)
+                    {
+                        $customer_id = $this->db->insert_id();
+                        $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
+                        
+                        $op_balance_dr = (float)$this->input->post('op_balance_dr', true)/$exchange_rate;
+                        $op_balance_cr = (float)$this->input->post('op_balance_cr', true)/$exchange_rate;
                     
                        $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
                        
@@ -539,6 +541,8 @@ class C_customers extends MY_Controller{
                        
                        $this->M_groups->editGroupOPBalance($receivable_account_code,$dr_balance,$cr_balance);
                        
+                    }
+                    
                        //POST IN cusmoter payment table
                        //$this->M_customers->addCustomerPaymentEntry($receivable_account_code,0,0,0,$customer_id,
                       //'Opening Balance-Debtor','',null,$exchange_rate,$op_balance_dr,$op_balance_cr);

@@ -41,6 +41,7 @@ class M_reports extends CI_Model{
         return $data;
    
     }
+
     public function get_parentGroups4Assets($company_id) //for balance sheet Assets
     {
         //$this->db->order_by('sort','asc');
@@ -70,6 +71,7 @@ class M_reports extends CI_Model{
         return $data;
    
     }
+    
     function get_profit_loss($company_id,$parent_code,$fy_start_date,$fy_end_date)
     {
         $this->db->select('SUM(credit) as credit, SUM(debit) as debit,g.parent_code, g.title,g.title_ur, g.account_code');

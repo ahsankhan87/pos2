@@ -49,7 +49,7 @@
 
             <label class="control-label col-sm-2" for="">Business Address:</label>
             <div class="col-sm-4">
-                <textarea name="business_address" id="business_address" class="form-control" ></textarea>
+                <input type="text" name="business_address" id="business_address" class="form-control" />
             </div>
 
         </div>
@@ -506,9 +506,7 @@
 
             console.log($('#item_id').val());
 
-            if ($('#posting_type_id').val() == 0) {
-                toastr.error("Please select posting_type_id", 'Error!');
-            } else if ($('#first_name').val() == 0) {
+            if ($('#first_name').val() == 0) {
                 toastr.error("Please enter name", 'Error!');
             } else {
                 // Send the form data using post
@@ -536,17 +534,17 @@
 
         let banks_ddl = '';
         $.ajax({
-            url: site_url + "pos/C_banking/get_active_banks_JSON",
+            url: site_url + "accounts/C_groups/get_detail_accounts_by_type/1",
             type: 'GET',
             dataType: 'json', // added data type
             success: function(data) {
                 console.log(data);
                 let i = 0;
-                banks_ddl += '<option value="0">Select Bank</option>';
+                banks_ddl += '<option value="0">Select Account</option>';
 
                 $.each(data, function(index, value) {
 
-                    banks_ddl += '<option value="' + value.id + '">' + value.bank_name+ '</option>';
+                    banks_ddl += '<option value="' + value.id + '">' + value.title+ '</option>';
 
                 });
 

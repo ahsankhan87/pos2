@@ -64,6 +64,21 @@ class M_groups extends CI_Model{
         return $data;
     }
     
+    public function get_detail_accounts_by_type($account_type_id = FALSE,$company_id)
+    {
+        if($account_type_id != FALSE)
+        {
+            $this->db->where('account_type_id', $account_type_id);
+        }
+        
+        $this->db->order_by('account_code','asc');
+        $options = array('type'=>'detail','company_id'=> $company_id);
+        
+        $query = $this->db->get_where('acc_groups',$options);
+        $data = $query->result_array();
+        return $data;
+    }
+    
     //retrieve journal entries against ledger account.
     public function entriesByAccount($account_code,$fy_start_date,$fy_end_date)
     {

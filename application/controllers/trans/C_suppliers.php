@@ -327,9 +327,6 @@ class C_suppliers extends MY_Controller{
         
             //form Validation
             $this->form_validation->set_rules('name', 'Full Name', 'required');
-            if(@$_SESSION['multi_currency'] == 1){
-            $this->form_validation->set_rules('currency_id', 'Currency', 'required');
-            }
             //$this->form_validation->set_rules('posting_type_id', 'Posting Type', 'required');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">�</a><strong>', '</strong></div>');
             
@@ -340,7 +337,7 @@ class C_suppliers extends MY_Controller{
                 
                 $data = array(
                 'company_id'=> $_SESSION['company_id'],
-                'sale_posting_type_id' => $this->input->post('sale_posting_type_id', true),
+                'sale_posting_type_id' => 0, //$this->input->post('sale_posting_type_id', true),
                 'posting_type_id' => $this->input->post('posting_type_id', true),
                 'name' => $this->input->post('name', true),
                 'email' => $this->input->post('email', true),

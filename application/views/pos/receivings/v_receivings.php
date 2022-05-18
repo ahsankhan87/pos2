@@ -43,11 +43,9 @@
 
             <label class="control-label col-sm-2" for="">Business Address:</label>
             <div class="col-sm-4">
-                <textarea name="business_address" id="business_address" class="form-control" ></textarea>
+                <input type="text" name="business_address" id="business_address" class="form-control" />
             </div>
 
-            
-            
         </div>
         <!-- /.col-sm-12 -->
         
