@@ -64,17 +64,15 @@ class M_groups extends CI_Model{
         return $data;
     }
     
-    public function get_detail_accounts_by_type($account_type_id = FALSE,$company_id)
+    public function get_detail_accounts_by_type(array $account_types,$company_id)
     {
-        if($account_type_id != FALSE)
-        {
-            $this->db->where('account_type_id', $account_type_id);
-        }
-        
-        $this->db->order_by('account_code','asc');
+        $this->db->select('g.id,g.title,g.title_ur,g.account_code,g.parent_code');
+        $this->db->order_by('g.account_code','asc');
         $options = array('type'=>'detail','company_id'=> $company_id);
+        $this->db->where_in('at.name',$account_types);
+        $this->db->join('account_types at','at.id=g.account_type_id');
         
-        $query = $this->db->get_where('acc_groups',$options);
+        $query = $this->db->get_where('acc_groups g',$options);
         $data = $query->result_array();
         return $data;
     }

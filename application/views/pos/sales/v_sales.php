@@ -28,7 +28,7 @@
 
             <label class="control-label col-sm-2" for="">Deposit To:</label>
             <div class="col-sm-4">
-                <select name="bank_id" id="bank_id" class="form-control select2me"></select>
+                <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
             </div>
 
             <label class="control-label col-sm-2" for="due_date">Due Date:</label>
@@ -318,7 +318,7 @@
             $("#sale_table > tbody").empty();
             $('#top_net_total').html('');
             $('#customer_id').val('').trigger('change');
-            $('#bank_id').val('').trigger('change');
+            $('#deposit_to_acc_code').val('').trigger('change');
 
             $('#business_address').val('');
             $('#description').val('');
@@ -364,11 +364,13 @@
         function accountsDDL(index = 0) {
 
         let accounts_ddl = '';
+        var account_type = ['liability','equity'];
         $.ajax({
-            url: site_url + "accounts/C_groups/get_detailAccountsJSON/",
-            type: 'GET',
+            url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
+            type: 'POST',
+            dataType: "JSON",
+            data: {account_types:account_type},
             cache: true,
-            dataType: 'json', // added data type
             success: function(data) {
                 //console.log(data);
                 let i = 0;
@@ -376,7 +378,7 @@
 
                 $.each(data, function(index, value) {
 
-                    accounts_ddl += '<option value="' + value.id + '">' + value.title + '</option>';
+                    accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
 
                 });
 
@@ -441,7 +443,7 @@
                 {
                    $.ajax({
                         type: "POST",
-                        url: site_url + "pos/C_sales/saleProducts",
+                        url: site_url + "pos/C_sales/sale_transaction",
                         data: formValues,
                         success: function(data) {
                             if(data == '1')
@@ -527,28 +529,31 @@
         /////
 
         ////
-        banksDDL();
+        deposit_to_acc_codeDDL();
         ////////////////////////
-        //GET banks DROPDOWN LIST
-        function banksDDL() {
+        //GET deposit_to_acc_code DROPDOWN LIST
+        function deposit_to_acc_codeDDL() {
 
-        let banks_ddl = '';
+        let deposit_to_acc_code_ddl = '';
+        var account_type = ['asset'];
         $.ajax({
-            url: site_url + "accounts/C_groups/get_detail_accounts_by_type/1",
-            type: 'GET',
-            dataType: 'json', // added data type
+            url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
+            type: 'POST',
+            dataType: "JSON",
+            data: {account_types:account_type},
+            //dataType: 'json', // added data type
             success: function(data) {
                 console.log(data);
                 let i = 0;
-                banks_ddl += '<option value="0">Select Account</option>';
+                deposit_to_acc_code_ddl += '<option value="0">Select Account</option>';
 
                 $.each(data, function(index, value) {
 
-                    banks_ddl += '<option value="' + value.id + '">' + value.title+ '</option>';
+                    deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
 
                 });
 
-                $('#bank_id').html(banks_ddl);
+                $('#deposit_to_acc_code').html(deposit_to_acc_code_ddl);
 
             },
             error: function(xhr, ajaxOptions, thrownError) {

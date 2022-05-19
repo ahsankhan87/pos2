@@ -58,9 +58,10 @@ class C_groups extends MY_Controller{
         print_r(json_encode($this->M_groups->get_detail_accounts(FALSE,$_SESSION['company_id'])));
     }
     
-    function get_detail_accounts_by_type($account_type_id)
+    function get_detail_accounts_by_type()
     {
-        print_r(json_encode($this->M_groups->get_detail_accounts_by_type($account_type_id,$_SESSION['company_id'])));
+        $account_types = array_values($this->input->post('account_types'));
+        print_r(json_encode($this->M_groups->get_detail_accounts_by_type((array)$account_types,$_SESSION['company_id'])));
     }
     
     function create()

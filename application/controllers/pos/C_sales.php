@@ -104,7 +104,7 @@ class C_sales extends MY_Controller
 
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
-            if (count((array)$this->input->post('product_id')) > 0) {
+            if (count((array)$this->input->post('account_id')) > 0) {
                 $this->db->trans_start();
                 //GET PREVIOISE INVOICE NO  
                 @$prev_invoice_no = $this->M_sales->getMAXSaleInvoiceNo();
@@ -130,11 +130,71 @@ class C_sales extends MY_Controller
                 $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
                 $due_date = $this->input->post("due_date");
                 $business_address = $this->input->post("business_address");
-                $bank_id = $this->input->post("bank_id");
+                $deposit_to_acc_code = $this->input->post("deposit_to_acc_code");
+
+                $data = array(
+                    'company_id' => $company_id,
+                    'invoice_no' => $new_invoice_no,
+                    'customer_id' => $customer_id,
+                    'deposit_to_acc_code'=>$deposit_to_acc_code,
+                    'employee_id' => $emp_id,
+                    'user_id' => $user_id,
+                    'sale_date' => $sale_date,
+                    'register_mode' => $register_mode,
+                    'account' => $saleType,
+                    'description' => $narration,
+                    'discount_value' => $discount,
+                    'currency_id' => $currency_id,
+                    'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
+                    'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
+                    //'is_taxable' => $is_taxable,
+                    'due_date'=>$due_date,
+                    'business_address'=>$business_address,
+                );
+                $this->db->insert('pos_sales', $data);
+                $sale_id = $this->db->insert_id();
+                ////////
+
+                foreach ($this->input->post('account_id') as $key => $value) {
+                    
+                    if ($value != 0) {
+                        $account_code  = htmlspecialchars(trim($value));
+                        $qty = $this->input->post('qty')[$key];
+                        $unit_price = $this->input->post('unit_price')[$key];
+                        $cost_price = $this->input->post('cost_price')[$key];
+                        $description = $this->input->post('description')[$key];
+                        
+                        $data = array(
+                            'sale_id' => $sale_id,
+                            'invoice_no' => $new_invoice_no,
+                            'item_id' => 0,//$item_id,
+                            'account_code'=>$account_code,
+                            'description' => $narration,
+                            'quantity_sold' => ($register_mode == 'sale' ? $qty : -$qty), //if sales return then insert amount in negative
+                            'item_cost_price' => ($register_mode == 'sale' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
+                            'item_unit_price' => ($register_mode == 'sale' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
+                            'unit_id' => $unit_id,
+                            'description' => $description,
+                            'company_id' => $company_id,
+                            //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
+                            'discount_value' => $this->input->post('discount')[$key],
+                            'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
+                            'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
+                            'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]
+                        );
+
+                        $this->db->insert('pos_sales_items', $data);
+
+                        //for logging
+                        $msg = 'invoice no ' . $new_invoice_no;
+                        $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
+                        // end logging
+                    }
+                }
 
                 foreach ($this->input->post('account_id') as $key => $value) :
                     
-                        $item_id  = htmlspecialchars(trim($value));
+                        $account_code  = htmlspecialchars(trim($value));
                         $qty = $this->input->post('qty')[$key];
                         $unit_price = $this->input->post('unit_price')[$key];
                         $cost_price = $this->input->post('cost_price')[$key];
@@ -149,7 +209,7 @@ class C_sales extends MY_Controller
                         'employee_id' => $_SESSION['user_id'],
                         //'entry_no' => $entry_no,
                         //'name' => $name,
-                        'account_code' => $value, //account_id,
+                        'account_code' => $account_code, //account_id,
                         'date' => $sale_date,
                         //'amount' => $dr_amount,
                         //'ref_account_id' => $ref_id,
@@ -158,73 +218,8 @@ class C_sales extends MY_Controller
                         'invoice_no' => $new_invoice_no,
                         'narration' => $narration,
                         'company_id' => $_SESSION['company_id'],
-                        
-
                     );
                     $this->db->insert('acc_entry_items', $data);
-
-                    if (isset($isCust) && !empty($ref_id)) {
-                        //POST IN cusmoter payment table
-                        //$this->M_customers->addCustomerPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,0,$entry_id);
-
-                        $data = array(
-                            'customer_id' => $ref_id,
-                            'account_code' => $account,
-                            'dueTo_acc_code' => $account,
-                            'date' => ($tran_date == null ? date('Y-m-d') : $tran_date),
-                            'debit' => $dr_amount,
-                            'credit' => $cr_amount,
-                            'invoice_no' => $new_invoice_no,
-                            'entry_id' => $entry_id,
-                            'narration' => $narration,
-                            'exchange_rate' => ($exchange_rate == null ? 0 : $exchange_rate),
-                            'company_id' => $_SESSION['company_id']
-                        );
-                        $this->db->insert('pos_customer_payments', $data);
-
-                        ///
-                    }
-                    if (isset($isSupp) && !empty($ref_id)) {
-                        //POST IN cusmoter payment table
-                        //$this->M_suppliers->addsupplierPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,0,$entry_id);
-
-                        $data = array(
-                            'supplier_id' => $ref_id,
-                            'account_code' => $account,
-                            'dueTo_acc_code' => $account,
-                            'date' => ($tran_date == null ? date('Y-m-d') : $tran_date),
-                            'debit' => $dr_amount,
-                            'credit' => $cr_amount,
-                            'invoice_no' => $new_invoice_no,
-                            'entry_id' => $entry_id,
-                            'narration' => $narration,
-                            'exchange_rate' => ($exchange_rate == null ? 0 : $exchange_rate),
-                            'company_id' => $_SESSION['company_id'],
-
-                        );
-                        $this->db->insert('pos_supplier_payments', $data);
-
-                        ///
-                    }
-                    if (isset($isBank) && !empty($ref_id)) {
-                        //POST IN cusmoter payment table
-                        //$this->M_banking->addBankPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,$entry_id);
-                        //addBankPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id='',$narration='',$new_invoice_no='',$tran_date=null,$entry_id=0)
-                        $data = array(
-                            'bank_id' => $ref_id,
-                            'account_code' => $account,
-                            'dueTo_acc_code' => $account,
-                            'date' => ($tran_date == null ? date('Y-m-d') : $tran_date),
-                            'debit' => $dr_amount,
-                            'credit' => $cr_amount,
-                            'invoice_no' => $new_invoice_no,
-                            'entry_id' => $entry_id,
-                            'narration' => $narration,
-                            'company_id' => $_SESSION['company_id']
-                        );
-                        $this->db->insert('pos_bank_payments', $data);
-                        ///
-                    }
 
                 endforeach;
             } //check product count
