@@ -183,6 +183,7 @@
 <script>
     $(document).ready(function() {
 
+        const module = '<?php echo $url1 = $this->uri->segment(3); ?>/';
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
         const date = '<?php echo date("Y-m-d") ?>';
@@ -407,11 +408,12 @@
             $('.tax').each(function() {
                 total_tax += parseFloat($(this).text());
             });
-            $('.discount').each(function() {
-                total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
-            });
-
-            net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
+            // $('.discount').each(function() {
+            //     total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
+            // });
+            total_tax = (total_tax ? total_tax : 0);
+            net_total = (total ? total : 0);
+            // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
@@ -443,7 +445,7 @@
                 {
                    $.ajax({
                         type: "POST",
-                        url: site_url + "pos/C_sales/sale_transaction",
+                        url: site_url + "pos/"+module+"/sale_transaction",
                         data: formValues,
                         success: function(data) {
                             if(data == '1')
@@ -451,7 +453,7 @@
                                 toastr.success("Invoice saved successfully",'Success');
                                 if(submit_btn == 'close')
                                 {
-                                    window.location.href = site_url+"pos/C_sales/allSales";
+                                    window.location.href = site_url+"pos/"+module+"/all";
                                 }
                             }else{
                                 toastr.error("Invoice not saved successfully",'Error');

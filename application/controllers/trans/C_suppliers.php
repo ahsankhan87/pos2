@@ -338,7 +338,7 @@ class C_suppliers extends MY_Controller{
                 $data = array(
                 'company_id'=> $_SESSION['company_id'],
                 'sale_posting_type_id' => 0, //$this->input->post('sale_posting_type_id', true),
-                'posting_type_id' => $this->input->post('posting_type_id', true),
+                'posting_type_id' => 0,//$this->input->post('posting_type_id', true),
                 'name' => $this->input->post('name', true),
                 'email' => $this->input->post('email', true),
                 'address' => $this->input->post('address', true),

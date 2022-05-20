@@ -8,7 +8,7 @@ class M_receivings extends CI_Model{
         
     }
     
-    function get_receivings($receiving_id = FALSE, $from_date = null, $to_date=null)
+    function get_receivings($receiving_id = FALSE, $from_date = null, $to_date=null,$type=null)
     {
         if($from_date != null)
         {
@@ -18,6 +18,11 @@ class M_receivings extends CI_Model{
         if($to_date != null)
         {
             $this->db->where('receiving_date <=',$to_date);
+        }
+        
+        if($type != null)
+        {
+            $this->db->where('account',$type);
         }
         
         if($receiving_id == FALSE)

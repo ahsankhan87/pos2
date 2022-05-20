@@ -33,8 +33,16 @@
         </div>
         
         </p> -->
-        <?php echo anchor('trans/C_receivings/index/cash', 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); ?>
+        <?php if($sale_type == "cash")
+        {
+            echo anchor('trans/C_receivings/index/'.$sale_type, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
         
+        }else{
+            echo anchor('trans/C_bills/index/'.$sale_type, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
+        
+        }
+        ?>
+
 
         <div class="portlet">
             <div class="portlet-title">
@@ -50,52 +58,50 @@
             </div>
             <div class="portlet-body flip-scroll">
 
-                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_receivings">
+                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_1" ><!-- id="sample_receivings_1122" -->
                     <thead class="flip-content">
                         <tr>
-                            <!-- <th>S.No</th> -->
+                            <th>S.No</th>
                             <th>Inv #</th>
                             <th><?php echo lang('date'); ?></th>
-                            <th><?php echo lang('supplier'); ?> Inv #</th>
-                            <th><?php echo lang('supplier'); ?></th>
-                            <th><?php echo lang('account'); ?></th>
+                            <!-- <th><?php echo lang('supplier'); ?> Inv #</th>-->
+                            <th>Supplier</th>
+                            <!-- <th><?php echo lang('account'); ?></th> -->
                             <th class="text-right"><?php echo lang('amount'); ?></th>
-                            <th class="text-right"><?php echo lang('taxes'); ?></th>
-                            <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th>
-                            <th class="hidden-print"><?php echo lang('action'); ?></th>
+                            <!-- <th class="text-right"><?php echo lang('taxes'); ?></th> -->
+                            <!-- <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th> -->
+                            <!-- <th class="hidden-print"><?php echo lang('action'); ?></th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        //$sno = 1;
-                        //        foreach($receivings as $key => $list)
-                        //        {
-                        //            echo '<tr>';
-                        //            //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                        //            //echo '<td><a href="'.site_url('trans/C_receivings/receipt/'.$list['invoice_no']).'">'.$list['invoice_no'].'</a></td>';
-                        //            echo '<td>'.$sno++.'</td>';
-                        //            echo '<td>'.$list['invoice_no'].'</td>';
-                        //            echo '<td>'.date('d-m-Y',strtotime($list['receiving_date'])).'</td>';
-                        //            //echo '<td><img src="'.base_url('images/supplier-images/thumbs/'.$list['supplier_image']).'" width="40" height="40"/></td>';
-                        //            $supplier_name = $this->M_suppliers->get_supplierName($list['supplier_id']);
-                        //            echo '<td>'.@$supplier_name.'</td>';
-                        //            //echo '<td>'.$list['supplier_invoice_no'].'</td>';
-                        //            echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
-                        //            echo '<td>'. $this->M_receivings->get_totalCostByReceivingID($list['invoice_no']). '</td>';
-                        //            
-                        //             } 
-                        //            
-                        //            echo '</tbody>';
-                        //            echo '<tfoot>
-                        //                    <tr>
-                        //                        <th></th><th></th><th></th>
-                        //                        <th></th><th>Total</th><th></th>
-                        //                        <th></th>
-                        //                    </tr>
-                        //                </tfoot>';
-
+                        $sno = 1;
+                               foreach($receivings as $key => $list)
+                               {
+                                   echo '<tr>';
+                                   //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
+                                   //echo '<td><a href="'.site_url('trans/C_receivings/receipt/'.$list['invoice_no']).'">'.$list['invoice_no'].'</a></td>';
+                                   echo '<td>'.$sno++.'</td>';
+                                   echo '<td>'.$list['invoice_no'].'</td>';
+                                   echo '<td>'.date('d-m-Y',strtotime($list['receiving_date'])).'</td>';
+                                   //echo '<td><img src="'.base_url('images/supplier-images/thumbs/'.$list['supplier_image']).'" width="40" height="40"/></td>';
+                                   $supplier_name = $this->M_suppliers->get_supplierName($list['supplier_id']);
+                                   echo '<td>'.@$supplier_name.'</td>';
+                                //    echo '<td>'.$list['supplier_invoice_no'].'</td>';
+                                //    echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
+                                   echo '<td>'. $this->M_receivings->get_totalCostByReceivingID($list['invoice_no']). '</td>';
+                                   echo '</tr>';
+                                    } 
+                                   
                         ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th><th></th>
+                            <th></th><th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

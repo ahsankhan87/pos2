@@ -2463,3 +2463,6 @@ ALTER TABLE `users`
 
 ALTER TABLE `pos_sales_items` ADD `account_code` VARCHAR(100) NULL AFTER `item_id`;
 ALTER TABLE `pos_sales` ADD `deposit_to_acc_code` VARCHAR(100) NULL AFTER `sale_date`;
+ALTER TABLE `acc_entry_items` ADD `user_id` INT(11) NULL AFTER `is_bank`;
+ALTER TABLE `pos_receivings_items` ADD `account_code` VARCHAR(100) NULL AFTER `item_id`;
+ALTER TABLE `pos_receivings` ADD `payment_acc_code` VARCHAR(100) NULL AFTER `user_id`;

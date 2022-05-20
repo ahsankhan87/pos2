@@ -27,7 +27,7 @@
 
             <label class="control-label col-sm-2" for="">Payment Method:</label>
             <div class="col-sm-4">
-                <select name="bank_id" id="bank_id" class="form-control select2me"></select>
+                <select name="payment_acc_code" id="payment_acc_code" class="form-control select2me"></select>
             </div>
 
         </div>
@@ -97,7 +97,8 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php echo form_submit('', 'Save', 'class="btn btn-success"'); ?></th>
+                    <th colspan="5"><?php echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
+                        <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?></th>
                         <th class="text-right" >Grand Total</th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
@@ -177,6 +178,7 @@
 <script>
     $(document).ready(function() {
 
+        const module = '<?php echo $url1 = $this->uri->segment(3); ?>/';
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
         const curr_symbol = "<?php echo $_SESSION["home_currency_symbol"]; ?>";
@@ -352,13 +354,14 @@
         ////////////////////////
         //GET Accounts DROPDOWN LIST
         function accountsDDL(index = 0) {
-
+            var account_type = ['expense'];
             let accounts_ddl = '';
             $.ajax({
-                url: site_url + "accounts/C_groups/get_detailAccountsJSON/",
-                type: 'GET',
+                url: site_url + "accounts/C_groups/get_detail_accounts_by_type/",
+                type: 'POST',
+                dataType: "JSON",
+                data: {account_types:account_type},
                 cache: true,
-                dataType: 'json', // added data type
                 success: function(data) {
                     //console.log(data);
                     let i = 0;
@@ -366,7 +369,7 @@
 
                     $.each(data, function(index, value) {
 
-                        accounts_ddl += '<option value="' + value.id + '">' + value.title + '</option>';
+                        accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
 
                     });
 
@@ -399,7 +402,8 @@
                 total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
             });
 
-            net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
+            // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
+            net_total = (total  ? total  : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
@@ -419,6 +423,7 @@
         $("#sale_form").on("submit", function(e) {
             var formValues = $(this).serialize();
             console.log(formValues);
+            var submit_btn = document.activeElement.id;
             // alert(formValues);
             // return false;
            
@@ -430,13 +435,18 @@
                 {
                    $.ajax({
                         type: "POST",
-                        url: site_url + "trans/C_receivings/purchaseProducts",
+                        url: site_url + "trans/"+module+"/purchase_transaction",
                         data: formValues,
                         success: function(data) {
                             if(data == '1')
                             {
                                 toastr.success("Invoice saved successfully",'Success');
-                                
+                                if(submit_btn == 'close')
+                                {
+                                    window.location.href = site_url+"trans/"+module+"/all";
+                                }
+                            }else{
+                                toastr.error("Invoice not saved successfully",'Error');
                             }
                             clearall();
                             console.log(data);
@@ -488,9 +498,7 @@
 
             //console.log($('#item_id').val());
 
-            if ($('#posting_type_id').val() == 0) {
-                toastr.error("Please select posting_type_id", 'Error!');
-            } else if ($('#first_name').val() == 0) {
+            if ($('#first_name').val() == 0) {
                 toastr.error("Please enter name", 'Error!');
             } else {
                 // Send the form data using post
@@ -510,28 +518,30 @@
         });
         /////
          ////
-         banksDDL();
+         payment_acc_codeDDL();
         ////////////////////////
-        //GET banks DROPDOWN LIST
-        function banksDDL() {
+        //GET payment_acc_code DROPDOWN LIST
+        function payment_acc_codeDDL() {
 
-        let banks_ddl = '';
+        let payment_acc_code_ddl = '';
+        var account_type = ['asset'];
         $.ajax({
-            url: site_url + "pos/C_banking/get_active_banks_JSON",
-            type: 'GET',
-            dataType: 'json', // added data type
+            url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
+            type: 'POST',
+            dataType: 'JSON', // added data type
+            data: {account_types:account_type},
             success: function(data) {
                 console.log(data);
                 let i = 0;
-                banks_ddl += '<option value="0">Select Bank</option>';
+                payment_acc_code_ddl += '<option value="0">Select Account</option>';
 
                 $.each(data, function(index, value) {
 
-                    banks_ddl += '<option value="' + value.id + '">' + value.bank_name+ '</option>';
+                    payment_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
 
                 });
 
-                $('#bank_id').html(banks_ddl);
+                $('#payment_acc_code').html(payment_acc_code_ddl);
 
             },
             error: function(xhr, ajaxOptions, thrownError) {

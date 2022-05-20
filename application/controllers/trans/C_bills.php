@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class C_receivings extends MY_Controller
+class C_bills extends MY_Controller
 {
 
     public function __construct()
@@ -15,8 +15,8 @@ class C_receivings extends MY_Controller
 
         //$this->output->enable_profiler();
 
-        $data['title'] = lang('purchases');
-        $data['main'] = lang('purchases');
+        $data['title'] = 'Bills';
+        $data['main'] = 'Bills';
 
         $data['purchaseType'] = $purchaseType;
         //when click on sale manu clear the cart first if exist
@@ -31,7 +31,7 @@ class C_receivings extends MY_Controller
         $this->load->view('pos/receivings/v_receivings', $data);
         $this->load->view('templates/footer');
     }
-    
+
     public function all()
     {
         $data = array('langs' => $this->session->userdata('lang'));
@@ -39,12 +39,13 @@ class C_receivings extends MY_Controller
         $to_date = FY_END_DATE; //date("Y-m-d");
         $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
 
-        $data['title'] = lang('purchases') . ' ' . $fiscal_dates;
-        $data['main'] = lang('purchases');
-        $data['main_small'] = $fiscal_dates;
-        $data['sale_type'] = "cash";
+        $data['title'] = "Bills";
+        $data['main'] = "Bills";
+        $data['sale_type'] = "credit";
 
-        $data['receivings'] = $this->M_receivings->get_receivings(false, $start_date, $to_date,'cash');
+        $data['main_small'] = $fiscal_dates;
+
+        $data['receivings'] = $this->M_receivings->get_receivings(false, $start_date, $to_date,'credit');
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/receivings/v_allPurchases', $data);
@@ -115,7 +116,7 @@ class C_receivings extends MY_Controller
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
                 $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'receive'; //$this->input->post("register_mode");
-                $purchaseType = 'cash';
+                $purchaseType = 'credit';
                 $is_taxable =  1; //$this->input->post("is_taxable");
                 $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
                 $due_date = $this->input->post("due_date");
@@ -652,6 +653,7 @@ class C_receivings extends MY_Controller
         $this->load->view('templates/footer');
     }
 
+    
     function get_purchases_JSON()
     {
         $start_date = FY_START_DATE; //date("Y-m-d", strtotime("last year"));

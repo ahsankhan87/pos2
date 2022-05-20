@@ -274,7 +274,6 @@ var path = '<?php echo base_url(); ?>';</script>
                     
                         if(count($module) > 0)
                         {
-                            
                             echo '<ul class="sub-menu">';
                             foreach($module as $values):
                             

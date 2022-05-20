@@ -33,8 +33,15 @@
             </ul>
         </div>
         </p> -->
-        <?php echo anchor('pos/C_sales/index/'.$sale_type, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); ?>
-                
+        <?php if($sale_type == "cash")
+        {
+            echo anchor('pos/C_sales/index/'.$sale_type, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
+
+        }else{
+            echo anchor('pos/C_invoices/index/'.$sale_type, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
+
+        }
+        ?>
 
         <div class="portlet">
             <div class="portlet-title">

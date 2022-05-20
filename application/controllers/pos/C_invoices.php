@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class C_sales extends MY_Controller
+class C_invoices extends MY_Controller
 {
 
     public function __construct()
@@ -13,8 +13,8 @@ class C_sales extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = lang('sales');
-        $data['main'] = lang('sales');
+        $data['title'] = 'Invoices';
+        $data['main'] = 'Invoices';
 
         $data['customer_id'] = $customer_id;
         $data['saleType'] = $saleType;
@@ -33,7 +33,7 @@ class C_sales extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    public function all()
+    public function all()//credit all sales
     {
         $data = array('langs' => $this->session->userdata('lang'));
         $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last month"));
@@ -42,17 +42,17 @@ class C_sales extends MY_Controller
 
         $data['title'] = lang('sales') . ' ' . $fiscal_dates;
         $data['main'] = lang('sales');
-        $data['sale_type'] = "cash";
+        $data['sale_type'] = "credit";
 
         $data['main_small'] = $fiscal_dates;
 
-        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date,'cash');
+        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date,'credit');
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_allsales', $data);
         $this->load->view('templates/footer');
     }
- 
+
     public function editSales($invoice_no)
     {
         $data = array('langs' => $this->session->userdata('lang'));
@@ -105,7 +105,7 @@ class C_sales extends MY_Controller
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
                 $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'sale'; //$this->input->post("register_mode");
-                $saleType = 'cash';
+                $saleType = 'credit';
                 $is_taxable =  1; //$this->input->post("is_taxable");
                 $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
                 $due_date = $this->input->post("due_date");
