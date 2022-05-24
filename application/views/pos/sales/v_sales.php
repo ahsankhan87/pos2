@@ -365,7 +365,7 @@
         function accountsDDL(index = 0) {
 
         let accounts_ddl = '';
-        var account_type = ['liability','equity'];
+        var account_type = ['liability','equity','cos','revenue','expense','asset'];
         $.ajax({
             url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
             type: 'POST',

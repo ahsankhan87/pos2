@@ -143,14 +143,16 @@
                         $total_cost = ($list['item_unit_price'] * $list['quantity_sold']) - $list['discount_value'];
                         $discount += $list['discount_value'];
                         $tax_amount = $total_cost * $list['tax_rate'] / 100;
-                        $item = $this->M_items->get_items($list['item_id']);
-                        
+                        //$item = $this->M_items->get_items($list['item_id']);
+                        $account_name = $this->M_groups->get_accountName($list['account_code']);
+
                         $symbol = $_SESSION['home_currency_symbol'];
 
                         echo '<tr>';
                         echo '<td style="text-align:center;" >' . $counter++ . '</td>';
-                        echo '<td>' . $item[0]['name'] . '<div class="item-desc">'.$list['item_desc']. '</div></td>';
-                        echo '<td style="text-align:left;" class="hidden-480">' . $item[0]['description'] . '</td>';
+                        //echo '<td>' . $account_name . '<div class="item-desc">'.$list['item_desc']. '</div></td>';
+                        echo '<td>' . $account_name . '</div></td>';
+                        echo '<td style="text-align:left;" class="hidden-480">' . $list['item_desc'] . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . $list['quantity_sold'] . ' ' . $this->M_units->get_unitName($list['unit_id']) . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . $symbol . round($list['item_unit_price'], 2) . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . round($list['discount_value'], 2) . '</td>';

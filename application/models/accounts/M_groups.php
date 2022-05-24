@@ -30,6 +30,17 @@ class M_groups extends CI_Model{
         return $data;
     }
     
+    function get_accountName($account_code)
+    {
+       $query = $this->db->get_where('acc_groups',array('account_code'=>$account_code,'company_id'=> $_SESSION['company_id']));
+      
+       if($Name = $query->row())
+        {
+            return $Name->title;
+        }
+        return '';
+    }
+    
     public function get_groupsByID($id = FALSE,$company_id)
     {
         if($id  === FALSE)

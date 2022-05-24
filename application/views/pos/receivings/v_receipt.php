@@ -140,17 +140,15 @@
                             }
                             $discount = ($list['item_cost_price'] * $list['quantity_purchased']) * $list['discount_percent'] / 100;
                             $item = $this->M_items->get_items($list['item_id']);
-                            $size = $this->M_sizes->get_sizeName($list['size_id']);
-                            if (@$_SESSION['multi_currency'] == 1) {
-                                $currency = $this->M_currencies->get_currencies($receivings_items[0]['currency_id']);
-                                $symbol = $currency[0]['symbol'];
-                            } else {
-                                $symbol = $_SESSION['home_currency_symbol'];
-                            }
+                            //$size = $this->M_sizes->get_sizeName($list['size_id']);
+                            $account_name = $this->M_groups->get_accountName($list['account_code']);
+
+                            $symbol = $_SESSION['home_currency_symbol'];
+                            
                             echo '<tr>';
                             echo '<td style="text-align:center;" >' . $counter++ . '</td>';
-                            echo '<td>' . $item[0]['name'] . (isset($size) ? " " . $size : '') . '</td>';
-                            echo '<td style="text-align:left;" class="hidden-480">' . $item[0]['description'] . '</td>';
+                            echo '<td>' . $account_name . '</td>';
+                            echo '<td style="text-align:left;" class="hidden-480">' . $list['description'] . '</td>';
                             echo '<td style="text-align:right;" class="hidden-480">' . round($list['quantity_purchased'], 2) . ' ' . $this->M_units->get_unitName($list['unit_id']) . '</td>';
                             echo '<td style="text-align:right;" class="hidden-480">' . $symbol . round($price, 2) . '</td>';
                             echo '<td style="text-align:right;" class="hidden-480">' . $symbol . round($tax_amount, 2) . '</td>';
