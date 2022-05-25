@@ -354,7 +354,7 @@
         ////////////////////////
         //GET Accounts DROPDOWN LIST
         function accountsDDL(index = 0) {
-            var account_type = ['expense'];
+            var account_type = ['liability','equity','cos','revenue','expense','asset'];
             let accounts_ddl = '';
             $.ajax({
                 url: site_url + "accounts/C_groups/get_detail_accounts_by_type/",
