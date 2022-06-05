@@ -86,8 +86,8 @@ class m_estimate extends CI_Model{
     function get_estimate_items($new_invoice_no)//for receipt
     {
        $this->db->select('A.sale_date,A.sale_time,A.amount_due,A.register_mode,A.employee_id,A.discount_value as total_discount,A.customer_id,
-       A.currency_id,A.description,A.invoice_no,A.account,A.delivery_date,A.advance,
-       B.unit_id,B.item_id,B.size_id,B.item_unit_price,B.item_cost_price,B.quantity_sold,B.exchange_rate,B.service,
+       A.currency_id,A.description,A.invoice_no,A.account,A.delivery_date,
+       B.unit_id,B.account_code,B.item_unit_price,B.item_cost_price,B.quantity_sold,B.description AS item_desc,
        B.discount_percent,B.discount_value,B.tax_rate,B.tax_id');
        $this->db->join('pos_estimate_items as B','A.sale_id = B.sale_id');
        $query = $this->db->get_where('pos_estimate as A',array('A.invoice_no'=>$new_invoice_no,'A.company_id'=> $_SESSION['company_id']));

@@ -100,7 +100,7 @@ class C_sales extends MY_Controller
                 $customer_id = $this->input->post("customer_id");
                 $emp_id = ''; //$this->input->post("emp_id");
                 $unit_id = '';//$this->input->post("unit_id");
-                $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
+                //$posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
                 $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
@@ -1075,43 +1075,14 @@ class C_sales extends MY_Controller
 
     public function delete($invoice_no, $redirect = true)
     {
-        //if entry deleted then all item qty will be reversed
-        $sales_items = $this->M_sales->get_sales_items($invoice_no);
-
         $this->db->trans_start();
-
-        foreach ($sales_items as $values) {
-            $total_stock =  $this->M_items->total_stock($values['item_id'], -1, $values['size_id']);
-
-            //if products is to be return then it will add from qty and the avg cost will be reverse to original cost
-            $quantity = ($total_stock + $values['quantity_sold']);
-
-            $option_data = array(
-                'quantity' => $quantity
-            );
-            $this->db->update('pos_items_detail', $option_data, array('size_id' => $values['size_id'], 'item_id' => $values['item_id']));
-
-            //ADD ITEM DETAIL IN INVENTORY TABLE    
-            $data1 = array(
-                'trans_item' => $values['item_id'],
-                'trans_comment' => 'KSPOS Deleted',
-                'trans_inventory' => -$values['quantity_sold'],
-                'company_id' => $_SESSION['company_id'],
-                'trans_user' => $_SESSION['user_id'],
-                'invoice_no' => $invoice_no
-            );
-
-            $this->db->insert('pos_inventory', $data1);
-            //////////////
-        }
-
 
         $this->M_sales->delete($invoice_no);
         $this->db->trans_complete();
 
         if ($redirect === true) {
             $this->session->set_flashdata('message', 'Entry Deleted');
-            redirect('pos/C_sales/allSales', 'refresh');
+            redirect('pos/C_sales/all', 'refresh');
         }
     }
 

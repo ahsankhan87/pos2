@@ -3,10 +3,10 @@
 
 <html lang="en" class="no-js" ng-app="myApp"><!--<![endif]--><!-- BEGIN HEAD --><head>
 <meta charset="utf-8">
-<title><?php echo $title; ?> | Kasbook Accounting Software</title>
+<title><?php echo $title; ?> | GuvenFI Accounting Software</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Kasbook Accounting Software, E-Accountant, Point of Sales" name="description">
+<meta content="GuvenFI Accounting Software, E-Accountant, Point of Sales" name="description">
 <meta content="Ahsan Khan" name="author">
 <meta name="MobileOptimized" content="320">
 
@@ -48,7 +48,7 @@ var path = '<?php echo base_url(); ?>';</script>
 <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" type="text/css">
  <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css">
  <link href="<?php echo base_url(); ?>assets/css/style-responsive.css" rel="stylesheet" type="text/css">
- <link href="<?php echo base_url(); ?>assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color">
+ <link href="<?php echo base_url(); ?>assets/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color">
 <link href="<?php echo base_url(); ?>assets/css/style-conquer.css" rel="stylesheet" type="text/css">
 <?php } ?>
 
@@ -97,9 +97,9 @@ var path = '<?php echo base_url(); ?>';</script>
 	<div class="header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-            <!-- <a href="<?php echo site_url('Dashboard'); ?>">
-                <img src="<?php echo base_url(); ?>assets/img/logo.png" alt="logo">
-            </a> -->
+            <a href="<?php echo site_url('Dashboard'); ?>">
+                <img src="<?php echo base_url(); ?>assets/img/logo.jpg"  width="100" height="30" alt="logo">
+            </a>
         </div>
         
 		<!-- END LOGO -->

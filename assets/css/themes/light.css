@@ -6,7 +6,7 @@ Reset and overrides
 ***/
 body {
   color: #111111;
-  background-color: #dddddd !important;
+  background-color: #eef5f7 !important;
 }
 .page-content {
   background-image: none;
@@ -19,7 +19,7 @@ Page header
 .header {
   filter: none;
   background-image: none;
-  background-color: #444444;
+  background-color: #eef5f7;
 }
 .header .navbar-nav .dropdown-toggle:hover,
 .header .navbar-nav .dropdown.open .dropdown-toggle {
@@ -76,7 +76,7 @@ Page sidebar
   margin-left: 13px;
 }
 .page-sidebar {
-  background: #dddddd;
+  background: #eef5f7;
 }
 ul.page-sidebar-menu > li {
   border-bottom: 1px solid #ccc;
@@ -101,32 +101,33 @@ ul.page-sidebar-menu > li a i {
 ul.page-sidebar-menu > li.open > a,
 ul.page-sidebar-menu > li > a:hover,
 ul.page-sidebar-menu > li:hover > a {
-  background: #c9c9c9;
+  background: #003463;
+  color:#fff;
 }
 ul.page-sidebar-menu > li.active > a {
-  color: #000000;
-  background: #c9c9c9 !important;
+  color: #fff;
+  background: #003463 !important;
 }
 ul.page-sidebar-menu > li.active > a i {
-  color: #000000;
+  color: #fff;
 }
 ul.page-sidebar-menu > li > ul.sub-menu > li:first-child > a {
   border-top: 0px !important;
 }
 ul.page-sidebar-menu > li > ul.sub-menu > li.active > a,
 ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
-  color: #000000 !important;
-  background: #eaeaea !important;
+  color: #fff !important;
+  background: #003463 !important;
 }
 ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
-  background: #eaeaea !important;
+  background: #003463 !important;
 }
 /* 3rd level sub menu */
 ul.page-sidebar-menu > li > ul.sub-menu li > ul.sub-menu > li.active > a,
 ul.page-sidebar-menu > li > ul.sub-menu li > ul.sub-menu > li > a:hover,
 ul.page-sidebar-menu > li > ul.sub-menu li.open > a {
-  color: #000000 !important;
-  background: #eaeaea !important;
+  color: #fff !important;
+  background: #003463 !important;
 }
 /* font color for all sub menu links*/
 ul.page-sidebar-menu li > ul.sub-menu > li > a {
@@ -151,7 +152,7 @@ ul.page-sidebar-menu > li.active > a .arrow.open:before {
 }
 /* sub menu bg color on hover menu item */
 .page-sidebar-closed ul.page-sidebar-menu > li:hover .sub-menu {
-  background-color: #dddddd;
+  background-color: #eef5f7;
 }
 /***
 Footer 
@@ -188,10 +189,10 @@ Footer
 /* begin: boxed page */
 @media (min-width: 992px) {
   .page-boxed {
-    background-color: #dddddd !important;
+    background-color: #eef5f7 !important;
   }
   .page-boxed .page-container {
-    background-color: #dddddd;
+    background-color: #eef5f7;
     border-left: 1px solid #f7f7f7;
     border-bottom: 1px solid #f7f7f7;
   }

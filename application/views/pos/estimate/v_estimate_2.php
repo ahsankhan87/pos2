@@ -1,6 +1,6 @@
 <form id="sale_form" action="">
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-sm-6">
 
             <label class="control-label col-sm-2" for="">Select Customer:</label>
             <div class="col-sm-4">
@@ -15,24 +15,7 @@
         </div>
         <!-- /.col-sm-12 -->
         
-        <div class="col-sm-2 text-right">
-            
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-sm-10">
-
-            <label class="control-label col-sm-2" for="">Deposit To:</label>
-            <div class="col-sm-4">
-                <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
-            </div>
-
-            
-        </div>
-        <!-- /.col-sm-12 -->
-        
-        <div class="col-sm-2 text-right">
+        <div class="col-sm-6 text-right">
             <div id="top_net_total"></div>
             
         </div>
@@ -70,11 +53,11 @@
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
-                    <!-- <tr>
+                    <tr>
                         <th class="text-right" colspan="6">Discount</th>
                         <th class="text-right" id="total_discount">0.00</th>
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
-                    </tr> -->
+                    </tr>
                     <tr>
                         <th class="text-right" colspan="6">Tax</th>
                         <th class="text-right" id="total_tax">0.00</th>
@@ -109,25 +92,24 @@
         $('.add_new').on('click', function(event) {
             event.preventDefault();
             counter++;
-            accountsDDL(counter);
+            productDDL(counter);
 
             var div = '<tr><td>' + counter + '</td>' +
-                '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]"></select></td>' +
+                '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
                 '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
                 '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" autocomplete="off">' +
                 '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]">'+
                 '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>'+
                 '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>'+
                 '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>'+
-                // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
-                '<td class="text-right"><input type="text" class="form-control description" id="description_' + counter + '" name="description[]" value=""  ></td>' +
+                '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
                 '<td class="text-right tax" id="tax_' + counter + '"></td>' +
                 '<td class="text-right total" id="total_' + counter + '"></td>' +
                 '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
             $('.create_table').append(div);
 
             //SELECT 2 DROPDOWN LIST   
-            $('#accountid_' + counter).select2();
+            $('#productid_' + counter).select2();
             ///
 
             //GET TOTAL WHEN QTY CHANGE
@@ -153,29 +135,29 @@
                 calc_gtotal();
             });
             //GET TOTAL WHEN DISCOUNT CHANGE
-            // $(".discount").on("keyup change", function(e) {
-            //     var curId = this.id.split("_")[1];
-            //     var qty = parseFloat($('#qty_' + curId).val());
-            //     var price = parseFloat($('#unitprice_' + curId).val());
-            //     var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
-            //     var total = (qty * price ? qty * price - discount : 0).toFixed(2);
-            //     $('#total_' + curId).text(total);
+            $(".discount").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var price = parseFloat($('#unitprice_' + curId).val());
+                var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
 
-            //     calc_gtotal();
-            // });
+                calc_gtotal();
+            });
 
             ////// LOAD COST PRICE, UNIT PRICE, TAX WHEN PRODUCT DROPDOWN CHANGE
             $('.product_id').on('change', function(event) {
                 // event.preventDefault();
                 var curId = this.id.split("_")[1];
-                var accountid = $(this).val();
+                var productid = $(this).val();
                 var qty = parseFloat($('#qty_' + curId).val());
                 var discount = (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
                 var tax_rate = 0;
                 var unit_price = 0;
 
                 $.ajax({
-                    url: site_url + "pos/Items/getSelected_items/" + accountid,
+                    url: site_url + "pos/Items/getSelected_items/" + productid,
                     type: 'GET',
                     dataType: 'json', // added data type
                     success: function(data) {
@@ -255,7 +237,7 @@
 
                     });
 
-                    $('#accountid_' + index).html(product_ddl);
+                    $('#productid_' + index).html(product_ddl);
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -264,39 +246,6 @@
                 }
             });
         }
-        ////////////////////////
-        //GET Accounts DROPDOWN LIST
-        function accountsDDL(index = 0) {
-
-            let accounts_ddl = '';
-            var account_type = ['liability','equity','cos','revenue','expense','asset'];
-            $.ajax({
-                url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
-                type: 'POST',
-                dataType: "JSON",
-                data: {account_types:account_type},
-                cache: true,
-                success: function(data) {
-                    //console.log(data);
-                    let i = 0;
-                    accounts_ddl += '<option value="0">Select Account</option>';
-
-                    $.each(data, function(index, value) {
-
-                        accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
-
-                    });
-
-                    $('#accountid_' + index).html(accounts_ddl);
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-        }
-        
         ///////////////////
         /////////////ADD NEW LINES END HERE
 
@@ -313,16 +262,15 @@
             $('.tax').each(function() {
                 total_tax += parseFloat($(this).text());
             });
-            // $('.discount').each(function() {
-            //     total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
-            // });
+            $('.discount').each(function() {
+                total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
+            });
 
-            total_tax = (total_tax ? total_tax : 0);
-            net_total = (total ? total : 0);
-            
+            net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
+
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
-            // $('#total_discount_txt').val(parseFloat(total_discount));
+            $('#total_discount_txt').val(parseFloat(total_discount));
             $('#total_tax_txt').val(parseFloat(total_tax));
             $('#net_total_txt').val(parseFloat(net_total));
             /////////////
@@ -330,7 +278,7 @@
             $('#top_net_total').html('Grand Total:<h2 style="margin:0">'+parseFloat(net_total).toLocaleString('en-US', 2)+'</h2>');
             $('#net_total').text(parseFloat(net_total).toLocaleString('en-US', 2));
             $('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
-            // $('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
+            $('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
             $('#total_tax').text(parseFloat(total_tax).toLocaleString('en-US'));
             //console.log(total_discount);
         }
@@ -349,7 +297,7 @@
                 {
                    $.ajax({
                         type: "POST",
-                        url: site_url + "pos/C_estimate/sale_transaction",
+                        url: site_url + "pos/C_estimate/saleProducts",
                         data: formValues,
                         success: function(data) {
                             if(data == '1')
@@ -365,40 +313,6 @@
             }
             e.preventDefault();
         });
-        ////
-        deposit_to_acc_codeDDL();
-            ////////////////////////
-            //GET deposit_to_acc_code DROPDOWN LIST
-            function deposit_to_acc_codeDDL() {
 
-            let deposit_to_acc_code_ddl = '';
-            var account_type = ['asset'];
-            $.ajax({
-                url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
-                type: 'POST',
-                dataType: "JSON",
-                data: {account_types:account_type},
-                //dataType: 'json', // added data type
-                success: function(data) {
-                    console.log(data);
-                    let i = 0;
-                    deposit_to_acc_code_ddl += '<option value="0">Select Account</option>';
-
-                    $.each(data, function(index, value) {
-
-                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
-
-                    });
-
-                    $('#deposit_to_acc_code').html(deposit_to_acc_code_ddl);
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-            }
-            ///////////////////
     });
 </script>

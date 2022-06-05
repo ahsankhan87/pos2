@@ -82,9 +82,9 @@
                                    echo '<td>'.date('d-m-Y',strtotime($list['sale_date'])).'</td>';
                                    $name = $this->M_customers->get_CustomerName($list['customer_id']);
                                    echo '<td>'.@$name.'</td>';
-                                //    echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
+                                   //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
                                    
-                                   echo '<td class="text-right">'. number_format($this->M_sales->get_totalCostBysaleID($list['invoice_no']),2). '</td>';
+                                   echo '<td class="text-right">'. number_format($list['total_amount'],2). '</td>';
                                    //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                                    echo '<td>';
                                    echo '<a href="'.site_url($langs).'/pos/C_sales/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
@@ -94,7 +94,6 @@
                                    echo '</tr>';
                                 } 
                                    
-                                   echo '</tbody>';
                         ?>
                     </tbody>
                     <tfoot>

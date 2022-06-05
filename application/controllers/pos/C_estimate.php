@@ -51,7 +51,111 @@ class C_estimate extends MY_Controller{
         $this->load->view('pos/estimate/v_editestimateProduct',$data);
         $this->load->view('templates/footer');
     }
-    
+    public function sale_transaction()
+    {
+        $total_amount = 0;
+        $discount = 0;
+        $unit_price = 0;
+        $cost_price = 0;
+
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            if (count((array)$this->input->post('account_id')) > 0) {
+                $this->db->trans_start();
+                //GET PREVIOISE INVOICE NO  
+                @$prev_invoice_no = $this->M_estimate->getMAXSaleInvoiceNo();
+                //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                //$new_invoice_no = 'POS'.date("Ymd").$number;
+                $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                $new_invoice_no = 'E' . $number;
+
+                //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
+                $user_id = $_SESSION['user_id'];
+                $company_id = $_SESSION['company_id'];
+                $sale_date = $this->input->post("sale_date");
+                $customer_id = $this->input->post("customer_id");
+                $emp_id = ''; //$this->input->post("emp_id");
+                $unit_id = '';//$this->input->post("unit_id");
+                //$posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
+                $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
+                $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
+                $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $register_mode = 'sale'; //$this->input->post("register_mode");
+                $saleType = 'cash';
+                $is_taxable =  1; //$this->input->post("is_taxable");
+                $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
+                $due_date = $this->input->post("due_date");
+                $business_address = $this->input->post("business_address");
+                $deposit_to_acc_code = $this->input->post("deposit_to_acc_code");
+                $total_amount = $this->input->post("net_total");
+
+                $data = array(
+                    'company_id' => $company_id,
+                    'invoice_no' => $new_invoice_no,
+                    'customer_id' => $customer_id,
+                    'deposit_to_acc_code'=>$deposit_to_acc_code,
+                    'employee_id' => $emp_id,
+                    'user_id' => $user_id,
+                    'sale_date' => $sale_date,
+                    'register_mode' => $register_mode,
+                    'account' => $saleType,
+                    'description' => $narration,
+                    'discount_value' => $discount,
+                    'currency_id' => $currency_id,
+                    'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
+                    'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
+                    //'is_taxable' => $is_taxable,
+                    //'due_date'=>$due_date,
+                    // 'business_address'=>$business_address,
+                );
+                $this->db->insert('pos_estimate', $data);
+                $sale_id = $this->db->insert_id();
+               
+                foreach ($this->input->post('account_id') as $key => $value) {
+                    
+                    if ($value != 0) {
+                        $account_code  = htmlspecialchars(trim($value));
+                        $qty = $this->input->post('qty')[$key];
+                        $unit_price = $this->input->post('unit_price')[$key];
+                        $cost_price = $this->input->post('cost_price')[$key];
+                        $description = $this->input->post('description')[$key];
+                        $total_amount = (double)($qty*$unit_price);
+                    
+                        $data = array(
+                            'sale_id' => $sale_id,
+                            'invoice_no' => $new_invoice_no,
+                            //'item_id' => 0,//$item_id,
+                            'account_code'=>$account_code,
+                            'description' => $narration,
+                            'quantity_sold' => ($register_mode == 'sale' ? $qty : -$qty), //if sales return then insert amount in negative
+                            'item_cost_price' => ($register_mode == 'sale' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
+                            'item_unit_price' => ($register_mode == 'sale' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
+                            'unit_id' => $unit_id,
+                            'description' => $description,
+                            'company_id' => $company_id,
+                            //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
+                            'discount_value' => $this->input->post('discount')[$key],
+                            'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
+                            'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
+                            'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]
+                        );
+
+                        $this->db->insert('pos_estimate_items', $data);
+
+                       
+                         //for logging
+                         $msg = 'invoice no ' . $new_invoice_no;
+                         $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
+                         // end logging
+                         
+                    }
+                }
+                $this->db->trans_complete();
+                echo '1';
+            } //check product count
+            
+        }
+    }
     //sale the projuct 
     public function saleProducts()
     {
@@ -174,7 +278,7 @@ class C_estimate extends MY_Controller{
         $data['Company'] = $this->M_companies->get_companies($company_id);
             
         $this->load->view('templates/header',$data);
-        $this->load->view('pos/estimate/v_receipt_small',$data);
+        $this->load->view('pos/estimate/v_receipt',$data);
         //$this->load->view('pos/estimate/v_receipt',$data);
         $this->load->view('templates/footer');
     }
@@ -223,7 +327,7 @@ class C_estimate extends MY_Controller{
         if($redirect === true)
         {
             $this->session->set_flashdata('message','Entry Deleted');
-            redirect('trans/C_estimate/allestimate','refresh');
+            redirect('pos/C_estimate/allestimate','refresh');
         }
         
     }

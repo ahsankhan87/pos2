@@ -1,9 +1,9 @@
 <html lang="en" class="no-js"><!--<![endif]--><!-- BEGIN HEAD --><head>
 <meta charset="utf-8">
-<title>Login | Kasbook Accounting Software</title>
+<title>Login | GuvenFI Accounting Software</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Kasbook Accounting Software to run your business, Point of Sale, Accounts Management Systems" name="description">
+<meta content="GuvenFI Accounting Software to run your business, Point of Sale, Accounts Management Systems" name="description">
 <meta content="Ahsan khan" name="author">
 <meta name="MobileOptimized" content="320">
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -33,7 +33,7 @@
 <div class="logo animated bounceIn">
 	<!-- <h1 class="form-title">GuvenFi</h1> -->
 	<a href="<?php echo base_url(); ?>">
-	<img src="<?php echo base_url(); ?>assets/img/logo.png" width="200" height="100" alt="Logo">
+	<img src="<?php echo base_url(); ?>assets/img/logo.jpg" width="200" height="70" alt="Logo">
 	</a>
 </div>
 <!-- END LOGO -->

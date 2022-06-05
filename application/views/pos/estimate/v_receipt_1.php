@@ -1,66 +1,10 @@
-<button class="hidden-print"><a href="<?php echo site_url('trans/C_sales/editSales/' . $invoice_no) ?>" title="edit">Edit</a></button>
+<button class="hidden-print"><a href="<?php echo site_url('trans/C_estimate/editestimate/' . $invoice_no) ?>" title="edit">Edit</a></button>
 <button class="hidden-print"><a href="#" onclick="window.print()" title="print">Print</a></button>
-<button class="hidden-print"><a href="<?php echo site_url('trans/C_sales/allSales') ?>">Sales</a></button>
-<style>
-    .invoice{
-        background-color: #fff;
-        border: solid 3px #0d83dd;
-        padding: 10px;
-    }
-    .invoice-header{
-        background-color: #0d83dd;
-        padding: 10px;
-        margin:-10px -10px 0 -10px;
-
-    }  
-    .invoice-header{
-        color: #a9d0ec;
-    }    
-
-    .grey{
-        color: gray;
-    }
-    .blue-title{
-        color: #0d83dd;
-    }
-    
-    .table thead tr{
-        border-top:#0d83dd solid 3px;
-    }
-    .item-desc{
-        font-size: 11px;
-        color: grey;
-    }
-</style>
-<?php 
-    $counter = 1;
-    $total = 0;
-    $discount = 0;
-    $discount_total = 0;
-    $total_tax_amount = 0;
-?>
-
+<button class="hidden-print"><a href="<?php echo site_url('trans/C_estimate/allestimate') ?>">estimate</a></button>
 <!-- BEGIN PAGE CONTENT-->
 <div class="invoice">
-    <div class="invoice-header">
-        <div class="row">
-            <div class="col-sm-4 col-xs-4">
-                <h1>ESTIMATE</h1>
-            </div>
-            <div class="col-sm-5 col-xs-5">
-
-            </div>
-            <div class="col-sm-3 col-xs-3">
-                <h3><?php echo $Company[0]['name']; ?></h3>
-                <span class="text-capitalize"><?php echo $Company[0]['address']; ?></span><br />
-                <span class=""><?php echo $Company[0]['contact_no']; ?></span>
-            </div>
-        </div>
-    </div> 
-    
-    <br>
     <div class="row invoice-logo">
-        <!-- <div class="col-sm-2 col-xs-2 invoice-logo-space">
+        <div class="col-sm-2 col-xs-2 invoice-logo-space">
             <?php if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
                 echo '<img src="' . base_url('images/company/thumb/' . $Company[0]['image']) . '" width="100" height="100" class="img-rounded" alt="picture"/>';
             } else {
@@ -69,90 +13,88 @@
             }
             ?>
 
-        </div> -->
-        <div class="col-sm-4 col-xs-4">
-            <div class="grey">Billed To</div>
-            <div>
-                <?php $customer =  @$this->M_customers->get_customers(@$estimate_items[0]['customer_id']); ?>
-                <?php echo @$customer[0]['store_name']; ?><br />
-                <?php echo @$customer[0]['address']; ?> <br />
-                <?php echo @$customer[0]['mobile_no']; ?><br />
-            </div>
         </div>
-        <div class="col-sm-2 col-xs-2">
-            <div class="grey">Invoice Number</div>
-            <div class=""><?php echo $invoice_no ?></div>
-            <br>
-            <div class="grey">Date of Issue</div>
-            <div class=""><?php echo date('m/d/Y', strtotime(@$estimate_items[0]['sale_date'])) ?></div>
-            
+        <div class="col-sm-4 col-xs-4 text-capitalize">
+
+            <h3><?php echo $Company[0]['name']; ?></h3>
+            <span class="text-capitalize"><?php echo $Company[0]['address']; ?></span><br />
+            <span class=""><?php echo $Company[0]['contact_no']; ?></span>
         </div>
         <div class="col-sm-6 col-xs-6">
             <p>
-                <!-- TAX INVOICE <br> -->
-                
-                <span style="font-size: 26px; color:grey">Invoice Total<br />
-                    <php echo $total; ?>
-                </span>
+                ESTIMATE <br>
+                #<?php echo $invoice_no; ?> / <?php echo date('d, M Y', strtotime(@$estimate_items[0]['sale_date'])); ?>
+                <?php $emp = @$this->M_employees->get_emp_name(@$estimate_items[0]['employee_id']);
+                //var_dump($emp); 
+                ?>
+                <span>User:&nbsp;<?php echo @$emp->first_name; ?><br />
+                    <!-- Contact:&nbsp;<?php echo @$emp->contact; ?><br /> -->
+                    <?php $customer =  @$this->M_customers->get_customers(@$estimate_items[0]['customer_id']); ?>
+                    <?php echo lang('customer'); ?>:&nbsp; <?php echo @$customer[0]['store_name']; ?><br />
+                    <!--<?php echo 'Cust Cell No'; ?>:&nbsp; <?php echo @$customer[0]['mobile_no']; ?><br />
+                             Cust Address:&nbsp; <?php echo @$customer[0]['address']; ?></span>  -->
             </p>
         </div>
     </div>
-    <br><br>
+
     <div class="row">
         <div class="col-xs-12">
-            <table class="table table-striped table-hover">
-                <thead class="blue-title">
+            <table class="table table-bordered table-striped table-hover table-condensed">
+                <thead>
                     <tr>
                         <th>
                             #
                         </th>
                         <th>
-                            <?php echo lang('product'); ?>
+                            Item
                         </th>
                         <th class="hidden-480">
-                            <?php echo lang('description'); ?>
-
+                            Description
                         </th>
                         <th class="hidden-480 text-right">
-                            <?php echo lang('quantity'); ?>
-
+                            Quantity
                         </th>
                         <th class="hidden-480 text-right">
-                            <?php echo lang('price'); ?>
-
+                            Price
                         </th>
                         <th class="hidden-480 text-right">
-                            <?php echo lang('disc'); ?>
-
+                            Disc
                         </th>
                         <th class="hidden-480 text-right">
-                            <?php echo lang('tax'); ?>
-
+                            Tax
                         </th>
                         <th class="text-right">
-                            <?php echo lang('total'); ?>
-
+                            Total
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    
+                    $counter = 1;
+                    $total = 0;
+                    $discount = 0;
+                    $discount_total = 0;
+                    $total_tax_amount = 0;
+
                     foreach ($estimate_items as $key => $list) {
 
                         $total_cost = ($list['item_unit_price'] * $list['quantity_sold']) - $list['discount_value'];
                         $discount += $list['discount_value'];
                         $tax_amount = $total_cost * $list['tax_rate'] / 100;
-                        //$item = $this->M_items->get_items($list['item_id']);
-                        $account_name = $this->M_groups->get_accountName($list['account_code']);
+                        $item = $this->M_items->get_items($list['item_id']);
+                        $size = $this->M_sizes->get_sizeName($list['size_id']);
+                        if (@$_SESSION['multi_currency'] == 1) {
+                            $currency = $this->M_currencies->get_currencies($estimate_items[0]['currency_id']);
+                            $symbol = $currency[0]['symbol'];
+                        } else {
+                            $symbol = $_SESSION['home_currency_symbol'];
+                        }
 
-                        $symbol = $_SESSION['home_currency_symbol'];
 
                         echo '<tr>';
                         echo '<td style="text-align:center;" >' . $counter++ . '</td>';
-                        //echo '<td>' . $account_name . '<div class="item-desc">'.$list['item_desc']. '</div></td>';
-                        echo '<td>' . $account_name . '</div></td>';
-                        echo '<td style="text-align:left;" class="hidden-480">' . $list['item_desc'] . '</td>';
+                        echo '<td>' . $item[0]['name'] . (isset($size) ? " " . $size : '') . '</td>';
+                        echo '<td style="text-align:left;" class="hidden-480">' . $item[0]['description'] . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . $list['quantity_sold'] . ' ' . $this->M_units->get_unitName($list['unit_id']) . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . $symbol . round($list['item_unit_price'], 2) . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . round($list['discount_value'], 2) . '</td>';
@@ -188,13 +130,13 @@
 							</li>
 							-->
                 <li>
-                    <strong class="blue-title"><?php echo lang('total') . ' ' . lang('disc'); ?>:</strong> <?php echo $symbol . round($discount, 2); ?>
+                    <strong>Total Disc:</strong> <?php echo $symbol . round($discount, 2); ?>
                 </li>
                 <li>
-                    <strong class="blue-title"><?php echo lang('total') . ' ' . lang('tax'); ?>:</strong> <?php echo $symbol . round($total_tax_amount, 2); ?>
+                    <strong>Total Tax:</strong> <?php echo $symbol . round($total_tax_amount, 2); ?>
                 </li>
                 <li>
-                    <strong class="blue-title"><?php echo lang('grand') . ' ' . lang('total'); ?>:</strong> <?php echo $symbol . round(@$total - $discount + $total_tax_amount, 2); ?>
+                    <strong>Grand Total:</strong> <?php echo $symbol . round(@$total - $discount + $total_tax_amount, 2); ?>
                 </li>
             </ul>
         </div>
@@ -211,7 +153,7 @@
                         <tr>
                             <td>
                             Warranty<br />
-                            Warranty products will be handled according to our warranty policy, we usually take 5 to 6 days to process any warranty item. Ask the sales representative
+                            Warranty products will be handled according to our warranty policy, we usually take 5 to 6 days to process any warranty item. Ask the estimate representative
                             for individual item warranty policy
                             </td>
                         </tr>
@@ -246,8 +188,8 @@ It is completely on our discretion to accept any return or not.
                     </tbody>
                 </table>-->
 
-    <!-- <br />
-    <div class="text-left">Powered by: <i>khybersoft.com</i> </div> -->
+    <br />
+    <div class="text-left">Powered by: <i>khybersoft.com</i> </div>
 
 </div>
 <!-- END PAGE CONTENT-->
