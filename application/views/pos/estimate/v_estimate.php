@@ -49,8 +49,8 @@
                         <th>#</th>
                         <th>Product</th>
                         <th>Qty</th>
-                        <th>Sale/Unit Price</th>
-                        <th>Discount</th>
+                        <th>Price</th>
+                        <th>Description</th>
                         <th>Tax</th>
                         <th>Sub-Total</th>
                         <th></th>

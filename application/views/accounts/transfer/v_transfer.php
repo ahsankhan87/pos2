@@ -12,7 +12,6 @@
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
             
-            
         </div>
         <!-- /.col-sm-12 -->
         
