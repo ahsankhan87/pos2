@@ -21,6 +21,25 @@ class C_bankDeposit extends MY_Controller
         $this->load->view('templates/footer');
     }
 
+    public function all()
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+        $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last month"));
+        $to_date = FY_END_DATE; //date("Y-m-d");
+        $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
+
+        $data['title'] = "All Bank Deposit";
+        $data['main'] = "All Bank Deposit";
+
+        $data['main_small'] = "";// $fiscal_dates;
+
+        $data['bank_deposit'] = $this->M_bank_deposit->get_bank_deposit(false, $start_date, $to_date,null);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('banking/bank_deposit/v_allbank_deposit', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function bank_deposit_transaction()
     {
         $total_amount = 0;
