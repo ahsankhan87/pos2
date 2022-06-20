@@ -22,7 +22,7 @@ class C_sales extends MY_Controller
         $data['estimate_no'] = $estimate_no; // Estimate invoice no.
 
         //$data['itemDDL'] = $this->M_items->get_activeItems();
-        $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        //$data['customersDDL'] = $this->M_customers->getCustomerDropDown();
         //$data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
         //$data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
         //$data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
@@ -66,12 +66,10 @@ class C_sales extends MY_Controller
         //$data['isEstimate'] = $isEstimate;
 
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
-        $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
-        $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
-        $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
-
+        //$data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/v_sales', $data);
+        $this->load->view('pos/sales/v_editsales', $data);
         $this->load->view('templates/footer');
     }
 
@@ -1099,9 +1097,9 @@ class C_sales extends MY_Controller
                 $outp .= ",";
             }
 
-            $outp .= '{"item_id":"'  . $rs["item_id"] . '",';
-            $outp .= '"size_id":"'   . $rs["size_id"] . '",';
-            $outp .= '"unit_id":"'   . $rs["unit_id"] . '",';
+            //$outp .= '{"item_id":"'  . $rs["item_id"] . '",';
+            $outp .= '{"account_code":"'  . $rs["account_code"] . '",';
+            //$outp .= '"unit_id":"'   . $rs["unit_id"] . '",';
             $outp .= '"item_cost_price":"'   . $rs["item_cost_price"] . '",';
             $outp .= '"item_unit_price":"'   . $rs["item_unit_price"] . '",';
             $outp .= '"quantity_sold":"'   . $rs["quantity_sold"] . '",';
@@ -1110,14 +1108,12 @@ class C_sales extends MY_Controller
             $outp .= '"tax_id":"'   . $rs["tax_id"] . '",';
             $outp .= '"tax_rate":"'   . $rs["tax_rate"] . '",';
             $outp .= '"tax_name":"",';
-            $outp .= '"inventory_acc_code":"'   . $rs["inventory_acc_code"] . '",';
-            $outp .= '"service":"'   . $rs["service"] . '",';
+            $outp .= '"description":"'   . $rs["description"] . '",';
+            //$outp .= '"service":"'   . $rs["service"] . '",';
 
-            $item_name = $this->M_items->get_ItemName($rs["item_id"]);
-            $outp .= '"name":"'   . @$item_name . '",';
-
-            $size_name = $this->M_sizes->get_sizeName($rs["size_id"]);
-            $outp .= '"size":"'   . @$size_name . '",';
+            //$item_name = $this->M_items->get_ItemName($rs["item_id"]);
+            //$item_name = $this->M_groups->get_accountName($rs["account_code"]);
+            //$outp .= '"name":"'   . @$item_name . '",';
 
             $outp .= '"invoice_no":"' . $rs["invoice_no"]     . '"}';
         }
@@ -1151,8 +1147,9 @@ class C_sales extends MY_Controller
             $outp .= '"discount_value":"'   . $rs["discount_value"] . '",';
             $outp .= '"total_amount":"'   . $rs["total_amount"] . '",';
             $outp .= '"total_tax":"'   . $rs["total_tax"] . '",';
-            $outp .= '"paid":"'   . $rs["paid"] . '",';
-            $outp .= '"is_taxable":"'   . $rs["is_taxable"] . '",';
+            $outp .= '"business_address":"'   . $rs["business_address"] . '",';
+            $outp .= '"deposit_to_acc_code":"'   . $rs["deposit_to_acc_code"] . '",';
+            $outp .= '"due_date":"'   . $rs["due_date"] . '",';
 
             $outp .= '"exchange_rate":"'   . $rs["exchange_rate"] . '",';
             $outp .= '"currency_id":"'   . $rs["currency_id"] . '",';

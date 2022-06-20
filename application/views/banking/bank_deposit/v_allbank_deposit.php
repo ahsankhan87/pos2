@@ -13,7 +13,7 @@
         }
         ?>
         <?php
-            echo anchor('banking/C_bank_deposit/', 'New ' . lang('transaction'), 'class="btn btn-success" id=""'); 
+            echo anchor('banking/C_bankDeposit/', 'New ' . lang('transaction'), 'class="btn btn-success" id=""'); 
         ?> 
        
         <div class="portlet">
