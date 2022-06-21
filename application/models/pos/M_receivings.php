@@ -117,7 +117,15 @@ class M_receivings extends CI_Model{
         return $query->result_array();
        
     }
+    function get_receiving_items_only($invoice_no)//for receipt
+    {
     
+       $this->db->where(array('invoice_no'=>$invoice_no,'company_id'=>$_SESSION['company_id']));
+       $query = $this->db->get('pos_receivings_items');
+       return $query->result_array();
+       
+    }
+
    function delete($invoice_no)
     {
         $this->db->delete('pos_receivings',array('invoice_no'=>$invoice_no));

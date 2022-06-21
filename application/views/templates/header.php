@@ -97,9 +97,9 @@ var path = '<?php echo base_url(); ?>';</script>
 	<div class="header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-            <a href="<?php echo site_url('Dashboard'); ?>">
+            <!-- <a href="<?php echo site_url('Dashboard'); ?>">
                 <img src="<?php echo base_url(); ?>assets/img/logo.jpg"  width="100" height="30" alt="logo">
-            </a>
+            </a> -->
         </div>
         
 		<!-- END LOGO -->

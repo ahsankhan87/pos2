@@ -70,7 +70,7 @@
                             <th class="text-right"><?php echo lang('amount'); ?></th>
                             <!-- <th class="text-right"><?php echo lang('taxes'); ?></th> -->
                             <!-- <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th> -->
-                            <!-- <th class="hidden-print"><?php echo lang('action'); ?></th> -->
+                            <th class="hidden-print"><?php echo lang('action'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,6 +90,11 @@
                                 //    echo '<td>'.$list['supplier_invoice_no'].'</td>';
                                 //    echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
                                    echo '<td>'. $this->M_receivings->get_totalCostByReceivingID($list['invoice_no']). '</td>';
+                                   echo '<td>';
+                                   echo '<a href="'.site_url($langs).'/trans/'.($sale_type == "cash" ? "C_receivings" : "C_bills").'/edit/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>';
+                                   //echo '| <a href="'.site_url($langs).'/trans/'.($sale_type == "cash" ? "C_receivings" : "C_bills").'/receipt/' . $list['invoice_no'] .'" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a>';
+                                   echo '| <a href="'.site_url($langs).'/trans/'.($sale_type == "cash" ? "C_receivings" : "C_bills").'/delete/' . $list['invoice_no'] .'" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
+                                   echo '</td>';
                                    echo '</tr>';
                                     } 
                                    

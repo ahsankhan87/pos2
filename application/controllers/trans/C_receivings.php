@@ -85,7 +85,28 @@ class C_receivings extends MY_Controller
             $this->load->view('templates/footer');
         }
     }
-    public function purchase_transaction()
+
+    public function edit($invoice_no)
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+
+        $data['title'] = lang('edit') . ' ' . lang('sales');
+        $data['main'] = lang('edit') . ' ' . lang('sales');
+
+        $data['saleType'] = ''; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
+        $data['invoice_no'] = $invoice_no;
+        $data['edit'] = true;
+        //$data['isEstimate'] = $isEstimate;
+
+        //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
+        //$data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        
+        $this->load->view('templates/header', $data);
+        $this->load->view('pos/receivings/v_editreceivings', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function purchase_transaction($edit = null,$invoice_no=null)
     {
         //INITIALIZE
         $total_amount = 0;
@@ -96,12 +117,20 @@ class C_receivings extends MY_Controller
 
             if (count((array)$this->input->post('account_id')) > 0) {
                 $this->db->trans_start();
-                //GET PREVIOISE INVOICE NO  
-                @$prev_invoice_no = $this->M_receivings->getMAXPurchaseInvoiceNo();
-                //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                //$new_invoice_no = 'POS'.date("Ymd").$number;
-                $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                $new_invoice_no = 'R' . $number;
+                 
+                //IF EDIT THEN DELETE ALL INVOICES AND INSERT AGAIN
+                 if($edit != null)
+                 {
+                     $this->delete($invoice_no,false);
+                     $new_invoice_no = $invoice_no;
+                 }else{
+                    //GET PREVIOISE INVOICE NO  
+                    @$prev_invoice_no = $this->M_receivings->getMAXPurchaseInvoiceNo();
+                    //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                    //$new_invoice_no = 'POS'.date("Ymd").$number;
+                    $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                    $new_invoice_no = 'R' . $number;
+                 }
 
                 //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
                 $user_id = $_SESSION['user_id'];
@@ -174,7 +203,7 @@ class C_receivings extends MY_Controller
                             'description'=>$description,
                             'company_id' => $company_id,
                             //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
-                            'discount_value' => $this->input->post('discount')[$key],
+                            //'discount_value' => $this->input->post('discount')[$key],
                             'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
                             'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
                             //'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]
@@ -659,7 +688,14 @@ class C_receivings extends MY_Controller
 
         print_r(json_encode($this->M_receivings->get_selected_receivings($start_date, $to_date)));
     }
-
+    function get_receiving_by_invoice($invoice_no)
+    {
+        print_r(json_encode($this->M_receivings->get_receiving_by_invoice($invoice_no)));
+    }
+    function get_receiving_items_only($invoice_no)
+    {
+        print_r(json_encode($this->M_receivings->get_receiving_items_only($invoice_no)));
+    }
 
     public function getSupplierCurrencyJSON($supplier_id)
     {
