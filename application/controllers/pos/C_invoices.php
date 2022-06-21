@@ -183,7 +183,7 @@ class C_invoices extends MY_Controller
                             'description' => $description,
                             'company_id' => $company_id,
                             //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
-                            'discount_value' => $this->input->post('discount')[$key],
+                            //'discount_value' => $this->input->post('discount')[$key],
                             'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
                             'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
                             'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]
