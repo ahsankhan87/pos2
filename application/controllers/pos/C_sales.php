@@ -73,7 +73,7 @@ class C_sales extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    public function sale_transaction()
+    public function sale_transaction($edit = null,$invoice_no=null)
     {
         $total_amount = 0;
         $discount = 0;
@@ -84,13 +84,23 @@ class C_sales extends MY_Controller
 
             if (count((array)$this->input->post('account_id')) > 0) {
                 $this->db->trans_start();
-                //GET PREVIOISE INVOICE NO  
-                @$prev_invoice_no = $this->M_sales->getMAXSaleInvoiceNo();
-                //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                //$new_invoice_no = 'POS'.date("Ymd").$number;
-                $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                $new_invoice_no = 'S' . $number;
+        
+                //IF EDIT THEN DELETE ALL INVOICES AND INSERT AGAIN
+                if($edit != null)
+                {
+                    $this->delete($invoice_no,false);
+                    $new_invoice_no = $invoice_no;
+                }else{
+                    //GET PREVIOISE INVOICE NO  
+                    @$prev_invoice_no = $this->M_sales->getMAXSaleInvoiceNo();
+                    //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                    //$new_invoice_no = 'POS'.date("Ymd").$number;
+                    $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                    $new_invoice_no = 'S' . $number;
 
+                }
+
+                
                 //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
                 $user_id = $_SESSION['user_id'];
                 $company_id = $_SESSION['company_id'];
@@ -174,7 +184,7 @@ class C_sales extends MY_Controller
                             'description' => $description,
                             'company_id' => $company_id,
                             //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
-                            'discount_value' => $this->input->post('discount')[$key],
+                            //'discount_value' => $this->input->post('discount')[$key],
                             'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
                             'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
                             'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]

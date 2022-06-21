@@ -104,8 +104,8 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
-                        <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?></th>
+                        <th colspan="5"><?php //echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
+                        <?php echo form_submit('', 'Update', 'id="close" class="btn btn-success"'); ?></th>
                         <th class="text-right" >Grand Total</th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
@@ -446,7 +446,7 @@
                 {
                    $.ajax({
                         type: "POST",
-                        url: site_url + "pos/"+module+"/sale_transaction",
+                        url: site_url + "pos/"+module+"/sale_transaction/"+1+"/"+invoice_no,
                         data: formValues,
                         success: function(data) {
                             if(data == '1')
