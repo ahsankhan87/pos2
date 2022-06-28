@@ -219,28 +219,9 @@
             $('#accountid_' + counter).select2();
             ///
 
-            //GET TOTAL WHEN QTY CHANGE
-            $(".qty").on("keyup change", function(e) {
-                var curId = this.id.split("_")[1];
-                var qty = parseFloat($(this).val());
-                var price = parseFloat($('#unitprice_' + curId).val());
-                var discount = 0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
-                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
-                $('#total_' + curId).text(total);
-
-                calc_gtotal();
-            });
-            //GET TOTAL WHEN UNIT PRICE CHANGE
-            $(".unit_price").on("keyup change", function(e) {
-                var curId = this.id.split("_")[1];
-                var qty = parseFloat($('#qty_' + curId).val());
-                var discount = 0; //(parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
-                var price = parseFloat($(this).val());
-                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
-                $('#total_' + curId).text(total);
-
-                calc_gtotal();
-            });
+            qty_change();
+            unit_price_change();
+            
             //GET TOTAL WHEN DISCOUNT CHANGE
             // $(".discount").on("keyup change", function(e) {
             //     var curId = this.id.split("_")[1];
@@ -296,6 +277,34 @@
 
         });
         //$(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
+
+        function qty_change(){
+            //GET TOTAL WHEN QTY CHANGE
+            $(".qty").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($(this).val());
+                var price = parseFloat($('#unitprice_' + curId).val());
+                var discount = 0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+        }
+
+        function unit_price_change(){
+            //GET TOTAL WHEN UNIT PRICE CHANGE
+            $(".unit_price").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var discount = 0; //(parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var price = parseFloat($(this).val());
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+        }
 
         /////////////////////////////////
         $("#sale_table").on("click", "#removeItem", function() {
@@ -363,7 +372,7 @@
         ///////////////////
         ////////////////////////
         //GET Accounts DROPDOWN LIST
-        function accountsDDL(index = 0) {
+        function accountsDDL(index = 0,selected_acc_code="") {
 
             let accounts_ddl = '';
             var account_type = ['liability','equity','cos','revenue','expense','asset'];
@@ -380,7 +389,7 @@
 
                     $.each(data, function(index, value) {
 
-                        accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
+                        accounts_ddl += '<option value="' + value.account_code + '" '+(value.account_code == selected_acc_code ? "selected=''": "")+'>' + value.title + '</option>';
 
                     });
 
@@ -615,7 +624,7 @@
                     
                     $.each(data, function(index, value) {
                         counter++;
-                        accountsDDL_1(counter,value.account_code);
+                        accountsDDL(counter,value.account_code);
                         
                         var div = '<tr><td>' + counter + '</td>' +
                         // '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
@@ -641,7 +650,9 @@
                         calc_gtotal();
                     });
 
-                    
+                    qty_change();
+                    unit_price_change();
+            
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -651,38 +662,6 @@
             /////
             
         }
-        //GET Accounts DROPDOWN LIST
-        function accountsDDL_1(index = 0,selected_acc_code="") {
-
-            let accounts_ddl = '';
-            var account_type = ['liability','equity','cos','revenue','expense','asset'];
-            $.ajax({
-                url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
-                type: 'POST',
-                dataType: "JSON",
-                data: {account_types:account_type},
-                cache: true,
-                success: function(data) {
-                    //console.log(data);
-                    let i = 0;
-                    accounts_ddl += '<option value="0">Select Account</option>';
-
-                    $.each(data, function(index, value) {
-
-                        accounts_ddl += '<option value="' + value.account_code + '" '+(value.account_code == selected_acc_code ? "selected=''": "")+'>' + value.title + '</option>';
-
-                    });
-
-                    $('#accountid_' + index).html(accounts_ddl);
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-        }
-
         
         ///////////////////
     });
