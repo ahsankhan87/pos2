@@ -5,12 +5,12 @@
         if($flash_message == TRUE)
         {
           echo '<div class="alert alert-success">';
-            echo '<a class="close" data-dismiss="alert">×</a>';
+            echo '<a class="close" data-dismiss="alert">ï¿½</a>';
             echo '<strong>Well done!</strong> new supplier created with success.';
           echo '</div>';       
         }else{
           echo '<div class="alert alert-error">';
-            echo '<a class="close" data-dismiss="alert">×</a>';
+            echo '<a class="close" data-dismiss="alert">ï¿½</a>';
             echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
           echo '</div>';          
         }
@@ -25,6 +25,12 @@ echo validation_errors();
 echo form_open('setting/C_taxes/create',$attributes);
 
 ?>
+<div class="form-group">
+  <label class="control-label col-sm-2" for="account_code">Account:</label>
+  <div class="col-sm-10">
+    <?php echo form_dropdown('account_code',$accountDDL,set_value('account_code'),'class="form-control select2me"'); ?>
+  </div>
+</div>
 
 <div class="form-group">
   <label class="control-label col-sm-2" for="name">Name:</label>

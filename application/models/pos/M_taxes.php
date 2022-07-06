@@ -65,7 +65,7 @@ class M_taxes extends CI_Model{
     function gettaxDropDown()
     {
         $data = array();
-        $data['']= 'Select Tax Account';
+        $data['']= 'Tax';
         
         $query = $this->db->get_where('pos_taxes',array('status'=>1,'company_id'=> $_SESSION['company_id']));
         
@@ -105,6 +105,7 @@ class M_taxes extends CI_Model{
             $data = array(
             'company_id'=> $data['company_id'],
             'name' => $data['name'],
+            'account_code' => $data['account_code'],
             'rate' => $data['rate'],
             'description' => $data['description'],
             'status' => $data['status']
@@ -121,6 +122,7 @@ class M_taxes extends CI_Model{
             $data = array(
             'company_id'=> $_SESSION['company_id'],
             'name' => $data['name'],
+            'account_code' => $data['account_code'],
             'rate' => $data['rate'],
             'description' => $data['description'],
             'status' => $data['status']

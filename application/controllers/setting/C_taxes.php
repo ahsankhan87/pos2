@@ -27,6 +27,11 @@ class C_taxes extends MY_Controller{
         //echo $_SESSION['home_tax_code'];
         print_r($this->M_taxes->get_tax_rate($_SESSION['home_tax_code'],$to_tax,$amount));
     }
+      
+    function tax_DDL() {
+        //echo $_SESSION['home_tax_code'];
+        print_r(json_encode($this->M_taxes->get_activetaxes()));
+    }
                             
     function create()
     {
@@ -39,7 +44,7 @@ class C_taxes extends MY_Controller{
             $this->form_validation->set_rules('name', 'Name', 'required');
             $this->form_validation->set_rules('rate', 'Rate', 'required');
             //$this->form_validation->set_rules('tax_account_no', 'tax_account_no', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -47,6 +52,7 @@ class C_taxes extends MY_Controller{
                 $data = array(
                 'company_id'=> $_SESSION['company_id'],
                 'name' => $this->input->post('name', true),
+                'account_code' => $this->input->post('account_code', true),
                 'rate' => $this->input->post('rate', true),
                 'description' => $this->input->post('description', true),
                 'status' => $this->input->post('status', true),
@@ -70,6 +76,7 @@ class C_taxes extends MY_Controller{
         }
             $data['title'] = 'Create Tax';
             $data['main'] = 'Create New Tax';
+            $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
             
                
             $this->load->view('templates/header',$data);
@@ -87,13 +94,14 @@ class C_taxes extends MY_Controller{
             //form Validation
             $this->form_validation->set_rules('name', 'Name', 'required');
             $this->form_validation->set_rules('rate', 'Rate', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
             {
                  $data = array(
                     'company_id'=> $_SESSION['company_id'],
+                    'account_code' => $this->input->post('account_code', true),
                     'name' => $this->input->post('name', true),
                     'rate' => $this->input->post('rate', true),
                     'description' => $this->input->post('description', true),
@@ -123,6 +131,7 @@ class C_taxes extends MY_Controller{
             $data['main'] = 'Update Tax';
             
             $data['tax'] = $this->M_taxes->get_taxes($id);
+            $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
             
             $this->load->view('templates/header',$data);
             $this->load->view('pos/taxes/edit',$data);

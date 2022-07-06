@@ -16,6 +16,12 @@ echo form_open('setting/C_taxes/edit',$attributes);
 
 echo form_hidden('id',$values['id']);
 ?>
+<div class="form-group">
+  <label class="control-label col-sm-2" for="account_code">Account:</label>
+  <div class="col-sm-10">
+    <?php echo form_dropdown('account_code',$accountDDL,$values['account_code'],'class="form-control select2me"'); ?>
+  </div>
+</div>
 
 <div class="form-group">
   <label class="control-label col-sm-2" for="Name">Name:</label>

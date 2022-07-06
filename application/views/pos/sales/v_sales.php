@@ -99,7 +99,7 @@
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right">Tax</th>
+                        <th class="text-right"><select name="tax_id" id="tax_id" class="form-control"></select></th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
@@ -536,33 +536,66 @@
         //GET deposit_to_acc_code DROPDOWN LIST
         function deposit_to_acc_codeDDL() {
 
-        let deposit_to_acc_code_ddl = '';
-        var account_type = ['asset'];
-        $.ajax({
-            url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
-            type: 'POST',
-            dataType: "JSON",
-            data: {account_types:account_type},
-            //dataType: 'json', // added data type
-            success: function(data) {
-                console.log(data);
-                let i = 0;
-                deposit_to_acc_code_ddl += '<option value="0">Select Account</option>';
+            let deposit_to_acc_code_ddl = '';
+            var account_type = ['asset'];
+            $.ajax({
+                url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
+                type: 'POST',
+                dataType: "JSON",
+                data: {account_types:account_type},
+                //dataType: 'json', // added data type
+                success: function(data) {
+                    console.log(data);
+                    let i = 0;
+                    deposit_to_acc_code_ddl += '<option value="0">Select Account</option>';
 
-                $.each(data, function(index, value) {
+                    $.each(data, function(index, value) {
 
-                    deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
+                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
 
-                });
+                    });
 
-                $('#deposit_to_acc_code').html(deposit_to_acc_code_ddl);
+                    $('#deposit_to_acc_code').html(deposit_to_acc_code_ddl);
 
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ///////////////////
+
+         ////
+         taxDDL();
+        ////////////////////////
+        //GET customer DROPDOWN LIST
+        function taxDDL() {
+
+        let taxDDL = '';
+            $.ajax({
+                url: site_url + "setting/C_taxes/tax_DDL",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    console.log(data);
+                    let i = 0;
+                    taxDDL += '<option value="0">No Tax</option>';
+
+                    $.each(data, function(index, value) {
+
+                        taxDDL += '<option value="' + value.id + '">' + value.name+ '</option>';
+
+                    });
+
+                    $('#tax_id').html(taxDDL);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
         }
         ///////////////////
     });
