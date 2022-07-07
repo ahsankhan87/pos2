@@ -99,7 +99,8 @@
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right"><select name="tax_id" id="tax_id" class="form-control"></select></th>
+                        <th class="text-right"><select name="tax_id" id="tax_id" class="form-control"></select>
+                        <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value=""></th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
@@ -405,16 +406,16 @@
                 total += parseFloat($(this).text());
             });
 
-            $('.tax').each(function() {
-                total_tax += parseFloat($(this).text());
-            });
+            var tax_rate = $('#tax_id').val();
+            
+            total_tax = (tax_rate*total/100);
             // $('.discount').each(function() {
             //     total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
             // });
             total_tax = (total_tax ? total_tax : 0);
-            net_total = (total ? total : 0);
-            // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
-
+            total = (total  ? total : 0);
+            net_total = (total + total_tax ? total+total_tax : 0);
+            
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
             $('#total_discount_txt').val(parseFloat(total_discount));
@@ -584,7 +585,7 @@
 
                     $.each(data, function(index, value) {
 
-                        taxDDL += '<option value="' + value.id + '">' + value.name+ '</option>';
+                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '">' + value.name+ '</option>';
 
                     });
 
@@ -598,5 +599,15 @@
             });
         }
         ///////////////////
+
+        ////// LOAD TAX DROPDOWN CHANGE
+        $('#tax_id').on('change', function(event) {
+            // event.preventDefault();
+            calc_gtotal();     
+            var account_code = $("#tax_id option:selected").attr("account_code");
+            $("#tax_acc_code_txt").val(account_code);
+            // console.log(account_code);
+         });
+
     });
 </script>

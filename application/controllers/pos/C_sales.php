@@ -100,7 +100,6 @@ class C_sales extends MY_Controller
 
                 }
 
-                
                 //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
                 $user_id = $_SESSION['user_id'];
                 $company_id = $_SESSION['company_id'];
@@ -119,8 +118,8 @@ class C_sales extends MY_Controller
                 $due_date = $this->input->post("due_date");
                 $business_address = $this->input->post("business_address");
                 $deposit_to_acc_code = $this->input->post("deposit_to_acc_code");
-                $total_amount = $this->input->post("net_total");
-
+                $sub_total = $this->input->post("sub_total");
+                
                 $data = array(
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
@@ -134,7 +133,7 @@ class C_sales extends MY_Controller
                     'description' => $narration,
                     'discount_value' => $discount,
                     'currency_id' => $currency_id,
-                    'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
+                    'total_amount' => ($register_mode == 'sale' ? $sub_total : -$sub_total), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     //'is_taxable' => $is_taxable,
                     'due_date'=>$due_date,
@@ -153,7 +152,7 @@ class C_sales extends MY_Controller
                     'date' => $sale_date,
                     //'amount' => $dr_amount,
                     //'ref_account_id' => $ref_id,
-                    'debit' => $total_amount,
+                    'debit' => $sub_total,
                     'credit' => 0,
                     'invoice_no' => $new_invoice_no,
                     'narration' => $narration,
