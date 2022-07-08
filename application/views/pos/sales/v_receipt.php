@@ -156,15 +156,16 @@
                         echo '<td style="text-align:right;" class="hidden-480">' . $list['quantity_sold'] . ' ' . $this->M_units->get_unitName($list['unit_id']) . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . $symbol . round($list['item_unit_price'], 2) . '</td>';
                         echo '<td style="text-align:right;" class="hidden-480">' . round($list['discount_value'], 2) . '</td>';
-                        echo '<td style="text-align:right;" class="hidden-480">' . round($tax_amount, 2) . '</td>';
+                        echo '<td style="text-align:right;" class="hidden-480"></td>';
                         echo '<td style="text-align:right;" >' . $symbol . round($total_cost + $tax_amount, 2) . '</td>';
 
                         echo '</tr>';
 
                         $total += ($list['item_unit_price'] * $list['quantity_sold']);
                         //$discount_total += (($list['item_unit_price']*$list['quantity_sold'])*$list['discount_value']/100);
-                        $total_tax_amount += $tax_amount;
+                        //$total_tax_amount += $tax_amount;
                     }
+                    $total_tax_amount = $sales_items[0]['total_tax'];
                     ?>
 
                 </tbody>
@@ -188,13 +189,13 @@
 							</li>
 							-->
                 <li>
-                    <strong class="blue-title"><?php echo lang('total') . ' ' . lang('disc'); ?>:</strong> <?php echo $symbol . round($discount, 2); ?>
+                    <strong class="blue-title"><?php echo lang('total') . ' ' . lang('disc'); ?>:</strong> <?php echo $symbol . number_format($discount, 2); ?>
                 </li>
                 <li>
-                    <strong class="blue-title"><?php echo lang('total') . ' ' . lang('tax'); ?>:</strong> <?php echo $symbol . round($total_tax_amount, 2); ?>
+                    <strong class="blue-title"><?php echo lang('total') . ' ' . lang('tax'); ?>:</strong> <?php echo $symbol . number_format($total_tax_amount, 2); ?>
                 </li>
                 <li>
-                    <strong class="blue-title"><?php echo lang('grand') . ' ' . lang('total'); ?>:</strong> <?php echo $symbol . round(@$total - $discount + $total_tax_amount, 2); ?>
+                    <strong class="blue-title"><?php echo lang('grand') . ' ' . lang('total'); ?>:</strong> <?php echo $symbol . number_format(@$total - $discount + $total_tax_amount, 2); ?>
                 </li>
             </ul>
         </div>

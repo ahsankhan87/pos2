@@ -84,7 +84,7 @@
                                    echo '<td>'.@$name.'</td>';
                                    //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
                                    
-                                   echo '<td class="text-right">'. number_format($list['total_amount'],2). '</td>';
+                                   echo '<td class="text-right">'. number_format($list['total_amount']+$list['total_tax'],2). '</td>';
                                    //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                                    echo '<td>';
                                    echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>

@@ -119,6 +119,7 @@ class C_sales extends MY_Controller
                 $business_address = $this->input->post("business_address");
                 $deposit_to_acc_code = $this->input->post("deposit_to_acc_code");
                 $sub_total = $this->input->post("sub_total");
+                $tax_acc_code = $this->input->post("tax_acc_code");
                 
                 $data = array(
                     'company_id' => $company_id,
@@ -216,7 +217,47 @@ class C_sales extends MY_Controller
                          // end logging
                          
                     }
+                    
                 }
+                    ///////////////
+                    //TAX ACCOUNT ENTRY
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $emp_id,
+                        'user_id' => $user_id,
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $deposit_to_acc_code, //account_id,
+                        'date' => $sale_date,
+                        //'amount' => $dr_amount,
+                        //'ref_account_id' => $ref_id,
+                        'debit' => $total_tax_amount,
+                        'credit' => 0,
+                        'invoice_no' => $new_invoice_no,
+                        'narration' => $narration,
+                        'company_id' => $company_id,
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+                    
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $emp_id,
+                        'user_id' => $user_id,
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $tax_acc_code, //account_id,
+                        'date' => $sale_date,
+                        //'amount' => $dr_amount,
+                        //'ref_account_id' => $ref_id,
+                        'debit' => 0,
+                        'credit' => $total_tax_amount,
+                        'invoice_no' => $new_invoice_no,
+                        'narration' => $narration,
+                        'company_id' => $company_id,
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+                    //////////
+
                 $this->db->trans_complete();
                 echo '1';
             } //check product count

@@ -91,7 +91,7 @@ class m_sales extends CI_Model{
     function get_sales_items($new_invoice_no)//for receipt
     {
        $this->db->select('A.sale_date,A.sale_time,A.amount_due,A.register_mode,A.employee_id,A.discount_value as total_discount,A.customer_id,
-       A.currency_id,A.description,A.invoice_no,A.account,A.is_taxable,A.business_address,
+       A.currency_id,A.description,A.invoice_no,A.account,A.is_taxable,A.business_address,A.total_tax,
        B.unit_id,B.item_id,B.item_unit_price,B.item_cost_price,B.quantity_sold,B.description as item_desc,
        B.discount_percent,B.discount_value,B.tax_rate,B.tax_id,B.inventory_acc_code,B.account_code');
        $this->db->join('pos_sales_items as B','A.sale_id = B.sale_id');
