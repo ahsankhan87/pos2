@@ -459,10 +459,10 @@
         });
 
         ////
-        supplierDDL();
+        //supplierDDL();
         ////////////////////////
         //GET supplier DROPDOWN LIST
-        function supplierDDL() {
+        function supplierDDL(supplier_id='') {
 
         let supplier_ddl = '';
         $.ajax({
@@ -476,7 +476,7 @@
 
                 $.each(data, function(index, value) {
 
-                    supplier_ddl += '<option value="' + value.id + '">' + value.name + '</option>';
+                    supplier_ddl += '<option value="' + value.id + '" '+(value.id == supplier_id ? "selected=''": "")+' >' + value.name + '</option>';
 
                 });
 
@@ -518,8 +518,8 @@
             }
         });
         /////
-         ////
-         payment_acc_codeDDL();
+        ////
+        // payment_acc_codeDDL();
         ////////////////////////
         //GET payment_acc_code DROPDOWN LIST
         function payment_acc_codeDDL() {
@@ -538,7 +538,7 @@
 
                 $.each(data, function(index, value) {
 
-                    payment_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
+                    payment_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == customer_id ? "selected=''": "")+' >' + value.title+ '</option>';
 
                 });
 
@@ -570,11 +570,8 @@
                 success: function(data) {
                     console.log(data);
                     $.each(data, function(index, value) {
-                        $('#supplier_id').val(null).trigger('change'); //Clearing selections
-                        $('#payment_acc_code').val(null).trigger('change'); // Clearing selections
-                        
-                        $('#supplier_id').val(value.supplier_id).trigger('change');
-                        $('#payment_acc_code').val(value.payment_acc_code).trigger('change');
+                        supplierDDL(value.supplier_id);
+                        payment_acc_codeDDL(value.payment_acc_code);
                         $('#business_address').val(value.business_address);
                         $('#due_date').val(value.due_date);
                         $('#sale_date').val(value.receiving_date);

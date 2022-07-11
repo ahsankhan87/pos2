@@ -480,10 +480,10 @@
         });
 
         ////
-        customerDDL();
+        //customerDDL();
         ////////////////////////
         //GET customer DROPDOWN LIST
-        function customerDDL() {
+        function customerDDL(customer_id='') {
 
         let customer_ddl = '';
         $.ajax({
@@ -497,7 +497,7 @@
 
                 $.each(data, function(index, value) {
 
-                    customer_ddl += '<option value="' + value.id + '">' + value.first_name+ '</option>';
+                    customer_ddl += '<option value="' + value.id + '" '+(value.id == customer_id ? "selected=''": "")+' >' + value.first_name+ '</option>';
 
                 });
 
@@ -541,10 +541,10 @@
         /////
 
         ////
-        deposit_to_acc_codeDDL();
+        //deposit_to_acc_codeDDL();
         ////////////////////////
         //GET deposit_to_acc_code DROPDOWN LIST
-        function deposit_to_acc_codeDDL() {
+        function deposit_to_acc_codeDDL(deposit_to_acc_code='') {
 
         let deposit_to_acc_code_ddl = '';
         var account_type = ['asset'];
@@ -561,7 +561,7 @@
 
                 $.each(data, function(index, value) {
 
-                    deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
+                    deposit_to_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == deposit_to_acc_code ? "selected=''": "")+'>' + value.title+ '</option>';
 
                 });
 
@@ -592,11 +592,8 @@
                 success: function(data) {
                     console.log(data);
                     $.each(data, function(index, value) {
-                        $('#customer_id').val(null).trigger('change'); //Clearing selections
-                        $('#deposit_to_acc_code').val(null).trigger('change'); // Clearing selections
-                        
-                        $('#customer_id').val(value.customer_id).trigger('change');
-                        $('#deposit_to_acc_code').val(value.deposit_to_acc_code).trigger('change');
+                        customerDDL(value.customer_id);
+                        deposit_to_acc_codeDDL(value.deposit_to_acc_code);
                         $('#business_address').val(value.business_address);
                         $('#due_date').val(value.due_date);
                         $('#sale_date').val(value.sale_date);
