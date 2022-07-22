@@ -22,7 +22,7 @@ class C_invoices extends MY_Controller
         $data['estimate_no'] = $estimate_no; // Estimate invoice no.
 
         //$data['itemDDL'] = $this->M_items->get_activeItems();
-        $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        //$data['customersDDL'] = $this->M_customers->getCustomerDropDown();
         //$data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
         //$data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
         //$data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
@@ -66,9 +66,9 @@ class C_invoices extends MY_Controller
         //$data['isEstimate'] = $isEstimate;
 
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
-        $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
-        $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
-        $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+        // $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        // $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
+        // $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_editsales', $data);

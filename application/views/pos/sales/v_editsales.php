@@ -183,7 +183,7 @@
 <script>
     $(document).ready(function() {
 
-        const invoice_no = '<?php echo $invoice_no; ?>/';
+        const invoice_no = '<?php echo $invoice_no; ?>';
         const module = '<?php echo $url1 = $this->uri->segment(3); ?>/';
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
@@ -465,10 +465,11 @@
                                 {
                                     window.location.href = site_url+"pos/"+module+"/all";
                                 }
+                                clearall();
+                                
                             }else{
                                 toastr.error("Invoice not saved successfully",'Error');
                             }
-                            clearall();
                             console.log(data);
                         }
                     });
@@ -590,7 +591,7 @@
                 //data: {account_types:account_type},
                 dataType: 'json', // added data type
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     $.each(data, function(index, value) {
                         customerDDL(value.customer_id);
                         deposit_to_acc_codeDDL(value.deposit_to_acc_code);
@@ -617,7 +618,7 @@
                 //data: {account_types:account_type},
                 dataType: 'json', // added data type
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     
                     $.each(data, function(index, value) {
                         counter++;
