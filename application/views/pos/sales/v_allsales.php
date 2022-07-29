@@ -87,6 +87,10 @@
                                    echo '<td class="text-right">'. number_format($list['total_amount']+$list['total_tax'],2). '</td>';
                                    //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                                    echo '<td>';
+                                   if($sale_type == "credit")
+                                   {
+                                    echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/receivePayment/' . $list['customer_id'] .'/'.$list['invoice_no'].'" title="Receive Payment" >Receive Payment</a> | ';
+                                   }
                                    echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
                                     | <a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/receipt/' . $list['invoice_no'] .'" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a>
                                     | <a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/delete/' . $list['invoice_no'] .'" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';

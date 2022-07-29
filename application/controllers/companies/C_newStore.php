@@ -47,9 +47,9 @@ class C_newStore extends CI_Controller{
                 'contact_no' => $this->input->post('contact_no', true),
                 'status' => 'active',
                 'currency_id' => $this->input->post('currency_id', true),
-                'is_multi_currency' =>($this->input->post('is_multi_currency',true) == null ? 0 : $this->input->post('is_multi_currency', true)),
+                'is_multi_currency' => 0,//($this->input->post('is_multi_currency',true) == null ? 0 : $this->input->post('is_multi_currency', true)),
                 
-                'time_zone' => $this->input->post('time_zone', true),
+                'time_zone' => '',//$this->input->post('time_zone', true),
                 'expire' => $expire,
                 'locked' => 1
             

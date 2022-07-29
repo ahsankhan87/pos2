@@ -313,7 +313,7 @@
                                 toastr.success("Invoice saved successfully",'Success');
                                 if(submit_btn == 'close')
                                 {
-                                    window.location.href = site_url+"pos/"+module+"/all";
+                                    window.location.href = site_url+"banking/"+module+"/all";
                                 }
                             }else{
                                 toastr.error("Invoice not saved successfully",'Error');

@@ -93,14 +93,15 @@
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
                     <tr>
-                    
-                        <th class="text-right" >Discount</th>
+                        <th class="text-right">Discount</th>
                         <th class="text-right" id="total_discount">0.00</th>
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right"><select name="tax_id" id="tax_id" class="form-control"></select>
-                        <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value=""></th>
+                        <th class="text-right"><select name="tax_rate" id="tax_rate" class="form-control"></select>
+                        <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value="">
+                        <input type="hidden" name="tax_id" id="tax_id_txt" value="">
+                        </th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
@@ -109,7 +110,10 @@
                         <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?></th>
                         <th class="text-right" >Grand Total</th>
                         <th class="text-right lead" id="net_total">0.00</th>
-                        <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
+                        <th>
+                            <input type="hidden" name="net_total" id="net_total_txt" value="">
+                            <input type="hidden" name="sale_type" id="sale_type" value="<?php echo $saleType; ?>">
+                        </th>
                     </tr>
                 </tfoot>
             </table>
@@ -406,7 +410,7 @@
                 total += parseFloat($(this).text());
             });
 
-            var tax_rate = $('#tax_id').val();
+            var tax_rate = $('#tax_rate').val();
             
             total_tax = (tax_rate*total/100);
             // $('.discount').each(function() {
@@ -579,17 +583,17 @@
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     let i = 0;
                     taxDDL += '<option value="0">No Tax</option>';
 
                     $.each(data, function(index, value) {
 
-                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '">' + value.name+ '</option>';
+                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" >' + value.name+ '</option>';
 
                     });
 
-                    $('#tax_id').html(taxDDL);
+                    $('#tax_rate').html(taxDDL);
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -601,11 +605,13 @@
         ///////////////////
 
         ////// LOAD TAX DROPDOWN CHANGE
-        $('#tax_id').on('change', function(event) {
+        $('#tax_rate').on('change', function(event) {
             // event.preventDefault();
             calc_gtotal();     
-            var account_code = $("#tax_id option:selected").attr("account_code");
+            var account_code = $("#tax_rate option:selected").attr("account_code");
+            var tax_id = $("#tax_rate option:selected").attr("tax_id");
             $("#tax_acc_code_txt").val(account_code);
+            $("#tax_id_txt").val(tax_id);
             // console.log(account_code);
          });
 

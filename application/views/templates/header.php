@@ -143,12 +143,12 @@ var path = '<?php echo base_url(); ?>';</script>
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="<?php echo base_url(); ?>ar<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/ar.png"> Arabic</a>
-					</li>
-                    <li>
                     	<a href="<?php echo base_url(); ?>en<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/en.png"> English</a>
                     </li>
 					<li>
+						<a href="<?php echo base_url(); ?>ar<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/tr.png"> Turkiye</a>
+					</li>
+                    <!-- <li>
                     	<a href="<?php echo base_url(); ?>es<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/es.png"> Español</a>
                     </li>
 					<li>
@@ -156,7 +156,7 @@ var path = '<?php echo base_url(); ?>';</script>
                     </li>
                     <li>
 						<a href="<?php echo base_url(); ?>ur<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/ur.png"> Urdu</a>
-					</li>
+					</li> -->
                     
 				</ul>
 			</li>

@@ -25,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col-sm-10">
-
+    
             <label class="control-label col-sm-2" for="">Deposit To:</label>
             <div class="col-sm-4">
                 <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
@@ -99,7 +99,10 @@
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right">Tax</th>
+                        <th class="text-right"><select name="tax_rate" id="tax_rate" class="form-control"></select>
+                        <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value="">
+                        <input type="hidden" name="tax_id" id="tax_id_txt" value="">
+                        </th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
@@ -108,7 +111,11 @@
                         <?php echo form_submit('', 'Update', 'id="close" class="btn btn-success"'); ?></th>
                         <th class="text-right" >Grand Total</th>
                         <th class="text-right lead" id="net_total">0.00</th>
-                        <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
+                        <th>
+                            <input type="hidden" name="net_total" id="net_total_txt" value="">
+                            <input type="hidden" name="sale_type" id="sale_type" value="<?php echo $saleType; ?>">
+                    
+                        </th>
                     </tr>
                 </tfoot>
             </table>
@@ -415,14 +422,15 @@
                 total += parseFloat($(this).text());
             });
 
-            $('.tax').each(function() {
-                total_tax += parseFloat($(this).text());
-            });
+            var tax_rate = $('#tax_rate').val();
+            
+            total_tax = (tax_rate*total/100);
+            
             // $('.discount').each(function() {
             //     total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
             // });
             total_tax = (total_tax ? total_tax : 0);
-            net_total = (total ? total : 0);
+            net_total = (total + total_tax ? total+total_tax : 0);
             // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
@@ -547,33 +555,84 @@
         //GET deposit_to_acc_code DROPDOWN LIST
         function deposit_to_acc_codeDDL(deposit_to_acc_code='') {
 
-        let deposit_to_acc_code_ddl = '';
-        var account_type = ['asset'];
-        $.ajax({
-            url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
-            type: 'POST',
-            dataType: "JSON",
-            data: {account_types:account_type},
-            //dataType: 'json', // added data type
-            success: function(data) {
-                console.log(data);
-                let i = 0;
-                deposit_to_acc_code_ddl += '<option value="0">Select Account</option>';
+            let deposit_to_acc_code_ddl = '';
+            var account_type = ['asset'];
+            $.ajax({
+                url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
+                type: 'POST',
+                dataType: "JSON",
+                data: {account_types:account_type},
+                //dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    deposit_to_acc_code_ddl += '<option value="0">Select Account</option>';
 
-                $.each(data, function(index, value) {
+                    $.each(data, function(index, value) {
 
-                    deposit_to_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == deposit_to_acc_code ? "selected=''": "")+'>' + value.title+ '</option>';
+                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == deposit_to_acc_code ? "selected=''": "")+'>' + value.title+ '</option>';
 
-                });
+                    });
 
-                $('#deposit_to_acc_code').html(deposit_to_acc_code_ddl);
+                    $('#deposit_to_acc_code').html(deposit_to_acc_code_ddl);
 
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ////
+        //taxDDL();
+        ////////////////////////
+        //GET customer DROPDOWN LIST
+        function taxDDL(tax_rate='') {
+
+            let taxDDL = '';
+            $.ajax({
+                url: site_url + "setting/C_taxes/tax_DDL",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    
+                    let i = 0;
+                    taxDDL += '<option value="0">No Tax</option>';
+
+                    $.each(data, function(index, value) {
+
+                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" '+(parseFloat(value.rate) == parseFloat(tax_rate) ? "selected=''": "")+' >' + value.name+ '</option>';
+
+                    });
+
+                    $('#tax_rate').html(taxDDL);
+                    tax_changed();
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ///////////////////
+        ////// LOAD TAX DROPDOWN CHANGE
+        $('#tax_rate').on('change', function(event) {
+            // event.preventDefault();
+            calc_gtotal();     
+            var account_code = $("#tax_rate option:selected").attr("account_code");
+            var tax_id = $("#tax_rate option:selected").attr("tax_id");
+            $("#tax_acc_code_txt").val(account_code);
+            $("#tax_id_txt").val(tax_id);
+            // console.log(account_code);
         });
+
+        function tax_changed(){
+            calc_gtotal();     
+            var account_code = $("#tax_rate option:selected").attr("account_code");
+            var tax_id = $("#tax_rate option:selected").attr("tax_id");
+            $("#tax_acc_code_txt").val(account_code);
+            $("#tax_id_txt").val(tax_id);
+            // console.log(account_code);
         }
         
         ///////////////////
@@ -595,6 +654,7 @@
                     $.each(data, function(index, value) {
                         customerDDL(value.customer_id);
                         deposit_to_acc_codeDDL(value.deposit_to_acc_code);
+                        taxDDL(value.tax_rate);
                         $('#business_address').val(value.business_address);
                         $('#due_date').val(value.due_date);
                         $('#sale_date').val(value.sale_date);

@@ -167,7 +167,7 @@
 				<input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address">
 			</div>
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
           <label class="control-label visible-ie8 visible-ie9">Time Zone:</label>
                 <select class="form-control" name="time_zone"> 
                     <option value="">Select Timezone</option>
@@ -328,7 +328,7 @@
                     <option value="Pacific/Tongatapu">Tongatapu [TOT +13:00]</option> 
                     <option value="Pacific/Kiritimati">Kiritimati [LINT +14:00]</option> 
                 </select>
-        </div>
+        </div> -->
         		
         <div class="form-group">
           <label class="control-label visible-ie8 visible-ie9" >Currency:</label>
@@ -339,14 +339,14 @@
         </div>
         </div>
         
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label class="control-label visible-ie8 visible-ie9">Multi Currency</label>
           <div class="input-icon">
                Multi Currency
                <input type="checkbox" name="is_multi_currency" value="1" class="form-control placeholder-no-fix"/>
     
           </div>
-        </div>
+        </div> -->
 
         <div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">Contact</label>
