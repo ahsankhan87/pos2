@@ -66,6 +66,7 @@
                             <th><?php echo lang('customer') ?></th>
                             <!-- <th><?php echo lang('account') ?></th> -->
                             <th class="text-right"><?php echo lang('amount') ?></th>
+                            <th><?php echo lang('status') ?></th>
                             <th class="hidden-print"><?php echo lang('action') ?></th>
                         </tr>
                     </thead>
@@ -74,6 +75,8 @@
                         $sno = 1;
                                foreach($sales as $key => $list)
                                {
+                                    $total = ($list['total_amount']+$list['total_tax']);
+                                    $paid = ($list['paid']);
                                    echo '<tr>';
                                    //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
                                    //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
@@ -84,10 +87,23 @@
                                    echo '<td>'.@$name.'</td>';
                                    //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
                                    
-                                   echo '<td class="text-right">'. number_format($list['total_amount']+$list['total_tax'],2). '</td>';
+                                   echo '<td class="text-right">'. number_format($total,2). '</td>';
                                    //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
-                                   echo '<td>';
-                                   if($sale_type == "credit")
+                                   
+                                   if($paid >= $total){
+                                        $label = "label label-success";
+                                        $status = 'Paid';
+                                   }elseif($paid < $total && $paid > 0) {
+                                        $label = "label label-warning";
+                                        $status = 'Partialy Paid';
+                                   }else {
+                                        $label = "label label-danger";
+                                        $status = 'Unpaid';
+                                    }
+                                   echo '<td> <span class="'.$label.'">' . $status . '</span></td>';
+            
+                                   echo '<td class="text-right">';
+                                   if($sale_type == "credit" && $status != 'Paid')
                                    {
                                     echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/receivePayment/' . $list['customer_id'] .'/'.$list['invoice_no'].'" title="Receive Payment" >Receive Payment</a> | ';
                                    }
@@ -104,6 +120,7 @@
                         <tr>
                             <th></th><th></th>
                             <th></th><th></th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </tfoot>

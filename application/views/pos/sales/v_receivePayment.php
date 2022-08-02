@@ -31,6 +31,8 @@
                         <form action="<?php echo site_url('pos/C_invoices/makePayment'); ?>" method="post" class="form-horizontal">
                             
                             <input type="hidden" name="cr_acc_code" value="<?php echo $sales[0]['deposit_to_acc_code']; ?>" />
+                            <input type="hidden" name="invoice_no" value="<?php echo $sales[0]['invoice_no']; ?>" />
+                            <input type="text" name="paid_amount" value="<?php echo $sales[0]['paid']; ?>" />
 
                             <div class="form-body">
                                 <input type="hidden" name="customer_id" ng-model="customer_id" ng-init="customer_id=<?php echo $list['id']; ?>" value="<?php echo $list['id']; ?>" />
@@ -57,14 +59,15 @@
                                     <label class="col-md-2 control-label">Total Amount</label>
                                     <div class="col-md-4">
 
-                                        <input type="text" class="form-control" required="" ng-model="amount" ng-change="update()" ng-init="amount=''" name="amount" placeholder="Enter Amount" autocomplete="off">
+                                        <input type="text" class="form-control" required="" ng-model="amount" ng-change="update()" autofocus ng-init="amount=''" name="amount" placeholder="Enter Amount" autocomplete="off">
 
                                     </div>
                                     
-                                    <label class="col-md-2 control-label">Comment</label>
+                                    <label class="col-md-2 control-label">Balance Amount</label>
                                     <div class="col-md-4">
 
-                                        <textarea name="narration" name="comment" ng-model="comment" ng-init="comment=''" class="form-control"></textarea>
+                                    <input type="number" class="form-control"  name="balance" value="<?php echo ($sales[0]['total_amount']+$sales[0]['total_tax']-$sales[0]['paid']) ;?>" readonly autocomplete="off">
+
 
                                     </div>
                                 </div>
@@ -78,6 +81,12 @@
                                     </div>
 
                                     
+                                    <label class="col-md-2 control-label">Comment</label>
+                                    <div class="col-md-4">
+
+                                        <textarea name="narration" name="comment" ng-model="comment" ng-init="comment=''" class="form-control"></textarea>
+
+                                    </div>
                                 </div>
                                 
                             </div>
@@ -191,7 +200,7 @@ $(document).ready(function() {
     const path = '<?php echo base_url(); ?>';
     
         ////
-        deposit_to_acc_codeDDL();
+        deposit_to_acc_codeDDL(1001);
         ////////////////////////
         //GET deposit_to_acc_code DROPDOWN LIST
         function deposit_to_acc_codeDDL(deposit_to_acc_code='') {

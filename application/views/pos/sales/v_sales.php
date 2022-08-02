@@ -534,12 +534,13 @@
             }
         });
         /////
-
+        var sale_type= '<?php echo $saleType; ?>';
+        var deposit_to_acc_code = (sale_type == 'cash' ? 1001 : 1003);
         ////
-        deposit_to_acc_codeDDL();
+        deposit_to_acc_codeDDL(deposit_to_acc_code);
         ////////////////////////
         //GET deposit_to_acc_code DROPDOWN LIST
-        function deposit_to_acc_codeDDL() {
+        function deposit_to_acc_codeDDL(deposit_to_acc_code='') {
 
             let deposit_to_acc_code_ddl = '';
             var account_type = ['asset'];
@@ -556,7 +557,7 @@
 
                     $.each(data, function(index, value) {
 
-                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
+                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == deposit_to_acc_code ? "selected=''": "")+'>' + value.title+ '</option>';
 
                     });
 

@@ -308,7 +308,14 @@ class C_invoices extends MY_Controller
             $dr_acc_code = $this->input->post("deposit_to_acc_code");
             $cr_acc_code = $this->input->post("cr_acc_code");
             $amount = $this->input->post("amount");
-
+            $paid_amount = $this->input->post("paid_amount");
+            $invoice_no = $this->input->post("invoice_no");
+            
+            $data = array(
+                'paid' => ($paid_amount+$amount),
+                );
+            $this->M_sales->updatePaidAmount($invoice_no,$data);
+        
             ////////
             $data = array(
                 //'entry_id' => $entry_id,
