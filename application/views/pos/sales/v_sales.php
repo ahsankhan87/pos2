@@ -411,7 +411,6 @@
             });
 
             var tax_rate = $('#tax_rate').val();
-            
             total_tax = (tax_rate*total/100);
             // $('.discount').each(function() {
             //     total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
@@ -572,8 +571,8 @@
         }
         ///////////////////
 
-         ////
-         taxDDL();
+        ////
+        taxDDL();
         ////////////////////////
         //GET customer DROPDOWN LIST
         function taxDDL() {

@@ -33,7 +33,7 @@ echo form_hidden('id',$values['id']);
 <div class="form-group">
   <label class="control-label col-sm-2" for="rate">Rate (%):</label>
   <div class="col-sm-10">
-    <input type="text" class="form-control" id="rate" name="rate" value="<?php echo $values['rate']; ?>"placeholder="rate" />
+    <input type="text" class="form-control" id="rate" name="rate" min="0" step="0.0001"  value="<?php echo $values['rate']; ?>"placeholder="rate" />
   </div>
 </div>
  

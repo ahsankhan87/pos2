@@ -9,7 +9,7 @@ class C_bills extends MY_Controller
         $this->lang->load('index');
     }
 
-    public function index($purchaseType = '')
+    public function index()
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
@@ -18,7 +18,7 @@ class C_bills extends MY_Controller
         $data['title'] = 'Bills';
         $data['main'] = 'Bills';
 
-        $data['purchaseType'] = $purchaseType;
+        $data['purchaseType'] = "credit";
         //when click on sale manu clear the cart first if exist
         //$this->destroyCart();
 
@@ -41,7 +41,7 @@ class C_bills extends MY_Controller
 
         $data['title'] = "Bills";
         $data['main'] = "Bills";
-        $data['sale_type'] = "credit";
+        $data['purchaseType'] = "credit";
 
         $data['main_small'] = $fiscal_dates;
 
@@ -59,13 +59,13 @@ class C_bills extends MY_Controller
         $data['title'] = lang('edit') . ' ' . lang('sales');
         $data['main'] = lang('edit') . ' ' . lang('sales');
 
-        $data['saleType'] = 'credit'; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
+        $data['purchaseType'] = "credit"; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
         $data['invoice_no'] = $invoice_no;
         $data['edit'] = true;
         //$data['isEstimate'] = $isEstimate;
 
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
-        //$data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        //$data['suppliersDDL'] = $this->M_suppliers->getsupplierDropDown();
         
         $this->load->view('templates/header', $data);
         $this->load->view('pos/receivings/v_editreceivings', $data);
@@ -139,7 +139,6 @@ class C_bills extends MY_Controller
                 $supplier_id = $this->input->post("supplier_id");
                 $supplier_invoice_no = $this->input->post("supplier_invoice_no");
                 $emp_id = ''; //$this->input->post("emp_id");
-                $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
                 $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
@@ -150,6 +149,10 @@ class C_bills extends MY_Controller
                 $due_date = $this->input->post("due_date");
                 $business_address = $this->input->post("business_address");
                 $payment_acc_code = $this->input->post("payment_acc_code");
+                $sub_total = $this->input->post("sub_total");
+                $tax_acc_code = $this->input->post("tax_acc_code");
+                $tax_rate = $this->input->post("tax_rate");
+                $tax_id = $this->input->post('tax_id'); 
 
                 //if tax amount is checked or 1 then tax will be dedected otherwise not deducted from total amount
                 //total net amount 
@@ -171,7 +174,7 @@ class C_bills extends MY_Controller
                     'description' => $narration,
                     'discount_value' => $discount,
                     'currency_id' => $currency_id,
-                    'total_amount' => ($register_mode == 'receive' ? $net_total : -$net_total), //return will be in minus amount
+                    'total_amount' => ($register_mode == 'receive' ? $sub_total : -$sub_total), //return will be in minus amount
                     'total_tax' => ($register_mode == 'receive' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     'due_date'=>$due_date,
                     'business_address'=>$business_address,
@@ -180,6 +183,24 @@ class C_bills extends MY_Controller
                 $receiving_id = $this->db->insert_id();
                 ////////
 
+                $data = array(
+                    //'entry_id' => $entry_id,
+                    'employee_id' => $emp_id,
+                    'user_id' => $user_id,
+                    //'entry_no' => $entry_no,
+                    //'name' => $name,
+                    'account_code' => $payment_acc_code, //account_id,
+                    'date' => $sale_date,
+                    //'amount' => $dr_amount,
+                    //'ref_account_id' => $ref_id,
+                    'debit' => 0,
+                    'credit' => $sub_total,
+                    'invoice_no' => $new_invoice_no,
+                    'narration' => $narration,
+                    'company_id' => $company_id,
+                );
+                $this->db->insert('acc_entry_items', $data);
+                    
                 foreach ($this->input->post('account_id') as $key => $value) {
 
                     if ($value != 0) {
@@ -232,23 +253,44 @@ class C_bills extends MY_Controller
                     }
                 }
                 
-                $data = array(
-                    //'entry_id' => $entry_id,
-                    'employee_id' => $emp_id,
-                    'user_id' => $user_id,
-                    //'entry_no' => $entry_no,
-                    //'name' => $name,
-                    'account_code' => $payment_acc_code, //account_id,
-                    'date' => $sale_date,
-                    //'amount' => $dr_amount,
-                    //'ref_account_id' => $ref_id,
-                    'debit' => 0,
-                    'credit' => $net_total,
-                    'invoice_no' => $new_invoice_no,
-                    'narration' => $narration,
-                    'company_id' => $company_id,
-                );
-                $this->db->insert('acc_entry_items', $data);
+                    //////////////
+                    //TAX ACCOUNT ENTRY
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $emp_id,
+                        'user_id' => $user_id,
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $payment_acc_code, //account_id,
+                        'date' => $sale_date,
+                        //'amount' => $dr_amount,
+                        //'ref_account_id' => $ref_id,
+                        'debit' => 0,
+                        'credit' => $total_tax_amount,
+                        'invoice_no' => $new_invoice_no,
+                        'narration' => $narration,
+                        'company_id' => $company_id,
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+                    
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $emp_id,
+                        'user_id' => $user_id,
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $tax_acc_code, //account_id,
+                        'date' => $sale_date,
+                        //'amount' => $dr_amount,
+                        //'ref_account_id' => $ref_id,
+                        'debit' =>$total_tax_amount,
+                        'credit' => 0,
+                        'invoice_no' => $new_invoice_no,
+                        'narration' => $narration,
+                        'company_id' => $company_id,
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+                    //////////
 
                         //for logging
                         $msg = 'invoice no ' . $new_invoice_no;
@@ -260,384 +302,99 @@ class C_bills extends MY_Controller
             }
         }
     }
-    //purchase the projuct angularjs
-    public function purchaseProducts()
+    
+    function receivePayment($supplier_id,$invoice_no)
     {
-        //INITIALIZE
-        $total_amount = 0;
-        $discount = 0;
+        $data = array('langs' => $this->session->userdata('lang'));
+        
+        $data['title'] = 'Payment';
+        $data['main'] = 'Payment';
+        
+        $data['purchases'] = $this->M_receivings->get_receiving_by_invoice($invoice_no);
+        $data['supplier'] = $this->M_suppliers->get_suppliers($supplier_id);
+        
+        $this->load->view('templates/header',$data);
+        $this->load->view('pos/receivings/v_payment',$data);
+        $this->load->view('templates/footer');
+    }
+
+    function makePayment()
+    {
         $amount = 0;
 
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
-            if (count((array)$this->input->post('product_id')) > 0) {
-                $this->db->trans_start();
-                //GET PREVIOISE INVOICE NO  
-                @$prev_invoice_no = $this->M_receivings->getMAXPurchaseInvoiceNo();
-                //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                //$new_invoice_no = 'POS'.date("Ymd").$number;
-                $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                $new_invoice_no = 'R' . $number;
+            $this->db->trans_start();
+            //GET PREVIOISE INVOICE NO  
+            @$prev_invoice_no = $this->M_entries->getMAXEntryInvoiceNo('JV');
+            $number = (int) substr($prev_invoice_no, 2) + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+            $new_invoice_no = 'JV' . $number;
 
-                //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
-                $user_id = $_SESSION['user_id'];
-                $company_id = $_SESSION['company_id'];
-                $sale_date = $this->input->post("sale_date");
-                $supplier_id = $this->input->post("supplier_id");
-                $supplier_invoice_no = $this->input->post("supplier_invoice_no");
-                $emp_id = ''; //$this->input->post("emp_id");
-                $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
-                $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
-                $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
-                $register_mode = 'receive'; //$this->input->post("register_mode");
-                $purchaseType = 'cash';
-                $is_taxable =  1; //$this->input->post("is_taxable");
-                $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
-                $due_date = $this->input->post("due_date");
-                $business_address = $this->input->post("business_address");
-                $bank_id = $this->input->post("bank_id");
-
-                //if tax amount is checked or 1 then tax will be dedected otherwise not deducted from total amount
-                //total net amount 
-                $total_amount =  ($this->input->post("sub_total") - $discount) - $total_tax_amount;
-                $total_return_amount =  ($this->input->post("sub_total") - $discount) - $total_tax_amount; //FOR RETURN PURSPOSE
-
-                //////
-
-                $data = array(
-                    'company_id' => $company_id,
-                    'invoice_no' => $new_invoice_no,
-                    'supplier_id' => $supplier_id,
-                    'supplier_invoice_no' => $supplier_invoice_no,
-                    'employee_id' => $emp_id,
-                    'user_id' => $user_id,
-                    'receiving_date' => $sale_date,
-                    'register_mode' => $register_mode,
-                    'account' => $purchaseType,
-                    'description' => $narration,
-                    'discount_value' => $discount,
-                    'currency_id' => $currency_id,
-                    'total_amount' => ($register_mode == 'receive' ? $total_amount : -$total_amount), //return will be in minus amount
-                    'total_tax' => ($register_mode == 'receive' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
-                    'due_date'=>$due_date,
-                    'business_address'=>$business_address,
+            //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
+            $user_id = $_SESSION['user_id'];
+            $supplier_id = $this->input->post('supplier_id',true);
+            $company_id = $_SESSION['company_id'];
+            $sale_date = $this->input->post("payment_date");
+            $narration = ($this->input->post("comment") == '' ? '' : $this->input->post("comment"));
+            $cr_acc_code = $this->input->post("deposit_to_acc_code");
+            $dr_acc_code = $this->input->post("dr_acc_code");
+            $amount = $this->input->post("amount");
+            $paid_amount = $this->input->post("paid_amount");
+            $invoice_no = $this->input->post("invoice_no");
+            
+            $data = array(
+                'paid' => ($paid_amount+$amount),
                 );
-                $this->db->insert('pos_receivings', $data);
-                $receiving_id = $this->db->insert_id();
-                ////////
+            $this->M_receivings->updatePaidAmount($invoice_no,$data);
+        
+            ////////
+            $data = array(
+                //'entry_id' => $entry_id,
+                // 'employee_id' => $emp_id,
+                'user_id' => $user_id,
+                //'entry_no' => $entry_no,
+                //'name' => $name,
+                'account_code' => $dr_acc_code, //account_id,
+                'date' => $sale_date,
+                //'amount' => $dr_amount,
+                //'ref_account_id' => $ref_id,
+                'debit' => $amount,
+                'credit' => 0,
+                'invoice_no' => $new_invoice_no,
+                'narration' => $narration,
+                'company_id' => $company_id,
+            );
+            $this->db->insert('acc_entry_items', $data);
 
-                foreach ($this->input->post('product_id') as $key => $value) {
+            ////////
+            $data = array(
+                //'entry_id' => $entry_id,
+                // 'employee_id' => $emp_id,
+                'user_id' => $user_id,
+                //'entry_no' => $entry_no,
+                //'name' => $name,
+                'account_code' => $cr_acc_code, //account_id,
+                'date' => $sale_date,
+                //'amount' => $dr_amount,
+                //'ref_account_id' => $ref_id,
+                'debit' => 0,
+                'credit' => $amount,
+                'invoice_no' => $new_invoice_no,
+                'narration' => $narration,
+                'company_id' => $company_id,
+            );
+            $this->db->insert('acc_entry_items', $data);
 
-                    if ($value != 0) {
-                        $item_id  = htmlspecialchars(trim($value));
-                        $qty = $this->input->post('qty')[$key];
-                        $unit_price = $this->input->post('unit_price')[$key];
-                        $cost_price = $this->input->post('cost_price')[$key];
-                        $description = $this->input->post('description')[$key];
-                        
-                        $data = array(
-                            'receiving_id' => $receiving_id,
-                            'invoice_no' => $new_invoice_no,
-                            'item_id' => $item_id,
-                            'description' => $narration,
-                            'quantity_purchased' => ($register_mode == 'receive' ? $qty : -$qty), //if sales return then insert amount in negative
-                            'item_cost_price' => ($register_mode == 'receive' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
-                            'item_unit_price' => ($register_mode == 'receive' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
-                            'unit_id' => $this->input->post('unit_id')[$key],
-                            'description'=>$description,
-                            'company_id' => $company_id,
-                            //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
-                            'discount_value' => $this->input->post('discount')[$key],
-                            'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
-                            'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
-                            //'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]
-                        );
+            //for logging
+            $msg = 'invoice no ' . $new_invoice_no;
+            $this->M_logs->add_log($msg, "Payment Receipt transaction", "created", "trans");
+            // end logging
 
-                        $this->db->insert('pos_receivings_items', $data);
-
-                        //for logging
-                        $msg = 'invoice no ' . $new_invoice_no;
-                        $this->M_logs->add_log($msg, "Purchase transaction", "created", "trans");
-                        // end logging
-
-
-                        //CHECK SERVICE IF SERVICE THEN DO NOT UPDATE QTY
-                        if (trim($this->input->post('item_type')[$key]) != "service") {
-                            if ($this->M_items->is_item_exist($item_id)) {
-                                $total_stock =  $this->M_items->total_stock($item_id);
-
-                                //if products is to be return then it will add from qty and the avg cost will be reverse to original cost
-                                if ($register_mode == 'return') {
-                                    $quantity = ($total_stock - $qty);
-                                } else {
-                                    $quantity = ($total_stock + $qty);
-                                }
-
-                                $option_data = array(
-                                    'quantity' => $quantity,
-                                    'unit_price' => $unit_price,
-                                    'avg_cost' => $this->M_items->getAvgCost($item_id, $cost_price, $qty, $register_mode) //calculate avg cost
-
-                                );
-                                $this->db->update('pos_items_detail', $option_data, array('id' => $item_id));
-                            }
-                        }
-
-                        //ADD ITEM DETAIL IN INVENTORY TABLE    
-                        $data1 = array(
-                            'trans_item' => $item_id,
-                            'trans_comment' => 'Receive',
-                            'trans_inventory' => $qty,
-                            'company_id' => $company_id,
-                            'trans_user' => $user_id,
-                            'invoice_no' => $new_invoice_no,
-                            'cost_price' => $cost_price, //actually its avg cost comming from sale from
-                            'unit_price' => $unit_price,
-
-                        );
-
-                        $this->db->insert('pos_inventory', $data1);
-                        //////////////
-
-                        $amount += ($qty * $cost_price);
-                    }
-                } //end foreach
-
-                //'{"invoice_no":"'.$new_invoice_no.'"}'; //redirect to receipt page using this $receiving_id
-
-            } //check product count
-
-
-            if (count($posting_type_code) !== 0) {
-
-
-                //total net amount 
-                //$total_amount =  round(($amount-$discount)-$data_posted->amount_due,2);
-
-                /////////////////////////////////
-                ////   ACCOUNT TRANSACTIONS  /////
-                /////////////////////////////////       
-
-                // inventory DEBIT AND
-                // CASH CREDITED
-                if ($purchaseType == 'cash' && $register_mode == 'receive') {
-                    //Search for inventory and cash ledger account for account entry
-                    //if invoice is cash then entry will be purchase debit and cash credit and vice versa
-
-                    $dr_ledger_id = $posting_type_code[0]['inventory_acc_code'];
-                    if($bank_id != 0 && isset($bank_id))
-                    {
-                        $get_banks = $this->M_banking->get_activeBanking($bank_id);
-                        $cr_ledger_id = $posting_type_code[0]['bank_acc_code'];
-                    }else{
-                        $cr_ledger_id = $posting_type_code[0]['cash_acc_code'];
-                    }
-                    
-
-                    $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $amount, $amount, ucwords($narration), $new_invoice_no, $sale_date);
-
-
-                    ///////////////
-                    //TAX JOURNAL ENTRY
-                    if ($total_tax_amount > 0) {
-                        $tax_dr_ledger_id = $posting_type_code[0]['salestax_acc_code'];
-                        //$tax_cr_ledger_id = $posting_type_code[0]['cash_acc_code'];
-                        if($bank_id != 0 && isset($bank_id))
-                        {
-                            $tax_cr_ledger_id = $posting_type_code[0]['bank_acc_code'];
-                        }else{
-                            $tax_cr_ledger_id = $posting_type_code[0]['cash_acc_code'];
-                        }
-                   
-                        $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
-                    }
-                    ////////////////
-                    ///Bank entry
-                    if($bank_id != 0 && isset($bank_id))
-                    {
-                        $data = array(
-                            'bank_id' => $bank_id,
-                            'account_code' => $get_banks[0]["bank_acc_code"],
-                            'dueTo_acc_code' => $get_banks[0]["cash_acc_code"],
-                            'date' => $sale_date,
-                            'debit'=>$amount,
-                            'credit'=>0,
-                            'invoice_no' => $new_invoice_no,
-                            'entry_id' => $entry_id,
-                            'narration' => $narration,
-                            'company_id'=> $_SESSION['company_id']
-                            );
-                        $this->db->insert('pos_bank_payments', $data); 
-                    }
-                    ///
-                }
-
-                //inventory DEBITED AND 
-                //ACOUNT PAYABLE SUPPLIER ID IS CREDITED
-                elseif ($purchaseType == 'credit' && $register_mode == 'receive') {
-                    //Search for inventory and cash ledger account for account entry
-                    //if invoice is cash then entry will be purchase debit and cash credit and vice versa
-
-                    $dr_ledger_id = $posting_type_code[0]['inventory_acc_code'];
-                    $cr_ledger_id = $posting_type_code[0]['payable_acc_code'];
-
-                    $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $amount, $amount, ucwords($narration), $new_invoice_no, $sale_date);
-
-                    // $dr_ledger_id = $posting_type_code[0]['inventory_acc_code'];
-                    // $cr_ledger_id = $posting_type_code[0]['payable_acc_code'];
-                    // $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$total_amount,$total_amount,ucwords($narration),$new_invoice_no,$sale_date);
-
-                    ///////////////
-                    //TAX JOURNAL ENTRY
-                    if ($total_tax_amount > 0) {
-                        $tax_dr_ledger_id = $posting_type_code[0]['salestax_acc_code'];
-                        $tax_cr_ledger_id = $posting_type_code[0]['payable_acc_code'];
-
-                        $entry_id_tax = $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
-                        //M_suppliers SALES TAX PAYMENT ENTRY
-                        $this->M_suppliers->addsupplierPaymentEntry($tax_cr_ledger_id, $tax_dr_ledger_id, 0, $total_tax_amount, $supplier_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id_tax);
-                    } //////////////// tax
-
-                    ////////////
-
-                    //for customer payment table
-                    $this->M_suppliers->addsupplierPaymentEntry($cr_ledger_id, $dr_ledger_id, 0, $total_amount, $supplier_id, $narration, $new_invoice_no, $sale_date);
-                    ///
-                    ///Bank entry
-                    if($bank_id != 0 && isset($bank_id))
-                    {
-                        $get_banks = $this->M_banking->get_activeBanking($bank_id);
-                        $data = array(
-                            'bank_id' => $bank_id,
-                            'account_code' => $get_banks[0]["bank_acc_code"],
-                            'dueTo_acc_code' => $get_banks[0]["cash_acc_code"],
-                            'date' => $sale_date,
-                            'debit'=>0,
-                            'credit'=>$total_amount,
-                            'invoice_no' => $new_invoice_no,
-                            'entry_id' => $entry_id,
-                            'narration' => $narration,
-                            'company_id'=> $_SESSION['company_id']
-                            );
-                        $this->db->insert('pos_bank_payments', $data); 
-                    }
-                    ///
-                }
-                //PURCHASE RETURN CREDITED AND
-                elseif ($purchaseType == 'cash' && $register_mode == 'return') {
-                    //Search for purchases returns and discount ledger account for account entry
-                    //if invoice is cash then entry will be purchase debit and cash credit and vice versa
-
-                    $dr_ledger_id = $posting_type_code[0]['cash_acc_code'];
-                    $cr_ledger_id = $posting_type_code[0]['purchasereturn_acc_code'];
-                    $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
-
-                    ///////////////
-                    //TAX JOURNAL ENTRY
-                    if ($total_tax_amount > 0) {
-                        $tax_dr_ledger_id = $posting_type_code[0]['cash_acc_code'];
-                        $tax_cr_ledger_id = $posting_type_code[0]['salestax_acc_code'];
-
-                        $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
-                    }
-                    ////////////////
-
-                }
-                ////PURCHASE RETURN CREDITED AND
-                elseif ($purchaseType == 'credit' && $register_mode == 'return') {
-                    //Search for purchases and cash ledger account for account entry
-                    //if invoice is cash then entry will be purchase debit and cash credit and vice versa
-                    //SUPPLIER IS DEBITED
-                    $dr_ledger_id = $posting_type_code[0]['payable_acc_code'];
-                    $cr_ledger_id = $posting_type_code[0]['purchasereturn_acc_code'];
-                    $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
-
-                    ///////////////
-                    //TAX JOURNAL ENTRY
-                    if ($total_tax_amount > 0) {
-                        $tax_dr_ledger_id = $posting_type_code[0]['payable_acc_code'];
-                        $tax_cr_ledger_id = $posting_type_code[0]['salestax_acc_code'];
-
-                        $entry_id_tax =  $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
-
-                        //M_suppliers SALES TAX PAYMENT ENTRY
-                        $this->M_suppliers->addsupplierPaymentEntry($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, 0, $supplier_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id_tax);
-                        // //M_suppliers SALES TAX PAYMENT ENTRY
-                        // $this->M_suppliers->addsupplierPaymentEntry($tax_cr_ledger_id,$tax_dr_ledger_id,0,$total_tax_amount,$supplier_id,$narration,$new_invoice_no,$sale_date,1,$entry_id_tax);
-
-                    }
-                    ////////////////
-
-                    /////////////////
-                    //REDUCE THE TOTAL AMOUNT IN RECEINVING TO SHOW EXACT AMOUNT IN OUTSTANDING INVOICES
-                    $credit_purchase = $this->M_receivings->get_creditPurchases($supplier_id);
-                    foreach ($credit_purchase as $values) {
-                        $prev_bal = $values['total_amount'];
-                        $cur_amount = $total_return_amount;
-
-                        if ($cur_amount > $prev_bal) {
-                            $cur_amount = $prev_bal;
-                        } else if ($cur_amount < $prev_bal) {
-                            $cur_amount = $total_return_amount;
-                        }
-
-                        $data = array(
-                            'total_amount' => ($prev_bal - $cur_amount),
-                        );
-
-                        $this->db->update('pos_receivings', $data, array('invoice_no' => $values['invoice_no']));
-
-                        $cur_amount = ($total_return_amount - $prev_bal);
-
-                        if ($cur_amount > 0) {
-                            $total_return_amount = $cur_amount;
-                        } else {
-                            $total_return_amount = 0;
-                        }
-                    }
-                    ///////////////
-
-                    //for cusmoter payment table
-                    $this->M_suppliers->addsupplierPaymentEntry($dr_ledger_id, $cr_ledger_id, $total_amount, 0, $supplier_id, $narration, $new_invoice_no, $sale_date);
-                    ///
-
-                }
-                //IF DISCOUNT RECEIVED FROM SUPPLIER
-                // PURCHASE DICOUNT CREDITED AND PURCHASES DEBITED
-                if ($register_mode == 'receive') {
-                    if ($discount != 0) {
-
-                        $cr_ledger_discount_id = $posting_type_code[0]['purchasedis_acc_code'];
-
-                        //journal entries 
-                        // PURCHASE DICOUNT CREDITED AND PURCHASES DEBITED
-                        $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_discount_id, $discount, $discount, $narration, $new_invoice_no, $sale_date);
-                    }
-                } elseif ($register_mode == 'return') {
-                    if ($discount != 0) {
-
-                        $dr_ledger_discount_id = $posting_type_code[0]['purchasedis_acc_code'];
-
-                        //journal entries 
-                        // PURCHASE DICOUNT DEBITED AND PURCHASES OR AC/PAYABLE CREDITED
-                        $this->M_entries->addEntries($dr_ledger_discount_id, $cr_ledger_id, $discount, $discount, $narration, $new_invoice_no, $sale_date);
-                    }
-                }
-
-                //////
-
-                // echo '{"invoice_no":"' . $new_invoice_no . '"}'; //redirect to receipt page using this $new_invoice_no 
-
-
-                ////////////////////////////
-                //      ACCOUNTS CLOSED ..///
-
-                // Posting type  end if 
-            } //posting type if
             $this->db->trans_complete();
-            echo '1';
-        } //end post if
+
+            $this->session->set_flashdata('message', 'Payment entry completed');
+            redirect('trans/C_bills/all', 'refresh');
+        }
     }
 
     public function receipt($new_invoice_no)

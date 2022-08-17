@@ -42,7 +42,7 @@ echo form_open('setting/C_taxes/create',$attributes);
 <div class="form-group">
   <label class="control-label col-sm-2" for="rate">Rate (%):</label>
   <div class="col-sm-10">
-    <input type="number" class="form-control" id="rate" name="rate" placeholder="Rate" />
+    <input type="number" class="form-control" id="rate" name="rate"  min="0" step="0.0001"  placeholder="Rate" />
   </div>
 </div>
  

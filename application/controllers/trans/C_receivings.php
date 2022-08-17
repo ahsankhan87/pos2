@@ -18,7 +18,7 @@ class C_receivings extends MY_Controller
         $data['title'] = lang('purchases');
         $data['main'] = lang('purchases');
 
-        $data['purchaseType'] = $purchaseType;
+        $data['purchaseType'] = "cash";
         //when click on sale manu clear the cart first if exist
         //$this->destroyCart();
 
@@ -42,7 +42,7 @@ class C_receivings extends MY_Controller
         $data['title'] = lang('purchases') . ' ' . $fiscal_dates;
         $data['main'] = lang('purchases');
         $data['main_small'] = $fiscal_dates;
-        $data['sale_type'] = "cash";
+        $data['purchaseType'] = "cash";
 
         $data['receivings'] = $this->M_receivings->get_receivings(false, $start_date, $to_date,'cash');
 
@@ -93,7 +93,7 @@ class C_receivings extends MY_Controller
         $data['title'] = lang('edit') . ' ' . lang('sales');
         $data['main'] = lang('edit') . ' ' . lang('sales');
 
-        $data['saleType'] = ''; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
+        $data['purchaseType'] = "cash"; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
         $data['invoice_no'] = $invoice_no;
         $data['edit'] = true;
         //$data['isEstimate'] = $isEstimate;
@@ -139,7 +139,6 @@ class C_receivings extends MY_Controller
                 $supplier_id = $this->input->post("supplier_id");
                 $supplier_invoice_no = $this->input->post("supplier_invoice_no");
                 $emp_id = ''; //$this->input->post("emp_id");
-                $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
                 $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
@@ -150,6 +149,10 @@ class C_receivings extends MY_Controller
                 $due_date = $this->input->post("due_date");
                 $business_address = $this->input->post("business_address");
                 $payment_acc_code = $this->input->post("payment_acc_code");
+                $sub_total = $this->input->post("sub_total");
+                $tax_acc_code = $this->input->post("tax_acc_code");
+                $tax_rate = $this->input->post("tax_rate");
+                $tax_id = $this->input->post('tax_id'); 
 
                 //if tax amount is checked or 1 then tax will be dedected otherwise not deducted from total amount
                 //total net amount 
@@ -171,14 +174,34 @@ class C_receivings extends MY_Controller
                     'description' => $narration,
                     'discount_value' => $discount,
                     'currency_id' => $currency_id,
-                    'total_amount' => ($register_mode == 'receive' ? $net_total : -$net_total), //return will be in minus amount
+                    'total_amount' => ($register_mode == 'receive' ? $sub_total : -$sub_total), //return will be in minus amount
                     'total_tax' => ($register_mode == 'receive' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     'due_date'=>$due_date,
                     'business_address'=>$business_address,
+                    'tax_rate'=>$tax_rate,
+                    'tax_id' => $tax_id,
                 );
                 $this->db->insert('pos_receivings', $data);
                 $receiving_id = $this->db->insert_id();
                 ////////
+
+                $data = array(
+                    //'entry_id' => $entry_id,
+                    'employee_id' => $emp_id,
+                    'user_id' => $user_id,
+                    //'entry_no' => $entry_no,
+                    //'name' => $name,
+                    'account_code' => $payment_acc_code, //account_id,
+                    'date' => $sale_date,
+                    //'amount' => $dr_amount,
+                    //'ref_account_id' => $ref_id,
+                    'debit' => 0,
+                    'credit' => $sub_total,
+                    'invoice_no' => $new_invoice_no,
+                    'narration' => $narration,
+                    'company_id' => $company_id,
+                );
+                $this->db->insert('acc_entry_items', $data);
 
                 foreach ($this->input->post('account_id') as $key => $value) {
 
@@ -232,24 +255,45 @@ class C_receivings extends MY_Controller
                     }
                 }
                 
-                $data = array(
-                    //'entry_id' => $entry_id,
-                    'employee_id' => $emp_id,
-                    'user_id' => $user_id,
-                    //'entry_no' => $entry_no,
-                    //'name' => $name,
-                    'account_code' => $payment_acc_code, //account_id,
-                    'date' => $sale_date,
-                    //'amount' => $dr_amount,
-                    //'ref_account_id' => $ref_id,
-                    'debit' => 0,
-                    'credit' => $net_total,
-                    'invoice_no' => $new_invoice_no,
-                    'narration' => $narration,
-                    'company_id' => $company_id,
-                );
-                $this->db->insert('acc_entry_items', $data);
-
+                 ///////////////
+                    //TAX ACCOUNT ENTRY
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $emp_id,
+                        'user_id' => $user_id,
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $payment_acc_code, //account_id,
+                        'date' => $sale_date,
+                        //'amount' => $dr_amount,
+                        //'ref_account_id' => $ref_id,
+                        'debit' => 0,
+                        'credit' => $total_tax_amount,
+                        'invoice_no' => $new_invoice_no,
+                        'narration' => $narration,
+                        'company_id' => $company_id,
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+                    
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $emp_id,
+                        'user_id' => $user_id,
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $tax_acc_code, //account_id,
+                        'date' => $sale_date,
+                        //'amount' => $dr_amount,
+                        //'ref_account_id' => $ref_id,
+                        'debit' =>$total_tax_amount,
+                        'credit' => 0,
+                        'invoice_no' => $new_invoice_no,
+                        'narration' => $narration,
+                        'company_id' => $company_id,
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+                    //////////
+                    
                         //for logging
                         $msg = 'invoice no ' . $new_invoice_no;
                         $this->M_logs->add_log($msg, "Purchase transaction", "created", "trans");

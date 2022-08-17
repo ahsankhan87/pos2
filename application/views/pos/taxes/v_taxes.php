@@ -47,7 +47,7 @@
                             foreach ($taxes as $key => $list) {
                                 echo '<tr valign="top">';
                                 echo '<td>' . $list['id'] . '</td>';
-                                echo '<td>' . $list['account_code'] . '</td>';
+                                echo '<td>' . $this->M_groups->get_accountName($list['account_code']) . '</td>';
                                 echo '<td>' . $list['name'] . '</td>';
                                 echo '<td>' . $list['rate'] . '</td>';
                                 echo '<td>' . $list['description'] . '</td>';

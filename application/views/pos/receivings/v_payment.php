@@ -1,4 +1,4 @@
-<div ng-controller="customersCtrl">
+<div ng-controller="suppliersCtrl">
     <div class="row">
         <div class="col-sm-12">
             <?php
@@ -16,7 +16,7 @@
             <div class="portlet">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="icon-bell"></i><?php echo ucwords($customer[0]['title'] . ' ' . $customer[0]['first_name'] . ' ' . $customer[0]['middle_name'] . ' ' . $customer[0]['last_name']); ?>
+                        <i class="icon-bell"></i><?php echo ucwords($supplier[0]['name']); ?>
                     </div>
                     <div class="tools">
                         <a href="" class="collapse"></a>
@@ -26,22 +26,22 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <?php foreach ($customer as $list) : ?>
+                    <?php foreach ($supplier as $list) : ?>
 
-                        <form action="<?php echo site_url('pos/C_invoices/makePayment'); ?>" method="post" class="form-horizontal">
+                        <form action="<?php echo site_url('trans/C_bills/makePayment'); ?>" method="post" class="form-horizontal">
                             
-                            <input type="hidden" name="cr_acc_code" value="<?php echo $sales[0]['deposit_to_acc_code']; ?>" />
-                            <input type="hidden" name="invoice_no" value="<?php echo $sales[0]['invoice_no']; ?>" />
-                            <input type="hidden" name="paid_amount" value="<?php echo $sales[0]['paid']; ?>" />
+                            <input type="hidden" name="dr_acc_code" value="<?php echo $purchases[0]['payment_acc_code']; ?>" />
+                            <input type="hidden" name="invoice_no" value="<?php echo $purchases[0]['invoice_no']; ?>" />
+                            <input type="hidden" name="paid_amount" value="<?php echo $purchases[0]['paid']; ?>" />
 
                             <div class="form-body">
-                                <input type="hidden" name="customer_id" ng-model="customer_id" ng-init="customer_id=<?php echo $list['id']; ?>" value="<?php echo $list['id']; ?>" />
+                                <input type="hidden" name="supplier_id" ng-model="supplier_id" ng-init="supplier_id=<?php echo $list['id']; ?>" value="<?php echo $list['id']; ?>" />
 
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Customer Name</label>
+                                    <label class="col-md-2 control-label">Supplier Name</label>
                                     <div class="col-md-4">
                                         <p class="form-control-static">
-                                            <?php echo ucwords($list['first_name']) . ' ' . ucwords($list['last_name']); ?>
+                                            <?php echo ucwords($list['name']); ?>
                                         </p>
                                         
                                     </div>
@@ -66,7 +66,7 @@
                                     <label class="col-md-2 control-label">Balance Amount</label>
                                     <div class="col-md-4">
 
-                                    <input type="number" class="form-control"  name="balance" value="<?php echo ($sales[0]['total_amount']+$sales[0]['total_tax']-$sales[0]['paid']) ;?>" readonly autocomplete="off">
+                                    <input type="number" class="form-control"  name="balance" value="<?php echo ($purchases[0]['total_amount']+$purchases[0]['total_tax']-$purchases[0]['paid']) ;?>" readonly autocomplete="off">
 
 
                                     </div>
@@ -95,7 +95,7 @@
                         <!-- this is transaction wise list of outstanding credit amount invoices
                         <br />
                         <h3>Outstanding Transactions</h3>
-                        <table class="table table-striped table-hover" ng-init="GetCreditSales(<?php echo $customer[0]['id']; ?>)" id="sample_">
+                        <table class="table table-striped table-hover" ng-init="GetCreditpurchases(<?php echo $supplier[0]['id']; ?>)" id="sample_">
                                 <thead>
                                     <tr>
                                         <th>Invoice No.</th>
@@ -105,7 +105,7 @@
                                         <th>Payment</th>
                                     </tr>
                                 </thead>
-                                <tr ng-repeat="credit in CreditSales">
+                                <tr ng-repeat="credit in Creditpurchases">
                                     
                                     <td>{{credit.invoice_no}}</td>
                                     <td>{{credit.sale_date}}</td>
@@ -144,7 +144,7 @@
                         //                                $cr_amount = 0.00;
                         //                                $balance = 0.00;
                         //                                
-                        //                                foreach($creditSales as $key => $list)
+                        //                                foreach($creditpurchases as $key => $list)
                         //                                {
                         //                                    $balance = round(($list['total_amount']-$list['paid'])*$list['exchange_rate'],2);
                         //                                    
@@ -192,7 +192,7 @@
         <!-- /.col-sm-12 -->
     </div>
     <!-- /.row -->
-</div><!-- /.customerCTRL -->
+</div><!-- /.supplierCTRL -->
 <script>
 $(document).ready(function() {
 

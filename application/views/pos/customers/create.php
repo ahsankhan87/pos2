@@ -37,12 +37,12 @@ echo form_open('pos/C_customers/create',$attributes);
 <div class="form-group">
   <label class="control-label col-sm-2" for="opening">Opening Balance Debit:</label>
   <div class="col-sm-4">
-    <input type="number" class="form-control" name="op_balance_dr" value="<?php echo set_value('op_balance_dr') ?>" min="0" step="0.01"  placeholder="Opening Balance Amount" />
+    <input type="number" class="form-control" name="op_balance_dr" value="<?php echo set_value('op_balance_dr') ?>" min="0" step="0.001"  placeholder="Opening Balance Amount" />
   </div>
   
   <label class="control-label col-sm-2" for="opening">Opening Balance Credit:</label>
   <div class="col-sm-4">
-    <input type="number" class="form-control" name="op_balance_cr" value="<?php echo set_value('op_balance_cr') ?>" min="0" step="0.01" placeholder="Opening Balance Amount" />
+    <input type="number" class="form-control" name="op_balance_cr" value="<?php echo set_value('op_balance_cr') ?>" min="0" step="0.001" placeholder="Opening Balance Amount" />
   </div>
   
 </div>
