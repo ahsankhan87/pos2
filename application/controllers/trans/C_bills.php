@@ -494,6 +494,6 @@ class C_bills extends MY_Controller
         $this->db->trans_complete();
 
         $this->session->set_flashdata('message', 'Entry Deleted');
-        redirect('trans/C_receivings/allPurchases', 'refresh');
+        redirect('trans/C_bills/all', 'refresh');
     }
 }
