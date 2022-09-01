@@ -395,7 +395,8 @@ var path = '<?php echo base_url(); ?>';</script>
             
 			<!-- END BEGIN STYLE CUSTOMIZER -->
 			<!-- BEGIN PAGE HEADER-->
-			<h3 class="page-title">
+			<?php $hide_on_print = ($this->uri->segment(2) == "reports" ? "class='page-title hidden-print'" : "class='page-title'"); ?>
+			<h3 <?php echo $hide_on_print ?>>
 			<?php echo $main ?> <small><?php echo @$main_small; ?></small>
 			</h3>
 			<div class="page-bar">

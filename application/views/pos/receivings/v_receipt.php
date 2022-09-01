@@ -3,11 +3,11 @@
 <style>
     .invoice{
         background-color: #fff;
-        border: solid 3px #0d83dd;
+        border: solid 3px #999;
         padding: 10px;
     }
     .invoice-header{
-        background-color: #0d83dd;
+        background-color: #f9f9f9;
         padding: 10px;
         margin:-10px -10px 0 -10px;
 

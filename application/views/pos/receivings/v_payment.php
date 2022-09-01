@@ -75,7 +75,7 @@
                                 <div class="form-group">
 
                                     
-                                    <label class="control-label col-sm-2" for="">Deposit To:</label>
+                                    <label class="control-label col-sm-2" for="">Payment Account:</label>
                                     <div class="col-sm-4">
                                         <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
                                     </div>

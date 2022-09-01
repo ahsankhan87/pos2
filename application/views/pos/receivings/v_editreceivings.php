@@ -405,6 +405,7 @@
 
             // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
             net_total = (total  ? total  : 0);
+            total_tax = (total_tax  ? total_tax  : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
@@ -522,10 +523,10 @@
         // payment_acc_codeDDL();
         ////////////////////////
         //GET payment_acc_code DROPDOWN LIST
-        function payment_acc_codeDDL() {
+        function payment_acc_codeDDL(deposit_to_acc_code='') {
 
         let payment_acc_code_ddl = '';
-        var account_type = ['asset'];
+        var account_type = ['asset','liability'];
         $.ajax({
             url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
             type: 'POST',
@@ -538,7 +539,7 @@
 
                 $.each(data, function(index, value) {
 
-                    payment_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == customer_id ? "selected=''": "")+' >' + value.title+ '</option>';
+                    payment_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == deposit_to_acc_code ? "selected=''": "")+' >' + value.title+ '</option>';
 
                 });
 
