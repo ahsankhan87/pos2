@@ -70,7 +70,11 @@
                             <th class="text-right"><?php echo lang('amount'); ?></th>
                             <!-- <th class="text-right"><?php echo lang('taxes'); ?></th> -->
                             <!-- <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th> -->
-                            <th><?php echo lang('status') ?></th>
+                            <?php 
+                            if($purchaseType == "credit")
+                            {
+                                echo '<th>'. lang('status') .'</th>';
+                            } ?>
                             <th class="hidden-print"><?php echo lang('action'); ?></th>
                         </tr>
                     </thead>
@@ -106,7 +110,10 @@
                                     $label = "label label-danger";
                                     $status = 'Unpaid';
                             }
-                            echo '<td> <span class="'.$label.'">' . $status . '</span></td>';
+                            if($purchaseType == "credit")
+                            {
+                                echo '<td> <span class="'.$label.'">' . $status . '</span></td>';
+                            }
                             echo '<td class="text-right">';
                             if($purchaseType == "credit" && $status != 'Paid')
                             {

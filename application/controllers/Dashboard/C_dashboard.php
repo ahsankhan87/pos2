@@ -21,24 +21,25 @@ class C_dashboard extends MY_Controller{
         $data['title'] = lang('dashboard');
         $data['main'] = lang('home_searchBox');
         
-        $data['net_income']=  ($_SESSION['role'] == 'admin' ? $this->M_reports->get_net_income() : 0);
+        //$data['net_income']=  ($_SESSION['role'] == 'admin' ? $this->M_reports->get_net_income() : 0);
         //$data['totalStock']= $this->M_dashboard->totalStock($_SESSION["company_id"]);
-        $data['totalStock'] =  $this->M_dashboard->get_level3_account_balance('inventory');
-        $data['monthlySaleReport']=  $this->M_dashboard->monthlySaleReport($_SESSION["company_id"],FY_YEAR,'sales');
+        //$data['totalStock'] =  $this->M_dashboard->get_level3_account_balance('inventory');
+        //$data['monthlySaleReport']=  $this->M_dashboard->monthlySaleReport($_SESSION["company_id"],FY_YEAR,'sales');
         $data['expenses'] =  $this->M_dashboard->get_ExpensesAccounts('operative_expenses',FY_START_DATE,FY_END_DATE,10);
         
-        $data['cash_hand'] = '';// $this->M_dashboard->get_level3_account_balance('cash_hand');
+        //$data['cash_hand'] = '';// $this->M_dashboard->get_level3_account_balance('cash_hand');
         
         $data['total_expenses'] =  $this->M_dashboard->get_level2_account_balance('operative_expenses',FY_START_DATE,FY_END_DATE);
         //var_dump($data['total_expenses']);
         
-        $today = date("Y-m-d");
-        $data['today_sale'] =  $this->M_dashboard->today_sale_1($today,$_SESSION["company_id"]); 
+        //$today = date("Y-m-d");
+        //$data['today_sale'] =  $this->M_dashboard->today_sale_1($today,$_SESSION["company_id"]); 
         
-        $cur_month = date("Y-m");
-        $data['cur_month'] =  $this->M_dashboard->cur_month_sale($cur_month,$_SESSION["company_id"]);
+        //$cur_month = date("Y-m");
+        //$data['cur_month'] =  $this->M_dashboard->cur_month_sale($cur_month,$_SESSION["company_id"]);
         
         $data['monthly_sale'] = $this->M_dashboard->month_sales($_SESSION["company_id"]);
+        $data['banking']= $this->M_banking->get_activeBanking();
         
         //$ledgers= $this->M_ledgers->getLedgerByName('Revenue');
        

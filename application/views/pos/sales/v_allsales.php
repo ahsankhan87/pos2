@@ -66,7 +66,12 @@
                             <th><?php echo lang('customer') ?></th>
                             <!-- <th><?php echo lang('account') ?></th> -->
                             <th class="text-right"><?php echo lang('amount') ?></th>
-                            <th><?php echo lang('status') ?></th>
+                            <?php 
+                                if($sale_type != "cash")
+                                {
+                                    echo '<th>'. lang('status') .'</th>';
+                                }
+                            ?>
                             <th class="hidden-print"><?php echo lang('action') ?></th>
                         </tr>
                     </thead>
@@ -100,8 +105,12 @@
                                         $label = "label label-danger";
                                         $status = 'Unpaid';
                                     }
-                                   echo '<td> <span class="'.$label.'">' . $status . '</span></td>';
-            
+
+                                    if($sale_type != "cash")
+                                    {
+                                        echo '<td> <span class="'.$label.'">' . $status . '</span></td>';
+                                    }
+                                   
                                    echo '<td class="text-right">';
                                    if($sale_type == "credit" && $status != 'Paid')
                                    {

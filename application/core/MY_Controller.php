@@ -26,7 +26,7 @@ class MY_Controller extends CI_Controller {
         }
         //---------------End------------------------------------
         
-        date_default_timezone_set($_SESSION['time_zone']);
+        //date_default_timezone_set($_SESSION['time_zone']);
         
         //get active financial year
         define('FY_YEAR', $_SESSION['fy_year']);

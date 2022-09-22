@@ -16,6 +16,12 @@
     .invoice-header{
         color: #999;
     }    
+    
+    .invoice-footer{
+        /* color: #999; */
+        text-align: right;
+        /* margin-top: 500px; */
+    }   
 
     .grey{
         color: gray;
@@ -91,9 +97,9 @@
             <p>
                 <!-- TAX INVOICE <br> -->
                 
-                <span style="font-size: 26px; color:grey">Invoice Total<br />
+                <!-- <span style="font-size: 26px; color:grey">Invoice Total<br />
                     <php echo $total; ?>
-                </span>
+                </span> -->
             </p>
         </div>
     </div>
@@ -181,7 +187,7 @@
                 </div>
             <?php } ?>
         </div>
-        <div class="col-xs-4 invoice-block">
+        <div class="col-xs-4 invoice-footer">
             <ul class="list-unstyled amounts">
                 <!--
                             <li>
