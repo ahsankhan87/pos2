@@ -21,7 +21,7 @@ class C_dashboard extends MY_Controller{
         $data['title'] = lang('dashboard');
         $data['main'] = lang('home_searchBox');
         
-        //$data['net_income']=  ($_SESSION['role'] == 'admin' ? $this->M_reports->get_net_income() : 0);
+        $data['net_income']=  ($_SESSION['role'] == 'admin' ? $this->M_reports->get_net_income() : 0);
         //$data['totalStock']= $this->M_dashboard->totalStock($_SESSION["company_id"]);
         //$data['totalStock'] =  $this->M_dashboard->get_level3_account_balance('inventory');
         //$data['monthlySaleReport']=  $this->M_dashboard->monthlySaleReport($_SESSION["company_id"],FY_YEAR,'sales');
@@ -30,6 +30,7 @@ class C_dashboard extends MY_Controller{
         //$data['cash_hand'] = '';// $this->M_dashboard->get_level3_account_balance('cash_hand');
         
         $data['total_expenses'] =  $this->M_dashboard->get_level2_account_balance('operative_expenses',FY_START_DATE,FY_END_DATE);
+        $data['current_assets'] =  $this->M_groups->get_GroupsByParent('10');
         //var_dump($data['total_expenses']);
         
         //$today = date("Y-m-d");

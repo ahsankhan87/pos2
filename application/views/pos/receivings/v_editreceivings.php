@@ -92,16 +92,21 @@
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" >Tax</th>
+                        <th class="text-right"><select name="tax_rate" id="tax_rate" class="form-control"></select>
+                        <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value="">
+                        <input type="hidden" name="tax_id" id="tax_id_txt" value="">
+                        </th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                    <th colspan="5"><?php echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
-                        <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?></th>
+                    <th colspan="5">
+                        <?php echo form_submit('', 'Update', 'id="close" class="btn btn-success"'); ?></th>
                         <th class="text-right" >Grand Total</th>
                         <th class="text-right lead" id="net_total">0.00</th>
-                        <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
+                        <th><input type="hidden" name="net_total" id="net_total_txt" value="">
+                        <input type="hidden" name="purchase_type" id="purchase_type" value="<?php echo $purchaseType; ?>">
+                    </th>
                     </tr>
                 </tfoot>
             </table>
@@ -213,29 +218,9 @@
             // $('#productid_' + counter).select2();
             $('#accountid_' + counter).select2();
             ///
-
-            //GET TOTAL WHEN QTY CHANGE
-            $(".qty").on("keyup change", function(e) {
-                var curId = this.id.split("_")[1];
-                var qty = parseFloat($(this).val());
-                var price = parseFloat($('#costprice_' + curId).val());
-                var discount = 0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
-                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
-                $('#total_' + curId).text(total);
-
-                calc_gtotal();
-            });
-            //GET TOTAL WHEN UNIT PRICE CHANGE
-            $(".cost_price").on("keyup change", function(e) {
-                var curId = this.id.split("_")[1];
-                var qty = parseFloat($('#qty_' + curId).val());
-                var discount =0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
-                var price = parseFloat($(this).val());
-                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
-                $('#total_' + curId).text(total);
-
-                calc_gtotal();
-            });
+            qty_change();
+            cost_price_change();
+           
             //GET TOTAL WHEN DISCOUNT CHANGE
             $(".discount").on("keyup change", function(e) {
                 var curId = this.id.split("_")[1];
@@ -291,6 +276,34 @@
 
         });
         //$(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
+ 
+        function qty_change(){
+            //GET TOTAL WHEN QTY CHANGE
+            $(".qty").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($(this).val());
+                var price = parseFloat($('#costprice_' + curId).val());
+                var discount = 0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+        }
+
+        function cost_price_change(){
+            //GET TOTAL WHEN UNIT PRICE CHANGE
+            $(".cost_price").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var discount = 0; //(parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var price = parseFloat($(this).val());
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+        }
 
         /////////////////////////////////
         $("#sale_table").on("click", "#removeItem", function() {
@@ -396,16 +409,18 @@
                 total += parseFloat($(this).text());
             });
 
-            $('.tax').each(function() {
-                total_tax += parseFloat($(this).text());
-            });
+           
+            var tax_rate = $('#tax_rate').val();
+            total_tax = (tax_rate*total/100);
+
             $('.discount').each(function() {
                 total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
             });
 
             // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
-            net_total = (total  ? total  : 0);
-            total_tax = (total_tax  ? total_tax  : 0);
+            
+            total_tax = (total_tax ? total_tax : 0);
+            net_total = (total + total_tax ? total+total_tax : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
@@ -573,6 +588,7 @@
                     $.each(data, function(index, value) {
                         supplierDDL(value.supplier_id);
                         payment_acc_codeDDL(value.payment_acc_code);
+                        taxDDL(value.tax_rate);
                         $('#business_address').val(value.business_address);
                         $('#due_date').val(value.due_date);
                         $('#sale_date').val(value.receiving_date);
@@ -607,14 +623,14 @@
                         '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]" ></select></td>' +
                         '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="'+value.quantity_purchased+'" autocomplete="off"></td>' +
                         '<td class="text-right"><input type="hidden" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" value="'+value.item_unit_price+'" autocomplete="off">' +
-                        '<input type="number" cost_price" id="costprice_' + counter + '" name="cost_price[]" value="'+value.item_cost_price+'">'+
-                        '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]" value=""></td>'+
-                        '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]" value="'+value.tax_id+'"></td>'+
-                        '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]" value="'+value.tax_rate+'"></td>'+
+                        '<input type="number" class="form-control cost_price" id="costprice_' + counter + '" name="cost_price[]" value="'+value.item_cost_price+'">'+
+                        '<input type="hidden" class="form-control item_type" id="itemtype_' + counter + '" name="item_type[]" value=""></td>'+
+                        //'<input type="hidden" class="form-control tax_id" id="taxid_' + counter + '" name="tax_id[]" value="'+value.tax_id+'"></td>'+
+                        //'<input type="hidden" class="form-control tax_rate" id="taxrate_' + counter + '" name="tax_rate[]" value="'+value.tax_rate+'"></td>'+
                         // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
                         '<td class="text-right"><input type="text" class="form-control description" id="description_' + counter + '" name="description[]"  value="'+value.description+'"  ></td>' +
                         '<td class="text-right tax" id="tax_' + counter + '"></td>' +
-                        '<td class="text-right total" id="total_' + counter + '">'+(value.quantity_purchased*value.item_unit_price)+'</td>' +
+                        '<td class="text-right total" id="total_' + counter + '">'+(value.quantity_purchased*value.item_cost_price)+'</td>' +
                         '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
                         $('.create_table').append(div);
                         
@@ -626,7 +642,8 @@
                         calc_gtotal();
                     });
 
-                    
+                    qty_change();
+                    cost_price_change();
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -669,6 +686,56 @@
         }
 
         
+        ////////////////////////
+        //GET customer DROPDOWN LIST
+        function taxDDL(tax_rate='') {
+
+        let taxDDL = '';
+            $.ajax({
+                url: site_url + "setting/C_taxes/tax_DDL",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    taxDDL += '<option value="0">No Tax</option>';
+
+                    $.each(data, function(index, value) {
+
+                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" '+(parseFloat(value.rate) == parseFloat(tax_rate) ? "selected=''": "")+' >' + value.name+ '</option>';
+
+                    });
+
+                    $('#tax_rate').html(taxDDL);
+                    tax_changed();
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ///////////////////
+
+        ////// LOAD TAX DROPDOWN CHANGE
+        $('#tax_rate').on('change', function(event) {
+            // event.preventDefault();
+            calc_gtotal();     
+            var account_code = $("#tax_rate option:selected").attr("account_code");
+            var tax_id = $("#tax_rate option:selected").attr("tax_id");
+            $("#tax_acc_code_txt").val(account_code);
+            $("#tax_id_txt").val(tax_id);
+            // console.log(account_code);
+         });
+
+         function tax_changed(){
+            calc_gtotal();     
+            var account_code = $("#tax_rate option:selected").attr("account_code");
+            var tax_id = $("#tax_rate option:selected").attr("tax_id");
+            $("#tax_acc_code_txt").val(account_code);
+            $("#tax_id_txt").val(tax_id);
+            // console.log(account_code);
+        }
         ///////////////////
     });
 

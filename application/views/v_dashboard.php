@@ -163,7 +163,7 @@
                 -->
 			</div>
 			<div class="portlet-body">
-				<div class="lead text-center">Total Expense: <?php echo number_format($total_expenses,2); ?></div>
+				<div class="lead text-center">Total Expense: <?php echo number_format($total_expenses, 2); ?></div>
 				<div id="site_statistics_loading" style="display: none;">
 					<img src="<?php echo base_url(); ?>assets/img/loading.gif" alt="loading">
 				</div>
@@ -181,7 +181,7 @@
 					</div>
 
 
-				</div>  
+				</div>
 			</div>
 		</div>
 		<!-- END PORTLET-->
@@ -223,23 +223,24 @@
 							</thead>
 							<tbody>
 								<?php
-								foreach ($banking as $list) :
+								foreach ($current_assets as $list) :
 									//OPENING BALANCES
-									$op_balance_dr = (double) $list['op_balance_dr'];
-									$op_balance_cr = (double) $list['op_balance_cr'];
+									$op_balance_dr = (float) $list['op_balance_dr'];
+									$op_balance_cr = (float) $list['op_balance_cr'];
 									$op_balance = ($op_balance_dr - $op_balance_cr);
-	
+
 									//CURRENT BALANCES
-									$cur_balance = $this->M_banking->get_bank_total_balance($list['id'], FY_START_DATE, FY_END_DATE);
-									$balance_dr = (double) $cur_balance[0]['dr_balance'];
-									$balance_cr = (double) $cur_balance[0]['cr_balance'];
-	
+									// $cur_balance = $this->M_banking->get_bank_total_balance($list['id'], FY_START_DATE, FY_END_DATE);
+									$cur_balance = $this->M_groups->get_account_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']);
+									// $balance_dr = (double) $cur_balance[0]['dr_balance'];
+									// $balance_cr = (double) $cur_balance[0]['cr_balance'];
+
 									echo '<tr>';
 									echo '<td>';
-									echo '<a href="' . site_url('pos/C_banking/bankDetail/' . $list['id']) . '">' . $list['bank_name'] . '</a>';
+									echo '<a href="' . site_url('pos/C_banking/bankDetail/' . $list['id']) . '">' . $list['title'] . '</a>';
 									echo '</td>';
-									
-									echo '<td class="text-right">' . number_format(($op_balance_dr + $balance_dr) - ($op_balance_cr + $balance_cr),2) . '</td>';
+
+									echo '<td class="text-right">' . number_format(($op_balance_dr - $op_balance_cr) + ($cur_balance), 2) . '</td>';
 									echo '</td></tr>';
 								endforeach;
 								?>
@@ -252,4 +253,50 @@
 
 			</div>
 		</div>
+
+
+		<div class="col-md-6 col-sm-6">
+			<div class="portlet">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-bank"></i>Profit & Loss
+					</div>
+					<!--<div class="actions">-->
+					<!--	<div class="btn-group">-->
+					<!--		<a class="btn btn-default btn-sm dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">-->
+					<!--		Filter By <i class="fa fa-angle-down"></i>-->
+					<!--		</a>-->
+					<!--		<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">-->
+					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Finance</label>-->
+					<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> Membership</label>-->
+					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Customer Support</label>-->
+					<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> HR</label>-->
+					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> System</label>-->
+					<!--		</div>-->
+					<!--	</div>-->
+					<!--</div>-->
+				</div>
+				<div class="portlet-body">
+
+					<h3>Net Income <strong><?php echo number_format($net_income,2); ?></strong></h3>
+					Income
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+							<span class="sr-only">
+								40% Complete (success) </span>
+						</div>
+					</div>
+					Expenses
+					<div class="progress">
+						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+							<span class="sr-only">
+								20% Complete </span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
 	</div>
+</div>
