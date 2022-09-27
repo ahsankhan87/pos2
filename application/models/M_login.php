@@ -98,7 +98,6 @@ class M_login extends CI_Model{
                                     $_SESSION['company_id'] = $rows['id'];
                                     $_SESSION['company_name'] = $rows['name'];
                                     $_SESSION['time_zone'] = $rows['time_zone'];
-                                    ($rows['time_zone'] != "" ? date_default_timezone_set($_SESSION['time_zone']) : "");
                                     $_SESSION['multi_currency'] = $rows['is_multi_currency'];
                                     $_SESSION['home_currency_code'] = $currency['code'];
                                     $_SESSION['home_currency_symbol'] = $currency['symbol'];

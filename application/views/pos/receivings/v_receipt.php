@@ -1,5 +1,6 @@
 <button class="hidden-print"><a href="#" onclick="window.print()" title="print">Print</a></button>
-<button class="hidden-print"><a href="<?php echo site_url('trans/C_receivings/allPurchases') ?>">Purchases</a></button <!-- BEGIN PAGE CONTENT-->
+<button class="hidden-print"><a href="<?php echo site_url('trans/C_receivings/all') ?>">Purchases</a></button 
+<!-- BEGIN PAGE CONTENT -->
 <style>
     .invoice{
         background-color: #fff;
@@ -82,9 +83,9 @@
             <p>
                 <!-- TAX INVOICE <br> -->
                 
-                <span style="font-size: 26px; color:grey">Invoice Total<br />
+                <!-- <span style="font-size: 26px; color:grey">Invoice Total<br />
                     <php echo $total; ?>
-                </span>
+                </span> -->
             </p>
         </div>
     </div>

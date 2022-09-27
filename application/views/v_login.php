@@ -25,7 +25,8 @@
 <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url(); ?>assets/css/animate.min.css" rel="stylesheet" type="text/css">
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/flags/favicon.ico">
+
 </head>
 <!-- BEGIN BODY -->
 <body class="login">
@@ -338,7 +339,9 @@
                 
         </div>
         </div>
-        
+
+        <input type="hidden" name="time_zone" class="form-control" value="Europe/Istanbul" />
+
         <!-- <div class="form-group">
           <label class="control-label visible-ie8 visible-ie9">Multi Currency</label>
           <div class="input-icon">

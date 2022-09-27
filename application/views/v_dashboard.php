@@ -163,7 +163,7 @@
                 -->
 			</div>
 			<div class="portlet-body">
-				<div class="lead text-center">Total Expense: <?php echo number_format($total_expenses, 2); ?></div>
+				<div class="lead text-center">Total Expense: <?php echo $_SESSION['home_currency_symbol'].' '.number_format($total_expenses, 2); ?></div>
 				<div id="site_statistics_loading" style="display: none;">
 					<img src="<?php echo base_url(); ?>assets/img/loading.gif" alt="loading">
 				</div>
@@ -237,7 +237,7 @@
 
 									echo '<tr>';
 									echo '<td>';
-									echo '<a href="' . site_url('pos/C_banking/bankDetail/' . $list['id']) . '">' . $list['title'] . '</a>';
+									echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $list['account_code']) . '">' . $list['title'] . '</a>';
 									echo '</td>';
 
 									echo '<td class="text-right">' . number_format(($op_balance_dr - $op_balance_cr) + ($cur_balance), 2) . '</td>';
@@ -246,14 +246,13 @@
 								?>
 							</tbody>
 						</table>
-						<div class="pull-right "><a class="margin-bottom-5" href="<?php echo site_url('pos/C_banking/'); ?>">View all</a></div>
+						<div class="pull-right "><a class="margin-bottom-5" href="<?php echo site_url('accounts/C_groups'); ?>">View all</a></div>
 					</div>
 
 				</div>
 
 			</div>
 		</div>
-
 
 		<div class="col-md-6 col-sm-6">
 			<div class="portlet">
@@ -277,20 +276,27 @@
 					<!--</div>-->
 				</div>
 				<div class="portlet-body">
-
-					<h3>Net Income <strong><?php echo number_format($net_income,2); ?></strong></h3>
-					Income
+					<?php 
+						//echo date_default_timezone_get();
+						$total_amount = (double) (($total_revenue+$total_expenses) == 0 ? 1 : ($total_revenue+$total_expenses)); 
+						$income_percent = (double) round($total_revenue*100/$total_amount,2); 
+						$expense_percent = (double) round($total_expenses*100/$total_amount,2); 
+					?>
+					<h3>Net Income <strong><?php echo $_SESSION['home_currency_symbol'].' '.number_format($net_income,2); ?></strong></h3>
+					Income <?php echo $_SESSION['home_currency_symbol'].' '.number_format($total_revenue,2);?>
 					<div class="progress">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $income_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $income_percent.'%' ?>">
 							<span class="sr-only">
-								40% Complete (success) </span>
+								<?php echo $income_percent.'% Income' ?> 
+							</span>
 						</div>
 					</div>
-					Expenses
+					Expenses <?php echo $_SESSION['home_currency_symbol'].' '. number_format($total_expenses,2);?>
 					<div class="progress">
-						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo $expense_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $expense_percent.'%' ?>">
 							<span class="sr-only">
-								20% Complete </span>
+							<?php echo $expense_percent.'% Expense' ?>  
+							</span>
 						</div>
 					</div>
 				</div>

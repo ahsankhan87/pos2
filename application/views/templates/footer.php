@@ -131,7 +131,7 @@ jQuery(document).ready(function() {
 <link href="<?php echo base_url(); ?>assets/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
 <!-- <link href="<?php echo base_url(); ?>assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"> -->
 
-<link href="http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css" rel="stylesheet" type="text/css" />
+<!-- <link href="https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css" rel="stylesheet" type="text/css" /> -->
 
 <?php if($this->db->dbdriver !== 'sqlite3'){ ?>
 <!-- BEGIN GLOBAL MANDATORY STYLES--> 

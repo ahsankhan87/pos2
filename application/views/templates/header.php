@@ -63,13 +63,13 @@ var path = '<?php echo base_url(); ?>';</script>
 <link href="<?php echo base_url(); ?>assets/css/animate.min.css" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url(); ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css">
 
+<link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url(); ?>assets/img/flags/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url(); ?>assets/img/flags/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/img/flags/favicon-16x16.png">
 
-<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/favicon.ico">
+<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/flags/favicon.ico">
+<link rel="manifest" href="<?php echo base_url(); ?>assets/img/flags/site.webmanifest">
 
-<!-- END THEME STYLES 
-<link rel="shortcut icon" href="favicon.ico">
-<style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style>
--->
 <?php if($this->db->dbdriver !== 'sqlite3'){ ?>
 <!-- Global site tag (gtag.js) - Google Analytics 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120969945-1"></script>

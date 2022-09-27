@@ -69,8 +69,8 @@ echo form_open('companies/C_newStore/create',$attributes);
     <input type="text" class="form-control" id="Todatepicker" value="<?php echo date("Y-12-31"); ?>" name="fy_end" required="" placeholder=""/>
   </div>
 </div>
-
-<div class="form-group">
+<input type="text" name="timezone" value="Europe/Istanbul" />
+<!-- <div class="form-group">
   <label class="control-label col-sm-2" for="time_zone">Time Zone:</label>
   <div class="col-sm-10">
         <select class="form-control" name="time_zone"> 
@@ -232,7 +232,7 @@ echo form_open('companies/C_newStore/create',$attributes);
             <option value="Pacific/Kiritimati">Kiritimati [LINT +14:00]</option> 
         </select>
 </div>
-</div>
+</div> -->
 
 <div class="form-group">
   <label class="control-label col-sm-2" for="currency_name">Currency:</label>

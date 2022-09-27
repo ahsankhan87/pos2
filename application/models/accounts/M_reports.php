@@ -144,6 +144,36 @@ class M_reports extends CI_Model{
         }
     }
     
+    function get_total_revenue_amount()
+    {
+        $query_string = 
+        'SELECT sum(credit-debit) AS net_income
+        FROM account_types at join acc_groups g ON at.id=g.account_type_id JOIN acc_entry_items ei ON ei.account_code=g.account_code
+        WHERE ei.company_id = '.$_SESSION['company_id'].' AND g.company_id = '.$_SESSION['company_id'].' AND ei.date BETWEEN "'.FY_START_DATE.'" AND "'.FY_END_DATE.'" AND at.name in ("cos","revenue")';
+        
+        $query = $this->db->query($query_string);
+        
+        if($row = $query->row())
+        {
+            return $row->net_income;
+        }
+    }
+    
+    function get_total_expense_amount()
+    {
+        $query_string = 
+        'SELECT sum(debit-credit) AS total_expense
+        FROM account_types at join acc_groups g ON at.id=g.account_type_id JOIN acc_entry_items ei ON ei.account_code=g.account_code
+        WHERE ei.company_id = '.$_SESSION['company_id'].' AND g.company_id = '.$_SESSION['company_id'].' AND ei.date BETWEEN "'.FY_START_DATE.'" AND "'.FY_END_DATE.'" AND at.name in ("expense")';
+        
+        $query = $this->db->query($query_string);
+        
+        if($row = $query->row())
+        {
+            return $row->total_expense;
+        }
+    }
+    
     function year_report($company_id,$month,$year,$account_code)
     {
         if($this->db->dbdriver === 'sqlite3')
