@@ -1,149 +1,118 @@
-<!-- END OVERVIEW STATISTIC BARS-->
-<div class="clearfix">
-</div>
 <div class="row">
-	<div class="col-md-6 col-sm-12">
-		<!-- BEGIN PORTLET-->
-		<div class="portlet">
-			<div class="portlet-title">
-				<div class="caption">
-					<i class="icon-bar-chart"></i><?php echo lang('monthly_sales'); ?>
-				</div>
-				<!--
-                <div class="actions">
-					<div class="btn-group" data-toggle="buttons">
-						<label class="btn btn-default btn-sm active">
-						<input type="radio" name="options" class="toggle">New </label>
-						<label class="btn btn-default btn-sm">
-						<input type="radio" name="options" class="toggle">Returning </label>
-					</div>
-				</div>
-                -->
-			</div>
-			<div class="portlet-body">
-				<?php
-				//get total monthly unit price of sold items i.e total monthly sale for the chart
-				$month = ""; //for chart
-				$price = ""; //for chart
-				//var_dump($monthlySaleReport);
-				foreach ($monthly_sale as $values) :
 
-					$month .= '"' . $values['month'] . '",';
-					$price .= abs($values['amount']) . ',';
+	<?php
+	//get total monthly unit price of sold items i.e total monthly sale for the chart
+	$month = ""; //for chart
+	$price = ""; //for chart
+	//var_dump($monthlySaleReport);
+	foreach ($monthly_sale as $values) :
 
-				endforeach;
+		$month .= '"' . $values['month'] . '",';
+		$price .= abs($values['amount']) . ',';
 
-				//convert into JSON for Chart
-				$month = '[' . $month . ']';
-				$price = '[' . $price . ']';
-				///////////////////////////////////////
+	endforeach;
 
-				//for expense
-				//////////////////
-				$exp_balance = '';
-				$title = '';
-				if (@$expenses) {
-					foreach ($expenses as $exp_val) :  //Expenses 
-						//$dr_total = $this->M_ledgers->get_dr_total($exp_val['id']);
-						//$cr_total = $this->M_ledgers->get_cr_total($exp_val ['id']);
+	//convert into JSON for Chart
+	$month = '[' . $month . ']';
+	$price = '[' . $price . ']';
+	///////////////////////////////////////
 
-						//$expense_chart .= '{value:"'.$exp_val['balance'].'", color:"'.$exp_color[$count].'", highlight:"'.$exp_color_hover[$count].'", label:"'.$exp_val['title'].'"},';
+	//for expense
+	//////////////////
+	$exp_balance = '';
+	$title = '';
+	if (@$expenses) {
+		foreach ($expenses as $exp_val) :  //Expenses 
+			//$dr_total = $this->M_ledgers->get_dr_total($exp_val['id']);
+			//$cr_total = $this->M_ledgers->get_cr_total($exp_val ['id']);
 
-						$title .= '"' . $exp_val['title'] . '",';
-						$exp_balance .= abs($exp_val['balance']) . ',';
+			//$expense_chart .= '{value:"'.$exp_val['balance'].'", color:"'.$exp_color[$count].'", highlight:"'.$exp_color_hover[$count].'", label:"'.$exp_val['title'].'"},';
 
-					//$count ++;
-					endforeach;
-				}
+			$title .= '"' . $exp_val['title'] . '",';
+			$exp_balance .= abs($exp_val['balance']) . ',';
 
-				//convert into JSON for Chart
-				$title = '[' . $title . ']';
-				$exp_balance = '[' . $exp_balance . ']';
-				$exp_color = array('#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360', '#4080bf', '#6699cc', '#009933', '#ace600', '#ff9900');
-				$exp_color_hover = array('#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774', '#6699cc', '#bbff99', '#00cc44', '#c6ff1a', '#ffad33');
+		//$count ++;
+		endforeach;
+	}
 
-				?>
-				<div id="site_statistics_loading" style="display: none;">
-					<img src="<?php echo base_url(); ?>assets/img/loading.gif" alt="loading">
-				</div>
-				<div id="site_statistics_content" class="display-none" style="display: block;">
-					<div>
-						<canvas id="canvas"></canvas>
-					</div>
-					<script>
-						////////////////////////////////////
-						////MONTHLY SALES CHART
-						var months = <?php echo $month; ?>;
-						var price = <?php echo $price; ?>;
-						var barChartData = {
-							labels: months,
-							datasets: [{
-								label: 'Monthly Sales',
-								//fillColor: "rgba(120,220,220,0.5)",
-								//strokeColor: "rgba(140,220,220,0.8)",
-								//highlightFill: "rgba(120,220,220,0.75)",
-								//highlightStroke: "rgba(140,220,220,1)",
-								data: price,
-								backgroundColor: [
-									'rgba(255, 99, 132, 0.2)',
-									'rgba(54, 162, 235, 0.2)',
-									'rgba(255, 206, 86, 0.2)',
-									'rgba(75, 192, 192, 0.2)',
-									'rgba(153, 102, 255, 0.2)',
-									'rgba(255, 159, 64, 0.2)'
-								],
-								borderColor: [
-									'rgba(255,99,132,1)',
-									'rgba(54, 162, 235, 1)',
-									'rgba(255, 206, 86, 1)',
-									'rgba(75, 192, 192, 1)',
-									'rgba(153, 102, 255, 1)',
-									'rgba(255, 159, 64, 1)'
-								],
-								borderWidth: 1
-							}]
+	//convert into JSON for Chart
+	$title = '[' . $title . ']';
+	$exp_balance = '[' . $exp_balance . ']';
+	$exp_color = array('#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360', '#4080bf', '#6699cc', '#009933', '#ace600', '#ff9900');
+	$exp_color_hover = array('#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774', '#6699cc', '#bbff99', '#00cc44', '#c6ff1a', '#ffad33');
 
-						};
+	?>
 
-						///////////////////////////
-						//EXPENSE CHART
-						var title = <?php echo $title; ?>;
-						var exp_balance = <?php echo $exp_balance; ?>;
-						var ExpenseData = {
-							labels: title,
-							datasets: [{
-								data: exp_balance,
-								backgroundColor: <?php echo json_encode($exp_color); ?>,
-								borderColor: <?php echo json_encode($exp_color_hover); ?>,
-								borderWidth: 1
-							}]
+	<script>
+		////////////////////////////////////
+		////MONTHLY SALES CHART
+		var months = <?php echo $month; ?>;
+		var price = <?php echo $price; ?>;
+		var barChartData = {
+			labels: months,
+			datasets: [{
+				label: 'Monthly Sales',
+				//fillColor: "rgba(120,220,220,0.5)",
+				//strokeColor: "rgba(140,220,220,0.8)",
+				//highlightFill: "rgba(120,220,220,0.75)",
+				//highlightStroke: "rgba(140,220,220,1)",
+				data: price,
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255,99,132,1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1
+			}]
 
-						};
-						window.onload = function() {
+		};
 
-							//Monthly sale
-							var ctx = document.getElementById("canvas").getContext("2d");
-							var myBarChart = new Chart(ctx, {
-								type: 'bar',
-								data: barChartData,
-								//options: options
-							});
-							////
+		///////////////////////////
+		//EXPENSE CHART
+		var title = <?php echo $title; ?>;
+		var exp_balance = <?php echo $exp_balance; ?>;
+		var ExpenseData = {
+			labels: title,
+			datasets: [{
+				data: exp_balance,
+				backgroundColor: <?php echo json_encode($exp_color); ?>,
+				borderColor: <?php echo json_encode($exp_color_hover); ?>,
+				borderWidth: 1
+			}]
 
-							//for expenses myDoughnut chart
-							var ctx1 = document.getElementById("chart-area").getContext("2d");
-							var myDoughnutChart = new Chart(ctx1, {
-								type: 'doughnut',
-								data: ExpenseData,
-								//options: options
-							});
-						}
-					</script>
-				</div>
-			</div>
-		</div>
-		<!-- END PORTLET-->
-	</div>
+		};
+		window.onload = function() {
+
+			//Monthly sale
+			// var ctx = document.getElementById("canvas").getContext("2d");
+			// var myBarChart = new Chart(ctx, {
+			// 	type: 'bar',
+			// 	data: barChartData,
+			// 	//options: options
+			// });
+			////
+
+			//for expenses myDoughnut chart
+			var ctx1 = document.getElementById("chart-area").getContext("2d");
+			var myDoughnutChart = new Chart(ctx1, {
+				type: 'doughnut',
+				data: ExpenseData,
+				//options: options
+			});
+		}
+	</script>
+
 	<div class="col-md-6 col-sm-12">
 		<!-- BEGIN PORTLET-->
 		<div class="portlet">
@@ -163,7 +132,7 @@
                 -->
 			</div>
 			<div class="portlet-body">
-				<div class="lead text-center">Total Expense: <?php echo $_SESSION['home_currency_symbol'].' '.number_format($total_expenses, 2); ?></div>
+				<div class="lead text-center">Total Expense: <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?></div>
 				<div id="site_statistics_loading" style="display: none;">
 					<img src="<?php echo base_url(); ?>assets/img/loading.gif" alt="loading">
 				</div>
@@ -186,6 +155,58 @@
 		</div>
 		<!-- END PORTLET-->
 	</div>
+
+	<div class="col-md-6 col-sm-6">
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-bank"></i>Profit & Loss
+				</div>
+				<!--<div class="actions">-->
+				<!--	<div class="btn-group">-->
+				<!--		<a class="btn btn-default btn-sm dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">-->
+				<!--		Filter By <i class="fa fa-angle-down"></i>-->
+				<!--		</a>-->
+				<!--		<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">-->
+				<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Finance</label>-->
+				<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> Membership</label>-->
+				<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Customer Support</label>-->
+				<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> HR</label>-->
+				<!--			<label><div class="checker"><span><input type="checkbox"></span></div> System</label>-->
+				<!--		</div>-->
+				<!--	</div>-->
+				<!--</div>-->
+			</div>
+			<div class="portlet-body">
+				<?php
+				//echo date_default_timezone_get();
+				$total_amount = (float) (($total_revenue + $total_expenses) == 0 ? 1 : ($total_revenue + $total_expenses));
+				$income_percent = (float) round($total_revenue * 100 / $total_amount, 2);
+				$expense_percent = (float) round($total_expenses * 100 / $total_amount, 2);
+				?>
+				<h3>Net Income <strong><?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($net_income, 2); ?></strong></h3>
+				Income <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_revenue, 2); ?>
+				<div class="progress">
+					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="<?php echo $income_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $income_percent . '%' ?>">
+						<span class="sr-only">
+							<?php echo $income_percent . '% Income' ?>
+						</span>
+					</div>
+				</div>
+				Expenses <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?>
+				<div class="progress">
+					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $expense_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $expense_percent . '%' ?>">
+						<span class="sr-only">
+							<?php echo $expense_percent . '% Expense' ?>
+						</span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
 </div>
 <div class="clearfix">
 
@@ -195,7 +216,7 @@
 			<div class="portlet">
 				<div class="portlet-title">
 					<div class="caption">
-						<i class="fa fa-bank"></i>Banks
+						<i class="fa fa-bank"></i>Current Assets
 					</div>
 					<!--<div class="actions">-->
 					<!--	<div class="btn-group">-->
@@ -217,7 +238,7 @@
 						<table class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>Banks</th>
+									<th>Account</th>
 									<th class="text-right">Balance</th>
 								</tr>
 							</thead>
@@ -252,57 +273,6 @@
 				</div>
 
 			</div>
-		</div>
-
-		<div class="col-md-6 col-sm-6">
-			<div class="portlet">
-				<div class="portlet-title">
-					<div class="caption">
-						<i class="fa fa-bank"></i>Profit & Loss
-					</div>
-					<!--<div class="actions">-->
-					<!--	<div class="btn-group">-->
-					<!--		<a class="btn btn-default btn-sm dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">-->
-					<!--		Filter By <i class="fa fa-angle-down"></i>-->
-					<!--		</a>-->
-					<!--		<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">-->
-					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Finance</label>-->
-					<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> Membership</label>-->
-					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Customer Support</label>-->
-					<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> HR</label>-->
-					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> System</label>-->
-					<!--		</div>-->
-					<!--	</div>-->
-					<!--</div>-->
-				</div>
-				<div class="portlet-body">
-					<?php 
-						//echo date_default_timezone_get();
-						$total_amount = (double) (($total_revenue+$total_expenses) == 0 ? 1 : ($total_revenue+$total_expenses)); 
-						$income_percent = (double) round($total_revenue*100/$total_amount,2); 
-						$expense_percent = (double) round($total_expenses*100/$total_amount,2); 
-					?>
-					<h3>Net Income <strong><?php echo $_SESSION['home_currency_symbol'].' '.number_format($net_income,2); ?></strong></h3>
-					Income <?php echo $_SESSION['home_currency_symbol'].' '.number_format($total_revenue,2);?>
-					<div class="progress">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $income_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $income_percent.'%' ?>">
-							<span class="sr-only">
-								<?php echo $income_percent.'% Income' ?> 
-							</span>
-						</div>
-					</div>
-					Expenses <?php echo $_SESSION['home_currency_symbol'].' '. number_format($total_expenses,2);?>
-					<div class="progress">
-						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo $expense_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $expense_percent.'%' ?>">
-							<span class="sr-only">
-							<?php echo $expense_percent.'% Expense' ?>  
-							</span>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
 		</div>
 	</div>
 </div>
