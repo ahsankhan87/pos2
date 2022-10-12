@@ -80,7 +80,7 @@
             <div class="grey">Billed To</div>
             <div>
                 <?php $customer =  @$this->M_customers->get_customers(@$sales_items[0]['customer_id']); ?>
-                <?php echo @$customer[0]['store_name']; ?><br />
+                <?php echo @$customer[0]['first_name'].' '.@$customer[0]['last_name']; ?><br />
                 <?php echo @$customer[0]['address']; ?> <br />
                 <?php echo @$customer[0]['mobile_no']; ?><br />
             </div>

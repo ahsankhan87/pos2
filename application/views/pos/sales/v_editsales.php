@@ -83,7 +83,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="5" rowspan="3">
+                        <th colspan="5" rowspan="2">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
                             <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
                             <!-- <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea> -->
@@ -92,12 +92,12 @@
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                     
                         <th class="text-right" >Discount</th>
                         <th class="text-right" id="total_discount">0.00</th>
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="text-right"><select name="tax_rate" id="tax_rate" class="form-control"></select>
                         <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value="">
