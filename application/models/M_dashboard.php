@@ -282,4 +282,24 @@ class M_dashboard extends CI_Model{
         $data = $query->result_array();
         return $data;
     }
+
+    
+    public function main_search($keyword)
+    {
+        $query = "(SELECT s.invoice_no,s.sale_date as date,s.total_amount,s.total_tax,(s.total_amount+s.total_tax) AS net_amount,
+            s.customer_id,s.account,s.employee_id,s.account,c.first_name as name
+            FROM pos_sales s LEFT JOIN pos_customers c ON c.id=s.customer_id WHERE s.invoice_no LIKE '%" . 
+           $keyword . "%' AND s.company_id = '".$_SESSION['company_id']."') 
+           UNION
+           (SELECT r.invoice_no,r.receiving_date as date,r.total_amount,r.total_tax,(total_amount+r.total_tax) AS net_amount,
+           r.supplier_id,r.account,r.employee_id,r.account,sp.name as supplier
+           FROM pos_receivings as r LEFT JOIN pos_supplier sp ON sp.id=r.supplier_id WHERE r.invoice_no LIKE '%" . 
+           $keyword . "%' AND r.company_id = '".$_SESSION['company_id']."')";
+           
+        $query = $this->db->query($query);
+        $data = $query->result_array();
+        
+        return $data;
+    }
+    
 }

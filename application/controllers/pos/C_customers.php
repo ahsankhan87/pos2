@@ -647,9 +647,9 @@ class C_customers extends MY_Controller{
                        $receivable_account_code = $posting_type_code[0]['receivable_acc_code'];//customer ledger id
                        
                        $receivable_account = $this->M_groups->get_groups($receivable_account_code,$_SESSION['company_id']);
-                       $receivable_dr_balance = abs($receivable_account[0]['op_balance_dr']);
+                       $receivable_dr_balance = abs(@$receivable_account[0]['op_balance_dr']);
                        
-                       $receivable_cr_balance = abs($receivable_account[0]['op_balance_cr']);
+                       $receivable_cr_balance = abs(@$receivable_account[0]['op_balance_cr']);
                        
                        $dr_balance = $receivable_dr_balance-$op_balance_dr_old;
                        $cr_balance = $receivable_cr_balance-$op_balance_cr_old;

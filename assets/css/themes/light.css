@@ -13,6 +13,9 @@ body {
   background: #fff;
   border-left: 1px solid #ccc !important;
 }
+.logo-color{
+  color:#003463 !important;
+}
 /***
 Page header
 ***/
@@ -37,7 +40,7 @@ Page header
 .header .search-form .form-control,
 .page-sidebar-menu .search-form .form-control {
   color: #666;
-  background-color: #999;
+  /* background-color: #999; */
   border-color: #c4c4c4;
 }
 .header .search-form .input-icon > i,

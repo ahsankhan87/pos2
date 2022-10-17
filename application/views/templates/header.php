@@ -97,12 +97,17 @@ var path = '<?php echo base_url(); ?>';</script>
 	<div class="header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<h3 class="form-title text-primary">GuvenFi</h3>	
+			<h3 class="form-title logo-color">&nbsp;&nbsp;&nbsp;&nbsp;GuvenFi</h3>	
             <!-- <a href="<?php echo site_url('Dashboard'); ?>">
                 <img src="<?php echo base_url(); ?>assets/img/logo.jpg"  width="100" height="30" alt="logo">
             </a> -->
         </div>
-        
+		<form class="search-form search-form-header" role="form" action="<?php echo site_url('search/C_search/index'); ?>">
+            <div class="input-icon right">
+                <i class="icon-magnifier"></i>
+                <input type="text" class="form-control input-sm" name="keyword" placeholder="Search...">
+            </div>
+        </form>
 		<!-- END LOGO -->
 		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 		<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

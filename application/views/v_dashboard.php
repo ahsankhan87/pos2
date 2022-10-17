@@ -184,7 +184,7 @@
 				$income_percent = (float) round($total_revenue * 100 / $total_amount, 2);
 				$expense_percent = (float) round($total_expenses * 100 / $total_amount, 2);
 				?>
-				<h3>Net Income <strong><?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($net_income, 2); ?></strong></h3>
+				<div class="lead text-center">Net Income <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($net_income, 2); ?></div>
 				Income <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_revenue, 2); ?>
 				<div class="progress">
 					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="<?php echo $income_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $income_percent . '%' ?>">
