@@ -209,7 +209,7 @@
                 // '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
                 '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]"></select></td>' +
                 '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
-                '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" autocomplete="off">' +
+                '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" step="0.0001" autocomplete="off">' +
                 '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]">'+
                 '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>'+
                 '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>'+

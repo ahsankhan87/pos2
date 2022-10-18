@@ -25,11 +25,11 @@
                 <form class="form-inline" method="post" action="<?php echo site_url('reports/C_balancesheet') ?>" role="form">
                     <div class="form-group">
                         <label for="exampleInputEmail2"><?php echo lang('from') . ' ' . lang('date') ?></label>
-                        <input type="date" class="form-control" name="from_date" placeholder="From Date">
+                        <input type="date" class="form-control" name="from_date" value="<?php echo date("Y-m-d"); ?>" placeholder="From Date">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword2"><?php echo lang('to') . ' ' . lang('date') ?></label>
-                        <input type="date" class="form-control" name="to_date" placeholder="To Date">
+                        <input type="date" class="form-control" name="to_date" value="<?php echo date("Y-m-d"); ?>" placeholder="To Date">
                     </div>
 
                     <button type="submit" class="btn btn-default"><?php echo lang('search') ?></button>
@@ -60,7 +60,7 @@
 
                 <?php
                 $asset_total = 0;
-
+                
                 foreach ($parentGroups4Assets as $key => $list) {
                     echo '<tr><td colspan="2">';
                     echo '<strong>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
@@ -69,7 +69,7 @@
                     ///////
                     //$bl_report = $this->M_reports->get_Assets4BalanceSheet($_SESSION['company_id'],$list['account_code'],$from_date,$to_date);
                     $bl_report = $this->M_groups->get_GroupsByParent($list['account_code']);
-
+                    
                     foreach ($bl_report as $key => $values) :
 
                         $dr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['debit'];
@@ -137,7 +137,7 @@
                         $cr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['credit'];
                         $balance = ($values['op_balance_cr'] + $cr) - ($dr + $values['op_balance_dr']);
 
-                        if ($balance != 0) {
+                        //if ($balance != 0) {
                             echo '<tr><td>';
                             echo '&nbsp;&nbsp;';
                             echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
@@ -151,7 +151,7 @@
                             $total += $balance;
                             //echo '</td>
                             echo '</tr>';
-                        }
+                        //}
                     endforeach;
                     /////
                 }

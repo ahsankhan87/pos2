@@ -8,7 +8,6 @@ class C_balancesheet extends MY_Controller{
         $this->lang->load('index');
     }
     
-   
     public function index()
     {
         $data = array('langs' => $this->session->userdata('lang'));

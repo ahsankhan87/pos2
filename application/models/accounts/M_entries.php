@@ -40,8 +40,8 @@ class m_entries extends CI_Model{
     {
         //$query = $this->db->query("Select * FROM acc_entry_items WHERE entry_id in (SELECT entry_id FROM acc_entry_items WHERE ledger_id = {$ledger_id})");
         $this->db->select('SUM(ei.debit) as debit, SUM(ei.credit) as credit')->from('acc_entry_items ei')->where(array(
-        'ei.account_code'=>$account_code,'e.company_id'=> $_SESSION['company_id'],'ei.company_id'=> $_SESSION['company_id']));
-        $this->db->join('acc_entries e','e.id=ei.entry_id');
+        'ei.account_code'=>$account_code,'ei.company_id'=> $_SESSION['company_id']));
+        // $this->db->join('acc_entries e','e.id=ei.entry_id');
         
         $this->db->where('ei.date >=', $fy_start_date);
         $this->db->where('ei.date <=', $fy_end_date);
