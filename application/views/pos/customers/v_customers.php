@@ -44,7 +44,7 @@
         ?>
         <p>
             <?php echo anchor('pos/C_customers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success"'); ?>
-            <?php echo anchor('pos/C_customers/CustomerImport', 'Import Customers', 'class="btn btn-success"'); ?>
+            <!-- <?php echo anchor('pos/C_customers/CustomerImport', 'Import Customers', 'class="btn btn-success"'); ?> -->
             <!-- <?php echo anchor('pos/C_customers/cheque_list', 'List of Cheques', 'class="btn btn-success"'); ?> -->
 
         </p>
@@ -69,10 +69,6 @@
                             <th>Id</th>
                             <th><?php echo lang('name'); ?></th>
                             <th><?php echo lang('store'); ?></th>
-                            <?php if (@$_SESSION['multi_currency'] == 1) {
-                                echo '<th>Currency</th>';
-                            }
-                            ?>
                             <th><?php echo lang('address'); ?></th>
                             <th><?php echo lang('city'); ?></th>
                             <th><?php echo lang('contact'); ?></th>

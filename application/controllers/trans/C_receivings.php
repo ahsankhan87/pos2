@@ -756,16 +756,16 @@ class C_receivings extends MY_Controller
         //var_dump($receiving_items);
 
         foreach ($receiving_items as $values) {
-            $total_stock =  $this->M_items->total_stock($values['item_id'], -1, $values['size_id']);
+            $total_stock =  $this->M_items->total_stock($values['item_id'], -1, -1);
             $quantity = ($total_stock - $values['quantity_purchased']);
 
             $option_data = array(
                 'quantity' => $quantity,
                 //'unit_price' =>$values['item_unit_price'],
-                'avg_cost' => $this->M_items->getAvgCost($values['item_id'], $values['item_cost_price'], $values['quantity_purchased'], 0, $values['size_id'], 'return') //calculate avg cost
+                'avg_cost' => $this->M_items->getAvgCost($values['item_id'], $values['item_cost_price'], $values['quantity_purchased'], 0, 0, 'return') //calculate avg cost
 
             );
-            $this->db->update('pos_items_detail', $option_data, array('size_id' => $values['size_id'], 'item_id' => $values['item_id']));
+            $this->db->update('pos_items_detail', $option_data, array('id' => $values['item_id']));
 
 
             //insert item info into inventory table

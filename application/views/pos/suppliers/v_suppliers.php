@@ -41,10 +41,7 @@
                             <tr>
 
                                 <th><?php echo lang('name'); ?></th>
-                                <?php if (@$_SESSION['multi_currency'] == 1) {
-                                    echo '<th>Currency</th>';
-                                }
-                                ?>
+
                                 <th><?php echo lang('email'); ?></th>
                                 <th><?php echo lang('contact'); ?></th>
                                 <th><?php echo lang('debit'); ?></th>

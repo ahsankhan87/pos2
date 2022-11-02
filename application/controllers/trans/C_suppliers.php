@@ -22,7 +22,7 @@ class C_suppliers extends MY_Controller{
         $data['suppliers']= $this->M_suppliers->get_activeSuppliers();
         
         $this->load->view('templates/header',$data);
-        $this->load->view('pos/suppliers/v_suppliers',$data);
+        $this->load->view('pos/suppliers/v_suppliers1',$data);
         $this->load->view('templates/footer');
     }
     
@@ -344,34 +344,16 @@ class C_suppliers extends MY_Controller{
                 'address' => $this->input->post('address', true),
                 'contact_no' => $this->input->post('contact_no',true),
                 'status' => 'active',
-                'currency_id' => $this->input->post('currency_id', true),
-                'op_balance_dr' => $this->input->post('op_balance_dr', true),
-                'op_balance_cr' => $this->input->post('op_balance_cr', true),
-                "exchange_rate" => $this->input->post('exchange_rate', true),
-                "acc_code" => $this->input->post('acc_code', true)
+                // 'currency_id' => $this->input->post('currency_id', true),
+                // 'op_balance_dr' => $this->input->post('op_balance_dr', true),
+                // 'op_balance_cr' => $this->input->post('op_balance_cr', true),
+                // "exchange_rate" => $this->input->post('exchange_rate', true),
+                // "acc_code" => $this->input->post('acc_code', true)
                 );
                 
                 if($this->db->insert('pos_supplier', $data)) {
                     
-                    $supplier_id = $this->db->insert_id();
-                    $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
                     
-                    $op_balance_dr = (float)$this->input->post('op_balance_dr', true)/$exchange_rate;
-                    $op_balance_cr = (float)$this->input->post('op_balance_cr', true)/$exchange_rate;
-                    
-                       $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
-                       
-                       //OPENING BALANCE IN supplier ACCOUNT
-                       $payable_acc_code = $posting_type_code[0]['payable_acc_code'];//supplier ledger id
-                       $payable_account = $this->M_groups->get_groups($payable_acc_code,$_SESSION['company_id']);
-                       $payable_dr_balance = abs($payable_account[0]['op_balance_dr']);
-                       $payable_cr_balance = abs($payable_account[0]['op_balance_cr']);
-                       
-                       $dr_balance = ($payable_dr_balance+$op_balance_dr);
-                       $cr_balance = ($payable_cr_balance+$op_balance_cr);
-                       
-                       $this->M_groups->editGroupOPBalance($payable_acc_code,$dr_balance,$cr_balance);
-                       
                        //for logging
                     $msg = $this->input->post('name');
                     $this->M_logs->add_log($msg,"Supplier","Added","POS");
@@ -395,10 +377,10 @@ class C_suppliers extends MY_Controller{
             $data['title'] = lang('add_new').' ' .lang('vendor');
             $data['main'] = lang('add_new').' ' .lang('vendor');
             
-            $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
-            $data['purchasePostingTypeDDL'] = $this->M_postingTypes->get_purchasePostingTypesDDL();
-            $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
-            $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
+            //$data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
+           // $data['purchasePostingTypeDDL'] = $this->M_postingTypes->get_purchasePostingTypesDDL();
+           // $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
+           // $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
                
             $this->load->view('templates/header',$data);
             $this->load->view('pos/suppliers/create',$data);
@@ -416,12 +398,6 @@ class C_suppliers extends MY_Controller{
         
             //form Validation
             $this->form_validation->set_rules('name', 'Full Name', 'required');
-            if(@$_SESSION['multi_currency'] == 1){
-                $this->form_validation->set_rules('currency_id', 'Currency', 'required');
-            }
-            $this->form_validation->set_rules('posting_type_id', 'Posting Type', 'required');
-           //$this->form_validation->set_rules('address', 'Address', 'required');
-            //$this->form_validation->set_rules('contact_no', 'Contact No', 'required');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">�</a><strong>', '</strong></div>');
             
             //after form Validation run
@@ -431,51 +407,21 @@ class C_suppliers extends MY_Controller{
             
                 $file_name = $this->upload->data();
                 $data = array(
-                'posting_type_id' => $this->input->post('posting_type_id', true),
-                'sale_posting_type_id' => $this->input->post('sale_posting_type_id', true),
+                'posting_type_id' =>0, //$this->input->post('posting_type_id', true),
+                'sale_posting_type_id' => 0, //,$this->input->post('sale_posting_type_id', true),
                 'name' => $this->input->post('name', true),
                 'email' => $this->input->post('email', true),
                 'address' => $this->input->post('address', true),
                 'contact_no' => $this->input->post('contact_no', true),
-                'currency_id' => $this->input->post('currency_id', true),
-                'op_balance_dr' => $this->input->post('op_balance_dr', true),
-                'op_balance_cr' => $this->input->post('op_balance_cr', true),
-                "exchange_rate" => $this->input->post('exchange_rate', true),
-                "acc_code" => $this->input->post('acc_code', true),
-                "also_customer" => $this->input->post('also_customer', true)
+                // 'currency_id' => $this->input->post('currency_id', true),
+                // 'op_balance_dr' => $this->input->post('op_balance_dr', true),
+                // 'op_balance_cr' => $this->input->post('op_balance_cr', true),
+                // "exchange_rate" => $this->input->post('exchange_rate', true),
+                // "acc_code" => $this->input->post('acc_code', true),
+                // "also_customer" => $this->input->post('also_customer', true)
                 );
                 if($this->db->update('pos_supplier', $data, array('id'=>$this->input->post('id',true)))) {
                     
-                    //$supplier_id = $this->input->post('id');
-                    $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
-                    
-                    $op_balance_dr = (float)$this->input->post('op_balance_dr', true)/$exchange_rate;
-                    $op_balance_cr = (float)$this->input->post('op_balance_cr', true)/$exchange_rate;
-                    
-                    
-                    $op_balance_dr_old = (double)$this->input->post('op_balance_dr_old', true)/$exchange_rate;
-                    
-                    $op_balance_cr_old = (double)$this->input->post('op_balance_cr_old', true)/$exchange_rate;
-                    
-                    
-                    $posting_type_code =$this->M_postingTypes->get_purchasePostingTypes($this->input->post('posting_type_id',true));
-                       
-                     //OPENING BALANCE IN CUSTOMER ACCOUNT
-                       $payable_acc_code = $posting_type_code[0]['payable_acc_code'];//supplier ledger id
-                       
-                       $payable_account = $this->M_groups->get_groups($payable_acc_code,$_SESSION['company_id']);
-                       $payable_dr_balance = abs($payable_account[0]['op_balance_dr']);
-                       
-                       $payable_cr_balance = abs($payable_account[0]['op_balance_cr']);
-                       
-                       $dr_balance = $payable_dr_balance-$op_balance_dr_old;
-                       $cr_balance = $payable_cr_balance-$op_balance_cr_old;
-                       
-                       $dr_balance = ($dr_balance+$op_balance_dr);
-                       $cr_balance = ($cr_balance+$op_balance_cr);
-                       
-                       $this->M_groups->editGroupOPBalance($payable_acc_code,$dr_balance,$cr_balance);
-                       
                     
                     //for logging
                     $msg = $this->input->post('name');
@@ -501,10 +447,10 @@ class C_suppliers extends MY_Controller{
             $data['main'] = lang('update').' ' .lang('vendor');
             
             $data['supplier'] = $this->M_suppliers->get_suppliers($id);
-            $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
-            $data['purchasePostingTypeDDL'] = $this->M_postingTypes->get_purchasePostingTypesDDL();
-            $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
-            $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
+            // $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
+            // $data['purchasePostingTypeDDL'] = $this->M_postingTypes->get_purchasePostingTypesDDL();
+            // $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
+            // $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
             
             $this->load->view('templates/header',$data);
             $this->load->view('pos/suppliers/edit',$data);
@@ -646,10 +592,10 @@ class C_suppliers extends MY_Controller{
             redirect('trans/C_suppliers/supplierDetail/'.$supplier_id,'refresh'); 
         }
     }
-    function delete($id,$op_balance_dr=0,$op_balance_cr=0)
+    function delete($id)
     {
         
-        $this->M_suppliers->deleteSupplier($id,$op_balance_dr,$op_balance_cr);
+        $this->M_suppliers->deleteSupplier($id);
         
         $this->session->set_flashdata('message','Supplier Deleted');
         redirect('trans/C_suppliers/index','refresh');

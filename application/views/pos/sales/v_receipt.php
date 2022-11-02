@@ -91,6 +91,8 @@
             <br>
             <div class="grey">Date of Issue</div>
             <div class=""><?php echo date('m/d/Y', strtotime(@$sales_items[0]['sale_date'])) ?></div>
+            <div class="grey">Due Date</div>
+            <div class=""><?php echo date('m/d/Y', strtotime(@$sales_items[0]['due_date'])) ?></div>
             
         </div>
         <div class="col-sm-6 col-xs-6">

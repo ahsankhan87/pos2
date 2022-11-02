@@ -31,11 +31,10 @@ $attributes = array('class' => 'form-horizontal', 'role' => 'form', 'enctype'=>"
 echo validation_errors();
 echo form_open('trans/C_suppliers/edit',$attributes);
 
-
 echo form_hidden('id',$values['id']);
 ?>
 <div class="form-body">
-
+<!-- 
 <div class="form-group">
   <label class="control-label col-md-3" for="store Name">Account Posting Type:<span class="required">* </span></label>
   <div class="col-md-4">
@@ -58,25 +57,7 @@ echo form_hidden('id',$values['id']);
     <input type="hidden" name="op_balance_cr_old" value="<?php echo $values['op_balance_cr']; ?>"/>
   </div>
   
-</div>
-
-<?php if(@$_SESSION['multi_currency'] == 1)
-{
-?>
-<div class="form-group">
-  <label class="control-label col-sm-3" for="currency_id">Currency:<span class="required">* </span></label>
-  <div class="col-sm-4">
-    <?php echo form_dropdown('currency_id',$currencyDropDown,$values['currency_id'],'class="form-control" required=""'); ?>
-  </div>
-</div>
-<div class="form-group">
-<label class="col-md-3 control-label">Exchange Rate</label>
-    <div class="col-md-4">
-    	<input type="text" class="form-control" name="exchange_rate" value="<?php echo $values['exchange_rate']; ?>" placeholder="Enter Exchange Rate">
-    
-    </div>
-</div>
-<?php } ?> 
+</div> -->
 
 <div class="form-group">
   <label class="control-label col-md-3" for="supplier Name">Supplier Name:<span class="required">* </span></label>
@@ -85,12 +66,6 @@ echo form_hidden('id',$values['id']);
   </div>
 </div>
 
-<div class="form-group">
-  <label class="control-label col-md-3" for="store Name">Account:</label>
-  <div class="col-md-4">
-    <?php echo form_dropdown('acc_code',$accountDDL,$values['acc_code'],'class="form-control select2me"'); ?>
-  </div>
-</div>
 
 <div class="form-group">
   <label class="control-label col-md-3" for="Email">Email:</label>

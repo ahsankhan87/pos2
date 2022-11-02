@@ -292,84 +292,10 @@ class M_customers extends CI_Model{
         return '';
     }
     
-    function deleteCustomer($id,$op_balance_dr,$op_balance_cr)
+    function deleteCustomer($id)
     {
        $this->db->trans_start();
-       $posting_type_code = $this->M_customers->getCustomerPostingTypes($id);
-       
-       if(!empty($posting_type_code))
-       {
-            //OPENING BALANCE IN CUSTOMER ACCOUNT
-           $receivable_account_code = $posting_type_code[0]['receivable_acc_code'];//customer ledger id
-           
-           $receivable_account = $this->M_groups->get_groups($receivable_account_code,$_SESSION['company_id']);
-           $receivable_dr_balance = abs((empty($receivable_account[0]['op_balance_dr']) ? 0 : $receivable_account[0]['op_balance_dr']));//if empty post 0 
-           $receivable_cr_balance = abs((empty($receivable_account[0]['op_balance_cr']) ? 0 : $receivable_account[0]['op_balance_cr']));//if empty post 0
-           
-           if($receivable_dr_balance !== 0 || $receivable_cr_balance !== 0)
-           {
-               $dr_balance = ($receivable_dr_balance-$op_balance_dr);
-               $cr_balance = ($receivable_cr_balance-$op_balance_cr);
                
-               $this->M_groups->editGroupOPBalance($receivable_account_code,$dr_balance,$cr_balance);
-           }
-       }
-       
-       //GET SALES ITEMS AND DELETE SALES AND SALES ITEMS CUSTOMER PAYEENT 
-       //AND ALSO JOURNAL ENTRIES
-       $query = $this->db->get_where('pos_sales',array('customer_id'=>$id,'company_id'=> $_SESSION['company_id']));
-       if($query->num_rows() > 0)//IF SALES EXIST THEN DELETE CUSTOMER SALES
-       {
-           $sales = $query->result_array();
-           
-           //GET INVOICE NO BY CUSTOMER ID AND DELETE ALL BY INVOICE NO.
-           foreach($sales as $sale_item)
-           {
-                
-                $this->db->delete('acc_entries',array('invoice_no'=>$sale_item['invoice_no'],'company_id'=> $_SESSION['company_id']));
-                $this->db->delete('acc_entry_items',array('invoice_no'=>$sale_item['invoice_no'],'company_id'=> $_SESSION['company_id']));
-                
-                             //WHEN CUSTOMER DELTED ITS SALES DELETED AND PRODUCT WILL BE REVERSED        
-                             //if entry deleted then all item qty will be reversed
-                            $sales_items = $this->M_sales->get_sales_items($sale_item['invoice_no']);
-                            foreach($sales_items as $values)
-                            {
-                                $total_stock =  $this->M_items->total_stock($values['item_id'],-1,$values['size_id']);
-                                            
-                                //if products is to be return then it will add from qty and the avg cost will be reverse to original cost
-                                $quantity = ($total_stock + $values['quantity_sold']);
-                                            
-                                    $option_data = array(
-                                    'quantity'=>$quantity
-                                    );
-                                $this->db->update('pos_items_detail',$option_data,array('size_id'=>$values['size_id'],'item_id'=>$values['item_id']));
-                                
-                                //ADD ITEM DETAIL IN INVENTORY TABLE    
-                                  $data1= array(
-                                    'trans_item'=>$values['item_id'],
-                                    'trans_comment'=>'KSPOS Deleted',
-                                    'trans_inventory' => -$values['quantity_sold'],
-                                    'company_id'=> $_SESSION['company_id'],
-                                    'trans_user'=>$_SESSION['user_id'],
-                                    'invoice_no'=>$sale_item['invoice_no']
-                                    );
-                                    
-                                  $this->db->insert('pos_inventory', $data1);
-                                  //////////////
-                            }    
-                $this->db->delete('pos_sales_items',array('invoice_no'=>$sale_item['invoice_no'],'company_id'=> $_SESSION['company_id']));
-                            /////////////////////////////
-                            //WHEN CUSTOMER DELTED ITS SALES DELETED AND PRODUCT WILL BE REVERSED            
-           }
-           
-           //DELETE ENTRIES BY CUSTOMER_ID NOT INVOICE NO.
-           $this->db->delete('pos_customer_payments',array('customer_id'=>$id,'company_id'=> $_SESSION['company_id']));
-           $this->db->delete('pos_sales',array('customer_id'=>$id,'company_id'=> $_SESSION['company_id']));
-          ////////////////
-          ///////ACCOUNTS ENDS
-       }
-       
-                     
       $query = $this->db->delete('pos_customers',array('id'=>$id));
       
       $this->db->trans_complete(); 

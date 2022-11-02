@@ -23,6 +23,7 @@ echo form_open('pos/C_customers/edit',$attributes);
 
 echo form_hidden('id',$values['id']);
 ?>
+<!--
 <div class="form-group">
   <label class="control-label col-sm-2" for="store Name">Posting Type:</label>
   <div class="col-sm-10">
@@ -45,23 +46,6 @@ echo form_hidden('id',$values['id']);
   
 </div>
 
-<?php if(@$_SESSION['multi_currency'] == 1)
-{
-?>
-<div class="form-group">
-  <label class="control-label col-sm-2" for="currency_id">Currency:</label>
-  <div class="col-sm-4">
-    <?php echo form_dropdown('currency_id',$currencyDropDown,$values['currency_id'],'class="form-control select2me" required=""'); ?>
-  </div>
-  
-    <label class="col-md-2 control-label">Exchange Rate</label>
-    <div class="col-md-4">
-    	<input type="text" class="form-control" name="exchange_rate" value="<?php echo $values['exchange_rate']; ?>" placeholder="Enter Exchange Rate">
-    
-    </div>
-</div>
-<?php } ?> 
-
 <div class="form-group">
   <label class="control-label col-md-2" for="store Name">Account:</label>
   <div class="col-md-4">
@@ -69,7 +53,7 @@ echo form_hidden('id',$values['id']);
   </div>
 </div>
 
-<!-- <div class="form-group">
+ <div class="form-group">
   <label class="control-label col-sm-2" for="Title">Title:</label>
   <div class="col-sm-10">
     <input type="text" class="form-control" id="Title" name="title" placeholder="Mr" value="<?php echo $values['title']; ?>" />

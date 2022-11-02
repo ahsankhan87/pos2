@@ -241,88 +241,12 @@ class M_suppliers extends CI_Model{
             // end logging  
         }
      
-    function deleteSupplier($id,$op_balance_dr,$op_balance_cr)
+    function deleteSupplier($id)
     {
         $this->db->trans_start();
-        $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($id);
-                       
-       if(!empty($posting_type_code))
-       {               
-            //OPENING BALANCE IN supplier ACCOUNT
-           $payable_acc_code = $posting_type_code[0]['payable_acc_code'];//supplier ledger id
-           $payable_account = $this->M_groups->get_groups($payable_acc_code,$_SESSION['company_id']);
-           $payable_dr_balance = abs($payable_account[0]['op_balance_dr']);
-           $payable_cr_balance = abs($payable_account[0]['op_balance_cr']);
-           
-            if($payable_dr_balance !== 0 || $payable_cr_balance !== 0)
-           {                
-               $dr_balance = ($payable_dr_balance-$op_balance_dr);
-               $cr_balance = ($payable_cr_balance-$op_balance_cr);
-               
-               $this->M_groups->editGroupOPBalance($payable_acc_code,$dr_balance,$cr_balance);
-           }
-       }
        
-       //GET receivings ITEMS AND DELETE receivings AND receivings ITEMS supplier PAYEENT 
-       //AND ALSO JOURNAL ENTRIES
-       $query = $this->db->get_where('pos_receivings',array('supplier_id'=>$id,'company_id'=> $_SESSION['company_id']));
-       if($query->num_rows() > 0)//IF receivings EXIST THEN DELETE supplier receivings
-       {
-           $receivings = $query->result_array();
-           
-           //GET INVOICE NO BY supplier ID AND DELETE ALL BY INVOICE NO.
-           foreach($receivings as $receiving_item)
-           {
-                
-                $this->db->delete('acc_entries',array('invoice_no'=>$receiving_item['invoice_no'],'company_id'=> $_SESSION['company_id']));
-                $this->db->delete('acc_entry_items',array('invoice_no'=>$receiving_item['invoice_no'],'company_id'=> $_SESSION['company_id']));
-                
-                             //WHEN supplier DELTED ITS receivings DELETED AND PRODUCT WILL BE REVERSED        
-                             //if entry deleted then all item qty will be reversed
-                            $receiving_items = $this->M_receivings->get_receiving_items($receiving_item['invoice_no']);
-                                //var_dump($receiving_items);
-                                
-                                foreach($receiving_items as $values)
-                                {
-                                    $total_stock =  $this->M_items->total_stock($values['item_id'],-1,$values['size_id']);
-                                    $quantity = ($total_stock - $values['quantity_purchased']);
-                                    
-                                    $option_data = array(
-                                    'quantity'=>$quantity,
-                                    //'unit_price' =>$values['item_unit_price'],
-                                    'avg_cost'=>$this->M_items->getAvgCost($values['item_id'],$values['item_cost_price'],$values['quantity_purchased'],0,$values['size_id'],'return')//calculate avg cost
-                                     
-                                    );
-                                  $this->db->update('pos_items_detail',$option_data,array('size_id'=>$values['size_id'],'item_id'=>$values['item_id']));
-                                 
-                                    //insert item info into inventory table
-                                    $data1= array(
-                                        
-                                        'trans_item'=>$values['item_id'],
-                                        'trans_comment'=>'KSRECV Deleted',
-                                        'trans_inventory'=>$values['quantity_purchased'],
-                                        'company_id'=>$_SESSION['company_id'],
-                                        'trans_user'=>$_SESSION['user_id'],
-                                        'invoice_no'=>$receiving_item['invoice_no']
-                                        );
-                                        
-                                    $this->db->insert('pos_inventory', $data1);
-                                }
-                $this->db->delete('pos_receivings_items',array('invoice_no'=>$receiving_item['invoice_no'],'company_id'=> $_SESSION['company_id']));
-                            /////////////////////////////
-                            //WHEN supplier DELTED ITS receivings DELETED AND PRODUCT WILL BE REVERSED            
-           }
-           
-           //DELETE ENTRIES BY supplier_ID NOT INVOICE NO.
-           $this->db->delete('pos_supplier_payments',array('supplier_id'=>$id,'company_id'=> $_SESSION['company_id']));
-           $this->db->delete('pos_receivings',array('supplier_id'=>$id,'company_id'=> $_SESSION['company_id']));
-          ////////////////
-          ///////ACCOUNTS ENDS
-       }
-                       
-    
-    $query = $this->db->delete('pos_supplier',array('id'=>$id));
-    $this->db->trans_complete();   
+        $query = $this->db->delete('pos_supplier',array('id'=>$id));
+        $this->db->trans_complete();   
             
         //for logging
             $msg = $id;

@@ -184,12 +184,12 @@ var path = '<?php echo base_url(); ?>';</script>
                     <li>
 						<a href="<?php echo site_url('setting/C_fyear'); ?>"><i class="fa fa-tasks"></i> <?php echo lang('fiscal_year'); ?></a>
 					</li>
-					<li>
+					<!-- <li>
 						<a href="<?php echo site_url('setting/PostingTypes'); ?>"><i class="fa fa-tasks"></i> <?php echo lang('customer').' ' .lang('account') .' ' . lang('posting'); ?></a>
 					</li>
                     <li>
 						<a href="<?php echo site_url('setting/PostingTypes/purchasePostingTypes'); ?>"><i class="fa fa-tasks"></i> <?php echo lang('supplier').' ' .lang('account') .' ' . lang('posting'); ?></a>
-					</li>
+					</li> -->
                     <li>
 						<a href="<?php echo site_url('setting/C_taxes'); ?>"><i class="fa fa-tasks"></i> <?php echo lang('taxes'); ?></a>
 						<!-- <a href="<?php echo site_url(''); ?>"><i class="fa fa-tasks"></i> <?php echo lang('taxes'); ?></a> -->

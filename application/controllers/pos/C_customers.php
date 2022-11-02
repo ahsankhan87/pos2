@@ -22,8 +22,8 @@ class C_customers extends MY_Controller{
         $data['customers']= $this->M_customers->get_activeCustomers();
         
         $this->load->view('templates/header',$data);
-        $this->load->view('pos/customers/v_custWithBalance',$data);
-        // $this->load->view('pos/customers/v_customers',$data);
+        // $this->load->view('pos/customers/v_custWithBalance',$data);
+        $this->load->view('pos/customers/v_customers',$data);
         $this->load->view('templates/footer');
     }
     
@@ -474,16 +474,8 @@ class C_customers extends MY_Controller{
         {
             
             //form Validation
-            //$this->form_validation->set_rules('posting_type_id', 'Posting Type', 'required');
-            //$this->form_validation->set_rules('store_name', 'Company Name', 'required');
             $this->form_validation->set_rules('first_name', 'First Name', 'required');
-            
-            if(@$_SESSION['multi_currency'] == 1){
-            $this->form_validation->set_rules('currency_id', 'Currency', 'required');
-            }
-            //$this->form_validation->set_rules('opening_balance_amount', 'Opening Balance Amount', 'required');
-            //$this->form_validation->set_rules('capital_acc_code', 'Select Capital Account', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">�</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">x</a><strong>', '</strong></div>');
             
             $this->db->trans_start();
             
@@ -519,36 +511,6 @@ class C_customers extends MY_Controller{
             
                 if($this->db->insert('pos_customers', $data)) {
                     
-                    if((float)$this->input->post('op_balance_dr') > 0 || (float)$this->input->post('op_balance_cr') > 0)
-                    {
-                        $customer_id = $this->db->insert_id();
-                        $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
-                        
-                        $op_balance_dr = (float)$this->input->post('op_balance_dr', true)/$exchange_rate;
-                        $op_balance_cr = (float)$this->input->post('op_balance_cr', true)/$exchange_rate;
-                    
-                       $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
-                       
-                       //OPENING BALANCE IN CUSTOMER ACCOUNT
-                       $receivable_account_code = $posting_type_code[0]['receivable_acc_code'];//customer ledger id
-                       
-                       $receivable_account = $this->M_groups->get_groups($receivable_account_code,$_SESSION['company_id']);
-                       $receivable_dr_balance = abs($receivable_account[0]['op_balance_dr']);
-                       $receivable_cr_balance = abs($receivable_account[0]['op_balance_cr']);
-                       
-                       $dr_balance = ($receivable_dr_balance+$op_balance_dr);
-                       $cr_balance = ($receivable_cr_balance+$op_balance_cr);
-                       
-                       $this->M_groups->editGroupOPBalance($receivable_account_code,$dr_balance,$cr_balance);
-                       
-                    }
-                    
-                       //POST IN cusmoter payment table
-                       //$this->M_customers->addCustomerPaymentEntry($receivable_account_code,0,0,0,$customer_id,
-                      //'Opening Balance-Debtor','',null,$exchange_rate,$op_balance_dr,$op_balance_cr);
-                       ///
-                    
-                    
                     //for logging
                     $msg = $this->input->post('first_name'). ' '. $this->input->post('last_name');
                     $this->M_logs->add_log($msg,"Customer","Added","POS");
@@ -568,9 +530,9 @@ class C_customers extends MY_Controller{
             $data['title'] = lang('add_new').' ' .lang('customer');
             $data['main'] = lang('add_new').' ' .lang('customer');
             
-            $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
-            $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
-            $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
+            //$data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
+            //$data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
+            //$data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
             // $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
         
             $this->load->view('templates/header',$data);
@@ -587,14 +549,7 @@ class C_customers extends MY_Controller{
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
             //form Validation
-            $this->form_validation->set_rules('posting_type_id', 'Posting Type Id', 'required');
-            //$this->form_validation->set_rules('store_name', 'Company Name', 'required');
             $this->form_validation->set_rules('first_name', 'First Name', 'required');
-            if(@$_SESSION['multi_currency'] == 1){
-            $this->form_validation->set_rules('currency_id', 'Currency', 'required');
-            }
-            //$this->form_validation->set_rules('opening_balance_amount', 'Opening Balance Amount', 'required');
-            //$this->form_validation->set_rules('capital_acc_code', 'Select Capital Account', 'required');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">�</a><strong>', '</strong></div>');
             
             $this->db->trans_start();
@@ -603,7 +558,7 @@ class C_customers extends MY_Controller{
             if($this->form_validation->run())
             {
                 $data = array(
-                'posting_type_id' => $this->input->post('posting_type_id', true),
+                //'posting_type_id' => $this->input->post('posting_type_id', true),
                 'first_name' => $this->input->post('first_name', true),
                 'last_name' => $this->input->post('last_name', true),
                 'middle_name' => $this->input->post('middle_name', true),
@@ -629,42 +584,7 @@ class C_customers extends MY_Controller{
             
                 if($this->db->update('pos_customers', $data, array('id'=>$this->input->post('id')))) {
                     
-                    //$customer_id = $this->input->post('id');
-                    $exchange_rate = ($this->input->post('exchange_rate', true) == 0 ? 1 : $this->input->post('exchange_rate', true));
-                    
-                    $op_balance_dr = (double) $this->input->post('op_balance_dr', true)/$exchange_rate;
-                    $op_balance_cr = (double) $this->input->post('op_balance_cr', true)/$exchange_rate;
-                    
-                    
-                    $op_balance_dr_old = (double) $this->input->post('op_balance_dr_old', true)/$exchange_rate;
-                    
-                    $op_balance_cr_old = (double) $this->input->post('op_balance_cr_old', true)/$exchange_rate;
-                    
-                    
-                    $posting_type_code = $this->M_postingTypes->get_salesPostingTypes($this->input->post('posting_type_id',true));
-                       
-                     //OPENING BALANCE IN CUSTOMER ACCOUNT
-                       $receivable_account_code = $posting_type_code[0]['receivable_acc_code'];//customer ledger id
-                       
-                       $receivable_account = $this->M_groups->get_groups($receivable_account_code,$_SESSION['company_id']);
-                       $receivable_dr_balance = abs(@$receivable_account[0]['op_balance_dr']);
-                       
-                       $receivable_cr_balance = abs(@$receivable_account[0]['op_balance_cr']);
-                       
-                       $dr_balance = $receivable_dr_balance-$op_balance_dr_old;
-                       $cr_balance = $receivable_cr_balance-$op_balance_cr_old;
-                       
-                       $dr_balance = ($dr_balance+$op_balance_dr);
-                       $cr_balance = ($cr_balance+$op_balance_cr);
-                       
-                       $this->M_groups->editGroupOPBalance($receivable_account_code,$dr_balance,$cr_balance);
-                       
-                       //POST IN cusmoter payment table
-                       //$this->M_customers->addCustomerPaymentEntry($receivable_account_code,0,0,0,$customer_id,
-                       //'Opening Balance-Debtor','',null,$exchange_rate,$op_balance_dr,$op_balance_cr);
-                       ///
-                    
-                    
+                   
                     //for logging
                     $msg = $this->input->post('first_name'). ' '. $this->input->post('last_name');
                     $this->M_logs->add_log($msg,"Customer","Updated","POS");
@@ -685,9 +605,9 @@ class C_customers extends MY_Controller{
             $data['main'] = lang('update').' ' .lang('customer');
             
             $data['customer'] = $this->M_customers->get_customers($id);
-            $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
-            $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
-            $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
+           // $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
+           // $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
+           // $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
             // $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
             
             $this->load->view('templates/header',$data);

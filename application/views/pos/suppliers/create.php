@@ -46,7 +46,7 @@ echo form_open($langs.'/trans/C_suppliers/create',$attributes);
 <button class="close" data-close="alert"></button>
 <?php echo lang('error_msg'); ?>
 </div-->
-<div class="form-group">
+<!-- <div class="form-group">
   <label class="control-label col-md-3" for="store Name">Posting Type:<span class="required">* </span></label>
   <div class="col-md-4">
     <?php echo form_dropdown('posting_type_id',$purchasePostingTypeDDL,set_value('posting_type_id'),'class="form-control" required=""'); ?>
@@ -71,38 +71,12 @@ echo form_open($langs.'/trans/C_suppliers/create',$attributes);
     <input type="number" class="form-control" name="op_balance_cr" value="<?php echo set_value('op_balance_cr') ?>"  min="0" step="0.01" placeholder="Opening Balance Amount" />
   </div>
   
-</div>
+</div> -->
 
-<?php if(@$_SESSION['multi_currency'] == 1)
-{
-?>
-<div class="form-group">
-  <label class="control-label col-sm-3" for="currency_id">Currency:<span class="required">* </span></label>
-  <div class="col-sm-4">
-    <?php echo form_dropdown('currency_id',$currencyDropDown,set_value('currency_id'),'class="form-control" required=""'); ?>
-  </div>
-</div>
-
-<div class="form-group">
-<label class="col-md-3 control-label">Exchange Rate<span class="required">* </span></label>
-<div class="col-md-4">
-	<input type="text" class="form-control" name="exchange_rate" value="<?php echo set_value('exchange_rate') ?>"  placeholder="Enter Exchange Rate">
-
-</div>
-</div>
-<?php } ?> 
 <div class="form-group">
   <label class="control-label col-md-3" for="supplier Name">Full Name:<span class="required">* </span></label>
   <div class="col-md-4">
     <input type="text" data-required="1" class="form-control" name="name" value="<?php echo set_value('name') ?>" required="" placeholder="Supplier Name"  />
-  </div>
-</div>
-
-
-<div class="form-group">
-  <label class="control-label col-md-3" for="store Name">Account:</label>
-  <div class="col-md-4">
-    <?php echo form_dropdown('acc_code',$accountDDL,set_value('acc_code'),'class="form-control select2me"'); ?>
   </div>
 </div>
 
