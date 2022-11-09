@@ -789,4 +789,118 @@ class C_receivings extends MY_Controller
         $this->session->set_flashdata('message', 'Entry Deleted');
         redirect('trans/C_receivings/all', 'refresh');
     }
+
+    //Print Invoice in PDF
+    function printReceipt($new_invoice_no)
+    {
+        $sales_items = $this->M_receivings->get_receiving_items($new_invoice_no);
+        // var_dump($sales_items);
+
+        $company_id = $_SESSION['company_id'];
+        $Company = $this->M_companies->get_companies($company_id);
+        $supplier =  @$this->M_suppliers->get_suppliers(@$sales_items[0]['supplier_id']);
+
+        
+        $this->load->library('Pdf_f');
+        $pdf = new Pdf_f("P", 'mm', 'A4');
+
+        $pdf->AddPage();
+        //Display Company Info
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(50, 10, $Company[0]['name'], 0, 1);
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
+        //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
+        $pdf->Cell(50, 7, "PH : ".$Company[0]['contact_no'], 0, 1);
+
+        //Display INVOICE text
+        $pdf->SetY(15);
+        $pdf->SetX(-40);
+        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->Cell(50, 10, "RECEIPT", 0, 1);
+
+        //Display Horizontal line
+        $pdf->Line(0, 42, 210, 42);
+
+        //Billing Details // Body
+        $pdf->SetY(49);
+        $pdf->SetX(10);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(50, 10, "Bill To: ", 0, 1);
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(50, 7, $supplier[0]["name"], 0, 1);
+        $pdf->Cell(50, 7, $supplier[0]["address"], 0, 1);
+        //$pdf->Cell(50, 7, $supplier[0]["city"], 0, 1);
+
+        //Display Invoice no
+        $pdf->SetY(49);
+        $pdf->SetX(-60);
+        $pdf->Cell(50, 7, "Invoice No : " . $new_invoice_no);
+
+        //Display Invoice date
+        $pdf->SetY(57);
+        $pdf->SetX(-60);
+        $pdf->Cell(50, 7, "Invoice Date : " . date('m-d-Y',strtotime($sales_items[0]["receiving_date"])));
+
+        //Display Table headings
+        $pdf->SetY(85);
+        $pdf->SetX(10);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(80, 9, "DESCRIPTION", 1, 0);
+        $pdf->Cell(40, 9, "PRICE", 1, 0, "C");
+        $pdf->Cell(30, 9, "QTY", 1, 0, "C");
+        $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
+        $pdf->SetFont('Arial', '', 12);
+        
+        $discount = 0;
+        $total_cost = 0;
+        $total = 0;
+        //Display table product rows
+        foreach ($sales_items as $row) {
+            $total += ($row['item_cost_price'] * $row['quantity_purchased']);
+            $discount += $row['discount_value'];
+            $account_name = $this->M_groups->get_accountName($row['account_code']);
+
+            $pdf->Cell(80, 9, $account_name, "LR", 0);
+            $pdf->Cell(40, 9, number_format($row["item_cost_price"],2), "R", 0, "R");
+            $pdf->Cell(30, 9, number_format($row["quantity_purchased"],2), "R", 0, "C");
+            $pdf->Cell(40, 9, number_format(($row['item_cost_price'] * $row['quantity_purchased']),2), "R", 1, "R");
+        }
+        //Display table empty rows
+        for ($i = 0; $i < 12 - count($sales_items); $i++) {
+            $pdf->Cell(80, 9, "", "LR", 0);
+            $pdf->Cell(40, 9, "", "R", 0, "R");
+            $pdf->Cell(30, 9, "", "R", 0, "C");
+            $pdf->Cell(40, 9, "", "R", 1, "R");
+        }
+        //Display table total row
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(40, 9, number_format($total,2), 1, 1, "R");
+
+        //Display amount in words
+        $pdf->SetY(215);
+        $pdf->SetX(10);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(0, 9, number_format($total,2), 0, 1);
+        ///////////////
+        ///body
+
+        //set footer position
+        $pdf->SetY(-60);
+        //$pdf->SetFont('helvetica', 'B', 12);
+        //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
+        $pdf->Ln(15);
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
+        $pdf->SetFont('helvetica', '', 10);
+
+        //Display Footer Text
+        $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");
+        ///////////////
+
+        $pdf->Output();
+    }
 }

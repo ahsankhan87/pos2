@@ -37,7 +37,17 @@
     <div class="invoice-header">
         <div class="row">
             <div class="col-sm-4 col-xs-4">
-                <h1>INVOICE</h1>
+                <h1>
+                <?php 
+                    // echo @$sales_items[0];
+                    if(@$sales_items[0]['account'] == "cash")
+                    {
+                        echo strtoupper('Receipt');
+                    }else{
+                        echo strtoupper('Bill');
+                    }
+                    ?>
+                </h1>
             </div>
             <div class="col-sm-5 col-xs-5">
 

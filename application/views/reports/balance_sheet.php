@@ -161,11 +161,11 @@
                 echo '</td>';
 
                 echo '<td class="text-right">';
-                echo number_format((double)$net_income,2);
+                echo number_format((double)abs($net_income),2);
                 echo '</td>';
 
                 //echo '<td>';
-                $total += -$net_income;
+                $total += abs($net_income);
                 //echo '</td>';
                 echo '</tr>';
                 ?>
