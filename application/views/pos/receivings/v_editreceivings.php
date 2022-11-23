@@ -77,7 +77,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="5" rowspan="2">
+                        <th colspan="5" rowspan="3">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
                             <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
                             <!-- <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea> -->
@@ -98,6 +98,11 @@
                         </th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" >Amount Paid</th>
+                        <th class="text-right" id="amount_paid">0.00</th>
+                        <th><input type="hidden" name="amount_paid" id="amount_paid_txt" value=""></th>
                     </tr>
                     <tr>
                     <th colspan="5">
@@ -409,7 +414,7 @@
                 total += parseFloat($(this).text());
             });
 
-           
+            var amount_paid = $('#amount_paid_txt').val();
             var tax_rate = $('#tax_rate').val();
             total_tax = (tax_rate*total/100);
 
@@ -418,9 +423,9 @@
             });
 
             // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
-            
+            amount_paid = (amount_paid ? amount_paid : 0);
             total_tax = (total_tax ? total_tax : 0);
-            net_total = (total + total_tax ? total+total_tax : 0);
+            net_total = (total + total_tax-amount_paid ? total+total_tax-amount_paid : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
@@ -592,6 +597,8 @@
                         $('#business_address').val(value.business_address);
                         $('#due_date').val(value.due_date);
                         $('#sale_date').val(value.receiving_date);
+                        $('#amount_paid').text(parseFloat(value.paid).toFixed(2));
+                        $('#amount_paid_txt').val(value.paid);
                         
                     });
 

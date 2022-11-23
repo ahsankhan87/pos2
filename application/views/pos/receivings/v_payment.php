@@ -80,7 +80,14 @@
                                         <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
                                     </div>
 
+                                    <label class="col-md-2 control-label">Amount Paid</label>
+                                    <div class="col-md-4">
+                                        <input type="number" class="form-control"  name="paid" value="<?php echo number_format($purchases[0]['paid'],2) ;?>" readonly autocomplete="off">
+                                    </div>
                                     
+                                </div>
+                                
+                                <div class="form-group">
                                     <label class="col-md-2 control-label">Comment</label>
                                     <div class="col-md-4">
 
@@ -88,7 +95,6 @@
 
                                     </div>
                                 </div>
-                                
                             </div>
 
                         <?php endforeach; ?>

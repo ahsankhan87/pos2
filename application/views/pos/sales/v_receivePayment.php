@@ -65,10 +65,7 @@
                                     
                                     <label class="col-md-2 control-label">Balance Amount</label>
                                     <div class="col-md-4">
-
-                                    <input type="number" class="form-control"  name="balance" value="<?php echo ($sales[0]['total_amount']+$sales[0]['total_tax']-$sales[0]['paid']) ;?>" readonly autocomplete="off">
-
-
+                                        <input type="number" class="form-control"  name="balance" value="<?php echo number_format($sales[0]['total_amount']+$sales[0]['total_tax']-$sales[0]['paid'],2) ;?>" readonly autocomplete="off">
                                     </div>
                                 </div>
                                 
@@ -80,7 +77,14 @@
                                         <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
                                     </div>
 
+                                    <label class="col-md-2 control-label">Amount Received</label>
+                                    <div class="col-md-4">
+                                        <input type="number" class="form-control"  name="paid" value="<?php echo number_format($sales[0]['paid'],2) ;?>" readonly autocomplete="off">
+                                    </div>
                                     
+                                </div>
+
+                                <div class="form-group">
                                     <label class="col-md-2 control-label">Comment</label>
                                     <div class="col-md-4">
 
@@ -88,7 +92,6 @@
 
                                     </div>
                                 </div>
-                                
                             </div>
 
                         <?php endforeach; ?>

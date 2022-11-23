@@ -61,7 +61,7 @@
                                 //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                                 echo '<td>';
                                 //echo '<a href="'.site_url($langs).'/pos/C_estimate/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | ';
-                                //echo '<a href="'.site_url($langs).'/pos/C_estimate/receipt/' . $list['invoice_no'] .'" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a> | ';
+                                echo '<a href="'.site_url($langs).'/pos/C_estimate/printReceipt/' . $list['invoice_no'] .'" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a> | ';
                                 echo '<a href="'.site_url($langs).'/pos/C_estimate/delete/' . $list['invoice_no'] .'" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
                                 echo '</td>';
                                 echo '</tr>';

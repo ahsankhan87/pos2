@@ -83,7 +83,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="5" rowspan="2">
+                        <th colspan="5" rowspan="3">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
                             <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
                             <!-- <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea> -->
@@ -92,12 +92,7 @@
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
-                    <!-- <tr>
                     
-                        <th class="text-right" >Discount</th>
-                        <th class="text-right" id="total_discount">0.00</th>
-                        <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
-                    </tr> -->
                     <tr>
                         <th class="text-right"><select name="tax_rate" id="tax_rate" class="form-control"></select>
                         <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value="">
@@ -105,6 +100,11 @@
                         </th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" >Amount Received</th>
+                        <th class="text-right" id="amount_received">0.00</th>
+                        <th><input type="hidden" name="amount_received" id="amount_received_txt" value=""></th>
                     </tr>
                     <tr>
                         <th colspan="5"><?php //echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
@@ -423,14 +423,16 @@
             });
 
             var tax_rate = $('#tax_rate').val();
+            var amount_received = $('#amount_received_txt').val();
             
             total_tax = (tax_rate*total/100);
+            amount_received = (amount_received ? amount_received : 0);
             
             // $('.discount').each(function() {
             //     total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
             // });
             total_tax = (total_tax ? total_tax : 0);
-            net_total = (total + total_tax ? total+total_tax : 0);
+            net_total = (total + total_tax-amount_received ? total+total_tax-amount_received : 0);
             // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
@@ -650,7 +652,7 @@
                 //data: {account_types:account_type},
                 dataType: 'json', // added data type
                 success: function(data) {
-                    //console.log(data);
+                    console.log(data);
                     $.each(data, function(index, value) {
                         customerDDL(value.customer_id);
                         deposit_to_acc_codeDDL(value.deposit_to_acc_code);
@@ -658,6 +660,8 @@
                         $('#business_address').val(value.business_address);
                         $('#due_date').val(value.due_date);
                         $('#sale_date').val(value.sale_date);
+                        $('#amount_received').text(parseFloat(value.paid).toFixed(2));
+                        $('#amount_received_txt').val(value.paid);
                         
                     });
 
