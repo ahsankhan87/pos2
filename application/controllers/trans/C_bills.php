@@ -220,11 +220,11 @@ class C_bills extends MY_Controller
                             'quantity_purchased' => ($register_mode == 'receive' ? $qty : -$qty), //if sales return then insert amount in negative
                             'item_cost_price' => ($register_mode == 'receive' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
                             'item_unit_price' => ($register_mode == 'receive' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
-                            'unit_id' => $this->input->post('unit_id')[$key],
+                            //'unit_id' => $this->input->post('unit_id')[$key],
                             'description'=>$description,
                             'company_id' => $company_id,
                             //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
-                            'discount_value' => $this->input->post('discount')[$key],
+                           // 'discount_value' => $this->input->post('discount')[$key],
                             //'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
                             //'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
                             //'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]

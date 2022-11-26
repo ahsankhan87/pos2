@@ -39,33 +39,92 @@
                             <th><?php echo lang('date'); ?></th>
                             <th><?php echo lang('customer'); ?></th>
                             <th class="text-right"><?php echo lang('amount'); ?></th>
+                            <th><?php echo lang('status'); ?></th>
                             <th class="hidden-print"><?php echo lang('action'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
+                        <?php
                         $sno = 1;
-                            foreach($estimate as $key => $list)
-                            {
-                                echo '<tr>';
-                                //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                                //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
-                                echo '<td>'.$sno++.'</td>';
-                                echo '<td>'.$list['invoice_no'].'</td>';
-                                echo '<td>'.date('d-m-Y',strtotime($list['sale_date'])).'</td>';
-                                $name = $this->M_customers->get_CustomerName($list['customer_id']);
-                                echo '<td>'.@$name.'</td>';
-                                //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
-                                
-                                echo '<td class="text-right">'. number_format($list['total_amount'],2). '</td>';
-                                //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
-                                echo '<td>';
-                                //echo '<a href="'.site_url($langs).'/pos/C_estimate/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | ';
-                                echo '<a href="'.site_url($langs).'/pos/C_estimate/printReceipt/' . $list['invoice_no'] .'" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a> | ';
-                                echo '<a href="'.site_url($langs).'/pos/C_estimate/delete/' . $list['invoice_no'] .'" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
-                                echo '</td>';
-                                echo '</tr>';
-                            } 
+                        foreach ($estimate as $key => $list) {
+                            echo '<tr>';
+                            //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
+                            //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
+                            echo '<td>' . $sno++ . '</td>';
+                            echo '<td>' . $list['invoice_no'] . '</td>';
+                            echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
+                            $name = $this->M_customers->get_CustomerName($list['customer_id']);
+                            echo '<td>' . @$name . '</td>';
+                            //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
+
+                            echo '<td class="text-right">' . number_format($list['total_amount'], 2) . '</td>';
+                            //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
+                            if ($list['status'] == 'In Progress') {
+
+                                $label = "label label-info";
+                            } else if ($list['status'] == 'Rejected') {
+                                $label = "label label-danger";
+                            } else {
+                                $label = "label label-success";
+                            }
+                            // echo '<td><span class="'.$label.'">'.$list['payment_status'].'</span></td>';
+                            echo '<td>' . anchor('#', '<span class="' . $label . '">' . $list['status'] . '</span>', ' data-toggle="modal" data-target="#status_' . $sno . '"') . '</td>';
+
+                            echo '<td>';
+                            //echo '<a href="'.site_url($langs).'/pos/C_estimate/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | ';
+                            echo '<a href="' . site_url($langs) . '/pos/C_estimate/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a> | ';
+                            echo '<a href="' . site_url($langs) . '/pos/C_estimate/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        ?>
+
+                            <!--delivery_status_ Modal -->
+                            <div class="modal fade" id="status_<?php echo $sno; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Estimate No. <?php echo $list['invoice_no']; ?></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-vertical" action="<?php echo site_url('pos/C_estimate/updateStatus');?>" method="post">
+                                                
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-3" for="no">Estimate No:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" value="<?php echo $list['invoice_no']; ?>" name="invoice_no" class="form-control" readonly>
+                                                        
+                                                    </div>
+                                                </div>
+                                                </br>
+                                            </br>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-3" for="status">Status:</label>
+                                                    <div class="col-sm-9">
+                                                        <select name="status" id="status" class="form-control">
+                                                            <option>In Progress</option>
+                                                            <option>Approved</option>
+                                                            <option>Rejected</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            
+                                            </br>
+                                            </br>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php
+                        }
                         ?>
                     </tbody>
                 </table>

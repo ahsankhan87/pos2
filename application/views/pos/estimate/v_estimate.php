@@ -355,7 +355,7 @@
                             if(data == '1')
                             {
                                 toastr.success("Estimate saved successfully",'Success');
-                                
+                                window.location.href = site_url+"pos/C_estimate/allestimate";
                             }
                             clearall();
                             console.log(data);

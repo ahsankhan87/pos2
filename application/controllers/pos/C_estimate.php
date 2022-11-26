@@ -51,6 +51,7 @@ class C_estimate extends MY_Controller{
         $this->load->view('pos/estimate/v_editestimateProduct',$data);
         $this->load->view('templates/footer');
     }
+
     public function sale_transaction()
     {
         $total_amount = 0;
@@ -104,10 +105,12 @@ class C_estimate extends MY_Controller{
                     'currency_id' => $currency_id,
                     'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
+                    'status' => "In Progress",
                     //'is_taxable' => $is_taxable,
                     //'due_date'=>$due_date,
-                    // 'business_address'=>$business_address,
+                    //'business_address'=>$business_address,
                 );
+
                 $this->db->insert('pos_estimate', $data);
                 $sale_id = $this->db->insert_id();
                
@@ -142,7 +145,6 @@ class C_estimate extends MY_Controller{
 
                         $this->db->insert('pos_estimate_items', $data);
 
-                       
                          //for logging
                          $msg = 'invoice no ' . $new_invoice_no;
                          $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
@@ -156,109 +158,24 @@ class C_estimate extends MY_Controller{
             
         }
     }
-    //sale the projuct 
-    public function saleProducts()
+    
+    public function updateStatus()
     {
-        $total_amount = 0;
-        $discount = 0;
-        $unit_price = 0;
-        $cost_price = 0;
-        
-        
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        $company_id = $_SESSION['company_id'];
+        $invoice_no = $this->input->post('invoice_no');
+        $status = $this->input->post('status');
 
-            if (count((array)$this->input->post('product_id')) > 0) {
-                $this->db->trans_start();
+        $data = array(
+            'status' => $status,
+        );
 
-                //GET PREVIOISE INVOICE NO  
-                @$prev_invoice_no = $this->M_estimate->getMAXSaleInvoiceNo();
-                //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                //$new_invoice_no = 'POS'.date("Ymd").$number;
-                $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                $new_invoice_no = 'E' . $number;
-
-                //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
-                $user_id = $_SESSION['user_id'];
-                $company_id = $_SESSION['company_id'];
-                $sale_date = $this->input->post("sale_date");
-                $customer_id = $this->input->post("customer_id");
-                $emp_id = ''; //$this->input->post("emp_id");
-                $unit_id = '';//$this->input->post("unit_id");
-                // $posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
-                $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
-                $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = ''; //($this->input->post("description") == '' ? '' : $this->input->post("description"));
-                $register_mode = 'sale'; //$this->input->post("register_mode");
-                $saleType = 'cash';
-                $is_taxable =  1; //$this->input->post("is_taxable");
-                $total_tax_amount =  ($is_taxable == 1 ? $this->input->post("total_tax") : 0);
-
-                //total net amount 
-                $total_amount =  ($this->input->post("sub_total") - $discount) - $total_tax_amount;
-                    
-                $data = array(
-                    'company_id' => $company_id,
-                    'invoice_no' => $new_invoice_no,
-                    'customer_id' => $customer_id,
-                    'employee_id' => $emp_id,
-                    'user_id' => $user_id,
-                    'sale_date' => $sale_date,
-                    'register_mode' => $register_mode,
-                    'account' => $saleType,
-                    'description' => $narration,
-                    'discount_value' => $discount,
-                    'currency_id' => $currency_id,
-                    'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
-                    'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
-                    'is_taxable' => $is_taxable,
-                );
-                $this->db->insert('pos_estimate', $data);
-                $sale_id = $this->db->insert_id();
-                ////////
-                
-                foreach ($this->input->post('product_id') as $key => $value) {
-
-                    if ($value != 0) {
-                        $item_id  = htmlspecialchars(trim($value));
-                        $qty = $this->input->post('qty')[$key];
-                        $unit_price = $this->input->post('unit_price')[$key];
-                        $cost_price = $this->input->post('cost_price')[$key];
-
-                        $data = array(
-                            'sale_id' => $sale_id,
-                            'invoice_no' => $new_invoice_no,
-                            'item_id' => $item_id,
-                            'description' => $narration,
-                            'quantity_sold' => $qty, //($register_mode == 'sale' ? $qty : -$qty), //if sales return then insert amount in negative
-                            'item_cost_price' => $cost_price, //($register_mode == 'sale' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
-                            'item_unit_price' => $unit_price, //($register_mode == 'sale' ? $unit_price : -$unit_price), //if sales return then insert amount in negative
-                            'unit_id' => $unit_id,
-                            'company_id' => $company_id,
-                            //'discount_percent'=>($posted_values->discount_percent == null ? 0 : $posted_values->discount_percent),
-                            'discount_value' => $this->input->post('discount')[$key],
-                            'tax_id' => ($is_taxable == 1 ? $this->input->post('tax_id')[$key] : 0),
-                            'tax_rate' => ($is_taxable == 1 ? $this->input->post('tax_rate')[$key] : 0),
-                            'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]
-                        );
-
-                        $this->db->insert('pos_estimate_items', $data);
-
-                        //for logging
-                        $msg = 'invoice no ' . $new_invoice_no;
-                        $this->M_logs->add_log($msg, "Estimate transaction", "created", "trans");
-                        // end logging
-
-                    }
-                } //end foreach
-                $this->db->trans_complete();  
-                echo '1';  //'{"invoice_no":"'.$new_invoice_no.'"}'; //redirect to receipt page using this $receiving_id
-
-            } //check product count
+        if($this->db->update('pos_estimate', $data, array('invoice_no'=>$invoice_no,'company_id'=>$company_id))) {
+            $this->session->set_flashdata('message','Status updated');
+        }else{
+            $this->session->set_flashdata('error','Status not updated');
         }
-        
+        redirect('pos/C_estimate/allestimate','refresh');
     }
-    
-    
     public function receipt($new_invoice_no)
     {
         $data = array('langs' => $this->session->userdata('lang'));
