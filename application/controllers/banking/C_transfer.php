@@ -61,9 +61,10 @@ class C_transfer extends MY_Controller
                 'company_id' => $company_id,
             );
             $this->db->insert('acc_entry_items', $data);
+            $this->db->insert('acc_transfer', $data);
 
             ////////
-            $data = array(
+            $data_1 = array(
                 //'entry_id' => $entry_id,
                 // 'employee_id' => $emp_id,
                 'user_id' => $user_id,
@@ -79,7 +80,8 @@ class C_transfer extends MY_Controller
                 'narration' => $narration,
                 'company_id' => $company_id,
             );
-            $this->db->insert('acc_entry_items', $data);
+            $this->db->insert('acc_entry_items', $data_1);
+            $this->db->insert('acc_transfer', $data_1);
 
 
             //for logging
@@ -92,7 +94,7 @@ class C_transfer extends MY_Controller
         }
     }
 
-    public function alltransfer()
+    public function all()
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
@@ -129,18 +131,15 @@ class C_transfer extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    function delete($id, $entry_id)
+    function delete($invoice_no)
     {
         $this->db->trans_start();
 
-        $this->M_customers->delete_entry_by_id($entry_id);
-        $this->M_suppliers->delete_entry_by_id($entry_id);
-        $this->M_banking->delete_entry_by_id($entry_id);
-
+        $this->M_transfer->delete($invoice_no);
+        
         $this->db->trans_complete();
 
-        $this->M_transfer->deleteEntry($id);
-        $this->session->set_flashdata('message', 'Journal transfer Deleted');
-        redirect('banking/C_transfer/index', 'refresh');
+        $this->session->set_flashdata('message', 'Transfer Deleted');
+        redirect('banking/C_transfer/all', 'refresh');
     }
 }

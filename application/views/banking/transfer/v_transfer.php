@@ -122,7 +122,7 @@
                 {
                    $.ajax({
                         type: "POST",
-                        url: site_url + "accounts/"+module+"/transfer_transaction",
+                        url: site_url + "banking/"+module+"/transfer_transaction",
                         data: formValues,
                         success: function(data) {
                             if(data == '1')
@@ -130,7 +130,7 @@
                                 toastr.success("Invoice saved successfully",'Success');
                                 if(submit_btn == 'close')
                                 {
-                                    window.location.href = site_url+"accounts/"+module+"/";
+                                    window.location.href = site_url+"banking/"+module+"/";
                                 }
                             }else{
                                 toastr.error("Invoice not saved successfully",'Error');
@@ -161,7 +161,7 @@
             data: {account_types:account_type},
             //dataType: 'json', // added data type
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 let i = 0;
                 transfer_from_ddl += '<option value="0">Select Account</option>';
 
@@ -196,7 +196,7 @@
             data: {account_types:account_type},
             //dataType: 'json', // added data type
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 let i = 0;
                 transfer_to_ddl += '<option value="0">Select Account</option>';
 

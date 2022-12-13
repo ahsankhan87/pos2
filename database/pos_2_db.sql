@@ -2468,3 +2468,32 @@ ALTER TABLE `pos_receivings_items` ADD `account_code` VARCHAR(100) NULL AFTER `i
 ALTER TABLE `pos_receivings` ADD `payment_acc_code` VARCHAR(100) NULL AFTER `user_id`;
 
 ALTER TABLE `pos_estimate` ADD `status` VARCHAR(100) NULL AFTER `deposit_to_acc_code`;
+CREATE TABLE `acc_transfer` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `invoice_no` varchar(255) DEFAULT NULL,
+ `account_code` varchar(100) NOT NULL,
+ `dueTo_acc_code` varchar(100) NOT NULL,
+ `ref_account_id` int(20) DEFAULT '0' COMMENT 'it will be customer, supp or bank id',
+ `entry_id` int(11) DEFAULT NULL,
+ `entry_no` varchar(50) DEFAULT NULL,
+ `reconciliation_date` datetime DEFAULT NULL,
+ `debit` double(18,4) NOT NULL,
+ `credit` double(18,4) NOT NULL,
+ `employee_id` int(100) NOT NULL,
+ `date` date NOT NULL,
+ `narration` varchar(255) DEFAULT NULL,
+ `narration_ur` text NOT NULL,
+ `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `company_id` int(20) NOT NULL,
+ `is_cust` tinyint(1) DEFAULT '0',
+ `is_supp` tinyint(1) DEFAULT '0',
+ `is_bank` tinyint(1) DEFAULT '0',
+ `user_id` int(11) DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ KEY `entry_no` (`entry_no`),
+ KEY `account_code` (`account_code`),
+ KEY `invoice_no` (`invoice_no`),
+ KEY `entry_id` (`entry_id`),
+ KEY `company_id` (`company_id`),
+ KEY `ref_account_code` (`ref_account_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8

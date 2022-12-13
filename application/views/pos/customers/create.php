@@ -151,7 +151,7 @@ echo form_dropdown('country',$country,set_value('country'),'class="form-control 
 <div class="form-group">
   <label class="control-label col-sm-2" for="Website">Website:</label>
   <div class="col-sm-10">
-    <input type="url" class="form-control" id="Website" name="website" value="<?php echo set_value('website') ?>"placeholder="Website" />
+    <input type="text" class="form-control" id="Website" name="website" value="<?php echo set_value('website') ?>"placeholder="Website" />
   </div>
 </div>
 

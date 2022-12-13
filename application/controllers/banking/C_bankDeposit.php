@@ -195,19 +195,12 @@ class C_bankDeposit extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    function delete($id, $entry_id)
+    function delete($invoice_no)
     {
-        $this->db->trans_start();
-
-        $this->M_customers->delete_entry_by_id($entry_id);
-        $this->M_suppliers->delete_entry_by_id($entry_id);
-        $this->M_banking->delete_entry_by_id($entry_id);
-
-        $this->db->trans_complete();
-
-        $this->M_bank_deposit->deleteEntry($id);
+        $this->M_bank_deposit->delete($invoice_no);
+        
         $this->session->set_flashdata('message', 'Bank Deposit Deleted');
-        redirect('banking/C_bank_deposit', 'refresh');
+        redirect('banking/C_bankDeposit/all', 'refresh');
     }
 
 }

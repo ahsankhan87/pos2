@@ -144,14 +144,19 @@ class m_bank_deposit extends CI_Model{
     
     function delete($invoice_no)
     {
+        $this->db->trans_start();
+
         $this->db->delete('acc_bank_deposit_header',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         
-        $this->db->delete('acc_bank_deposit_header_items',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+        $this->db->delete('acc_bank_deposit_detail',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         
         $this->db->delete('acc_entries',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         $this->db->delete('acc_entry_items',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         
         $this->db->delete('pos_customer_payments',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+        
+        $this->db->trans_complete();
+
     }
 
     public function get_totalbank_depositByCategory()

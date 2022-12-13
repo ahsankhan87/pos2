@@ -343,12 +343,12 @@ class C_estimate extends MY_Controller{
         //Display Invoice no
         $pdf->SetY(49);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, "Invoice No : " . $new_invoice_no);
+        $pdf->Cell(50, 7, "Estimate No : " . $new_invoice_no);
 
         //Display Invoice date
         $pdf->SetY(57);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, "Invoice Date : " . date('m-d-Y',strtotime($sales_items[0]["sale_date"])));
+        $pdf->Cell(50, 7, "Estimate Date : " . date('m-d-Y',strtotime($sales_items[0]["sale_date"])));
 
         //Display Table headings
         $pdf->SetY(85);
