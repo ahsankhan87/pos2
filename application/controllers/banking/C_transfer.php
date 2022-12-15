@@ -101,15 +101,15 @@ class C_transfer extends MY_Controller
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '10240M');
 
-        $data['title'] = lang('transferList');
-        $data['main'] = lang('transferList');
+        $data['title'] = "All Transfer";
+        $data['main'] = "All Transfer";
 
         //$data['cities'] = $this->M_city->get_city();
         $data['transfer'] = $this->M_transfer->get_alltransfer($_SESSION['company_id'], FY_START_DATE, FY_END_DATE);
 
 
         $this->load->view('templates/header', $data);
-        $this->load->view('banking/transfer/v_transfer', $data);
+        $this->load->view('banking/transfer/v_all', $data);
         $this->load->view('templates/footer');
     }
 
@@ -133,12 +133,10 @@ class C_transfer extends MY_Controller
 
     function delete($invoice_no)
     {
-        $this->db->trans_start();
-
-        $this->M_transfer->delete($invoice_no);
         
-        $this->db->trans_complete();
-
+        $this->M_transfer->deleteEntry_invoice_no($invoice_no);
+        
+        
         $this->session->set_flashdata('message', 'Transfer Deleted');
         redirect('banking/C_transfer/all', 'refresh');
     }

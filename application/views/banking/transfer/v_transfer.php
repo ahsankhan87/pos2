@@ -63,7 +63,7 @@
         <div class="col-sm-10">
 
             <?php echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
-            <!-- <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?> -->
+            <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?>
         </div>
         <!-- /.col-sm-12 -->
         
@@ -130,7 +130,7 @@
                                 toastr.success("Invoice saved successfully",'Success');
                                 if(submit_btn == 'close')
                                 {
-                                    window.location.href = site_url+"banking/"+module+"/";
+                                    window.location.href = site_url+"banking/"+module+"/all";
                                 }
                             }else{
                                 toastr.error("Invoice not saved successfully",'Error');

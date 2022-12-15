@@ -139,5 +139,5 @@ $autoload['model'] = array('pos/M_items','pos/M_sizes','pos/M_units','pos/M_area
                            'pos/M_companies','M_login','M_dashboard','M_modules','pos/M_employees','pos/M_customers',
                            'accounts/M_fyear','pos/M_currencies','M_logs','M_users','pos/M_payments','pos/M_eventCalendar',
                            'mfg/M_workcenters','mfg/M_workorders','mfg/M_billofmaterial',
-                           'banking/M_bank_deposit'
+                           'banking/M_bank_deposit','banking/M_transfer'
                            );
