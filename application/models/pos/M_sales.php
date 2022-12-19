@@ -74,7 +74,6 @@ class m_sales extends CI_Model{
        
     }
     
-    
     //ITS SHARIF CUSTOM CLEARING AGENT 
     //THIS FUNCTION WILL USE FOR ONLY SHARIF CUSTOM CLEARING AGENT
     //function get_sales_items($new_invoice_no)//for receipt
@@ -142,16 +141,38 @@ class m_sales extends CI_Model{
        
     }
     
+    function get_sales_inv_payment($invoice_no)
+    {
+        $this->db->where(array('sales_invoice_no'=>$invoice_no,'company_id'=>$_SESSION['company_id']));
+        $query = $this->db->get('pos_sales_inv_payment');
+        return $query->result_array();
+    }
+
     function delete($invoice_no)
     {
+        $this->db->trans_start();
+
         $this->db->delete('pos_sales',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         
         $this->db->delete('pos_sales_items',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         
+        $sales = $this->get_sales_inv_payment($invoice_no);
+        foreach($sales as $key => $list)
+        {
+            //delete entries of invoice payments / partial payment in invoice
+            $this->db->delete('acc_entries',array('invoice_no'=>$list['invoice_no'],'company_id'=> $_SESSION['company_id']));
+            $this->db->delete('acc_entry_items',array('invoice_no'=>$list['invoice_no'],'company_id'=> $_SESSION['company_id']));
+
+        }
+        $this->db->delete('pos_sales_inv_payment',array('sales_invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+
         $this->db->delete('acc_entries',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         $this->db->delete('acc_entry_items',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         
         $this->db->delete('pos_customer_payments',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+        
+        $this->db->trans_complete();
+
     }
 
     public function get_totalSalesByCategory()

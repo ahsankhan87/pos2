@@ -315,7 +315,20 @@ class C_invoices extends MY_Controller
                 'paid' => ($paid_amount+$amount),
                 );
             $this->M_sales->updatePaidAmount($invoice_no,$data);
-        
+            
+            ////////
+            $data = array(
+                'sales_invoice_no' => $invoice_no, //account_id,
+                'invoice_no' => $new_invoice_no, //account_id,
+                // 'date' => $sale_date,
+                //'amount' => $dr_amount,
+                'customer_id' => $customer_id,
+                'amount' => $amount,
+                'company_id' => $company_id,
+                'date_created'=> date("Y-m-d H:i:s"),
+            );
+            $this->db->insert('pos_sales_inv_payment', $data);
+
             ////////
             $data = array(
                 //'entry_id' => $entry_id,
@@ -407,10 +420,9 @@ class C_invoices extends MY_Controller
 
     public function delete($invoice_no, $redirect = true)
     {
-        $this->db->trans_start();
-            $this->M_sales->delete($invoice_no);
-        $this->db->trans_complete();
-
+        
+        $this->M_sales->delete($invoice_no);
+        
         if ($redirect === true) {
             $this->session->set_flashdata('message', 'Entry Deleted');
             redirect('pos/C_invoices/all', 'refresh');

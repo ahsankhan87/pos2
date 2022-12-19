@@ -2497,3 +2497,16 @@ CREATE TABLE `acc_transfer` (
  KEY `company_id` (`company_id`),
  KEY `ref_account_code` (`ref_account_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8
+
+CREATE TABLE `pos_receiving_inv_payment` ( `id` int(20) NOT NULL AUTO_INCREMENT, `supplier_id` int(20) NOT NULL, `invoice_no` varchar(40) COLLATE utf8_unicode_ci NOT NULL, `receiving_invoice_no` varchar(40) COLLATE utf8_unicode_ci NOT NULL, `amount` decimal(20,4) NOT NULL, `company_id` int(20) NOT NULL, `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+CREATE TABLE `pos_sales_inv_payment` (
+ `id` int(20) NOT NULL AUTO_INCREMENT,
+ `customer_id` int(20) NOT NULL,
+ `invoice_no` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+ `sales_invoice_no` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+ `amount` decimal(20,4) NOT NULL,
+ `company_id` int(20) NOT NULL,
+ `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci

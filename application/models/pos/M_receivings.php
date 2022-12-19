@@ -126,12 +126,29 @@ class M_receivings extends CI_Model{
        
     }
 
+    function get_receiving_inv_payment($invoice_no)
+    {
+        $this->db->where(array('receiving_invoice_no'=>$invoice_no,'company_id'=>$_SESSION['company_id']));
+        $query = $this->db->get('pos_receiving_inv_payment');
+        return $query->result_array();
+    }
+
    function delete($invoice_no)
     {
         $this->db->delete('pos_receivings',array('invoice_no'=>$invoice_no));
         
         $this->db->delete('pos_receivings_items',array('invoice_no'=>$invoice_no));
         
+        $receiving = $this->get_receiving_inv_payment($invoice_no);
+        foreach($receiving as $key => $list)
+        {
+            //delete entries of invoice payments / partial payment in invoice
+            $this->db->delete('acc_entries',array('invoice_no'=>$list['invoice_no'],'company_id'=> $_SESSION['company_id']));
+            $this->db->delete('acc_entry_items',array('invoice_no'=>$list['invoice_no'],'company_id'=> $_SESSION['company_id']));
+
+        }
+        $this->db->delete('pos_receiving_inv_payment',array('receiving_invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+
         $this->db->delete('acc_entries',array('invoice_no'=>$invoice_no));
         $this->db->delete('acc_entry_items',array('invoice_no'=>$invoice_no));
         

@@ -272,10 +272,10 @@ class M_transfer extends CI_Model{
         //$this->db->delete('acc_transfer',array('invoice_no'=>$invoice_no));
         $this->db->delete('acc_entry_items',array('id'=>$id));
         
-                    //for logging
-                    $msg = 'entry id '.$id;
-                    $this->M_logs->add_log($msg,"Journal Entry","deleted","Accounts");
-                    // end logging
+            //for logging
+            $msg = 'entry id '.$id;
+            $this->M_logs->add_log($msg,"Journal Entry","deleted","Accounts");
+            // end logging
     }
 
     

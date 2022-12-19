@@ -349,6 +349,19 @@ class C_bills extends MY_Controller
         
             ////////
             $data = array(
+                'receiving_invoice_no' => $invoice_no, //account_id,
+                'invoice_no' => $new_invoice_no, //account_id,
+                // 'date' => $sale_date,
+                //'amount' => $dr_amount,
+                'supplier_id' => $supplier_id,
+                'amount' => $amount,
+                'company_id' => $company_id,
+                'date_created'=> date("Y-m-d H:i:s"),
+            );
+            $this->db->insert('pos_receiving_inv_payment', $data);
+
+            ////////
+            $data = array(
                 //'entry_id' => $entry_id,
                 // 'employee_id' => $emp_id,
                 'user_id' => $user_id,
