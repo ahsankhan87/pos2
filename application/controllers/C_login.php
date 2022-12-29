@@ -123,7 +123,7 @@ class C_login extends CI_Controller
             } else {
 
                 $data = array(
-                    'password' => md5($this->input->post('password1')),
+                    'password' => md5($this->input->post('password')),
                 );
 
                 echo $this->db->update('users', $data, array('forgot_pass_identity' => $this->input->post('forgot_pass_identity', true)));
