@@ -106,7 +106,8 @@ class C_newStore extends CI_Controller{
                         'status'=>1,
                         'role'=>'admin', //$this->input->post('role',true),
                         'company_id'=> $company_id,
-                        'username'=>$username
+                        'username'=>$username,
+                        'email' => $this->input->post('email', true),
                       );
                   
                 $this->db->insert('users',$data);

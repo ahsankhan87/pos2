@@ -2510,3 +2510,6 @@ CREATE TABLE `pos_sales_inv_payment` (
  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+ALTER TABLE `users` ADD `forgot_pass_identity` TEXT NULL AFTER `status`;
+ALTER TABLE `users` ADD `email` varchar(200) NULL AFTER `forgot_pass_identity`;
