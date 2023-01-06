@@ -45,6 +45,9 @@ $lang['trial_balance']='ميزان المراجعة';
 $lang['income_exp']='الإيرادات والمصروفات';
 $lang['balance_sheet']='ورقة التوازن';
 $lang['annual_report']='تقرير سنوي';
+$lang['account_receivable']='حساب العميل';
+$lang['account_payable']='حساب المستحق';
+
 $lang['jan']='جنوری';
 $lang['feb']='فروری';
 $lang['mar']='مارچ';

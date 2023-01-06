@@ -462,13 +462,13 @@
                         success: function(data) {
                             if(data == '1')
                             {
-                                toastr.success("Invoice saved successfully",'Success');
+                                toastr.success("Bill updated successfully",'Success');
                                 if(submit_btn == 'close')
                                 {
                                     window.location.href = site_url+"trans/"+module+"/all";
                                 }
                             }else{
-                                toastr.error("Invoice not saved successfully",'Error');
+                                toastr.error("Bill not updated",'Error');
                             }
                             clearall();
                             //console.log(data);

@@ -166,7 +166,10 @@ class C_invoices extends MY_Controller
                     'narration' => $narration,
                     'company_id' => $company_id,
                 );
-                $this->db->insert('acc_entry_items', $data);
+                $entry_id = $this->db->insert_id('acc_entry_items', $data);
+                
+                //CUSTOMER PAYMENT ENTRY
+                $this->M_customers->addCustomerPaymentEntry($deposit_to_acc_code, 0, $sub_total, 0, $customer_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id);
 
                 foreach ($this->input->post('account_id') as $key => $value) {
                     
@@ -365,7 +368,10 @@ class C_invoices extends MY_Controller
                 'narration' => $narration,
                 'company_id' => $company_id,
             );
-            $this->db->insert('acc_entry_items', $data);
+            $entry_id = $this->db->insert_id('acc_entry_items', $data);
+
+                //CUSTOMER PAYMENT ENTRY
+                $this->M_customers->addCustomerPaymentEntry($dr_acc_code, $cr_acc_code, 0, $amount, $customer_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id);
 
             //for logging
             $msg = 'invoice no ' . $new_invoice_no;

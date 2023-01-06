@@ -2513,3 +2513,6 @@ CREATE TABLE `pos_sales_inv_payment` (
 
 ALTER TABLE `users` ADD `forgot_pass_identity` TEXT NULL AFTER `status`;
 ALTER TABLE `users` ADD `email` varchar(200) NULL AFTER `forgot_pass_identity`;
+
+INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountReceivable', 'Account Receivable ', 'اکاؤنٹ وصولی', 'حساب العميل', '', 'C_accountReceivable', '42', 'active');
+INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountPayable', 'Account Payable ', 'قابل ادائیگی اکاؤنٹ', 'حساب المستحق', '', 'C_accountPayable', '43', 'active')

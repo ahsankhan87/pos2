@@ -199,8 +199,11 @@ class C_bills extends MY_Controller
                     'narration' => $narration,
                     'company_id' => $company_id,
                 );
-                $this->db->insert('acc_entry_items', $data);
-                    
+                $entry_id = $this->db->insert_id('acc_entry_items', $data);
+                
+                //SUPPLIER PAYMENT ENTRY
+                $this->M_suppliers->addsupplierPaymentEntry($payment_acc_code, 0, 0,$sub_total, $supplier_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id);
+ 
                 foreach ($this->input->post('account_id') as $key => $value) {
 
                     if ($value != 0) {
@@ -396,8 +399,11 @@ class C_bills extends MY_Controller
                 'narration' => $narration,
                 'company_id' => $company_id,
             );
-            $this->db->insert('acc_entry_items', $data);
+            $entry_id = $this->db->insert_id('acc_entry_items', $data);
 
+            //SUPPLIER PAYMENT ENTRY
+            $this->M_suppliers->addsupplierPaymentEntry($cr_acc_code, $dr_acc_code, $amount, 0, $supplier_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id);
+ 
             //for logging
             $msg = 'invoice no ' . $new_invoice_no;
             $this->M_logs->add_log($msg, "Payment Receipt transaction", "created", "trans");
