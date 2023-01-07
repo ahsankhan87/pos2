@@ -4,7 +4,6 @@ var TableAdvanced = function () {
         var table = $('#sample_1');
 
         /* Table tools samples: https://www.datatables.net/release-datatables/extras/TableTools/ */
-
         /* Set tabletools buttons and button container */
         var oTable = table.dataTable({
             "order": [
