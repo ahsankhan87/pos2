@@ -202,7 +202,7 @@ class C_bills extends MY_Controller
                 $entry_id = $this->db->insert_id('acc_entry_items', $data);
                 
                 //SUPPLIER PAYMENT ENTRY
-                $this->M_suppliers->addsupplierPaymentEntry($payment_acc_code, 0, 0,$sub_total, $supplier_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id);
+                $this->M_suppliers->addsupplierPaymentEntry($payment_acc_code, 0, 0,$sub_total, $supplier_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id,$due_date);
  
                 foreach ($this->input->post('account_id') as $key => $value) {
 

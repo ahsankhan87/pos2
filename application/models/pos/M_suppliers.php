@@ -109,7 +109,7 @@ class M_suppliers extends CI_Model{
     }
     
     function addsupplierPaymentEntry($account_code,$dueTo_acc_code,$dr_amount,$cr_amount,$supplier_id='',
-    $narration='',$invoice_no='',$date=null,$exchange_rate=0,$entry_id=0)
+    $narration='',$invoice_no='',$date=null,$exchange_rate=0,$entry_id=0,$due_date='')
     {
         $data = array(
                 'supplier_id' => $supplier_id,
@@ -123,7 +123,7 @@ class M_suppliers extends CI_Model{
                 'narration' => $narration,
                 'exchange_rate'=>($exchange_rate == null ? 1 : $exchange_rate),
                 'company_id'=>$_SESSION['company_id'],
-        
+                'due_date'=>$due_date,
                 );
                 $this->db->insert('pos_supplier_payments', $data);      
                 

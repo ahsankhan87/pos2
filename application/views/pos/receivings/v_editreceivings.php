@@ -29,7 +29,12 @@
             <div class="col-sm-4">
                 <select name="payment_acc_code" id="payment_acc_code" class="form-control select2me"></select>
             </div>
-
+            
+            <label class="control-label col-sm-2" for="due_date">Due Date:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo date("Y-m-d") ?>" />
+            </div>
+            
         </div>
         <!-- /.col-sm-12 -->
         

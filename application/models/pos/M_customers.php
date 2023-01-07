@@ -244,7 +244,7 @@ class M_customers extends CI_Model{
             // end logging
         }
     function addCustomerPaymentEntry($account_code,$dueTo_acc_code,$dr=0,$cr=0,$customer_id='',
-    $narration='',$invoice_no='',$date=null,$exchange_rate=0,$entry_id=0)
+    $narration='',$invoice_no='',$date=null,$exchange_rate=0,$entry_id=0,$due_date='')
     {
         $data = array(
                 'customer_id' => $customer_id,
@@ -257,7 +257,8 @@ class M_customers extends CI_Model{
                 'entry_id' => $entry_id,
                 'narration' => $narration,
                 'exchange_rate'=>($exchange_rate == null ? 0 : $exchange_rate),
-                'company_id'=> $_SESSION['company_id']
+                'company_id'=> $_SESSION['company_id'],
+                'due_date'=>$due_date,
                 );
                 $this->db->insert('pos_customer_payments', $data);      
     }
