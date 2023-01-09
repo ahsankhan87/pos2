@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 border">
             <div class="text-center">
-                <?php echo anchor('reports/C_accountReceivable/printPDF/'.$from_date.'/'.$to_date,"Print","target='_blank'"); ?>
+                <?php echo anchor('reports/C_accountReceivable/printPDF/'.$from_date.'/'.$to_date,"<i class='fa fa-print'></i> Print","target='_blank'"); ?>
                 <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
                 <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
                 <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>
@@ -47,7 +47,7 @@
                 <thead>
                     <tr>
                         <th><?php echo lang('customer') ?></th>
-                        <th>Transaction Type</th>
+                        <th><?php echo lang('type') ?></th>
                         <!-- <th class="text-right"><?php echo lang('debit') . ' ' . lang('amount') ?></th>
                         <th class="text-right"><?php echo lang('credit') . ' ' . lang('amount') ?></th> -->
                         <th class="text-right"><?php echo lang('amount') ?></th> 
@@ -71,7 +71,7 @@
                     //{
                     echo '<tr>';
                     echo '<td>' . $list['first_name'].' '.$list["last_name"] . '</td>';
-                    echo '<td>Bill</td>';
+                    echo '<td>Invoice</td>';
                     
                     $op_balance_dr = ($list['op_balance_dr']);
                     $op_balance_cr = ($list['op_balance_cr']);

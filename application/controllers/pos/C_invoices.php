@@ -166,7 +166,8 @@ class C_invoices extends MY_Controller
                     'narration' => $narration,
                     'company_id' => $company_id,
                 );
-                $entry_id = $this->db->insert_id('acc_entry_items', $data);
+                $this->db->insert('acc_entry_items', $data);
+                $entry_id = $this->db->insert_id();
                 
                 //CUSTOMER PAYMENT ENTRY
                 $this->M_customers->addCustomerPaymentEntry($deposit_to_acc_code, 0, $sub_total, 0, $customer_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id,$due_date);
@@ -368,7 +369,8 @@ class C_invoices extends MY_Controller
                 'narration' => $narration,
                 'company_id' => $company_id,
             );
-            $entry_id = $this->db->insert_id('acc_entry_items', $data);
+            $this->db->insert('acc_entry_items', $data);
+            $entry_id = $this->db->insert_id();
 
                 //CUSTOMER PAYMENT ENTRY
                 $this->M_customers->addCustomerPaymentEntry($dr_acc_code, $cr_acc_code, 0, $amount, $customer_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id);

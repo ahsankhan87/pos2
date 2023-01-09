@@ -92,9 +92,8 @@ class C_accountReceivable extends MY_Controller{
             $balance = (($op_balance_dr + $balance_dr) - ($op_balance_cr + $balance_cr));
             $net_total += $balance;
             
-            
             $pdf->Cell(80, 9, $list["first_name"].' '.$list["last_name"], "LR", 0);
-            $pdf->Cell(40, 9, "Invoice", "R", 0, "L");
+            $pdf->Cell(40, 9, "Invoice", "R", 0, "C");
             $pdf->Cell(30, 9, "", "R", 0, "C");
             $pdf->Cell(40, 9, number_format($balance,2), "R", 1, "R");
         }
@@ -106,7 +105,7 @@ class C_accountReceivable extends MY_Controller{
             $pdf->Cell(30, 9, "", "R", 0, "C");
             $pdf->Cell(40, 9, "", "R", 1, "R");
         }
-        
+
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");

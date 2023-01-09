@@ -37,6 +37,7 @@
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 border">
             <div class="text-center">
+                <?php echo anchor('reports/C_accountPayable/printPDF/'.$from_date.'/'.$to_date,"<i class='fa fa-print'></i> Print","target='_blank'"); ?>
                 <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
                 <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
                 <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>
@@ -45,8 +46,8 @@
             <table class="table table-condensed">
                 <thead>
                     <tr>
-                        <th><?php echo lang('s_no') ?></th>
                         <th><?php echo lang('supplier') ?></th>
+                        <th><?php echo lang('type') ?></th>
                         <!-- <th class="text-right"><?php echo lang('debit') . ' ' . lang('amount') ?></th>
                         <th class="text-right"><?php echo lang('credit') . ' ' . lang('amount') ?></th> -->
                         <th class="text-right"><?php echo lang('amount') ?></th> 
@@ -69,9 +70,9 @@
                     //if($balance != 0)
                     //{
                     echo '<tr>';
-                    echo '<td></td>';
                     echo '<td>' . $list['name'] . '</td>';
-
+                    echo '<td>Bill</td>';
+                    
                     $op_balance_dr = ($list['op_balance_dr']);
                     $op_balance_cr = ($list['op_balance_cr']);
                     $op_balance = (($op_balance_dr - $op_balance_cr));
