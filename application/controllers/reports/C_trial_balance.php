@@ -75,7 +75,7 @@ class C_trial_balance extends MY_Controller{
         $pdf->SetX(10);
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(80, 9, "ACCOUNT", 1, 0);
-        $pdf->Cell(40, 9, "CODE", 1, 0, "C");
+        $pdf->Cell(40, 9, "", 1, 0, "C");
         $pdf->Cell(30, 9, "DEBIT", 1, 0, "C");
         $pdf->Cell(40, 9, "CREDIT", 1, 1, "C");
         $pdf->SetFont('Arial', '', 12);
@@ -101,7 +101,7 @@ class C_trial_balance extends MY_Controller{
             // } 
             
             $pdf->Cell(80, 9, ($langs == 'en' ? $list['title'] : $list['title_ur']), "LR", 0);
-            $pdf->Cell(40, 9, $list['account_code'], "R", 0, "C");
+            $pdf->Cell(40, 9, '', "R", 0, "C");
             $pdf->Cell(30, 9, ($dr_balance > 0 ? number_format($dr_balance,2) : 0), "R", 0, "R");
             $pdf->Cell(40, 9, ($cr_balance > 0 ? number_format($cr_balance,2) : 0), "R", 1, "R");
         }

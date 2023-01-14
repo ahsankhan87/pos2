@@ -35,6 +35,7 @@
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2 border">
         <div class="text-center">
+            <?php echo anchor('reports/C_profitloss/printPDF/' . $from_date . '/' . $to_date, "<i class='fa fa-print'></i> Print", "target='_blank'"); ?>
             <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
             <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
             <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>
@@ -68,11 +69,11 @@
                         echo '</td>';
                         $balance = $values['credit'] - $values['debit'];
                         echo '<td class="text-right">';
-                        echo number_format($balance,2);
+                        echo number_format($balance, 2);
                         echo '</td>';
                         $total += $balance;
                         echo '<td class="text-right">';
-                        echo number_format($total,2);
+                        echo number_format($total, 2);
                         echo '</td></tr>';
                     endforeach;
                     /////
@@ -83,7 +84,7 @@
                 <tr>
                     <td><strong>NET PROFIT</strong></td>
                     <td></td>
-                    <td class="text-right"><strong><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><?php echo number_format($total,2); ?></strong></td>
+                    <td class="text-right"><strong><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><?php echo number_format($total, 2); ?></strong></td>
                 </tr>
             </tfoot>
 

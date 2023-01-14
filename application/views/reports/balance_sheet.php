@@ -44,9 +44,10 @@
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2 border">
         <div class="text-center">
+            <?php echo anchor('reports/C_balancesheet/printPDF/' . $from_date . '/' . $to_date, "<i class='fa fa-print'></i> Print", "target='_blank'"); ?>
             <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
             <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
-            <p><?php echo date('d-m-Y',strtotime($from_date)) .' to '.date('d-m-Y',strtotime($to_date)); ?></p>
+            <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>
         </div>
         <h3>Assets</h3>
         <table class="table table-condensed">
@@ -60,16 +61,17 @@
 
                 <?php
                 $asset_total = 0;
-                
+
                 foreach ($parentGroups4Assets as $key => $list) {
+                    $bl_report = $this->M_groups->get_GroupsByParent($list['account_code']);
+
                     echo '<tr><td colspan="2">';
-                    echo '<strong>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
+                    echo '<strong>' . (count($bl_report) > 0 ? ($langs == 'en' ? $list['title'] : $list['title_ur']) : '') . '</strong>';
                     echo '</td></tr>';
 
                     ///////
                     //$bl_report = $this->M_reports->get_Assets4BalanceSheet($_SESSION['company_id'],$list['account_code'],$from_date,$to_date);
-                    $bl_report = $this->M_groups->get_GroupsByParent($list['account_code']);
-                    
+
                     foreach ($bl_report as $key => $values) :
 
                         $dr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['debit'];
@@ -124,13 +126,14 @@
                 $total = 0;
 
                 foreach ($Liability4BalanceSheet as $key => $list) {
+                    $bl_report = $this->M_groups->get_GroupsByParent($list['account_code']);
+
                     echo '<tr><td colspan="2">';
-                    echo '<strong>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
+                    echo '<strong>' . (count($bl_report) > 0 ? ($langs == 'en' ? $list['title'] : $list['title_ur']) : '') . '</strong>';
                     echo '</td></tr>';
 
                     ///////
                     //$bl_report = $this->M_reports->get_Liability4BalanceSheet($_SESSION['company_id'],$list['account_code'],$from_date,$to_date);
-                    $bl_report = $this->M_groups->get_GroupsByParent($list['account_code']);
                     foreach ($bl_report as $key => $values) :
 
                         $dr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['debit'];
@@ -138,20 +141,20 @@
                         $balance = ($values['op_balance_cr'] + $cr) - ($dr + $values['op_balance_dr']);
 
                         //if ($balance != 0) {
-                            echo '<tr><td>';
-                            echo '&nbsp;&nbsp;';
-                            echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
-                            echo '</td>';
+                        echo '<tr><td>';
+                        echo '&nbsp;&nbsp;';
+                        echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                        echo '</td>';
 
-                            echo '<td class="text-right">';
-                            echo number_format($balance, 2);
-                            echo '</td>';
+                        echo '<td class="text-right">';
+                        echo number_format($balance, 2);
+                        echo '</td>';
 
-                            //echo '<td>';
-                            $total += $balance;
-                            //echo '</td>
-                            echo '</tr>';
-                        //}
+                        //echo '<td>';
+                        $total += $balance;
+                        //echo '</td>
+                        echo '</tr>';
+                    //}
                     endforeach;
                     /////
                 }
@@ -161,7 +164,7 @@
                 echo '</td>';
 
                 echo '<td class="text-right">';
-                echo number_format((double)abs($net_income),2);
+                echo number_format((float)abs($net_income), 2);
                 echo '</td>';
 
                 //echo '<td>';
