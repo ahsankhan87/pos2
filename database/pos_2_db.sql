@@ -2515,6 +2515,6 @@ ALTER TABLE `users` ADD `forgot_pass_identity` TEXT NULL AFTER `status`;
 ALTER TABLE `users` ADD `email` varchar(200) NULL AFTER `forgot_pass_identity`;
 
 INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountReceivable', 'Account Receivable ', 'اکاؤنٹ وصولی', 'حساب العميل', '', 'C_accountReceivable', '42', 'active');
-INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountPayable', 'Account Payable ', 'قابل ادائیگی اکاؤنٹ', 'حساب المستحق', '', 'C_accountPayable', '43', 'active')
+INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountPayable', 'Account Payable ', 'قابل ادائیگی اکاؤنٹ', 'حساب المستحق', '', 'C_accountPayable', '43', 'active');
 ALTER TABLE `pos_customer_payments` ADD `due_date` DATE NULL AFTER `entry_id`;
 ALTER TABLE `pos_supplier_payments` ADD `due_date` DATE NULL AFTER `entry_id`;

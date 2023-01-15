@@ -99,9 +99,9 @@ class M_login extends CI_Model
                         //GIVE FINANCIAL YEARS TO SESSION AND THEN 
                         //ASSIGN IT TO CONSTANT VARIABLES IN MY_CONTROLLER 
                         $fyear = $this->M_fyear->get_ActiveFyear($_SESSION['company_id']);
-                        $_SESSION['fy_year'] = $fyear[0]['fy_year'];
-                        $_SESSION['fy_start_date'] = $fyear[0]['fy_start_date'];
-                        $_SESSION['fy_end_date'] = $fyear[0]['fy_end_date'];
+                        $_SESSION['fy_year'] = @$fyear[0]['fy_year'];
+                        $_SESSION['fy_start_date'] = @$fyear[0]['fy_start_date'];
+                        $_SESSION['fy_end_date'] = @$fyear[0]['fy_end_date'];
                         //////////////////////
 
                         if (isset($_SESSION['company_id']) && isset($_SESSION['user_id'])) {
