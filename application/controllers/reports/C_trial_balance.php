@@ -116,7 +116,7 @@ class C_trial_balance extends MY_Controller{
         
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(120, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(120, 9, "TOTAL", 1, 0, "");
         $pdf->Cell(30, 9, number_format($dr_net_total,2), 1, 0, "R");
         $pdf->Cell(40, 9, number_format($cr_net_total,2), 1, 1, "R");
         
@@ -128,10 +128,10 @@ class C_trial_balance extends MY_Controller{
         $pdf->SetY(-60);
         //$pdf->SetFont('helvetica', 'B', 12);
         //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
-        $pdf->Ln(15);
-        $pdf->SetFont('helvetica', '', 12);
-        $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
-        $pdf->SetFont('helvetica', '', 10);
+        // $pdf->Ln(15);
+        // $pdf->SetFont('helvetica', '', 12);
+        // $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
+        // $pdf->SetFont('helvetica', '', 10);
 
         //Display Footer Text
         $pdf->Cell(0, 10, "This is a computer generated report", 0, 1, "C");

@@ -471,9 +471,9 @@ class C_sales extends MY_Controller
             $total += ($row['item_unit_price'] * $row['quantity_sold']);
             $discount += $row['discount_value'];
             $tax_amount = $total_cost * $row['tax_rate'] / 100;
-            $account_name = $this->M_groups->get_accountName($row['account_code']);
+            //$account_name = $this->M_groups->get_accountName($row['account_code']);
 
-            $pdf->Cell(80, 9, $account_name, "LR", 0);
+            $pdf->Cell(80, 9, $row["item_desc"], "LR", 0);
             $pdf->Cell(40, 9, number_format($row["item_unit_price"],2), "R", 0, "R");
             $pdf->Cell(30, 9, number_format($row["quantity_sold"],2), "R", 0, "C");
             $pdf->Cell(40, 9, number_format(($row['item_unit_price'] * $row['quantity_sold']),2), "R", 1, "R");
@@ -491,12 +491,12 @@ class C_sales extends MY_Controller
         $pdf->Cell(40, 9, number_format($total,2), 1, 1, "R");
 
         //Display amount in words
-        $pdf->SetY(215);
-        $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(0, 9, number_format($total,2), 0, 1);
+        // $pdf->SetY(215);
+        // $pdf->SetX(10);
+        // $pdf->SetFont('Arial', 'B', 12);
+        // $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
+        // $pdf->SetFont('Arial', '', 12);
+        // $pdf->Cell(0, 9, number_format($total,2), 0, 1);
         ///////////////
         ///body
 

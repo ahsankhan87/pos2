@@ -170,7 +170,7 @@ class C_profitloss extends MY_Controller
 
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(150, 9, "TOTAL", 1, 0, "");
         //$pdf->Cell(30, 9, '', 1, 0, "R");
         $pdf->Cell(40, 9, number_format($total, 2), 1, 1, "R");
         ///body

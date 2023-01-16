@@ -119,7 +119,7 @@ class C_balancesheet extends MY_Controller
 
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(150, 9, "TOTAL", 1, 0, "");
         //$pdf->Cell(30, 9, '', 1, 0, "R");
         $pdf->Cell(40, 9, number_format($asset_total, 2), 1, 1, "R");
 
@@ -170,7 +170,7 @@ class C_balancesheet extends MY_Controller
 
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(150, 9, "TOTAL", 1, 0, "");
         //$pdf->Cell(30, 9, '', 1, 0, "R");
         $pdf->Cell(40, 9, number_format(($total + $net_income), 2), 1, 1, "R");
 
