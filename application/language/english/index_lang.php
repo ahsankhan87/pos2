@@ -172,3 +172,4 @@ $lang['sub_total']= 'Sub Total';
 $lang['discount']= 'Discount';
 $lang['disc']= 'Disc';
 $lang['tax']= 'Tax';
+$lang['due_date']= 'Due Date';

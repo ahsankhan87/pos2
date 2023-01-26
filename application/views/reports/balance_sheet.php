@@ -1,11 +1,11 @@
-<div class="note note-warning hidden-print">
+<!-- <div class="note note-warning hidden-print">
     <p>
         - If you want to distribute the profit among multiple partners then press below button and run Retained Earning Report.<br />
         - All Profit or Loss will be credted or debited accordingly to Retained Earning Account.<br />
         - Then Distribute profit/loss through Journal Entry.
         <a href="<?php echo site_url('reports/C_profitloss/run_pl_report') ?>" class="btn btn-success">Run Retained Earning Report</a>
     </p>
-</div>
+</div> -->
 <div class="row hidden-print">
     <div class="col-md-12">
         <!-- BEGIN SAMPLE FORM PORTLET-->

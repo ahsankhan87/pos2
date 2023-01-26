@@ -69,31 +69,52 @@
                 foreach ($customers as $key => $list) {
                     //if($balance != 0)
                     //{
-                    echo '<tr>';
-                    echo '<td>' . $list['first_name'].' '.$list["last_name"] . '</td>';
-                    echo '<td>Invoice</td>';
-                    
                     $op_balance_dr = ($list['op_balance_dr']);
                     $op_balance_cr = ($list['op_balance_cr']);
                     $op_balance = (($op_balance_dr - $op_balance_cr));
 
-                    //CURRENT BALANCES
-                    $cur_balance = $this->M_customers->get_customer_total_balance($list['id'], $from_date, $to_date);
-                    $balance_dr = ($cur_balance[0]['dr_balance']);
-                    $balance_cr = ($cur_balance[0]['cr_balance']);
+                    $customer_Entries = $this->M_customers->get_customer_Entries($list['id'], $from_date, $to_date);
                     
-                    $balance = (($op_balance_dr + $balance_dr) - ($op_balance_cr + $balance_cr));
-                    echo '<td class="text-right">'. number_format($balance, 2) . '</td>';
-                    $net_total += $balance;
+                    // var_dump($customer_Entries);
+                        
+                    $balance_dr = (@$customer_Entries[0]['debit']);
+                    $balance_cr = (@$customer_Entries[0]['credit']);
+                    $balance = (($op_balance_dr + $balance_dr)-($op_balance_cr + $balance_cr));
                     
-                    echo '</tr>';
-                    //}
+                    if((float) $balance > 0)
+                    {
+                        echo '<tr>';
+                        echo '<td>' . $list['first_name'].' '.$list["last_name"] . '</td>';
+                        echo '<td></td>';
+                        echo '<td></td>';
+                        echo '</tr>';
+                        
+                        foreach($customer_Entries as $rows)
+                        {
+                            $balance_row = (($op_balance_dr + @$customer_Entries[0]['debit'])-($op_balance_cr + @$customer_Entries[0]['credit']));
+                            $get_sales_inv_payment = $this->M_sales->get_sales_inv_payment($rows['invoice_no']);
+                            $total_balance = ($balance_row-@$get_sales_inv_payment[0]['amount']);
+                            
+                            if((float) $total_balance > 0)
+                            {
+                                echo '<tr>';
+                                echo '<td></td>';
+                                echo '<td>' . date("d-m-Y",strtotime($rows['due_date'])) . '</td>';
+                                echo '<td class="text-right">'. number_format($total_balance, 2) . '</td>';
+                                $net_total += $total_balance;
+                                echo '</tr>';
+                            }
+                            
+                        }
+                    }
+                    
+                    
                 }
                 echo '</tbody>';
                 echo '<tfoot>';
                 echo '<tr><td></td>';
                 echo '<td><strong>Total</strong></td>';
-               // echo '<td class="text-right">' . '<strong><small>' . $_SESSION['home_currency_symbol'] . '</small>' .  number_format(abs($dr_amount), 2) . '</strong></td>';
+                // echo '<td class="text-right">' . '<strong><small>' . $_SESSION['home_currency_symbol'] . '</small>' .  number_format(abs($dr_amount), 2) . '</strong></td>';
                 echo '<td class="text-right">' . '<strong><small>' . $_SESSION['home_currency_symbol'] . '</small>' .  number_format($net_total, 2) . '</strong></td>';
 
                 echo '</tr>';

@@ -171,4 +171,5 @@ $lang['sub_total']= 'المجموع الفرعي';
 $lang['discount']= 'خصم';
 $lang['disc']= 'خصم';
 $lang['tax']= 'ضريبة';
+$lang['due_date']= 'Due Date';
 
