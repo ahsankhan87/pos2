@@ -147,6 +147,17 @@ class m_sales extends CI_Model{
         $query = $this->db->get('pos_sales_inv_payment');
         return $query->result_array();
     }
+    
+    public function get_sales_inv_total_balance($invoice_no)
+    {
+        $this->db->select('SUM(amount) as amount')->from('pos_sales_inv_payment sp')->where('sp.sales_invoice_no', $invoice_no);
+        $this->db->where('sp.company_id', $_SESSION['company_id']);
+        $query = $this->db->get();
+        $data = $query->result_array();
+        
+        return $data;
+    }
+    
 
     function delete($invoice_no)
     {

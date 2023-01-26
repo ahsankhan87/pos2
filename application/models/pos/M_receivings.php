@@ -133,6 +133,16 @@ class M_receivings extends CI_Model{
         return $query->result_array();
     }
 
+    public function get_receiving_inv_total_balance($invoice_no)
+    {
+        $this->db->select('SUM(amount) as amount')->from('pos_receiving_inv_payment sp')->where('sp.receiving_invoice_no', $invoice_no);
+        $this->db->where('sp.company_id', $_SESSION['company_id']);
+        $query = $this->db->get();
+        $data = $query->result_array();
+        
+        return $data;
+    }
+
    function delete($invoice_no)
     {
         $this->db->delete('pos_receivings',array('invoice_no'=>$invoice_no));

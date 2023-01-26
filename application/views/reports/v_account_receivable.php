@@ -92,7 +92,7 @@
                         foreach($customer_Entries as $rows)
                         {
                             $balance_row = (($op_balance_dr + @$customer_Entries[0]['debit'])-($op_balance_cr + @$customer_Entries[0]['credit']));
-                            $get_sales_inv_payment = $this->M_sales->get_sales_inv_payment($rows['invoice_no']);
+                            $get_sales_inv_payment = $this->M_sales->get_sales_inv_total_balance($rows['invoice_no']);
                             $total_balance = ($balance_row-@$get_sales_inv_payment[0]['amount']);
                             
                             if((float) $total_balance > 0)

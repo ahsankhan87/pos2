@@ -91,7 +91,7 @@
                         foreach($supplier_Entries as $rows)
                         {
                             $balance_row = (($op_balance_cr + @$rows['credit'])-($op_balance_dr + @$rows['debit']));
-                            $receiving_inv_payment = $this->M_receivings->get_receiving_inv_payment($rows['invoice_no']);
+                            $receiving_inv_payment = $this->M_receivings->get_receiving_inv_total_balance($rows['invoice_no']);
                             $total_balance = ($balance_row-@$receiving_inv_payment[0]['amount']);
                             
                             if((float) $total_balance > 0)
