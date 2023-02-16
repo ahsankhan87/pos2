@@ -55,12 +55,14 @@ $route['^it/(.+)$'] = "$1";
 $route['^ur/(.+)$'] = "$1";
 $route['^ar/(.+)$'] = "$1";
 $route['^en/(.+)$'] = "$1";
+$route['^tr/(.+)$'] = "$1";
  
 // '/en' and '/fr' -> use default controller
 $route['^it$'] = $route['default_controller'];
 $route['^ur$'] = $route['default_controller'];
 $route['^ar$'] = $route['default_controller'];
 $route['^en$'] = $route['default_controller'];
+$route['^tr$'] = $route['default_controller'];
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

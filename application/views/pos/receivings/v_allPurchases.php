@@ -35,10 +35,10 @@
         </p> -->
         <?php if($purchaseType == "cash")
         {
-            echo anchor('trans/C_receivings/index/'.$purchaseType, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
+            echo anchor('trans/C_receivings/index/'.$purchaseType, lang('new').' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
         
         }else{
-            echo anchor('trans/C_bills/index/'.$purchaseType, 'New ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
+            echo anchor('trans/C_bills/index/'.$purchaseType, lang('new').' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
         
         }
         ?>
@@ -65,7 +65,7 @@
                             <th>Inv #</th>
                             <th><?php echo lang('date'); ?></th>
                             <!-- <th><?php echo lang('supplier'); ?> Inv #</th>-->
-                            <th>Supplier</th>
+                            <th><?php echo lang('supplier'); ?></th>
                             <!-- <th><?php echo lang('account'); ?></th> -->
                             <th class="text-right"><?php echo lang('amount'); ?></th>
                             <!-- <th class="text-right"><?php echo lang('taxes'); ?></th> -->

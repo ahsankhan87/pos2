@@ -60,7 +60,7 @@ echo form_hidden('id',$values['id']);
 </div> -->
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="supplier Name">Supplier Name:<span class="required">* </span></label>
+  <label class="control-label col-md-3" for="supplier Name"><?php echo lang('supplier').' '.lang('name');?>:<span class="required">* </span></label>
   <div class="col-md-4">
     <input type="text" class="form-control" id="name" name="name" value="<?php echo $values['name']; ?>" placeholder="Supplier Name"/>
   </div>
@@ -68,21 +68,21 @@ echo form_hidden('id',$values['id']);
 
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="Email">Email:</label>
+  <label class="control-label col-md-3" for="Email"><?php echo lang('email');?>:</label>
   <div class="col-md-4">
     <input type="email" class="form-control" id="Email" name="email" value="<?php echo $values['email']; ?>" placeholder="Supplier Email"/>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="Address">Address:</label>
+  <label class="control-label col-md-3" for="Address"><?php echo lang('address');?>:</label>
   <div class="col-md-4">
     <textarea class="form-control" placeholder="Address" name="address"><?php echo $values['address']; ?></textarea>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="Contactno">Contact No:</label>
+  <label class="control-label col-md-3" for="Contactno"><?php echo lang('contact_no');?>:</label>
   <div class="col-md-4">
     <input type="number" class="form-control" id="" name="contact_no" value="<?php echo $values['contact_no']; ?>" placeholder="Contact No"/>
   </div>
@@ -108,7 +108,7 @@ echo form_hidden('id',$values['id']);
 
 echo '<div class="form-actions fluid"><label class="control-label col-sm-3" for="submit"></label>';
 echo '<div class="col-md-offset-3 col-md-9">';
-echo form_submit('submit','Update','class="btn btn-default"');
+echo form_submit('submit',lang('save'),'class="btn btn-success"');
 echo '</div></div>';
 endforeach;
 ?>

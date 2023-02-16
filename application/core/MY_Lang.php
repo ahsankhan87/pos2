@@ -13,6 +13,7 @@ class MY_Lang extends CI_Lang {
 	// languages
 	var $languages = array(
 		'en' => 'english',
+		'tr' => 'turkey',
 		'it' => 'italian',
 		'ur' => 'urdu',
         'ar' => 'arabic',

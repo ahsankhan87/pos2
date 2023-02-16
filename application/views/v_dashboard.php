@@ -132,7 +132,7 @@
                 -->
 			</div>
 			<div class="portlet-body">
-				<div class="lead text-center">Total Expense: <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?></div>
+				<div class="lead text-center"><?php echo lang('total') . ' ' . lang('expenses'); ?>: <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?></div>
 				<div id="site_statistics_loading" style="display: none;">
 					<img src="<?php echo base_url(); ?>assets/img/loading.gif" alt="loading">
 				</div>
@@ -160,7 +160,7 @@
 		<div class="portlet">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-bank"></i>Profit & Loss
+					<i class="fa fa-bank"></i><?php echo lang('profit_loss'); ?>
 				</div>
 				<!--<div class="actions">-->
 				<!--	<div class="btn-group">-->
@@ -184,8 +184,8 @@
 				$income_percent = (float) round($total_revenue * 100 / $total_amount, 2);
 				$expense_percent = (float) round($total_expenses * 100 / $total_amount, 2);
 				?>
-				<div class="lead text-center">Net Income <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($net_income, 2); ?></div>
-				Income <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_revenue, 2); ?>
+				<div class="lead text-center"><?php echo lang('net_income') ?> <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($net_income, 2); ?></div>
+				<?php echo lang('income') ?> <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_revenue, 2); ?>
 				<div class="progress">
 					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="<?php echo $income_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $income_percent . '%' ?>">
 						<span class="sr-only">
@@ -193,7 +193,7 @@
 						</span>
 					</div>
 				</div>
-				Expenses <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?>
+				<?php echo lang('expenses') ?> <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?>
 				<div class="progress">
 					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $expense_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $expense_percent . '%' ?>">
 						<span class="sr-only">

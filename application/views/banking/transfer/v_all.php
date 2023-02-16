@@ -41,7 +41,7 @@ if (count(@$transfer)) {
                                 <th><?php echo lang('account'); ?></th>
                                 <th><?php echo lang('from'); ?></th>
                                 <th><?php echo lang('to'); ?></th>
-                                <th width="20%">Narration</th>
+                                <th width="20%"><?php echo lang('description'); ?></th>
                                 <th><?php //echo lang('action'); 
                                     ?></th>
                             </tr>

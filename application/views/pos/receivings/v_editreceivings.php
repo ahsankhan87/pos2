@@ -2,14 +2,14 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Select Supplier:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('select') . ' ' . lang('supplier') ?>:</label>
             <div class="col-sm-4">
                 <select name="supplier_id" id="supplier_id" class="form-control select2me"></select>
                 <!-- <?php echo form_dropdown('supplier_id', $supplierDDL, '', 'id="supplier_id" class="form-control select2me"'); ?> -->
-                <?php echo anchor('#', 'Add New <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#supplierModal"'); ?>
+                <?php echo anchor('#', lang('add_new') .' <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#supplierModal"'); ?>
             </div>
 
-            <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
+            <label class="control-label col-sm-2" for="sale_date"><?php echo lang('sale') . ' ' . lang('date') ?>:</label>
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
@@ -25,12 +25,12 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Payment Method:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('payment').' '.lang('method') ?>:</label>
             <div class="col-sm-4">
                 <select name="payment_acc_code" id="payment_acc_code" class="form-control select2me"></select>
             </div>
             
-            <label class="control-label col-sm-2" for="due_date">Due Date:</label>
+            <label class="control-label col-sm-2" for="due_date"><?php echo lang('due_date') ?>:</label>
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Business Address:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('business') . ' ' . lang('address') ?>:</label>
             <div class="col-sm-4">
                 <input type="text" name="business_address" id="business_address" class="form-control" />
             </div>
@@ -67,12 +67,13 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Cost Price</th>
-                        <th>Description</th>
-                        <th>Tax</th>
-                        <th>Sub-Total</th>
+                        <th><?php echo lang('product'); ?></th>
+                        <th><?php echo lang('quantity'); ?></th>
+                        <th><?php echo lang('cost').' '.lang('price'); ?></th>
+                        <th><?php echo lang('description'); ?></th>
+                        <th><?php echo lang('tax'); ?></th>
+                        <th><?php echo lang('sub_total'); ?></th>
+                        
                         <th></th>
                     </tr>
                 </thead>
@@ -87,7 +88,7 @@
                             <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
                             <!-- <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea> -->
                         </th>
-                        <th class="text-right">Sub Total</th>
+                        <th class="text-right"><?php echo lang('sub_total'); ?></th>
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
@@ -105,14 +106,14 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" >Amount Paid</th>
+                        <th class="text-right" ><?php echo lang('amount').' '.lang('paid'); ?></th>
                         <th class="text-right" id="amount_paid">0.00</th>
                         <th><input type="hidden" name="amount_paid" id="amount_paid_txt" value=""></th>
                     </tr>
                     <tr>
                     <th colspan="5">
-                        <?php echo form_submit('', 'Update', 'id="close" class="btn btn-success"'); ?></th>
-                        <th class="text-right" >Grand Total</th>
+                        <?php echo form_submit('', lang('save'), 'id="close" class="btn btn-success"'); ?></th>
+                        <th class="text-right" ><?php echo lang('grand').' '.lang('total'); ?></th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value="">
                         <input type="hidden" name="purchase_type" id="purchase_type" value="<?php echo $purchaseType; ?>">
@@ -132,7 +133,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add new Suppleir</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo lang('add_new').' '.lang('supplier'); ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -149,26 +150,26 @@
                     </div> -->
 
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="email">Name:</label>
+                        <label class="control-label col-sm-3" for="email"><?php echo lang('full').' '.lang('name'); ?>:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="name" id="first_name" placeholder="Enter Name" required="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="email">Store Name:</label>
+                        <label class="control-label col-sm-3" for="email"><?php echo lang('store').' '.lang('name'); ?>:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="store_name" id="store_name" placeholder="Enter Store Name" required="">
 
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="email">Email:</label>
+                        <label class="control-label col-sm-3" for="email"><?php echo lang('email'); ?>:</label>
                         <div class="col-sm-9">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="phone_no">Phone No:</label>
+                        <label class="control-label col-sm-3" for="phone_no"><?php echo lang('phone'); ?>:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="Enter phone no">
                         </div>
@@ -182,8 +183,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo lang('close');?></button>
+                <button type="submit" class="btn btn-primary"><?php echo lang('save').' '.lang('changes'); ?></button>
             </div>
         </div>
         </form>

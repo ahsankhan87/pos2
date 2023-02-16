@@ -2,14 +2,14 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Select Customer:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('select') . ' ' . lang('customer') ?>:</label>
             <div class="col-sm-4">
                 <select id="customer_id" name="customer_id" class="form-control select2me"></select>
                 <!-- <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?> -->
-                <br><?php echo anchor('#', 'Add New <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
+                <br><?php echo anchor('#', lang('add_new').' <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
             </div>
 
-            <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
+            <label class="control-label col-sm-2" for="sale_date"><?php echo lang('sale') . ' ' . lang('date') ?>:</label>
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
@@ -26,12 +26,12 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Deposit To:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('deposit') . ' ' . lang('to') ?>:</label>
             <div class="col-sm-4">
                 <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
             </div>
 
-            <label class="control-label col-sm-2" for="due_date">Due Date:</label>
+            <label class="control-label col-sm-2" for="due_date"><?php echo lang('due_date') ?>:</label>
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Business Address:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('business') . ' ' . lang('address') ?>:</label>
             <div class="col-sm-4">
                 <input type="text" name="business_address" id="business_address" class="form-control" />
             </div>
@@ -69,12 +69,12 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Sale/Unit Price</th>
-                        <th>Description</th>
-                        <th>Tax</th>
-                        <th>Sub-Total</th>
+                        <th><?php echo lang('product'); ?></th>
+                        <th><?php echo lang('quantity'); ?></th>
+                        <th><?php echo lang('sale').' '.lang('price'); ?></th>
+                        <th><?php echo lang('description'); ?></th>
+                        <th><?php echo lang('tax'); ?></th>
+                        <th><?php echo lang('sub_total'); ?></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -84,11 +84,11 @@
                 <tfoot>
                     <tr>
                         <th colspan="5" rowspan="2">
-                            <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
-                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
+                            <a href="#" class="btn btn-info btn-sm add_new" name="add_new"><?php echo lang('add_new'); ?></a>
+                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all"><?php echo lang('clear').' '.lang('all'); ?></a>
                             <!-- <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea> -->
                         </th>
-                        <th class="text-right">Sub Total</th>
+                        <th class="text-right"><?php echo lang('sub_total'); ?></th>
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
@@ -106,9 +106,9 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
-                        <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?></th>
-                        <th class="text-right" >Grand Total</th>
+                        <th colspan="5"><?php echo form_submit('', lang('save').' '.lang('and').' '.lang('new'), 'id="new" class="btn btn-success"'); ?>
+                        <?php echo form_submit('', lang('save').' '.lang('and').' '.lang('close'), 'id="close" class="btn btn-success"'); ?></th>
+                        <th class="text-right" ><?php echo lang('grand').' '.lang('total'); ?></th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th>
                             <input type="hidden" name="net_total" id="net_total_txt" value="">

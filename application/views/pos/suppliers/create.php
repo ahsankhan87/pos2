@@ -74,14 +74,14 @@ echo form_open($langs.'/trans/C_suppliers/create',$attributes);
 </div> -->
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="supplier Name">Full Name:<span class="required">* </span></label>
+  <label class="control-label col-md-3" for="supplier Name"><?php echo lang('supplier').' '.lang('name');?>:<span class="required">* </span></label>
   <div class="col-md-4">
     <input type="text" data-required="1" class="form-control" name="name" value="<?php echo set_value('name') ?>" required="" placeholder="Supplier Name"  />
   </div>
 </div>
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="Email">Email:</label>
+  <label class="control-label col-md-3" for="Email"><?php echo lang('email');?>:</label>
   <div class="col-md-4">
     <input type="email" class="form-control" name="email" value="<?php echo set_value('email') ?>" placeholder="Supplier Email" />
     
@@ -89,14 +89,14 @@ echo form_open($langs.'/trans/C_suppliers/create',$attributes);
 </div>
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="Address">Address:</label>
+  <label class="control-label col-md-3" for="Address"><?php echo lang('address');?>:</label>
   <div class="col-md-4">
     <textarea class="form-control" placeholder="Address" name="address"></textarea>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="control-label col-md-3" for="Contactno">Contact No:</label>
+  <label class="control-label col-md-3" for="Contactno"><?php echo lang('contact_no');?>:</label>
   <div class="col-md-4">
     <input type="number" class="form-control" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No"  />
     
@@ -123,7 +123,7 @@ echo form_open($langs.'/trans/C_suppliers/create',$attributes);
  
 echo '<div class="form-actions fluid"><label class="control-label col-sm-2" for="submit"></label>';
 echo '<div class="col-md-offset-3 col-md-9">';
-echo form_submit('submit','Submit','class="btn btn-success"');
+echo form_submit('submit',lang('save'),'class="btn btn-success"');
 echo '</div></div>';
 
 echo form_close();

@@ -13,8 +13,8 @@ class C_bankDeposit extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = "Bank Deposit";
-        $data['main'] = "Bank Deposit";
+        $data['title'] = lang('bank') . ' ' .lang('deposit');
+        $data['main'] = lang('bank') . ' ' .lang('deposit');
         
         $this->load->view('templates/header', $data);
         $this->load->view('banking/bank_deposit/v_bank_deposit', $data);
@@ -28,8 +28,8 @@ class C_bankDeposit extends MY_Controller
         $to_date = FY_END_DATE; //date("Y-m-d");
         $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
 
-        $data['title'] = "All Bank Deposit";
-        $data['main'] = "All Bank Deposit";
+        $data['title'] = lang('all').' '.lang('bank') . ' ' .lang('deposit');
+        $data['main'] = lang('all').' '.lang('bank') . ' ' .lang('deposit');
 
         $data['main_small'] = "";// $fiscal_dates;
 
@@ -164,8 +164,8 @@ class C_bankDeposit extends MY_Controller
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '10240M');
 
-        $data['title'] = "Bank Deposit";
-        $data['main'] = "Bank Deposit";
+        $data['title'] = lang('all').' '.lang('bank') . ' ' .lang('deposit');
+        $data['main'] = lang('all').' '.lang('bank') . ' ' .lang('deposit');
 
         //$data['cities'] = $this->M_city->get_city();
         $data['bank_deposit'] = $this->M_bank_deposit->get_allbank_deposit($_SESSION['company_id'], FY_START_DATE, FY_END_DATE);
@@ -181,7 +181,7 @@ class C_bankDeposit extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = 'Invoice';
+        $data['title'] = lang('invoice');
         $data['main'] = '';
         $data['invoice_no'] = $invoice_no;
 

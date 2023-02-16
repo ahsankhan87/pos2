@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Select Customer:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('select') . ' ' . lang('customer') ?>:</label>
             <div class="col-sm-4">
                 <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?>
             </div>
 
-            <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
+            <label class="control-label col-sm-2" for="sale_date"><?php echo lang('sale') . ' ' . lang('date') ?>:</label>
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Deposit To:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('deposit') . ' ' . lang('to') ?>:</label>
             <div class="col-sm-4">
                 <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
             </div>
@@ -47,12 +47,12 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th>Description</th>
-                        <th>Tax</th>
-                        <th>Sub-Total</th>
+                        <th><?php echo lang('product'); ?></th>
+                        <th><?php echo lang('quantity'); ?></th>
+                        <th><?php echo lang('sale').' '.lang('price'); ?></th>
+                        <th><?php echo lang('description'); ?></th>
+                        <th><?php echo lang('tax'); ?></th>
+                        <th><?php echo lang('sub_total'); ?></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -63,10 +63,10 @@
                 <tfoot>
                     <tr>
                         <th colspan="5">
-                            <a href="#" class="btn btn-info btn-sm add_new" name="add_new">Add lines</a>
-                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all">Clear all</a>
+                            <a href="#" class="btn btn-info btn-sm add_new" name="add_new"><?php echo lang('add_new'); ?></a>
+                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all"><?php echo lang('clear').' '.lang('all'); ?></a>
                         </th>
-                        <th class="text-right">Sub Total</th>
+                        <th class="text-right"><?php echo lang('sub_total'); ?></th>
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
@@ -76,13 +76,13 @@
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr> -->
                     <tr>
-                        <th class="text-right" colspan="6">Tax</th>
+                        <th class="text-right" colspan="6"><?php echo lang('tax'); ?></th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php echo form_submit('', 'Save', 'class="btn btn-success"'); ?></th>
-                        <th class="text-right" >Grand Total</th>
+                        <th colspan="5"><?php echo form_submit('',lang('save'), 'class="btn btn-success"'); ?></th>
+                        <th class="text-right" ><?php echo lang('grand').' '.lang('total'); ?></th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
                     </tr>

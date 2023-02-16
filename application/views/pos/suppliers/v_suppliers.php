@@ -64,9 +64,7 @@
                                 //echo '<td>'.$list['account_code'].'</td>';
                                 //echo '<td><a href="'.site_url('accounts/C_ledgers/ledgerDetail/'. $ledger_id).'">'.$name.'</a> </td>';
                                 echo '<td><a href="' . site_url('trans/Suppliers/supplierDetail/' . $list['id']) . '">' . $list['name'] . ' </a><a href="mailto:' . $list['email'] . '"><i class="fa fa-envelope-o fa-fw"></i></a></td>';
-                                if (@$_SESSION['multi_currency'] == 1) {
-                                    echo '<td>' . $this->M_currencies->get_currencyName($list['currency_id']) . '</td>';
-                                }
+                               
                                 echo '<td>' . $list['email'] . '</td>';
                                 //echo '<td>'.$list['address'].'</td>';
                                 echo '<td>' . $list['contact_no'] . '</td>';

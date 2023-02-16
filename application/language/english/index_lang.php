@@ -7,6 +7,7 @@ $lang['add'] = 'Add';
 $lang['cancel'] = 'Cancel';
 $lang['listof'] = 'List of';
 $lang['id']='ID';
+$lang['new']='New';
 
 $lang['title'] = 'Title';
 $lang['urdu'] = 'Urdu';
@@ -42,6 +43,7 @@ $lang['error_msg']='You have some form errors. Please check below.';
 //Reports
 $lang['trial_balance']='Trial Balance';
 $lang['income_exp']='Income & Expenditure';
+$lang['profit_loss']='Profit & Loss';
 $lang['balance_sheet']='Balance Sheet';
 $lang['annual_report']='Annual Report';
 $lang['account_receivable']='Account Receivable';
@@ -87,6 +89,8 @@ $lang['supdt'] = 'Superintendent';
 $lang['receiver'] = 'Receiver';
 $lang['signature'] = 'Sign';
 $lang['number'] = 'No.';
+$lang['received'] = 'Received';
+
 ////
 ////
 
@@ -123,6 +127,7 @@ $lang['income']='Income';
 $lang['stock']='Stock';
 $lang['site_visits']='Site Visits';
 $lang['best_selling_products']='Best Selling Products';
+$lang['net_income']='Net Income';
 
 //Manufacturings
 $lang['work']='Work';
@@ -173,3 +178,21 @@ $lang['discount']= 'Discount';
 $lang['disc']= 'Disc';
 $lang['tax']= 'Tax';
 $lang['due_date']= 'Due Date';
+$lang['business']= 'Business';
+$lang['deposit']= 'Deposit';
+$lang['clear']= 'Clear';
+$lang['close']= 'Close';
+$lang['back']= 'Back';
+
+////////////Customers
+$lang['first']= 'First';
+$lang['middle']= 'Middle';
+$lang['country']= 'Country';
+$lang['phone']= 'Phone';
+$lang['mobile']= 'Mobile';
+$lang['contact_no']= 'Contact No.';
+$lang['method']= 'Method';
+$lang['bills']= 'Bills';
+$lang['transfer']= 'Transfer';
+$lang['fund']= 'fund';
+

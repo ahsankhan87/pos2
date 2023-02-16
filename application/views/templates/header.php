@@ -44,7 +44,7 @@ var path = '<?php echo base_url(); ?>';</script>
 
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 <!-- BEGIN THEME STYLES -->
-<?php if($url1 == 'en' || $url1 == '' || $url1 == 'it' || $url1 == 'es'){ ?>
+<?php if($url1 == 'en' || $url1 == '' || $url1 == 'it' || $url1 == 'es'|| $url1 == 'tr'){ ?>
 <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" type="text/css">
  <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css">
  <link href="<?php echo base_url(); ?>assets/css/style-responsive.css" rel="stylesheet" type="text/css">
@@ -97,15 +97,15 @@ var path = '<?php echo base_url(); ?>';</script>
 	<div class="header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<h3 class="form-title logo-color">&nbsp;&nbsp;&nbsp;&nbsp;GuvenFi</h3>	
-            <!-- <a href="<?php echo site_url('Dashboard'); ?>">
-                <img src="<?php echo base_url(); ?>assets/img/logo.jpg"  width="100" height="30" alt="logo">
-            </a> -->
+			<!-- <h3 class="form-title logo-color">&nbsp;&nbsp;&nbsp;&nbsp;GuvenFi</h3>	 -->
+            <a href="<?php echo site_url('Dashboard'); ?>">
+                <img src="<?php echo base_url(); ?>assets/img/logo.png"  width="100" height="30" alt="logo">
+            </a>
         </div>
 		<form class="search-form search-form-header" role="form" action="<?php echo site_url('search/C_search/index'); ?>">
             <div class="input-icon right">
                 <i class="icon-magnifier"></i>
-                <input type="text" class="form-control input-sm" name="keyword" placeholder="Search...">
+                <input type="text" class="form-control input-sm" name="keyword" placeholder="<?php echo lang('search'); ?>...">
             </div>
         </form>
 		<!-- END LOGO -->
@@ -152,7 +152,7 @@ var path = '<?php echo base_url(); ?>';</script>
                     	<a href="<?php echo base_url(); ?>en<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/en.png"> English</a>
                     </li>
 					<li>
-						<a href="<?php echo base_url(); ?>ar<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/tr.png"> Turkiye</a>
+						<a href="<?php echo base_url(); ?>tr<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/tr.png"> Turkiye</a>
 					</li>
                     <!-- <li>
                     	<a href="<?php echo base_url(); ?>es<?php echo substr($this->uri->uri_string(),2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/es.png"> Español</a>
@@ -264,7 +264,7 @@ var path = '<?php echo base_url(); ?>';</script>
                 <li <?php echo ($url2 == $Pvalues['name']?"class='active'":'') ?>>
                     <a href="<?php echo ($Pvalues['path'] != '#' ? site_url($Pvalues['name'].'/'.$Pvalues['path']): ''); ?>">
                     <i class="<?php echo $Pvalues['icon']; ?>"></i>
-                    <span class="title"><?php if($url1 == 'ur'){
+                    <span class="title"><?php if($url1 == 'tr'){
 							     echo $Pvalues['title_ur'];
 							}else if($url1 == 'ar'){
 							     echo $Pvalues['title_ar'];
@@ -286,7 +286,7 @@ var path = '<?php echo base_url(); ?>';</script>
                     ?>
                         <li <?php echo ($url3 == $values['name'] || $url4 == $values['name'] ? "class='active'":'') ?>>
 							<a href="<?php echo site_url($Pvalues['name'].'/'.$values['path']); ?>">
-							<?php if($url1 == 'ur'){
+							<?php if($url1 == 'tr'){
 							     echo $values['title_ur'];
 							}else if($url1 == 'ar'){
 							     echo $values['title_ar'];

@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Tranfer fund from:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('transfer').' '.lang('fund').' '.lang('from');?>:</label>
             <div class="col-sm-4">
                 <select name="transfer_from" id="transfer_from" class="form-control select2me"></select>
             </div>
 
-            <label class="control-label col-sm-2" for="sale_date">Sale Date:</label>
+            <label class="control-label col-sm-2" for="sale_date"><?php echo lang('sale').' '.lang('date');?>:</label>
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
@@ -23,12 +23,12 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="">Tranfer fund to:</label>
+            <label class="control-label col-sm-2" for=""><?php echo lang('transfer').' '.lang('fund').' '.lang('to');?>:</label>
             <div class="col-sm-4">
                 <select name="transfer_to" id="transfer_to" class="form-control select2me"></select>
             </div>
 
-            <label class="control-label col-sm-2" for="Amount">Amount:</label>
+            <label class="control-label col-sm-2" for="Amount"><?php echo lang('amount');?>:</label>
             <div class="col-sm-4">
                 <input type="number" class="form-control" id="amount" name="amount" value="<?php echo set_value("amount") ?>" />
             </div>
@@ -45,7 +45,7 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <label class="control-label col-sm-2" for="description">Description:</label>
+            <label class="control-label col-sm-2" for="description"><?php echo lang('description');?>:</label>
             <div class="col-sm-4">
                 <input type="text" name="description" id="description" class="form-control" />
             </div>
@@ -62,8 +62,8 @@
     <div class="row">
         <div class="col-sm-10">
 
-            <?php echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
-            <?php echo form_submit('', 'Save & Close', 'id="close" class="btn btn-success"'); ?>
+            <?php echo form_submit('', lang('save').' '.lang('and').' '.lang('new'), 'id="new" class="btn btn-success"'); ?>
+            <?php echo form_submit('', lang('save').' '.lang('and').' '.lang('close'), 'id="close" class="btn btn-success"'); ?>
         </div>
         <!-- /.col-sm-12 -->
         

@@ -15,8 +15,8 @@ class C_bills extends MY_Controller
 
         //$this->output->enable_profiler();
 
-        $data['title'] = 'Bills';
-        $data['main'] = 'Bills';
+        $data['title'] = lang('bills');
+        $data['main'] = lang('bills');
 
         $data['purchaseType'] = "credit";
         //when click on sale manu clear the cart first if exist
@@ -39,8 +39,8 @@ class C_bills extends MY_Controller
         $to_date = FY_END_DATE; //date("Y-m-d");
         $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
 
-        $data['title'] = "Bills";
-        $data['main'] = "Bills";
+        $data['title'] = lang('bills');
+        $data['main'] = lang('bills');
         $data['purchaseType'] = "credit";
 
         $data['main_small'] = $fiscal_dates;
@@ -311,8 +311,8 @@ class C_bills extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
         
-        $data['title'] = 'Payment';
-        $data['main'] = 'Payment';
+        $data['title'] = lang('payment');
+        $data['main'] = lang('payment');
         
         $data['purchases'] = $this->M_receivings->get_receiving_by_invoice($invoice_no);
         $data['supplier'] = $this->M_suppliers->get_suppliers($supplier_id);

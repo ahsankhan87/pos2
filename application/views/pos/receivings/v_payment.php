@@ -38,7 +38,7 @@
                                 <input type="hidden" name="supplier_id" ng-model="supplier_id" ng-init="supplier_id=<?php echo $list['id']; ?>" value="<?php echo $list['id']; ?>" />
 
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Supplier Name</label>
+                                    <label class="col-md-2 control-label"><?php echo lang('supplier').' '.lang('name'); ?></label>
                                     <div class="col-md-4">
                                         <p class="form-control-static">
                                             <?php echo ucwords($list['name']); ?>
@@ -46,7 +46,7 @@
                                         
                                     </div>
 
-                                    <label class="col-md-2 control-label">Payment Date</label>
+                                    <label class="col-md-2 control-label"><?php echo lang('payment').' '.lang('date'); ?></label>
                                     <div class="col-md-4">
                                         <p class="form-control-static">
                                             <input type="date" class="form-control" ng-model="payment_date" name="payment_date" />
@@ -56,14 +56,14 @@
 
                                 <div class="form-group">
 
-                                    <label class="col-md-2 control-label">Total Amount</label>
+                                    <label class="col-md-2 control-label"><?php echo lang('total').' '.lang('amount'); ?></label>
                                     <div class="col-md-4">
 
                                         <input type="text" class="form-control" required="" ng-model="amount" ng-change="update()" autofocus ng-init="amount=''" name="amount" placeholder="Enter Amount" autocomplete="off">
 
                                     </div>
                                     
-                                    <label class="col-md-2 control-label">Balance Amount</label>
+                                    <label class="col-md-2 control-label"><?php echo lang('balance').' '.lang('amount'); ?></label>
                                     <div class="col-md-4">
 
                                     <input type="number" class="form-control"  name="balance" value="<?php echo ($purchases[0]['total_amount']+$purchases[0]['total_tax']-$purchases[0]['paid']) ;?>" readonly autocomplete="off">
@@ -75,12 +75,12 @@
                                 <div class="form-group">
 
                                     
-                                    <label class="control-label col-sm-2" for="">Payment Account:</label>
+                                    <label class="control-label col-sm-2" for=""><?php echo lang('payment').' '.lang('account'); ?>:</label>
                                     <div class="col-sm-4">
                                         <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
                                     </div>
 
-                                    <label class="col-md-2 control-label">Amount Paid</label>
+                                    <label class="col-md-2 control-label"><?php echo lang('amount').' '.lang('paid'); ?></label>
                                     <div class="col-md-4">
                                         <input type="number" class="form-control"  name="paid" value="<?php echo number_format($purchases[0]['paid'],2) ;?>" readonly autocomplete="off">
                                     </div>
@@ -88,7 +88,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Comment</label>
+                                    <label class="col-md-2 control-label"><?php echo lang('description'); ?></label>
                                     <div class="col-md-4">
 
                                         <textarea name="narration" name="comment" ng-model="comment" ng-init="comment=''" class="form-control"></textarea>
@@ -181,8 +181,8 @@
                             <label class="col-md-2 control-label"></label>
                             <div class="col-md-4">
 
-                                <button type="submit" class="btn btn-info" onclick="return confirm('Are you sure you want to save?')">Receive</button>
-                                <button type="button" class="btn btn-default" onclick="window.history.back()">Back</button>
+                                <button type="submit" class="btn btn-info" onclick="return confirm('Are you sure you want to save?')"><?php echo lang('save'); ?></button>
+                                <button type="button" class="btn btn-default" onclick="window.history.back()"><?php echo lang('back'); ?></button>
 
                             </div>
                         </div>

@@ -35,8 +35,8 @@ class C_groups extends MY_Controller{
         //selecting ledger id
         (empty($account_code) ? $account_code=$this->input->post('account_code') : $account_code);
         
-        $data['title'] = 'Account Detail';
-        $data['main'] = 'Account Detail';
+        $data['title'] = lang('account').' '. lang('detail');
+        $data['main'] = lang('account').' '. lang('detail');
         
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
@@ -225,7 +225,6 @@ class C_groups extends MY_Controller{
             $this->session->set_flashdata('error','Account not deleted because it has entries');
         }
         
-                    
         redirect('accounts/C_groups/index','refresh');
         
     }

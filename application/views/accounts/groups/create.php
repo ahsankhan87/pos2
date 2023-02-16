@@ -30,7 +30,7 @@
 							<?php echo lang('account').' '.lang('created'); ?>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">Title <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('title'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -66,7 +66,7 @@
 							</div>
 						</div> -->
                         <div class="form-group">
-							<label class="control-label col-md-3">Type <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('type'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
