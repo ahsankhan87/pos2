@@ -195,4 +195,5 @@ $lang['method']= 'Method';
 $lang['bills']= 'Bills';
 $lang['transfer']= 'Transfer';
 $lang['fund']= 'fund';
+$lang['bill']= 'Bill';
 

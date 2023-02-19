@@ -61,7 +61,7 @@ class C_trial_balance extends MY_Controller{
         $pdf->SetY(22);
         $pdf->SetX(80);
         $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(50, 10, "Trial Balance", 0, 1,"C");
+        $pdf->Cell(50, 10, lang("trial_balance"), 0, 1,"C");
         
         $pdf->SetY(28);
         $pdf->SetX(80);
@@ -74,10 +74,10 @@ class C_trial_balance extends MY_Controller{
         $pdf->SetY(45);
         $pdf->SetX(10);
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(80, 9, "ACCOUNT", 1, 0);
+        $pdf->Cell(80, 9, strtoupper(lang("account")), 1, 0);
         $pdf->Cell(40, 9, "", 1, 0, "C");
-        $pdf->Cell(30, 9, "DEBIT", 1, 0, "C");
-        $pdf->Cell(40, 9, "CREDIT", 1, 1, "C");
+        $pdf->Cell(30, 9, strtoupper(lang("debit")), 1, 0, "C");
+        $pdf->Cell(40, 9, strtoupper(lang("credit")), 1, 1, "C");
         $pdf->SetFont('Arial', '', 12);
         
         $dr_net_total = 0;
@@ -99,8 +99,11 @@ class C_trial_balance extends MY_Controller{
                 $cr_net_total += ($cr_balance > 0 ? $cr_balance : 0);
 
             // } 
-            
-            $pdf->Cell(80, 9, ($langs == 'en' ? $list['title'] : $list['title_ur']), "LR", 0);
+            $text = ($langs == 'en' ? $list['title'] : $list['title_ur']);
+            //$nb=$pdf->WordWrap($text,80);
+            // $pdf->Write(5,"This paragraph has $nb lines:\n\n");
+            //$pdf->Write(5,$text);
+            $pdf->Cell(80, 9, $text, "LR", 0);
             $pdf->Cell(40, 9, '', "R", 0, "C");
             $pdf->Cell(30, 9, ($dr_balance > 0 ? number_format($dr_balance,2) : 0), "R", 0, "R");
             $pdf->Cell(40, 9, ($cr_balance > 0 ? number_format($cr_balance,2) : 0), "R", 1, "R");
@@ -116,7 +119,7 @@ class C_trial_balance extends MY_Controller{
         
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(120, 9, "TOTAL", 1, 0, "");
+        $pdf->Cell(120, 9, strtoupper(lang("total")), 1, 0, "");
         $pdf->Cell(30, 9, number_format($dr_net_total,2), 1, 0, "R");
         $pdf->Cell(40, 9, number_format($cr_net_total,2), 1, 1, "R");
         

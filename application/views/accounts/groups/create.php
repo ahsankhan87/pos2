@@ -37,15 +37,15 @@
 								<input type="text" name="title" data-required="1" class="form-control"/>
 							</div>
 						</div>
-                        <!-- <div class="form-group">
-							<label class="control-label col-md-3">Urdu Title <span class="required">
+                        <div class="form-group">
+							<label class="control-label col-md-3">Title 2 (local) <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
 								<input type="text" name="title_ur" class="form-control"/>
 							</div>
 						</div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
 							<label class="control-label col-md-3">Name <span class="required">
 							* </span>
 							</label>

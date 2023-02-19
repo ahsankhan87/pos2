@@ -817,7 +817,7 @@ class C_receivings extends MY_Controller
         $pdf->SetY(15);
         $pdf->SetX(-40);
         $pdf->SetFont('Arial', 'B', 18);
-        $pdf->Cell(50, 10, "RECEIPT", 0, 1);
+        $pdf->Cell(50, 10, strtoupper(lang("receipt")), 0, 1);
 
         //Display Horizontal line
         $pdf->Line(0, 42, 210, 42);
@@ -826,7 +826,7 @@ class C_receivings extends MY_Controller
         $pdf->SetY(49);
         $pdf->SetX(10);
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(50, 10, "Bill To: ", 0, 1);
+        $pdf->Cell(50, 10, lang('bill').' '.lang('to')." : ", 0, 1);
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(50, 7, $supplier[0]["name"], 0, 1);
         $pdf->Cell(50, 7, $supplier[0]["address"], 0, 1);
@@ -835,21 +835,21 @@ class C_receivings extends MY_Controller
         //Display Invoice no
         $pdf->SetY(49);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, "Invoice No : " . $new_invoice_no);
+        $pdf->Cell(50, 7, lang('invoice')." No : " . $new_invoice_no);
 
         //Display Invoice date
         $pdf->SetY(57);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, "Invoice Date : " . date('m-d-Y',strtotime($sales_items[0]["receiving_date"])));
+        $pdf->Cell(50, 7, lang('invoice').' ' .lang('date')." : " . date('m-d-Y',strtotime($sales_items[0]["receiving_date"])));
 
         //Display Table headings
         $pdf->SetY(85);
         $pdf->SetX(10);
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(80, 9, "DESCRIPTION", 1, 0);
-        $pdf->Cell(40, 9, "PRICE", 1, 0, "C");
-        $pdf->Cell(30, 9, "QTY", 1, 0, "C");
-        $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
+        $pdf->Cell(80, 9, strtoupper(lang("description")), 1, 0);
+        $pdf->Cell(40, 9, strtoupper(lang("price")), 1, 0, "C");
+        $pdf->Cell(30, 9, strtoupper(lang("quantity")), 1, 0, "C");
+        $pdf->Cell(40, 9, strtoupper(lang("total")), 1, 1, "C");
         $pdf->SetFont('Arial', '', 12);
         
         $discount = 0;
@@ -875,7 +875,7 @@ class C_receivings extends MY_Controller
         }
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(150, 9, strtoupper(lang("total")), 1, 0, "R");
         $pdf->Cell(40, 9, number_format($total,2), 1, 1, "R");
 
         //Display amount in words

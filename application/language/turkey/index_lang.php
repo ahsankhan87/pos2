@@ -196,4 +196,5 @@ $lang['method']= 'Yöntem';
 $lang['bills']= 'Faturalar';
 $lang['transfer']= 'Aktar';
 $lang['fund']= 'para';
+$lang['bill']= 'Fatura';
 

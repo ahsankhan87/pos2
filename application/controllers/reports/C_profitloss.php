@@ -18,8 +18,8 @@ class C_profitloss extends MY_Controller
         ini_set('memory_limit', '10240M');
 
         //$this->output->enable_profiler(TRUE);
-        $data['title'] = lang('income_exp');
-        $data['main'] = lang('income_exp');
+        $data['title'] = lang('profit_loss');
+        $data['main'] = lang('profit_loss');
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
 
@@ -118,7 +118,7 @@ class C_profitloss extends MY_Controller
         $pdf->SetY(22);
         $pdf->SetX(80);
         $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(50, 10, "Profit & Loss", 0, 1, "C");
+        $pdf->Cell(50, 10, lang("profit_loss"), 0, 1, "C");
 
         $pdf->SetY(28);
         $pdf->SetX(80);
@@ -131,10 +131,10 @@ class C_profitloss extends MY_Controller
         $pdf->SetY(45);
         $pdf->SetX(10);
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(150, 9, "ACCOUNT", 1, 0);
+        $pdf->Cell(150, 9, strtoupper(lang("account")), 1, 0);
         // $pdf->Cell(40, 9, "", 1, 0, "C");
         // $pdf->Cell(30, 9, "", 1, 0, "C");
-        $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
+        $pdf->Cell(40, 9, strtoupper(lang("total")), 1, 1, "C");
         $pdf->SetFont('Arial', '', 12);
 
         $total = 0;
@@ -170,7 +170,7 @@ class C_profitloss extends MY_Controller
 
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(150, 9, "TOTAL", 1, 0, "");
+        $pdf->Cell(150, 9, lang("net_income"), 1, 0, "");
         //$pdf->Cell(30, 9, '', 1, 0, "R");
         $pdf->Cell(40, 9, number_format($total, 2), 1, 1, "R");
         ///body
