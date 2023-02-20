@@ -859,9 +859,9 @@ class C_receivings extends MY_Controller
         foreach ($sales_items as $row) {
             $total += ($row['item_cost_price'] * $row['quantity_purchased']);
             $discount += $row['discount_value'];
-            $account_name = $this->M_groups->get_accountName($row['account_code']);
+            // $account_name = $this->M_groups->get_accountName($row['account_code']);
 
-            $pdf->Cell(80, 9, $account_name, "LR", 0);
+            $pdf->Cell(80, 9, $row["item_desc"], "LR", 0);
             $pdf->Cell(40, 9, number_format($row["item_cost_price"],2), "R", 0, "R");
             $pdf->Cell(30, 9, number_format($row["quantity_purchased"],2), "R", 0, "C");
             $pdf->Cell(40, 9, number_format(($row['item_cost_price'] * $row['quantity_purchased']),2), "R", 1, "R");

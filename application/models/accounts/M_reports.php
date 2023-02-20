@@ -129,12 +129,12 @@ class M_reports extends CI_Model{
         return $data;
     }
     
-    function get_net_income()
+    function get_net_income($fy_start_date,$fy_end_date)
     {
         $query_string = 
         'SELECT sum(credit-debit) AS net_income
         FROM account_types at join acc_groups g ON at.id=g.account_type_id JOIN acc_entry_items ei ON ei.account_code=g.account_code
-        WHERE ei.company_id = '.$_SESSION['company_id'].' AND g.company_id = '.$_SESSION['company_id'].' AND ei.date BETWEEN "'.FY_START_DATE.'" AND "'.FY_END_DATE.'" AND at.name in ("expense","cos","revenue")';
+        WHERE ei.company_id = '.$_SESSION['company_id'].' AND g.company_id = '.$_SESSION['company_id'].' AND ei.date BETWEEN "'.$fy_start_date.'" AND "'.$fy_end_date.'" AND at.name in ("expense","cos","revenue")';
         
         $query = $this->db->query($query_string);
         

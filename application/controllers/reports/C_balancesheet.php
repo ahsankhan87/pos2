@@ -24,7 +24,7 @@ class C_balancesheet extends MY_Controller
 
         $data['main_small'] = '<br />' . date('d-m-Y', strtotime($data['from_date'])) . ' To ' . date('d-m-Y', strtotime($data['to_date']));
 
-        $data['net_income'] = $this->M_reports->get_net_income();
+        $data['net_income'] = $this->M_reports->get_net_income($data['from_date'],$data['to_date']);
         $data['parentGroups4Assets'] = $this->M_reports->get_parentGroups4Assets($_SESSION['company_id']);
         $data['Liability4BalanceSheet'] = $this->M_reports->get_parentGroups4Liability($_SESSION['company_id']);
 
@@ -43,7 +43,7 @@ class C_balancesheet extends MY_Controller
     function printPDF($from_date, $to_date)
     {
         $company_name = ucfirst($this->session->userdata("company_name"));
-        $net_income = $this->M_reports->get_net_income();
+        $net_income = $this->M_reports->get_net_income($from_date, $to_date);
         $parentGroups4Assets = $this->M_reports->get_parentGroups4Assets($_SESSION['company_id']);
         $Liability4BalanceSheet = $this->M_reports->get_parentGroups4Liability($_SESSION['company_id']);
 
@@ -105,7 +105,7 @@ class C_balancesheet extends MY_Controller
                 $pdf->Cell(150, 9, ($langs == 'en' ? '   ' . $list['title'] : '   ' . $list['title_ur']), "LR", 0);
                 //$pdf->Cell(40, 9, '', "R", 0, "C");
                 //$pdf->Cell(30, 9, '', "R", 0, "R");
-                $pdf->Cell(40, 9, ($balance > 0 ? number_format($balance, 2) : 0), "R", 1, "R");
+                $pdf->Cell(40, 9, number_format($balance, 2), "R", 1, "R");
             }
         }
 
@@ -152,7 +152,7 @@ class C_balancesheet extends MY_Controller
                 $pdf->Cell(150, 9, ($langs == 'en' ? '   ' . $list['title'] : '   ' . $list['title_ur']), "LR", 0);
                 //$pdf->Cell(40, 9, '', "R", 0, "C");
                 //$pdf->Cell(30, 9, '', "R", 0, "R");
-                $pdf->Cell(40, 9, ($balance > 0 ? number_format($balance, 2) : 0), "R", 1, "R");
+                $pdf->Cell(40, 9, number_format($balance, 2), "R", 1, "R");
             }
         }
         $pdf->SetFont('Arial', 'B', 12);

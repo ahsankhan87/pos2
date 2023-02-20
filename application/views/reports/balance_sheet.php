@@ -78,7 +78,7 @@
                         $cr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['credit'];
                         $balance = ($dr + $values['op_balance_dr']) - ($values['op_balance_cr'] + $cr);
 
-                        if ($balance != 0) {
+                        //if ($balance != 0) {
                             echo '<tr><td>';
                             echo '&nbsp;&nbsp;';
                             echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
@@ -92,7 +92,7 @@
                             $asset_total += $balance;
                             //echo '</td>
                             echo '</tr>';
-                        }
+                        //}
                     endforeach;
                     /////
                 }
@@ -160,15 +160,15 @@
                 }
 
                 echo '<tr><td>';
-                echo 'Net Income';
+                echo lang('net_income');
                 echo '</td>';
 
                 echo '<td class="text-right">';
-                echo number_format((float)abs($net_income), 2);
+                echo number_format((float)$net_income, 2);
                 echo '</td>';
 
                 //echo '<td>';
-                $total += abs($net_income);
+                $total += $net_income;
                 //echo '</td>';
                 echo '</tr>';
                 ?>
