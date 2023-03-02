@@ -98,8 +98,8 @@ var path = '<?php echo base_url(); ?>';</script>
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<!-- <h3 class="form-title logo-color">&nbsp;&nbsp;&nbsp;&nbsp;GuvenFi</h3>	 -->
-            <a href="<?php echo site_url('Dashboard'); ?>">
-                <img src="<?php echo base_url(); ?>assets/img/logo.png"  width="100" height="40" alt="logo">
+            <a href="<?php echo site_url('Dashboard/C_dashboard'); ?>">
+                <img src="<?php echo base_url(); ?>assets/img/logo-2.png"  width="100" height="" alt="logo">
             </a>
         </div>
 		<form class="search-form search-form-header" role="form" action="<?php echo site_url('search/C_search/index'); ?>">
