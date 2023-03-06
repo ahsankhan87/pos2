@@ -7,7 +7,7 @@ $lang['add'] = 'Eklemek';
 $lang['cancel'] = 'İptal etmek';
 $lang['listof'] = 'Listesi';
 $lang['id']='ID';
-$lang['new']='yeni';
+$lang['new']='Yeni';
 
 $lang['title'] = 'Başlık';
 $lang['urdu'] = 'Urdu';
@@ -17,7 +17,7 @@ $lang['type']='Tip';
 $lang['level']='Seviye';
 $lang['action']='Aksiyon';
 $lang['account']='Hesap';
-$lang['debit']='borç';
+$lang['debit']='Borç';
 $lang['credit']='Kredi';
 $lang['status']='Durum';
 $lang['email']='E-posta';
@@ -31,7 +31,7 @@ $lang['receipt']='Fiş';
 $lang['payment']='Ödeme';
 $lang['all']='Tüm';
 $lang['search']='Aramak';
-$lang['save']='Kaydetmek';
+$lang['save']='Kaydet';
 
 $lang['deleted']=' başarıyla sildi';
 $lang['edited']=' başarıyla güncellendi';
@@ -73,18 +73,18 @@ $lang['balance'] = 'Denge';
 //Chart of Accounts
 $lang['coa'] = 'Hesap tablosu';
 $lang['coa_small'] = 'Hesap Kodları ile';
-$lang['home'] = 'ana sayfa';
+$lang['home'] = 'Ana sayfa';
 $lang['dashboard'] = 'Gösterge Paneli';
 $lang['detail'] = 'detay';
 $lang['amount'] = 'Miktar';
 $lang['description'] = 'Tanım';
 $lang['date'] = 'Tarih';
-$lang['entry'] = 'giriş';
+$lang['entry'] = 'Giriş';
 $lang['assets'] = 'Varlıklar';
 $lang['libility'] = 'Yükümlülük';
 $lang['owner_equity'] = 'öz sermaye';
 $lang['invoice'] = 'Fatura';
-$lang['user'] = 'kullanıcı';
+$lang['user'] = 'Kullanıcı';
 $lang['supdt'] = 'müfettiş';
 $lang['receiver'] = 'Alıcı';
 $lang['signature'] = 'Sign';
@@ -107,7 +107,7 @@ $lang['employee']='Çalışan';
 $lang['employees']='Çalışanlar';
 $lang['product']='Ürün';
 $lang['products']='Ürünler';
-$lang['and']='Ve';
+$lang['and']='ve';
 $lang['service']='Hizmet';
 $lang['services']='Hizmetler';
 $lang['size']='Boyut';
@@ -127,7 +127,7 @@ $lang['income']='Gelir';
 $lang['stock']='Stoklamak';
 $lang['site_visits']='Site ziyaretleri';
 $lang['best_selling_products']='En Çok Satan Ürünler';
-$lang['net_income']='Net gelir';
+$lang['net_income']='Net Gelir';
 
 //Manufacturings
 $lang['work']='İş';
@@ -182,7 +182,7 @@ $lang['delivery_date']= 'Teslim tarihi';
 $lang['business']= 'Işletme';
 $lang['deposit']= 'Depozito';
 $lang['clear']= 'Temizlemek';
-$lang['close']= 'Kapalı';
+$lang['close']= 'Kapat';
 $lang['back']= 'Geri';
 
 ////////////Customers

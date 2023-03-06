@@ -113,7 +113,7 @@
                 echo '</tbody>';
                 echo '<tfoot>';
                 echo '<tr><td></td>';
-                echo '<td><strong>Total</strong></td>';
+                echo '<td><strong>'. lang('total').'</strong></td>';
                 // echo '<td class="text-right">' . '<strong><small>' . $_SESSION['home_currency_symbol'] . '</small>' .  number_format(abs($dr_amount), 2) . '</strong></td>';
                 echo '<td class="text-right">' . '<strong><small>' . $_SESSION['home_currency_symbol'] . '</small>' .  number_format($net_total, 2) . '</strong></td>';
 

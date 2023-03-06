@@ -101,7 +101,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><strong>TOTAL</strong></td>
+                    <td><strong><?php echo lang('total');?></strong></td>
 
                     <td class="text-right"><strong><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><?php echo number_format($asset_total, 2); ?></strong></td>
                 </tr>
@@ -176,7 +176,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><strong>TOTAL</strong></td>
+                    <td><strong><?php echo lang('total');?></strong></td>
 
                     <td class="text-right"><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><strong><?php echo number_format($total, 2); ?></strong></td>
                 </tr>

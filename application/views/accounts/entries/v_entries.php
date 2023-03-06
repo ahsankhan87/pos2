@@ -41,7 +41,7 @@ if (count(@$entries)) {
                                 <th><?php echo lang('account'); ?></th>
                                 <th><?php echo lang('debit'); ?></th>
                                 <th><?php echo lang('credit'); ?></th>
-                                <th width="20%">Narration</th>
+                                <th width="20%"><?php echo lang('description'); ?></th>
                                 <th><?php //echo lang('action'); 
                                     ?></th>
                             </tr>
@@ -96,7 +96,7 @@ if (count(@$entries)) {
                             echo '</tbody>';
                             echo '<tfoot>';
                             echo '<tr><th></th><th></th><th></th>';
-                            echo '<th>Total</th>';
+                            echo '<th>'.lang('total').'</th>';
                             echo '<th class="text-right"></th>';
                             echo '<th class="text-right"></th>';
                             echo '<th></th>';

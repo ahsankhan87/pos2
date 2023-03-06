@@ -82,7 +82,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><strong>NET PROFIT</strong></td>
+                    <td><strong><?php echo lang('net_income');?></strong></td>
                     <td></td>
                     <td class="text-right"><strong><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><?php echo number_format($total, 2); ?></strong></td>
                 </tr>

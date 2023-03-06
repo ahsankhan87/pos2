@@ -18,11 +18,11 @@
                 <form class="form-inline" method="post" action="<?php echo site_url('reports/C_trial_balance') ?>" role="form">
                     <div class="form-group">
                         <label for="exampleInputEmail2">From Date</label>
-                        <input type="date" class="form-control" name="from_date" placeholder="From Date">
+                        <input type="date" class="form-control" name="from_date" value="<?php echo date("Y-m-d"); ?>" placeholder="From Date">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword2">To Date</label>
-                        <input type="date" class="form-control" name="to_date" placeholder="To Date">
+                        <input type="date" class="form-control" name="to_date" value="<?php echo date("Y-m-d"); ?>" placeholder="To Date">
                     </div>
 
                     <button type="submit" class="btn btn-default">Submit</button>
