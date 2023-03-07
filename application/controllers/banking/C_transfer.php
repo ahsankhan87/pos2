@@ -14,7 +14,7 @@ class C_transfer extends MY_Controller
         $data = array('langs' => $this->session->userdata('lang'));
 
         $data['title'] = lang("transfer");
-        $data['main'] = lang("transfer");   
+        $data['main'] = lang("transfer");
 
         $this->load->view('templates/header', $data);
         $this->load->view('banking/transfer/v_transfer', $data);
@@ -101,8 +101,8 @@ class C_transfer extends MY_Controller
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '10240M');
 
-        $data['title'] = lang('all').' '.lang('transfer');
-        $data['main'] = lang('all').' '.lang('transfer');
+        $data['title'] = lang('all') . ' ' . lang('transfer');
+        $data['main'] = lang('all') . ' ' . lang('transfer');
 
         //$data['cities'] = $this->M_city->get_city();
         $data['transfer'] = $this->M_transfer->get_alltransfer($_SESSION['company_id'], FY_START_DATE, FY_END_DATE);
@@ -133,10 +133,10 @@ class C_transfer extends MY_Controller
 
     function delete($invoice_no)
     {
-        
+
         $this->M_transfer->deleteEntry_invoice_no($invoice_no);
-        
-        
+
+
         $this->session->set_flashdata('message', 'Transfer Deleted');
         redirect('banking/C_transfer/all', 'refresh');
     }
