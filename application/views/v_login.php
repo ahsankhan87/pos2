@@ -485,7 +485,6 @@
 
 			//console.log(site_url);
 			
-			
 
 			App.init();
 			//   Login();
@@ -493,6 +492,7 @@
 			handleForgetPassword();
 			handleRegister();
 			var action = location.hash.substr(1);
+			
 			if (action == 'createaccount') {
 				$('.register-form').show();
 				$('.login-form').hide();
@@ -852,8 +852,13 @@
 				});
 			}
 
-
-
+			//if registration querystring is true then show the register page
+			var registration = '<?php echo $_GET['reg']; ?>';
+			if(registration)
+			{
+				$("#register-btn").trigger("click");
+			}
+			//////
 
 		});
 	</script>
