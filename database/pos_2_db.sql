@@ -2518,3 +2518,16 @@ INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar
 INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountPayable', 'Account Payable ', 'قابل ادائیگی اکاؤنٹ', 'حساب المستحق', '', 'C_accountPayable', '43', 'active');
 ALTER TABLE `pos_customer_payments` ADD `due_date` DATE NULL AFTER `entry_id`;
 ALTER TABLE `pos_supplier_payments` ADD `due_date` DATE NULL AFTER `entry_id`;
+
+CREATE TABLE `unsubscribe` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `company_id` int(11) NOT NULL,
+ `business_name` text,
+ `customer_name` varchar(200) DEFAULT NULL,
+ `email` varchar(100) DEFAULT NULL,
+ `phone_no` varchar(100) DEFAULT NULL,
+ `comments` text,
+ `date_created` date NOT NULL,
+ `email_sent` tinyint(1) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

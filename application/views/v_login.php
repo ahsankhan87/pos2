@@ -503,7 +503,7 @@
 				$('.forget-form').show();
 			}
 
-
+			
 			function handleLogin() {
 				$('.login-form').validate({
 					errorElement: 'span', //default input error message container
@@ -853,12 +853,14 @@
 			}
 
 			//if registration querystring is true then show the register page
-			var registration = '<?php echo $_GET['reg']; ?>';
+			var registration = '<?php echo (@$_GET['reg'] == 'true' ? true : false); ?>';
+			console.log(registration);
 			if(registration)
 			{
 				$("#register-btn").trigger("click");
 			}
 			//////
+
 
 		});
 	</script>

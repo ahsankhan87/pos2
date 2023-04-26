@@ -90,7 +90,7 @@ class C_banking extends MY_Controller{
             //$this->form_validation->set_rules('bank_account_no', 'bank_account_no', 'required');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">�</a><strong>', '</strong></div>');
            
-           $this->db->trans_start();
+            $this->db->trans_start();
             
             //after form Validation run
             if($this->form_validation->run())
@@ -121,13 +121,13 @@ class C_banking extends MY_Controller{
                     $op_balance_cr = (double) $this->input->post('op_balance_cr', true)/$exchange_rate;
                     
                     $bank_account = $this->M_groups->get_groups($bank_acc_code,$_SESSION['company_id']);
-                       $bank_dr_balance = abs($bank_account[0]['op_balance_dr']);
-                       $bank_cr_balance = abs($bank_account[0]['op_balance_cr']);
+                    $bank_dr_balance = abs($bank_account[0]['op_balance_dr']);
+                    $bank_cr_balance = abs($bank_account[0]['op_balance_cr']);
+                    
+                    $dr_balance = ($bank_dr_balance+$op_balance_dr);
+                    $cr_balance = ($bank_cr_balance+$op_balance_cr);
                        
-                       $dr_balance = ($bank_dr_balance+$op_balance_dr);
-                       $cr_balance = ($bank_cr_balance+$op_balance_cr);
-                       
-                       $this->M_groups->editGroupOPBalance($bank_acc_code,$dr_balance,$cr_balance);
+                    $this->M_groups->editGroupOPBalance($bank_acc_code,$dr_balance,$cr_balance);
                        
                     $this->session->set_flashdata('message','Bank Created');
                 }else{

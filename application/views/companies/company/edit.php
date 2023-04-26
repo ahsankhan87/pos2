@@ -4,9 +4,15 @@ if ($this->session->flashdata('message')) {
   echo $this->session->flashdata('message');
   echo '</div>';
 }
+if ($this->session->flashdata('error')) {
+  echo "<div class='alert alert-danger fade in'>";
+  echo $this->session->flashdata('error');
+  echo '</div>';
+}
 ?>
 
 <?php
+echo validation_errors();
 foreach ($Company as $values) :
 
   $attributes = array('class' => 'form-horizontal', 'role' => 'form', 'enctype' => "multipart/form-data");
@@ -31,6 +37,8 @@ foreach ($Company as $values) :
       <span class="strong"><strong>You have <?php echo $expire_days ?> days remaining.</strong></span>
       <br/>This product will expire on <strong><?php echo date('F d, Y', $values['expire']) ?></strong>
       <!-- <a href="<?php echo site_url('reports/C_profitloss/run_pl_report') ?>" class="btn btn-success">Run Retained Earning Report</a> -->
+
+      <a href="<?php echo site_url($langs)?>/companies/C_company/unsubscribe/" class="btn btn-danger text-right">Unsubscribe</a>
     </p>
     
   </div>

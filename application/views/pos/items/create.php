@@ -16,7 +16,7 @@
         		<!-- BEGIN FORM-->
         		<?php 
                 $attributes = array('class' => 'form-horizontal', 'role' => 'form','enctype'=>"multipart/form-data");
-                echo validation_errors();
+                cc
                 echo form_open('pos/Items/create',$attributes);
                 ?>
         			<div class="form-body">
