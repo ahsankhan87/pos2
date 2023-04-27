@@ -294,7 +294,6 @@ class C_sales extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-
     function get_sales_JSON()
     {
         $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last year"));

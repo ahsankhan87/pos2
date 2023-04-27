@@ -463,7 +463,7 @@
                 {
                    $.ajax({
                         type: "POST",
-                        url: site_url + "trans/"+module+"/purchase_transaction",
+                        url: site_url + "trans/"+module+"/purchase_transaction/"+1+"/"+invoice_no,
                         data: formValues,
                         success: function(data) {
                             if(data == '1')
@@ -477,7 +477,8 @@
                                 toastr.error("Bill not updated",'Error');
                             }
                             clearall();
-                            //console.log(data);
+                            console.log(data);    
+                            
                         }
                     });
                 }
