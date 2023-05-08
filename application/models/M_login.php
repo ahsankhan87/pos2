@@ -75,33 +75,29 @@ class M_login extends CI_Model
 
                 //time()+(60*60*24*30); 
                 //$expire_days = ceil(($rows['expire']-time())/60/60/24); 
+                if ($rows['expire'] == 0) {
+                    $this->assign_session_values($rows);
+                    
+                    if (isset($_SESSION['company_id']) && isset($_SESSION['user_id'])) {
+                        //for logging
+                        $msg = $this->input->post('username', true);
+                        $this->M_logs->add_log($msg, "User", "logged in", "Admin");
+                        // end logging    
 
-                if ($rows['locked'] == 1) {
+                        redirect('Dashboard/C_dashboard', 'refresh');
+                    }
+                }
+                elseif ($rows['locked'] == 1) 
+                {
 
                     if ($rows['expire'] < time()) {
                         $this->updateAppLock($rows['id']); //if expire time is less than cur time than set locked = 0
-                        $this->session->set_flashdata('error', 'Your account has suspended. Please contact your vendor i.e. khybersoft.com');
+                        $this->session->set_flashdata('error', 'Your account has been suspended. Please contact your vendor i.e. khybersoft.com');
                         redirect('C_login', 'refresh');
                     } else {
-                        //GET CURRENCY CODE AND SYMBOL
-                        $currency_query = $this->db->get_where('pos_currencies', array('id' => $rows['currency_id']));
-                        $currency = $currency_query->row_array();
-                        /////
 
-                        $_SESSION['company_id'] = $rows['id'];
-                        $_SESSION['company_name'] = $rows['name'];
-                        $_SESSION['time_zone'] = $rows['time_zone'];
-                        $_SESSION['multi_currency'] = $rows['is_multi_currency'];
-                        $_SESSION['home_currency_code'] = $currency['code'];
-                        $_SESSION['home_currency_symbol'] = $currency['symbol'];
-
-
-                        //GIVE FINANCIAL YEARS TO SESSION AND THEN 
-                        //ASSIGN IT TO CONSTANT VARIABLES IN MY_CONTROLLER 
-                        $fyear = $this->M_fyear->get_ActiveFyear($_SESSION['company_id']);
-                        $_SESSION['fy_year'] = @$fyear[0]['fy_year'];
-                        $_SESSION['fy_start_date'] = @$fyear[0]['fy_start_date'];
-                        $_SESSION['fy_end_date'] = @$fyear[0]['fy_end_date'];
+                        $this->assign_session_values($rows);
+                       
                         //////////////////////
 
                         if (isset($_SESSION['company_id']) && isset($_SESSION['user_id'])) {
@@ -114,7 +110,7 @@ class M_login extends CI_Model
                         }
                     }
                 } elseif ($rows['locked'] == 0) {
-                    $this->session->set_flashdata('error', 'Your trial version has expired. Please contact your vendor.');
+                    $this->session->set_flashdata('error', 'YYour account has been suspended. Please contact your vendor i.e. khybersoft.com');
                     redirect('C_login', 'refresh');
                 }
             } else {
@@ -126,6 +122,29 @@ class M_login extends CI_Model
             //redirect('C_login','refresh');
             echo 'Please username and password and try again!.';
         }
+    }
+    
+    private function assign_session_values($rows){
+        
+        $_SESSION['company_id'] = $rows['id'];
+        $_SESSION['company_name'] = $rows['name'];
+        $_SESSION['time_zone'] = $rows['time_zone'];
+        $_SESSION['multi_currency'] = $rows['is_multi_currency'];
+        
+        //GET CURRENCY CODE AND SYMBOL
+        $currency_query = $this->db->get_where('pos_currencies', array('id' => $rows['currency_id']));
+        $currency = $currency_query->row_array();
+        $_SESSION['home_currency_code'] = $currency['code'];
+        $_SESSION['home_currency_symbol'] = $currency['symbol'];
+        /////
+        
+
+        //GIVE FINANCIAL YEARS TO SESSION AND THEN 
+        //ASSIGN IT TO CONSTANT VARIABLES IN MY_CONTROLLER 
+        $fyear = $this->M_fyear->get_ActiveFyear($_SESSION['company_id']);
+        $_SESSION['fy_year'] = @$fyear[0]['fy_year'];
+        $_SESSION['fy_start_date'] = @$fyear[0]['fy_start_date'];
+        $_SESSION['fy_end_date'] = @$fyear[0]['fy_end_date'];
     }
 
     private function updateAppLock($id)

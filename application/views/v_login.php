@@ -111,11 +111,11 @@
 					to reset your password.
 				</p>
 			</div>
-			<div class="create-account">
+			<!-- <div class="create-account">
 				<p>
 					Don't have an account yet ?&nbsp; <a href="javascript:;" id="register-btn">Create an account</a>
 				</p>
-			</div>
+			</div> -->
 
 		</form>
 		<!-- END LOGIN FORM -->
@@ -855,9 +855,11 @@
 			//if registration querystring is true then show the register page
 			var registration = '<?php echo (@$_GET['reg'] == 'true' ? true : false); ?>';
 			console.log(registration);
-			if(registration)
+			if(registration == '1')
 			{
-				$("#register-btn").trigger("click");
+				// $("#register-btn").trigger("click");
+				jQuery('.login-form').hide();
+				jQuery('.register-form').show();
 			}
 			//////
 

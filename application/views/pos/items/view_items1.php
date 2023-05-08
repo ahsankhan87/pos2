@@ -23,8 +23,8 @@
 
                 <!-- /btn-group -->
                 <?php echo anchor('pos/Items/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success"'); ?>
-                <?php echo anchor('pos/Items/lowStock', 'Low Stock', 'class="btn btn-warning"'); ?>
-                <?php echo anchor('pos/Items/barcode', 'Barcodes', 'class="btn btn-info"'); ?>
+                <!-- <?php echo anchor('pos/Items/lowStock', 'Low Stock', 'class="btn btn-warning"'); ?> -->
+                <!-- <?php echo anchor('pos/Items/barcode', 'Barcodes', 'class="btn btn-info"'); ?> -->
 
                 <!-- Trigger the modal with a button 
                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#create-Product-Modal">Add New Product</button>

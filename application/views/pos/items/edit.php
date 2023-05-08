@@ -15,15 +15,15 @@
         	<div class="portlet-body form">
         		<!-- BEGIN FORM-->
         		<?php 
+				// var_dump($Item);
                 foreach($Item as $keys => $values):
                 $attributes = array('class' => 'form-horizontal', 'role' => 'form','enctype'=>"multipart/form-data");
                 echo validation_errors();
                 echo form_open('pos/Items/edit',$attributes);
-                echo  form_hidden('item_id',$values['item_id']);
+                echo  form_hidden('item_id',$values['id']);
                 echo  form_hidden('id',$values['id']);
                 ?>
-                <input type="hidden" value="<?php echo $values['size_id'] ?>" class="form-control"/>
-                
+               
                 	<div class="form-body">
       				<h3 class="form-section">Product Info</h3>
                     
@@ -56,7 +56,7 @@
         				<!--/row-->
                         
         				<!--/row-->
-        				<div class="row">
+        				<!-- <div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3">Category</label>
@@ -66,7 +66,7 @@
         							</div>
         						</div>
         					</div>
-        					<!--/span-->
+        					
         					<div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3">Location</label>
@@ -75,8 +75,8 @@
         							</div>
         						</div>
         					</div>
-        					<!--/span-->
-        				</div>
+        					
+        				</div> -->
         				<!--/row-->
                         
                         <div class="row">
@@ -89,7 +89,7 @@
         							</div>
         						</div>
         					</div>
-        					<div class="col-md-6">
+        					<!-- <div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3">Item Type</label>
         							<div class="col-md-9">
@@ -99,7 +99,7 @@
 										</div>
         							</div>
         						</div>
-        					</div>
+        					</div> -->
         					<!--/span-->
         				</div>
         				<!--/row-->
@@ -136,28 +136,6 @@
                             
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3">Re-Stock Level</label>
-        							<div class="col-md-9">
-        								<input type="number" name="reorder_level" value="<?php echo $values['re_stock_level'] ?>" class="form-control">
-        							</div>
-        						</div>
-        					</div>
-        					
-        				</div>
-                        <!--/row-->
-        				<div class="row">
-                            <div class="col-md-6">
-        						<div class="form-group">
-                                  <label class="control-label col-sm-3">Tax:</label>
-                                  <div class="col-sm-9">
-                                    <?php echo form_dropdown('tax_id',$taxesDDL,$values['tax_id'],'class="form-control select2me"'); ?>
-                                  </div>
-                                </div>
-                            </div>
-        					<!--/span-->
-                            
-        					<div class="col-md-6">
-        						<div class="form-group">
         							<label class="control-label col-md-3">Description</label>
         							<div class="col-md-9">
         								<textarea class="form-control" name="description"><?php echo $values['description'] ?></textarea>
@@ -165,8 +143,30 @@
         						</div>
         					</div>
         					
+        					
         				</div>
-                        <div class="row">
+                        <!--/row-->
+        				<div class="row">
+                            <!-- <div class="col-md-6">
+        						<div class="form-group">
+                                  <label class="control-label col-sm-3">Tax:</label>
+                                  <div class="col-sm-9">
+                                    <?php echo form_dropdown('tax_id',$taxesDDL,$values['tax_id'],'class="form-control select2me"'); ?>
+                                  </div>
+                                </div>
+                            </div> -->
+        					<!--/span-->
+                            <!-- <div class="col-md-6">
+        						<div class="form-group">
+        							<label class="control-label col-md-3">Re-Stock Level</label>
+        							<div class="col-md-9">
+        								<input type="number" name="reorder_level" value="<?php echo $values['re_stock_level'] ?>" class="form-control">
+        							</div>
+        						</div>
+        					</div> -->
+        					
+        				</div>
+                        <!-- <div class="row">
 							<div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3">Barcode</label>
@@ -175,7 +175,7 @@
         							</div>
         						</div>
         					</div>
-						</div>
+						</div> -->
                     <!--    
         				<h3 class="form-section">Select Sizes and Enter Barcode</h3>
         				
@@ -198,7 +198,7 @@
         					</div>
      					
                         </div>
-        				<!--/row-->
+        				/row-->
         			</div>
         			<div class="form-actions">
         				<div class="row">

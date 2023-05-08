@@ -202,6 +202,8 @@
             counter++;
             // productDDL(counter);
             accountsDDL(counter);
+            productDDL(counter);
+
             var div = '<tr><td>' + counter + '</td>' +
                 // '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
                 '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]"></select></td>' +
@@ -221,6 +223,7 @@
             //SELECT 2 DROPDOWN LIST   
             // $('#productid_' + counter).select2();
             $('#accountid_' + counter).select2();
+            
             ///
 
             //GET TOTAL WHEN QTY CHANGE
@@ -347,15 +350,15 @@
                 success: function(data) {
                     //console.log(data);
                     let i = 0;
-                    product_ddl += '<option value="0">Select Product</option>';
+                    //product_ddl += '<option value="0">Select Product</option>';
 
                     $.each(data, function(index, value) {
 
-                        product_ddl += '<option value="' + value.id + '">' + value.name + '</option>';
+                        product_ddl += '<option value="' + value.inventory_acc_code + '">' + value.name + '</option>';
 
                     });
 
-                    $('#productid_' + index).html(product_ddl);
+                    $('#accountid_' + index).append(product_ddl);
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -388,7 +391,7 @@
 
                 });
 
-                $('#accountid_' + index).html(accounts_ddl);
+                $('#accountid_' + index).append(accounts_ddl);
 
             },
             error: function(xhr, ajaxOptions, thrownError) {

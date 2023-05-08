@@ -138,6 +138,11 @@ class C_company extends MY_Controller{
                     );
                 $this->db->insert('unsubscribe', $data);
                 
+                //update 30 days expiration
+                $_30_days =time()+60*60*24*30; // 30 days
+                $this->db->update('companies', array('locked'=> 1, 'expire'=>$_30_days),array('id'=>$_SESSION['company_id']));
+                ///////////////
+                
                 $this->session->set_flashdata('message', 'Your request for unsubscribe is submitted.');
                 
                 if($email_sent == 0 ){

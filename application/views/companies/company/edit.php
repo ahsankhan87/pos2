@@ -33,11 +33,13 @@ foreach ($Company as $values) :
 
   <div class="note note-warning hidden-print">
     <p>
-      <?php $expire_days = ceil(($values['expire'] - time()) / 60 / 60 / 24); //total expire days ?>
+      <?php 
+      if($values['expire'] != 0){
+      $expire_days = ceil(($values['expire'] - time()) / 60 / 60 / 24); //total expire days ?>
       <span class="strong"><strong>You have <?php echo $expire_days ?> days remaining.</strong></span>
       <br/>This product will expire on <strong><?php echo date('F d, Y', $values['expire']) ?></strong>
       <!-- <a href="<?php echo site_url('reports/C_profitloss/run_pl_report') ?>" class="btn btn-success">Run Retained Earning Report</a> -->
-
+        <?php } ?>
       <a href="<?php echo site_url($langs)?>/companies/C_company/unsubscribe/" class="btn btn-danger text-right">Unsubscribe</a>
     </p>
     

@@ -16,7 +16,7 @@
         		<!-- BEGIN FORM-->
         		<?php 
                 $attributes = array('class' => 'form-horizontal', 'role' => 'form','enctype'=>"multipart/form-data");
-                cc
+                
                 echo form_open('pos/Items/create',$attributes);
                 ?>
         			<div class="form-body">
@@ -37,7 +37,7 @@
                         </div>
         
         				<!--/row-->
-        				<div class="row">
+        				<!-- <div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3">Category</label>
@@ -47,7 +47,7 @@
         							</div>
         						</div>
         					</div>
-        					<!--/span-->
+        					
         					<div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3">Location</label>
@@ -56,8 +56,8 @@
         							</div>
         						</div>
         					</div>
-        					<!--/span-->
-        				</div>
+        					
+        				</div> -->
         				<!--/row-->
                         
                         <div class="row">
@@ -73,7 +73,7 @@
                             
         					<div class="col-md-6">
         						<div class="form-group">
-                                  <label class="control-label col-sm-3"><span class="required">* </span>Opening Inventory Account:</label>
+                                  <label class="control-label col-sm-3"><span class="required">* </span>GL Account:</label>
                                   <div class="col-sm-9">
                                     <?php echo form_dropdown('inventory_acc_code',$accountDDL,set_value('inventory_acc_code'),'class="form-control select2me"'); ?>
                                   </div>
@@ -83,7 +83,7 @@
         				</div>
         				<!--/row-->
                         
-                        <div class="row">
+                        <!-- <div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3"><span class="required">* </span> Item Type </label>
@@ -94,7 +94,7 @@
         							</div>
         						</div>
         					</div>
-        					<!--/span-->
+        					
                             
         					<div class="col-md-6" id="wip_acc" style="display:none">
         						<div class="form-group">
@@ -104,8 +104,8 @@
                                   </div>
                                 </div>
                             </div>
-        					<!--/span-->
-        				</div>
+        					
+        				</div> -->
         				<!--/row-->
                         
         				<div class="row">
@@ -149,7 +149,7 @@
                             
         				</div>
                         <!--/row-->
-        				<div class="row">
+        				<!-- <div class="row">
                             <div class="col-md-6">
         						<div class="form-group">
                                   <label class="control-label col-sm-3">Tax:</label>
@@ -158,8 +158,7 @@
                                   </div>
                                 </div>
                             </div>
-        					<!--/span-->
-                            
+        					
                             <div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3"> </span>Re-Stock Level</label>
@@ -169,7 +168,7 @@
         						</div>
         					</div>
                             
-        				</div>
+        				</div> -->
                         
                         <!--/row-->
         				<div class="row">
@@ -182,14 +181,14 @@
         						</div>
         					</div>
 
-							<div class="col-md-6">
+							<!-- <div class="col-md-6">
         						<div class="form-group">
         							<label class="control-label col-md-3">Barcode</label>
         							<div class="col-md-9">
         								<input type="text" name="barcode" value="" autocomplete="off" class="form-control" />
         							</div>
         						</div>
-        					</div>
+        					</div> -->
         				</div>	
                         <?php if(@$sizes){ ?>
         				<h3 class="form-section">Select Sizes and Enter Inital Quantity &amp; Barcode</h3>

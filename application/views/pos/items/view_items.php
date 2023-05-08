@@ -32,10 +32,10 @@
                 <?php //echo anchor('pos/C_items_import','Import Products','class="btn btn-success"'); 
                 ?>
 
-                <?php echo anchor('pos/Categories', 'Categories', 'class="btn btn-primary"'); ?>
+                <!-- <?php echo anchor('pos/Categories', 'Categories', 'class="btn btn-primary"'); ?> -->
 
                 <!-- /btn-group -->
-                <?php echo anchor('pos/Items/lowStock', 'Low Stock', 'class="btn btn-warning"'); ?>
+                <!-- <?php echo anchor('pos/Items/lowStock', 'Low Stock', 'class="btn btn-warning"'); ?> -->
 
                 <!-- Trigger the modal with a button 
                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#create-Product-Modal">Add New Product</button>
