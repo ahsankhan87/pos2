@@ -449,7 +449,7 @@
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		<?php echo date("Y"); ?> &copy; guvenfi.com
+		<?php echo date("Y"); ?> &copy; guvenfi.com | <a href="<?php site_url('Privacy_policy');?>">Privacy Policy</a> and <a href="<?php site_url('Terms');?>">Term of Use</a>
 	</div>
 	<!-- END COPYRIGHT -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -868,8 +868,6 @@
 	</script>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
 
-	<!-- END BODY -->
-	<span role="status" aria-live="polite" class="select2-hidden-accessible"></span>
 </body>
 
 </html>

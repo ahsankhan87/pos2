@@ -15,7 +15,7 @@
     }
     ?>
     <p>
-    <a href="<?php echo site_url('setting/users/C_users/create/') ?>" title="Add" class="btn btn-success"><i class="fa fa-plus fa-fw"></i> Add New</a>
+    <a href="<?php echo site_url('setting/users/C_users/create/') ?>" title="Add" class="btn btn-success"><i class="fa fa-plus fa-fw"></i> <?php echo lang('add_new'); ?></a>
         
     </p>
     <?php
@@ -40,10 +40,10 @@
         <thead class="flip-content">
         <tr>
             <th>ID</th>
-            <th>Username</th>
-            <th>Full Name</th>
-            <th>Role</th>
-            <th>Action</th>
+            <th><?php echo lang('username'); ?></th>
+            <th><?php echo lang('name'); ?></th>
+            <th><?php echo lang('role'); ?></th>
+            <th><?php echo lang('action'); ?></th>
             <th></th>
         </tr>
         </thead>

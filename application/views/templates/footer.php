@@ -7,7 +7,7 @@
 <!-- BEGIN FOOTER -->
 <div class="footer">
 	<div class="footer-inner">
-		 <?php echo date("Y"); ?> &copy; guvenfi.com Time: {elapsed_time}. Memory: {memory_usage}
+		 <?php echo date("Y"); ?> &copy; guvenfi.com | <a href="<?php site_url('Privacy_policy');?>">Privacy Policy</a> and <a href="<?php site_url('Terms');?>">Term of Use</a>
 	</div>
 	<div class="footer-tools">
 		<span class="go-top">

@@ -12,8 +12,8 @@ class C_fyear extends MY_Controller{
     {
         $data = array('langs' => $this->session->userdata('lang'));
         
-        $data['title'] = 'Fiscal Year';
-        $data['main'] = 'Fiscal Year';
+        $data['title'] = lang('fiscal_year');
+        $data['main'] = lang('fiscal_year');
         
         //$data['cities'] = $this->M_city->get_city();
         $data['Fyear']= $this->M_fyear->get_Fyear(false,$_SESSION['company_id']);
@@ -41,8 +41,8 @@ class C_fyear extends MY_Controller{
         }
         else
         {
-            $data['title'] = 'Create Fiscal Year';
-            $data['main'] = 'Create Fiscal Year';
+            $data['title'] = lang('add_new').' ' .lang('fiscal_year');
+            $data['main'] = lang('add_new').' ' .lang('fiscal_year');
             
                
             $this->load->view('templates/header',$data);
@@ -63,8 +63,8 @@ class C_fyear extends MY_Controller{
         }
         else
         {
-            $data['title'] = 'Update Fiscal Year';
-            $data['main'] = 'Update Fiscal Year';
+            $data['title'] = lang('edit').' ' .lang('fiscal_year');
+            $data['main'] = lang('edit').' ' .lang('fiscal_year');
             
             $data['Fyear']= $this->M_fyear->get_Fyear($id,$_SESSION['company_id']);
             

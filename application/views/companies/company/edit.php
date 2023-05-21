@@ -46,14 +46,14 @@ foreach ($Company as $values) :
   </div>
 
   <div class="form-group">
-    <label class="control-label col-sm-2" for="Company Name">Company Name:</label>
+    <label class="control-label col-sm-2" for="Company Name"><?php echo lang('company'). ' '.lang('name'); ?>:</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="name" value="<?php echo $values['name']; ?>" name="name" placeholder="Company Name" />
     </div>
   </div>
 
   <div class="form-group">
-    <label class="control-label col-sm-2" for="tax_no">Tax / VAT No.:</label>
+    <label class="control-label col-sm-2" for="tax_no"><?php echo lang('tax'). '/ '.lang('vat') . ' '.lang('number'); ?>:</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="tax_no" value="<?php echo $values['tax_no']; ?>" name="tax_no" placeholder="Tax / VAT No." />
     </div>
@@ -75,21 +75,21 @@ foreach ($Company as $values) :
 </div>
 -->
   <div class="form-group">
-    <label class="control-label col-sm-2" for="Email">Email:</label>
+    <label class="control-label col-sm-2" for="Email"><?php echo lang('email'); ?>:</label>
     <div class="col-sm-10">
       <input type="email" class="form-control" id="Email" value="<?php echo $values['email']; ?>" name="email" placeholder="Email" />
     </div>
   </div>
 
   <div class="form-group">
-    <label class="control-label col-sm-2" for="Address">Address:</label>
+    <label class="control-label col-sm-2" for="Address"><?php echo lang('address'); ?>:</label>
     <div class="col-sm-10">
       <textarea class="form-control" name="address"><?php echo $values['address']; ?></textarea>
     </div>
   </div>
 
   <div class="form-group">
-    <label class="control-label col-sm-2" for="fy_start">Fiscal Year:</label>
+    <label class="control-label col-sm-2" for="fy_start"><?php echo lang('fiscal_year'); ?>:</label>
     <div class="col-sm-10">
       <?php echo FY_YEAR; ?>
     </div>
@@ -121,7 +121,7 @@ foreach ($Company as $values) :
 </div> -->
 
   <div class="form-group">
-    <label class="control-label col-sm-2" for="currency_name">Home Currency:</label>
+    <label class="control-label col-sm-2" for="currency_name"><?php echo lang('home') . ' '. lang('currency'); ?>:</label>
     <div class="col-sm-10">
       <?php $currency = ($values['currency_id'] == 0 ? '' : $values['currency_id']); ?>
       <?php echo form_dropdown('currency_id', $currencyDropDown, $currency, 'class="form-control" required=""'); ?>
@@ -129,7 +129,7 @@ foreach ($Company as $values) :
   </div>
 
   <div class="form-group">
-    <label class="control-label col-sm-2" for="Contactno">Contact No:</label>
+    <label class="control-label col-sm-2" for="Contactno"><?php echo lang('contact').' '.lang('number'); ?>:</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="contact_no" value="<?php echo $values['contact_no']; ?>" name="contact_no" placeholder="Contact No" />
     </div>
@@ -151,7 +151,7 @@ foreach ($Company as $values) :
 
   echo '<div class="form-group"><label class="control-label col-sm-2" for="submit"></label>';
   echo '<div class="col-sm-10">';
-  echo form_submit('submit', 'Update', 'class="btn btn-success"');
+  echo form_submit('submit', lang('update'), 'class="btn btn-success"');
   echo '</div></div>';
 endforeach;
 ?>

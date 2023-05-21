@@ -12,8 +12,8 @@ class C_currencies extends MY_Controller{
     {
         $data = array('langs' => $this->session->userdata('lang'));
         
-        $data['title'] = 'Manage currencies';
-        $data['main'] = 'Manage currencies';
+        $data['title'] = lang('manage').' '.lang('currency');
+        $data['main'] = lang('manage').' '.lang('currency');
         
         //$data['cities'] = $this->M_city->get_city();
         $data['currencies']= $this->M_currencies->get_activecurrencies();
@@ -39,7 +39,7 @@ class C_currencies extends MY_Controller{
             $this->form_validation->set_rules('name', 'Namw', 'required');
             $this->form_validation->set_rules('symbol', 'Currency Symbol', 'required');
             //$this->form_validation->set_rules('currency_account_no', 'currency_account_no', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -69,8 +69,8 @@ class C_currencies extends MY_Controller{
             
            }
         }
-            $data['title'] = 'Create currency';
-            $data['main'] = 'Create New currency';
+            $data['title'] = lang('add_new').' '.lang('currency');
+            $data['main'] = lang('add_new').' '.lang('currency');
             
                
             $this->load->view('templates/header',$data);
@@ -88,7 +88,7 @@ class C_currencies extends MY_Controller{
             //form Validation
             $this->form_validation->set_rules('name', 'Namw', 'required');
             $this->form_validation->set_rules('symbol', 'Currency Symbol', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -119,8 +119,8 @@ class C_currencies extends MY_Controller{
             }
         }
        
-            $data['title'] = 'Update currency';
-            $data['main'] = 'Update currency';
+            $data['title'] =  lang('edit').' '.lang('currency');
+            $data['main'] =  lang('edit').' '.lang('currency');
             
             $data['currency'] = $this->M_currencies->get_currencies($id);
             

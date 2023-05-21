@@ -21,12 +21,12 @@
                     echo form_open('setting/users/C_users/create',$attributes);
                     ?>
 					<div class="form-body">
-						<h3 class="form-section">User Information</h3>
+						<h3 class="form-section"><?php echo lang('user') . ' ' .lang('information'); ?></h3>
                         
                         <div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Role</label>
+									<label><?php echo lang('role'); ?></label>
 									<select class="form-control" name="role">
                                         <option value="">Select Role</option>
                                         <option value="admin">Admin</option>
@@ -41,14 +41,14 @@
                         <div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Full Name</label>
+									<label><?php echo lang('full'). ' '. lang('name'); ?></label>
 									<input type="text" name="name" class="form-control" value="<?php echo set_value('name'); ?>"/>
 								</div>
 							</div>
 							<!--/span-->
                             <div class="col-md-6">
 								<div class="form-group">
-									<label>Username</label>
+									<label><?php echo lang('username'); ?></label>
 									<input type="text" name="username" class="form-control" value="<?php echo set_value('username'); ?>"/>
 								</div>
 							</div>
@@ -58,14 +58,14 @@
 							
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Password</label>
+									<label><?php echo lang('password'); ?></label>
 									<input type="password" name="password" class="form-control" value="<?php echo set_value('password'); ?>"/>
 								</div>
 							</div>
 							<!--/span-->
                             <div class="col-md-6">
 								<div class="form-group">
-									<label>Confirm Password</label>
+									<label><?php echo lang('confirm'). ' '.lang('password'); ?></label>
 									<input type="password" name="confirm_password" class="form-control" value="<?php echo set_value('confirm_password'); ?>"/>
 								</div>
 							</div>
@@ -74,8 +74,8 @@
 						</div>
 						<!--/row-->
                         
-                        <h3 class="form-section">Module Permission</h3>
-                        
+                        <h3 class="form-section"><?php echo lang('module'). ' '. lang('permission'); ?></h3>
+                        <?php $url1 = $this->uri->segment(1); ?>
                         <div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
@@ -85,7 +85,7 @@
 										<label>
 										<div class="col-sm-12">
                                             <span>
-                                            <input name="modules[]" value="<?php echo $values['id'] ?>" <?php ($values['id'] == 1 ? 'required=""' : '') ?> type="checkbox">&nbsp;<?php echo $values['title'] ?>
+                                            <input name="modules[]" value="<?php echo $values['id'] ?>" <?php ($values['id'] == 1 ? 'required=""' : '') ?> type="checkbox">&nbsp;<?php echo ($url1 == 'tr' ? $values['title_ur'] : $values['title']) ?>
                                             </span>
                                         </div>
                                         
@@ -102,7 +102,7 @@
                                         <div class="col-sm-offset-1 col-sm-4">
                                             <span>
                                             
-                                            <input name="sub_module[<?php echo $i; ?>]" value="<?php echo $sub_module['id'] ?>" type="checkbox">&nbsp;<?php echo $sub_module['title'] ?>
+                                            <input name="sub_module[<?php echo $i; ?>]" value="<?php echo $sub_module['id'] ?>" type="checkbox">&nbsp;<?php echo ($url1 == 'tr' ? $sub_module['title_ur'] : $sub_module['title'])  ?>
                                                                                                                                     
                                             
                                             </span>
@@ -136,7 +136,8 @@
                         
 					</div>
 					<div class="form-actions right">
-						<button type="submit" class="btn btn-info"><i class="fa fa-check"></i> Save</button><button type="button" onclick="window.history.back()" class="btn btn-default">Back</button>
+						<button type="submit" class="btn btn-info"><i class="fa fa-check"></i> <?php echo lang('save'); ?></button>
+						<button type="button" onclick="window.history.back()" class="btn btn-default"><?php echo lang('back'); ?></button>
 						
 					</div>
 				<?php echo form_close(); ?>

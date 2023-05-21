@@ -14,8 +14,8 @@ var initGetAllProducts = function () {
             "columns": [
                         { "data": "item_id" },
                         { "data": "name" },
-                        { "data": "unit_name" },
-                        { "data": "item_type" }, //{ "data": "category_id" },
+                        // { "data": "unit_name" },
+                        { "data": "description" }, //{ "data": "category_id" },
                         // { "data": "location_name" },
                         { "data": "quantity" },
                         { "data": "avg_cost" },
@@ -29,25 +29,25 @@ var initGetAllProducts = function () {
                             
                             var total_cost = (aData['quantity']*aData['avg_cost']);
                             
+                            $('td:eq(2)', nRow).css('text-align','right');
                             $('td:eq(3)', nRow).css('text-align','right');
-                            $('td:eq(4)', nRow).css('text-align','right');
-                            $('td:eq(4)', nRow).html(parseFloat(aData['avg_cost']).toFixed(2));
+                            $('td:eq(3)', nRow).html(parseFloat(aData['avg_cost']).toFixed(2));
                             
-                            $('td:eq(5)', nRow).css('text-align','right');
-                            $('td:eq(5)', nRow).html(parseFloat(aData['unit_price']).toFixed(2));
+                            $('td:eq(4)', nRow).css('text-align','right');
+                            $('td:eq(4)', nRow).html(parseFloat(aData['unit_price']).toFixed(2));
               
                             if(aData['service'] == parseInt("1")){
                                 
                                 // $('td:eq(2)', nRow).html('<div>Service</div>');
                                 
-                                $('td:eq(6)', nRow).html('<a href="'+site_url+'/pos/Items/editService/' + aData['item_id'] + 
+                                $('td:eq(5)', nRow).html('<a href="'+site_url+'/pos/Items/editService/' + aData['item_id'] + 
                                     '" title=\'Edit\'><i class=\'fa fa-pencil-square-o fa-fw\'></i></a><a href="'+site_url+'/pos/Items/delete/' + 
                                     aData['item_id'] + '/' + aData['inventory_acc_code'] + '/' + total_cost  + 
                                     '" onclick="return confirm(\'Are you sure you want to delete?\')"; title=\'Make Inactive\'><i class=\'fa fa-trash-o fa-fw\'></i></a>');
                             }else{
                                 // $('td:eq(2)', nRow).html('<div>Product</div>');
                                 
-                                $('td:eq(6)', nRow).html('<a href="'+site_url+'/pos/Items/edit/' + aData['item_id'] + 
+                                $('td:eq(5)', nRow).html('<a href="'+site_url+'/pos/Items/edit/' + aData['item_id'] + 
                                     '"><i class=\'fa fa-pencil-square-o fa-fw\'></i></a><a href="'+site_url+'/pos/Items/delete/' + 
                                     aData['item_id'] + '/' + aData['inventory_acc_code'] + '/' + total_cost + 
                                     '" onclick="return confirm(\'Are you sure you want to delete?\')"; title=\'Make Inactive\'><i class=\'fa fa-trash-o fa-fw\'></i></a>');

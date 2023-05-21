@@ -137,14 +137,14 @@
         						</div>
         					</div>
                             
-        				    <div class="col-md-6">
+        				    <!-- <div class="col-md-6">
         						<div class="form-group">
                                   <label class="control-label col-sm-3">Units:</label>
                                   <div class="col-sm-9">
                                     <?php echo form_dropdown('unit_id',$unitsDDL,set_value('unit_id'),'class="form-control select2me"'); ?>
                                   </div>
                                 </div>
-                            </div>
+                            </div> -->
         					<!--/span-->
                             
         				</div>

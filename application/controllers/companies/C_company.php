@@ -62,8 +62,8 @@ class C_company extends MY_Controller{
         }
         else
         {
-            $data['title'] = 'Update Company';
-            $data['main'] = 'Update Company Profile';
+            $data['title'] = lang('update').' '. lang('company');
+            $data['main'] = lang('edit').' '. lang('company');
             
             $company_id = $_SESSION['company_id'];
             $data['Company'] = $this->M_companies->get_companies($company_id);

@@ -12,8 +12,8 @@ class C_taxes extends MY_Controller{
     {
         $data = array('langs' => $this->session->userdata('lang'));
         
-        $data['title'] = 'Manage taxes';
-        $data['main'] = 'Manage taxes';
+        $data['title'] = lang('manage').' '.lang('taxes');
+        $data['main'] = lang('manage').' '.lang('taxes');
         
         //$data['cities'] = $this->M_city->get_city();
         $data['taxes']= $this->M_taxes->get_activetaxes();
@@ -74,8 +74,8 @@ class C_taxes extends MY_Controller{
             
            }
         }
-            $data['title'] = 'Create Tax';
-            $data['main'] = 'Create New Tax';
+            $data['title'] = lang('add_new').' '.lang('tax');
+            $data['main'] = lang('add_new').' '.lang('tax');
             $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account
             
                
@@ -127,8 +127,8 @@ class C_taxes extends MY_Controller{
             }
         }
        
-            $data['title'] = 'Update Tax';
-            $data['main'] = 'Update Tax';
+            $data['title'] = lang('edit').' '.lang('tax');
+            $data['main'] = lang('edit').' '.lang('tax');
             
             $data['tax'] = $this->M_taxes->get_taxes($id);
             $data['accountDDL'] = $this->M_groups->getGrpDetailDropDown($_SESSION['company_id'],$data['langs']);//search for legder account

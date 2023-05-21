@@ -37,9 +37,9 @@
                                 <th>ID</th>
                                 <th><?php echo lang('account'); ?></th>
                                 <th><?php echo lang('name'); ?></th>
-                                <th>Rate</th>
-                                <th>Description</th>
-                                <th>Action</th>
+                                <th><?php echo lang('rate'); ?></th>
+                                <th><?php echo lang('description'); ?></th>
+                                <th><?php echo lang('action'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,23 +61,23 @@
                                 <?php echo anchor('setting/C_taxes/edit/' . $list['id'], '<i class="fa fa-pencil-square-o fa-fw"></i>'); ?> |
                                 <a href="<?php echo site_url('setting/C_taxes/inactivate/' . $list['id']) ?>" onclick="return confirm('Are you sure you want to inactive?')"><i class="fa fa-trash-o fa-fw"></i></a>
                                 <!--
-     <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">option
-      <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li></li>
-        
-        <li><?php //echo anchor('setting/C_taxes/delete/'.$list['id'],'Delete'); 
-            ?></li>
-        <li><?php //echo anchor('setting/C_taxes/activate/'.$list['id'],'Activate'); 
-            ?></li>
-        <li><?php //echo anchor('setting/C_taxes/inactivate/'.$list['id'],'In-activate'); 
-            ?></li>
-        
-        <li></li>
-      </ul>
-    </div>
-    -->
+                                <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">option
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li></li>
+                                    
+                                    <li><?php //echo anchor('setting/C_taxes/delete/'.$list['id'],'Delete'); 
+                                        ?></li>
+                                    <li><?php //echo anchor('setting/C_taxes/activate/'.$list['id'],'Activate'); 
+                                        ?></li>
+                                    <li><?php //echo anchor('setting/C_taxes/inactivate/'.$list['id'],'In-activate'); 
+                                        ?></li>
+                                    
+                                    <li></li>
+                                </ul>
+                                </div>
+                                -->
                         <?php
                                 echo '</td>';
                                 echo '</tr>';

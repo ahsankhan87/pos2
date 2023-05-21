@@ -197,3 +197,21 @@ $lang['transfer']= 'Transfer';
 $lang['fund']= 'fund';
 $lang['bill']= 'Bill';
 
+$lang['company']= 'Company';
+$lang['vat']= 'VAT';
+$lang['update']= 'Update';
+$lang['change']= 'Change';
+$lang['password']= 'Password';
+
+$lang['role']= 'Role';
+$lang['username']= 'Username';
+$lang['information']= 'Informaiton';
+$lang['module']= 'Module';
+$lang['permission']= 'Permission';
+$lang['confirm']= 'Confirm';
+$lang['start']= 'Start';
+$lang['end']= 'End';
+$lang['manage']= 'Manage';
+$lang['rate']= 'Rate';
+$lang['code']= 'Code';
+$lang['symbol']= 'Symbol';

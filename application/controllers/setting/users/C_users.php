@@ -12,8 +12,8 @@ class C_users extends MY_Controller{
     {
         $data = array('langs' => $this->session->userdata('lang'));
         
-        $data['title'] = 'List of Users';
-        $data['main'] = 'List of Users';
+        $data['title'] = lang('listof').' '. lang('users');
+        $data['main'] = lang('listof').' '. lang('users');
         
         $data['users'] = $this->M_users->get_activeUsers();
             
@@ -37,7 +37,7 @@ class C_users extends MY_Controller{
             );
             $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[3]',array('required' => 'You must provide a %s.'));
             $this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'trim|required|matches[password]');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             ///$this->form_validation->set_rules(')
             
             //after form Validation run
@@ -52,8 +52,8 @@ class C_users extends MY_Controller{
               
         }
         
-        $data['title'] = 'Add New User';
-        $data['main'] = 'Add New User';
+        $data['title'] = lang('add_new').' '. lang('user');
+        $data['main'] = lang('add_new').' '. lang('user');
         
         $data['activeModules'] = $this->M_modules->get_modulesByParent();
      
@@ -96,7 +96,7 @@ class C_users extends MY_Controller{
             );
             //$this->form_validation->set_rules('password', 'password', 'trim|required|min_length[3]',array('required' => 'You must provide a %s.'));
             //$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'trim|required|matches[password]');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             ///$this->form_validation->set_rules(')
             
             //after form Validation run
@@ -108,8 +108,8 @@ class C_users extends MY_Controller{
             }
               
         }
-          $data['title'] = 'Update User';
-            $data['main'] = 'Update User';
+          $data['title'] = lang('edit').' '. lang('user');
+            $data['main'] = lang('edit').' '. lang('user');
             
             $data['activeModules'] = $this->M_modules->get_modulesByParent();
             $data['users'] = $this->M_users->get_activeUsers($user_id);
@@ -130,7 +130,7 @@ public function change_password($user_id=NULL)
         {
             $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[3]',array('required' => 'You must provide a %s.'));
             $this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'trim|required|matches[password]');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             ///$this->form_validation->set_rules(')
             
             //after form Validation run
@@ -142,8 +142,8 @@ public function change_password($user_id=NULL)
             }
               
         }
-          $data['title'] = 'Change Password';
-            $data['main'] = 'Change Password';
+          $data['title'] = lang('change').' '. lang('password');
+            $data['main'] = lang('change').' '. lang('password');
             
             //$data['activeModules'] = $this->M_modules->get_modulesByParent();
             $data['users'] = $this->M_users->get_activeUsers($user_id);

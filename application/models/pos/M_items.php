@@ -102,10 +102,8 @@ class M_items extends CI_Model{
     public function get_allItemsforJSON()
     {
         //$this->db->order_by('B.item_id','desc');
-        $this->db->select('A.id AS item_id,A.name,
-        A.item_type,A.unit_id,A.quantity,A.avg_cost,A.cost_price,A.unit_price,
-        A.inventory_acc_code,A.wip_acc_code,A.tax_id,
-        U.name as unit_name');
+        $this->db->select('A.id AS item_id,A.name,A.item_type,A.unit_id,A.quantity,A.avg_cost,A.cost_price,A.unit_price,
+        A.inventory_acc_code,A.wip_acc_code,A.tax_id,A.description,U.name as unit_name');
         // $this->db->join('pos_items AS B','A.item_id = B.item_id','left');
         // $this->db->join('pos_taxes AS T','T.id = A.tax_id','left');
         // $this->db->join('pos_sizes as C','A.size_id = C.id','left');
@@ -184,7 +182,7 @@ class M_items extends CI_Model{
             $desc = $this->input->post('description',true);
             $name = $this->input->post('name',true);
             $category_id = $this->input->post('category_id',true);
-            $unit_id = ($this->input->post('unit_id',true) == '' ? 0 : $this->input->post('unit_id',true));
+            $unit_id = 0; // ($this->input->post('unit_id',true) == '' ? 0 : $this->input->post('unit_id',true));
             $tax_id = $this->input->post('tax_id',true);
             $item_type = $this->input->post('item_type',true);
             $location_code = $this->input->post('location_code',true);

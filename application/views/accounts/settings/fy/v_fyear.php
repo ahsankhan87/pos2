@@ -12,7 +12,7 @@
             echo '</div>';
         }
         ?>
-        <p><?php echo anchor('setting/C_fyear/create', 'Create New Financial Year', 'class="btn btn-success"'); ?></p>
+        <p><?php echo anchor('setting/C_fyear/create', lang('add_new'), 'class="btn btn-success"'); ?></p>
     
         <?php
 
@@ -36,12 +36,12 @@
                         <thead>
                             <tr valign='top'>
                                 <th>ID</th>
-                                <th>FY Start Date</th>
-                                <th>FY End Date</th>
-                                <th>Financial Year</th>
-                                <th>Status</th>
-
-                                <th>Action</th>
+                                <th><?php echo lang('start').' '.lang('date'); ?></th>
+                                <th><?php echo lang('end').' '.lang('date'); ?></th>
+                                <th><?php echo lang('fiscal_year'); ?></th>
+                                <th><?php echo lang('status'); ?></th>
+                                <th><?php echo lang('action'); ?></th>
+                                
                             </tr>
                         </thead>
                         <tbody>

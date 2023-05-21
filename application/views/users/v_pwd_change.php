@@ -23,21 +23,21 @@
                     echo form_hidden("id",$user['id']);
                     ?>
 					<div class="form-body">
-						<h3 class="form-section">User Password Change</h3>
+						<h3 class="form-section"><?php echo lang('user') . ' ' .lang('password') . ' '. lang('change'); ?></h3>
                         
                         
                         <div class="row">
 							
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Password</label>
+									<label><?php echo lang('password'); ?></label>
 									<input type="password" name="password" class="form-control" value="<?php echo $user['password'] ?>"  required="" />
 								</div>
 							</div>
 							<!--/span-->
                             <div class="col-md-6">
 								<div class="form-group">
-									<label>Confirm Password</label>
+									<label><?php echo lang('confirm'). ' '.lang('password'); ?></label>
 									<input type="password" name="confirm_password" value="<?php echo $user['password'] ?>" class="form-control" required="" />
 								</div>
 							</div>
@@ -50,8 +50,8 @@
                         
 					</div>
 					<div class="form-actions right">
-                        <button type="submit" class="btn btn-info"><i class="fa fa-check"></i> Confirm Change</button>                    
-						<button type="button" onclick="window.history.back()" class="btn btn-default">Back</button>
+                        <button type="submit" class="btn btn-info"><i class="fa fa-check"></i> <?php echo lang('confirm'). ' '.lang('change'); ?></button>                    
+						<button type="button" onclick="window.history.back()" class="btn btn-default"><?php echo lang('back'); ?></button>
 						
 					</div>
 				<?php 

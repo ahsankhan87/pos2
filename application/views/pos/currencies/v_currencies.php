@@ -14,7 +14,7 @@
         echo '</div>';
     }
     ?>
-    <p><?php echo anchor('setting/C_currencies/create','Add New <i class="fa fa-plus"></i>','class="btn btn-success"'); ?></p>
+    <p><?php echo anchor('setting/C_currencies/create',lang('add_new'),'class="btn btn-success"'); ?></p>
     
     <?php
     if(count($currencies))
@@ -38,12 +38,12 @@
         <thead class="flip-content">
         <tr>
             <th>ID</th>
-            <th>Country</th>
-            <th>Name</th>
-            <th>Code</th>
-            <th>Symbol</th>
+            <th><?php echo lang('country'); ?></th>
+            <th><?php echo lang('name'); ?></th>
+            <th><?php echo lang('code'); ?></th>
+            <th><?php echo lang('symbol'); ?></th>
             
-            <th>Action</th>
+            <th><?php echo lang('action'); ?></th>
         </tr>
         </thead>
         <tbody>

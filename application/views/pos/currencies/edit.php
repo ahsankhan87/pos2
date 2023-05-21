@@ -18,28 +18,28 @@ echo form_hidden('id',$values['id']);
 ?>
 
 <div class="form-group">
-  <label class="control-label col-sm-2" for="Name">Name:</label>
+  <label class="control-label col-sm-2" for="Name"><?php echo lang('name'); ?>:</label>
   <div class="col-sm-10">
     <input type="text" class="form-control" id="Name" name="name" value="<?php echo $values['name']; ?>" placeholder="Name" />
   </div>
 </div>
  
 <div class="form-group">
-  <label class="control-label col-sm-2" for="country">Country:</label>
+  <label class="control-label col-sm-2" for="country"><?php echo lang('country'); ?>:</label>
   <div class="col-sm-10">
     <input type="text" class="form-control" id="country" name="country" value="<?php echo $values['country']; ?>"placeholder="country" />
   </div>
 </div>
  
  <div class="form-group">
-  <label class="control-label col-sm-2" for="code">Code:</label>
+  <label class="control-label col-sm-2" for="code"><?php echo lang('code'); ?>:</label>
   <div class="col-sm-10">
     <input type="text" class="form-control" id="code" name="code" value="<?php echo $values['code']; ?>"placeholder="code" />
   </div>
 </div>
 
 <div class="form-group">
-  <label class="control-label col-sm-2" for="symbol">Symbol:</label>
+  <label class="control-label col-sm-2" for="symbol"><?php echo lang('symbol'); ?>:</label>
   <div class="col-sm-10">
     <input type="text" class="form-control" id="symbol" name="symbol" value="<?php echo $values['symbol']; ?>" placeholder="symbol" />
   </div>
@@ -49,7 +49,7 @@ echo form_hidden('id',$values['id']);
 
 echo '<div class="form-group"><label class="control-label col-sm-2" for="submit"></label>';
 echo '<div class="col-sm-10">';
-echo form_submit('submit','Update','class="btn"');
+echo form_submit('submit',lang('update'),'class="btn"');
 echo '</div></div>';
 endforeach;
 ?>

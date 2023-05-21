@@ -23,12 +23,12 @@
                     echo form_hidden("id",$user['id']);
                     ?>
 					<div class="form-body">
-						<h3 class="form-section">User Information</h3>
+						<h3 class="form-section"><?php echo lang('user') . ' ' .lang('information'); ?></h3>
                         
                         <div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Role</label>
+									<label><?php echo lang('role'); ?></label>
                                     <?php $data = array(''=>'Please Select','admin'=>'Admin','user'=>'User');
                                     
                                     echo form_dropdown('role',$data,$user['role'],'class="form-control"'); ?>
@@ -42,21 +42,21 @@
                         <div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>Full Name</label>
+									<label><?php echo lang('full'). ' '. lang('name'); ?></label>
 									<input type="text" name="name" value="<?php echo $user['name'] ?>" class="form-control" />
 								</div>
 							</div>
 							<!--/span-->
                             <div class="col-md-6">
 								<div class="form-group">
-									<label>Username</label>
+									<label><?php echo lang('username'); ?></label>
 									<input type="text" name="username" value="<?php echo $user['username'] ?>" required="" class="form-control" />
 								</div>
 							</div>
 							<!--/span-->
                         </div>
                         
-                        <h3 class="form-section">Module Permission</h3>
+                        <h3 class="form-section"><?php echo lang('module'). ' '. lang('permission'); ?></h3>
                         
                         <div class="row">
 							<div class="col-md-12">
@@ -75,8 +75,8 @@
 										<label>
 										<div class="col-sm-12">
                                             <span>
-                                            
-                                            <input name="modules[]" value="<?php echo $values['id'] ?>" <?php echo (@$userModule[0]['module_id'] == $values['id'] ? 'checked=""' : '') ?>  type="checkbox">&nbsp;<?php echo $values['title'] ?>
+                                            <?php $url1 = $this->uri->segment(1); ?>
+                                            <input name="modules[]" value="<?php echo $values['id'] ?>" <?php echo (@$userModule[0]['module_id'] == $values['id'] ? 'checked=""' : '') ?>  type="checkbox">&nbsp;<?php echo ($url1 == 'tr' ? $values['title_ur'] : $values['title']) ?>
                                                                                                                                     
                                             
                                             </span>
@@ -95,7 +95,7 @@
                                         <div class="col-sm-offset-1 col-sm-4">
                                             <span>
                                             
-                                            <input name="sub_module[<?php echo $j; ?>][<?php echo $i; ?>]" value="<?php echo $sub_module['id'] ?>" <?php echo (@$user_subModule[0]['sub_module'] == $sub_module['id'] ? 'checked=""' : '') ?>  type="checkbox">&nbsp;<?php echo $sub_module['title'] ?>
+                                            <input name="sub_module[<?php echo $j; ?>][<?php echo $i; ?>]" value="<?php echo $sub_module['id'] ?>" <?php echo (@$user_subModule[0]['sub_module'] == $sub_module['id'] ? 'checked=""' : '') ?>  type="checkbox">&nbsp;<?php echo ($url1 == 'tr' ? $sub_module['title_ur'] : $sub_module['title']) ?>
                                                                                                                                     
                                             
                                             </span>
@@ -131,8 +131,8 @@
                         
 					</div>
 					<div class="form-actions right">
-                        <button type="submit" class="btn btn-info"><i class="fa fa-check"></i> Update</button>                    
-						<button type="button" onclick="window.history.back()" class="btn btn-default">Back</button>
+                        <button type="submit" class="btn btn-info"><i class="fa fa-check"></i> <?php echo lang('update'); ?></button>                    
+						<button type="button" onclick="window.history.back()" class="btn btn-default"><?php echo lang('back'); ?></button>
 						
 					</div>
 				<?php 

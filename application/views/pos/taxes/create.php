@@ -26,28 +26,28 @@ echo form_open('setting/C_taxes/create',$attributes);
 
 ?>
 <div class="form-group">
-  <label class="control-label col-sm-2" for="account_code">Account:</label>
+  <label class="control-label col-sm-2" for="account_code"><?php echo lang('account'); ?>:</label>
   <div class="col-sm-10">
     <?php echo form_dropdown('account_code',$accountDDL,set_value('account_code'),'class="form-control select2me"'); ?>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="control-label col-sm-2" for="name">Name:</label>
+  <label class="control-label col-sm-2" for="name"><?php echo lang('name'); ?>:</label>
   <div class="col-sm-10">
     <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
   </div>
 </div>
 
 <div class="form-group">
-  <label class="control-label col-sm-2" for="rate">Rate (%):</label>
+  <label class="control-label col-sm-2" for="rate"><?php echo lang('rate'); ?> (%):</label>
   <div class="col-sm-10">
     <input type="number" class="form-control" id="rate" name="rate"  min="0" step="0.0001"  placeholder="Rate" />
   </div>
 </div>
  
  <div class="form-group">
-  <label class="control-label col-sm-2" for="Description">Description:</label>
+  <label class="control-label col-sm-2" for="Description"><?php echo lang('description'); ?>:</label>
   <div class="col-sm-10">
     <textarea name="description" class="form-control"></textarea>
   </div>
@@ -65,7 +65,7 @@ echo form_dropdown('status',$option,'','class="form-control"') . '</div></div>';
 
 echo '<div class="form-group"><label class="control-label col-sm-2" for="submit"></label>';
 echo '<div class="col-sm-10">';
-echo form_submit('submit','Submit','class="btn btn-success"');
+echo form_submit('submit',lang('save'),'class="btn btn-success"');
 echo '</div></div>';
 
 echo form_close();

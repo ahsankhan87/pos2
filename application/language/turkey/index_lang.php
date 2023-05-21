@@ -198,3 +198,21 @@ $lang['transfer']= 'Aktar';
 $lang['fund']= 'para';
 $lang['bill']= 'Fatura';
 
+$lang['company']= 'Teslim etmek';
+$lang['vat']= 'VAT';
+$lang['update']= 'Güncelleme';
+$lang['change']= 'Değiştirmek';
+$lang['password']= 'Şifre';
+
+$lang['role']= 'rol';
+$lang['username']= 'Kullanıcı adı';
+$lang['information']= 'Bilgi';
+$lang['module']= 'Modül';
+$lang['permission']= 'İzin';
+$lang['confirm']= 'Onaylamak';
+$lang['start']= 'Başlangıç';
+$lang['end']= 'Son';
+$lang['manage']= 'Üstesinden gelmek';
+$lang['rate']= 'Oran';
+$lang['code']= 'Kod';
+$lang['symbol']= 'Sembol';

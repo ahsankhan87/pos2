@@ -38,7 +38,8 @@ class C_newStore extends CI_Controller{
          
             if($username && $this->input->post('password'))
             {
-                $expire=time()+60*60*24*14; // 14 days
+                // $expire=time()+60*60*24*14; // 14 days
+                $expire=0; // 0 mean unlimited
         
                 $data = array(
                 'name' => $this->input->post('name', true),
