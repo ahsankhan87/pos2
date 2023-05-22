@@ -215,3 +215,5 @@ $lang['manage']= 'Manage';
 $lang['rate']= 'Rate';
 $lang['code']= 'Code';
 $lang['symbol']= 'Symbol';
+$lang['report_period']= 'Report Period';
+$lang['submit']= 'Submit';

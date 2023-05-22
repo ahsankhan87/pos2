@@ -216,3 +216,5 @@ $lang['manage']= 'Üstesinden gelmek';
 $lang['rate']= 'Oran';
 $lang['code']= 'Kod';
 $lang['symbol']= 'Sembol';
+$lang['report_period']= 'Rapor Dönemi';
+$lang['submit']= 'Göndermek';

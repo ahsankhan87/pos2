@@ -850,10 +850,10 @@ class C_receivings extends MY_Controller
         $pdf->SetY(85);
         $pdf->SetX(10);
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(80, 9, strtoupper(lang("description")), 1, 0);
-        $pdf->Cell(40, 9, strtoupper(lang("price")), 1, 0, "C");
-        $pdf->Cell(30, 9, strtoupper(lang("quantity")), 1, 0, "C");
-        $pdf->Cell(40, 9, strtoupper(lang("total")), 1, 1, "C");
+        $pdf->Cell(105, 9, strtoupper(lang("description")), 1, 0);
+        $pdf->Cell(30, 9, strtoupper(lang("price")), 1, 0, "C");
+        $pdf->Cell(25, 9, strtoupper(lang("quantity")), 1, 0, "C");
+        $pdf->Cell(30, 9, strtoupper(lang("total")), 1, 1, "C");
         $pdf->SetFont('Arial', '', 12);
         
         $discount = 0;
@@ -865,22 +865,24 @@ class C_receivings extends MY_Controller
             $discount += $row['discount_value'];
             // $account_name = $this->M_groups->get_accountName($row['account_code']);
 
-            $pdf->Cell(80, 9, $row["item_desc"], "LR", 0);
-            $pdf->Cell(40, 9, number_format($row["item_cost_price"],2), "R", 0, "R");
-            $pdf->Cell(30, 9, number_format($row["quantity_purchased"],2), "R", 0, "C");
-            $pdf->Cell(40, 9, number_format(($row['item_cost_price'] * $row['quantity_purchased']),2), "R", 1, "R");
+            // $pdf->MultiCell(80, 9, strtoupper(lang("description")), 1, 0);
+            // $pdf->MultiCell(0,5,$row["item_desc"]);
+            $pdf->Cell(105, 9, $row["item_desc"]."\n", "LR", 0);
+            $pdf->Cell(30, 9, number_format($row["item_cost_price"],2), "R", 0, "R");
+            $pdf->Cell(25, 9, number_format($row["quantity_purchased"],2), "R", 0, "C");
+            $pdf->Cell(30, 9, number_format(($row['item_cost_price'] * $row['quantity_purchased']),2), "R", 1, "R");
         }
         //Display table empty rows
         for ($i = 0; $i < 12 - count($sales_items); $i++) {
-            $pdf->Cell(80, 9, "", "LR", 0);
-            $pdf->Cell(40, 9, "", "R", 0, "R");
-            $pdf->Cell(30, 9, "", "R", 0, "C");
-            $pdf->Cell(40, 9, "", "R", 1, "R");
+            $pdf->Cell(105, 9, "", "LR", 0);
+            $pdf->Cell(30, 9, "", "R", 0, "R");
+            $pdf->Cell(25, 9, "", "R", 0, "C");
+            $pdf->Cell(30, 9, "", "R", 1, "R");
         }
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(150, 9, strtoupper(lang("total")), 1, 0, "R");
-        $pdf->Cell(40, 9, number_format($total,2), 1, 1, "R");
+        $pdf->Cell(160, 9, strtoupper(lang("total")), 1, 0, "R");
+        $pdf->Cell(30, 9, number_format($total,2), 1, 1, "R");
 
         //Display amount in words
         $pdf->SetY(215);
