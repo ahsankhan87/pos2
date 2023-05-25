@@ -864,14 +864,43 @@ class C_receivings extends MY_Controller
             $total += ($row['item_cost_price'] * $row['quantity_purchased']);
             $discount += $row['discount_value'];
             // $account_name = $this->M_groups->get_accountName($row['account_code']);
+            $cellWidth = 105;
+            $cellHeight = 7;
+            // check whether the text is overflowing
+            if($pdf->GetStringWidth($row["item_desc"]) < $cellWidth){
+                $line= 1; // if not then do nothing
+            }else{
+                $textLength= strlen($row["item_desc"]);
+                $errMargin = 10;
+                $startChar = 0;
+                $maxChar = 1;
+                $textArray = array();
+                $tmpString =  "";
 
-            // $pdf->MultiCell(80, 9, strtoupper(lang("description")), 1, 0);
-            // $pdf->MultiCell(0,5,$row["item_desc"]);
-            $pdf->MultiCell(105, 9, $row["item_desc"], 1);
-            $pdf->MultiCell(30, 9, number_format($row["item_cost_price"],2), 1);
-            // $pdf->Cell(30, 9, number_format($row["item_cost_price"],2), "R", 0, "R");
-            $pdf->Cell(25, 9, number_format($row["quantity_purchased"],2), "R", 0, "C");
-            $pdf->Cell(30, 9, number_format(($row['item_cost_price'] * $row['quantity_purchased']),2), "R", 1, "R");
+                while($startChar < $textLength){
+                    
+                    while($pdf->GetStringWidth($tmpString) < ($cellWidth-$errMargin) && ($startChar+$maxChar) < $textLength){
+                        $maxChar++;
+                        $tmpString = substr($row["item_desc"], $startChar,$maxChar);
+                    }
+
+                    $startChar = $startChar+$maxChar;
+                    array_push($textArray,$tmpString);
+
+                    $maxChar=0;
+                    $tmpString='';
+                }
+                $line=count($textArray);
+            }
+            $xPos = $pdf->GetX();
+            $yPos = $pdf->GetY();
+
+            $pdf->MultiCell($cellWidth, $cellHeight, $row["item_desc"], 1,'L' );
+            $pdf->SetXY($xPos+$cellWidth,$yPos);
+            // $pdf->Cell(105, 9, $row["item_desc"],  "LR",0 );
+            $pdf->Cell(30, ($line*$cellHeight), number_format($row["item_cost_price"],2), 1, 0,'R' );
+            $pdf->Cell(25, ($line*$cellHeight), number_format($row["quantity_purchased"],2), 1, 0,'R' );
+            $pdf->Cell(30, ($line*$cellHeight), number_format(($row['item_cost_price'] * $row['quantity_purchased']),2),  1, 1,'R' );
         }
         //Display table empty rows
         for ($i = 0; $i < 12 - count($sales_items); $i++) {

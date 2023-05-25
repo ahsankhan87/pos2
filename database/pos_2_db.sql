@@ -2530,7 +2530,10 @@ CREATE TABLE `unsubscribe` (
  `date_created` date NOT NULL,
  `email_sent` tinyint(1) NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ALTER TABLE `pos_items_detail` CHANGE `barcode` `barcode` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `item_type` `item_type` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
-ALTER TABLE `pos_items_detail` CHANGE `re_stock_level` `re_stock_level` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL
+ALTER TABLE `pos_items_detail` CHANGE `re_stock_level` `re_stock_level` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+
+ALTER TABLE `pos_sales_items` CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `pos_receivings_items` CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
