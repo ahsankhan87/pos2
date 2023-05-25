@@ -867,8 +867,9 @@ class C_receivings extends MY_Controller
 
             // $pdf->MultiCell(80, 9, strtoupper(lang("description")), 1, 0);
             // $pdf->MultiCell(0,5,$row["item_desc"]);
-            $pdf->Cell(105, 9, $row["item_desc"]."\n", "LR", 0);
-            $pdf->Cell(30, 9, number_format($row["item_cost_price"],2), "R", 0, "R");
+            $pdf->MultiCell(105, 9, $row["item_desc"], 1);
+            $pdf->MultiCell(30, 9, number_format($row["item_cost_price"],2), 1);
+            // $pdf->Cell(30, 9, number_format($row["item_cost_price"],2), "R", 0, "R");
             $pdf->Cell(25, 9, number_format($row["quantity_purchased"],2), "R", 0, "C");
             $pdf->Cell(30, 9, number_format(($row['item_cost_price'] * $row['quantity_purchased']),2), "R", 1, "R");
         }

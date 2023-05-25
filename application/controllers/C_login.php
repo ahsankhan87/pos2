@@ -12,6 +12,8 @@ class C_login extends CI_Controller
 
     function index()
     {
+        $data = array('langs' => $this->session->userdata('lang'));
+
         $data['title'] = "Login ";
         $data['main'] = 'Login';
 
