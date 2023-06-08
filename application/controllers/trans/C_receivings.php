@@ -833,8 +833,9 @@ class C_receivings extends MY_Controller
         $pdf->Cell(50, 10, lang('bill').' '.lang('to')." : ", 0, 1);
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(50, 7, $supplier[0]["name"], 0, 1);
-        $pdf->Cell(50, 7, $supplier[0]["address"], 0, 1);
-        //$pdf->Cell(50, 7, $supplier[0]["city"], 0, 1);
+        $pdf->Cell(50, 5, $supplier[0]["address"], 0, 1);
+        //$pdf->Cell(50, 5, $supplier[0]["city"], 0, 1);
+        $pdf->Cell(50, 5, $supplier[0]["contact_no"], 0, 1);
 
         //Display Invoice no
         $pdf->SetY(49);
@@ -858,11 +859,12 @@ class C_receivings extends MY_Controller
         
         $discount = 0;
         $total_cost = 0;
-        $total = 0;
+        $total = 0; 
+        $total_tax =0;
         //Display table product rows
         foreach ($sales_items as $row) {
-            $total += ($row['item_cost_price'] * $row['quantity_purchased']);
-            $discount += $row['discount_value'];
+            //$total += ($row['item_cost_price'] * $row['quantity_purchased']);
+            //$discount += $row['discount_value'];
             // $account_name = $this->M_groups->get_accountName($row['account_code']);
             $cellWidth = 105;
             $cellHeight = 7;
@@ -910,17 +912,24 @@ class C_receivings extends MY_Controller
             $pdf->Cell(30, 9, "", "R", 1, "R");
         }
         //Display table total row
+        $total_tax = @$sales_items[0]["total_tax"];
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(160, 9, strtoupper(lang("total").' '.lang("tax")), 1, 0, "R");
+        $pdf->Cell(30, 9, number_format($total_tax,2), 1, 1, "R");
+
+        //Display table total row
+        $total = (@$sales_items[0]["total_amount"] + $total_tax);
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(160, 9, strtoupper(lang("total")), 1, 0, "R");
         $pdf->Cell(30, 9, number_format($total,2), 1, 1, "R");
 
         //Display amount in words
-        $pdf->SetY(215);
-        $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(0, 9, number_format($total,2), 0, 1);
+        // $pdf->SetY(215);
+        // $pdf->SetX(10);
+        // $pdf->SetFont('Arial', 'B', 12);
+        // $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
+        // $pdf->SetFont('Arial', '', 12);
+        // $pdf->Cell(0, 9, number_format($total,2), 0, 1);
         ///////////////
         ///body
 

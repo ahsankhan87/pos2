@@ -77,7 +77,7 @@ class M_receivings extends CI_Model{
     
     function get_receiving_items($new_invoice_no)//for receipt
     {
-       $this->db->select('A.receiving_date,A.amount_due,A.description,A.register_mode,A.employee_id,A.supplier_id,
+       $this->db->select('A.receiving_date,A.amount_due,A.description,A.register_mode,A.employee_id,A.supplier_id,A.total_tax,A.total_amount,
        A.currency_id,A.discount_value,B.tax_id,B.tax_rate,B.service,B.account_code,B.description as item_desc,
        B.unit_id,B.item_id,B.item_cost_price,B.item_unit_price,B.size_id,B.quantity_purchased,B.discount_percent');
        $this->db->join('pos_receivings_items as B','A.receiving_id = B.receiving_id');

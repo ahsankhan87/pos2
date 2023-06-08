@@ -438,8 +438,9 @@ class C_sales extends MY_Controller
         $pdf->Cell(50, 10, lang('bill').' '.lang('to')." : ", 0, 1);
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(50, 7, $customer[0]["first_name"], 0, 1);
-        $pdf->Cell(50, 7, $customer[0]["address"], 0, 1);
-        //$pdf->Cell(50, 7, $customer[0]["city"], 0, 1);
+        $pdf->Cell(50, 5, $customer[0]["address"], 0, 1);
+        $pdf->Cell(50, 5, $customer[0]["city"], 0, 1);
+        $pdf->Cell(50, 5, $customer[0]["phone_no"], 0, 1);
 
         //Display Invoice no
         $pdf->SetY(49);
@@ -464,11 +465,12 @@ class C_sales extends MY_Controller
         $discount = 0;
         $total_cost = 0;
         $total = 0;
+        $total_tax = 0;
         //Display table product rows
         foreach ($sales_items as $row) {
-            $total_cost = ($row['item_unit_price'] * $row['quantity_sold']) - $row['discount_value'];
-            $total += ($row['item_unit_price'] * $row['quantity_sold']);
-            $discount += $row['discount_value'];
+            //$total_cost = ($row['item_unit_price'] * $row['quantity_sold']) - $row['discount_value'];
+            //$total += ($row['item_unit_price'] * $row['quantity_sold']);
+            //$discount += $row['discount_value'];
             // $tax_amount = $total_cost * $row['tax_rate'] / 100;
             //$account_name = $this->M_groups->get_accountName($row['account_code']);
 
@@ -518,6 +520,13 @@ class C_sales extends MY_Controller
             $pdf->Cell(30, 9, "", "R", 1, "R");
         }
         //Display table total row
+        $total_tax = @$sales_items[0]["total_tax"];
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(160, 9, strtoupper(lang("total").' '.lang("tax")), 1, 0, "R");
+        $pdf->Cell(30, 9, number_format($total_tax,2), 1, 1, "R");
+
+        //Display table total row
+        $total = (@$sales_items[0]["total_amount"] + $total_tax);
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(160, 9, strtoupper(lang("total")), 1, 0, "R");
         $pdf->Cell(30, 9, number_format($total,2), 1, 1, "R");

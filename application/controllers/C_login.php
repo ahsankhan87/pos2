@@ -69,7 +69,6 @@ class C_login extends CI_Controller
 
     public function forget_password_email()
     {
-        
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $email = $this->input->post('email_forgot');
 
