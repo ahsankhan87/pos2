@@ -39,7 +39,7 @@
 	<div class="logo animated bounceIn">
 		<!-- <h1 class="form-title  logo-color">GuvenFi</h1> -->
 		<a href="<?php echo base_url(); ?>">
-			<img src="<?php echo base_url(); ?>assets/img/logo.png" width="150" height="50" alt="Logo">
+			<img src="<?php echo base_url(); ?>assets/img/logo.png"  alt="Logo">
 		</a>
 	</div>
 	<!-- END LOGO -->
