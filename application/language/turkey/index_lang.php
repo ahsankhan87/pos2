@@ -218,3 +218,7 @@ $lang['code']= 'Kod';
 $lang['symbol']= 'Sembol';
 $lang['report_period']= 'Rapor Dönemi';
 $lang['submit']= 'Göndermek';
+
+$lang['select']= 'Seçme';
+$lang['picture']= 'Resim';
+$lang['initial']= 'İlk';

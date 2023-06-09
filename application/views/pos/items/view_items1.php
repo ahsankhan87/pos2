@@ -20,7 +20,6 @@
                 <?php //echo anchor('pos/C_items_import','Import Products','class="btn btn-success"'); 
                 ?>
 
-
                 <!-- /btn-group -->
                 <?php echo anchor('pos/Items/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success"'); ?>
                 <!-- <?php echo anchor('pos/Items/lowStock', 'Low Stock', 'class="btn btn-warning"'); ?> -->
@@ -55,8 +54,8 @@
                             <th><?php echo lang('name'); ?></th>
                             <!-- <th><?php echo lang('unit'); ?></th> -->
                             <th><?php echo lang('description'); ?></th>
-                            <th class="text-right">Qty</th>
-                            <th class="text-right"><?php echo lang('cost') . ' ' . lang('price'); ?>(avg)</th>
+                            <th class="text-right"><?php echo lang('quantity'); ?></th>
+                            <th class="text-right"><?php echo lang('cost') . ' ' . lang('price'); ?></th>
                             <th class="text-right"><?php echo lang('unit') . ' ' . lang('price'); ?></th>
                             <th></th>
 

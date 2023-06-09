@@ -217,3 +217,7 @@ $lang['code']= 'Code';
 $lang['symbol']= 'Symbol';
 $lang['report_period']= 'Report Period';
 $lang['submit']= 'Submit';
+
+$lang['select']= 'Select';
+$lang['picture']= 'Picture';
+$lang['initial']= 'Initial';

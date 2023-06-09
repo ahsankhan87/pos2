@@ -3,7 +3,7 @@
         <div class="portlet">
         	<div class="portlet-title">
         		<div class="caption">
-        			<i class="fa fa-reorder"></i>New Product
+        			<i class="fa fa-reorder"></i><?php echo lang('add_new').''.lang('product'); ?>
         		</div>
         		<div class="tools">
         			<a href="javascript:;" class="collapse"></a>
@@ -20,14 +20,11 @@
                 echo form_open('pos/Items/create',$attributes);
                 ?>
         			<div class="form-body">
-        				<h3 class="form-section">Product Info</h3>
-                        
-                        <div class="row">
+        				<div class="row">
                             <div class="col-md-6">
                                   <div class="form-group">
-                                   <?php
-                                    echo '<label for="feespostingtype" class="control-label col-md-3">Select Picture</label>';
-                                   ?>
+                                   <label for="feespostingtype" class="control-label col-md-3"><?php echo lang('select') . ' ' .lang('picture'); ?></label>
+                                   
                                     <div class="col-md-9">
                                         <input type="file" class="form-control" name="upload_pic" />
                                     </div>
@@ -63,7 +60,7 @@
                         <div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3"><span class="required">* </span> Product Name </label>
+        							<label class="control-label col-md-3"><span class="required">* </span> <?php echo lang('product'). ' '.lang('name'); ?> </label>
         							<div class="col-md-9">
         								<textarea name="name" class="form-control"><?php echo set_value('name') ?></textarea>
         							</div>
@@ -73,7 +70,7 @@
                             
         					<div class="col-md-6">
         						<div class="form-group">
-                                  <label class="control-label col-sm-3"><span class="required">* </span>GL Account:</label>
+                                  <label class="control-label col-sm-3"><span class="required">* </span>GL <?php echo lang('account'); ?>:</label>
                                   <div class="col-sm-9">
                                     <?php echo form_dropdown('inventory_acc_code',$accountDDL,set_value('inventory_acc_code'),'class="form-control select2me"'); ?>
                                   </div>
@@ -111,7 +108,7 @@
         				<div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3"><span class="required">* </span>Cost Price</label>
+        							<label class="control-label col-md-3"><span class="required">* </span><?php echo lang('cost') . ' '. lang('price'); ?></label>
         							<div class="col-md-9">
         								<input type="number" min="0" name="cost_price" step="0.001" id="cost_price" value="<?php echo set_value('cost_price') ?>" class="form-control" />
         							</div>
@@ -119,7 +116,7 @@
         					</div>
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3"><span class="required">* </span>Sale/Retail Price</label>
+        							<label class="control-label col-md-3"><span class="required">* </span><?php echo lang('unit') . ' '. lang('price'); ?></label>
         							<div class="col-md-9">
         								<input type="number" min="0" name="unit_price" step="0.001" id="unit_price" value="<?php echo set_value('unit_price') ?>" class="form-control" />
         							</div>
@@ -130,7 +127,7 @@
         				<div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3"> Initial Quantity</label>
+        							<label class="control-label col-md-3"><?php echo lang('initial') . ' ' .lang('quantity'); ?></label>
         							<div class="col-md-9">
         								<input type="number" name="initial_qty_single" value="<?php echo set_value('initial_qty_single') ?>" id="initial_qty_single" class="form-control" />
         							</div>
@@ -174,7 +171,7 @@
         				<div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3">Description</label>
+        							<label class="control-label col-md-3"><?php echo lang('description'); ?></label>
         							<div class="col-md-9">
         								<textarea class="form-control" name="description"><?php echo set_value('description') ?></textarea>
         							</div>
@@ -229,8 +226,8 @@
         					<div class="col-md-6">
         						<div class="row">
         							<div class="col-md-offset-3 col-md-9">
-        								<button type="submit" class="btn btn-success">Submit</button>
-        								<button type="button" onclick="window.history.back();" class="btn btn-default">Cancel</button>
+        								<button type="submit" class="btn btn-success"><?php echo lang('save'); ?></button>
+        								<button type="button" onclick="window.history.back();" class="btn btn-default"><?php echo lang('back'); ?></button>
         							</div>
         						</div>
         					</div>

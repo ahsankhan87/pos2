@@ -3,7 +3,7 @@
         <div class="portlet">
         	<div class="portlet-title">
         		<div class="caption">
-        			<i class="fa fa-reorder"></i>Update Product
+        			<i class="fa fa-reorder"></i><?php echo lang('update').' '.lang('product'); ?>
         		</div>
         		<div class="tools">
         			<a href="javascript:;" class="collapse"></a>
@@ -25,14 +25,12 @@
                 ?>
                
                 	<div class="form-body">
-      				<h3 class="form-section">Product Info</h3>
-                    
                         <!--/row-->
         				<div class="row">
         					<div class="col-md-6">
                     	            
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Select Picture</label>
+                                        <label class="control-label col-md-3"><?php echo lang('select').' '.lang('picture'); ?></label>
                                         <div class="col-md-9">
                                         <?php
                                         
@@ -82,7 +80,7 @@
                         <div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3">Product Name</label>
+        							<label class="control-label col-md-3"><?php echo lang('product').' '.lang('name'); ?></label>
         							<div class="col-md-9">
         								<input type="text" name="name" value="<?php echo $values['name'] ?>" class="form-control" placeholder="Product Name">
         								
@@ -106,7 +104,7 @@
         				<div class="row">
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3">Cost Price (Avg)</label>
+        							<label class="control-label col-md-3"><?php echo lang('cost') . ' '. lang('price'); ?></label>
         							<div class="col-md-9">
         								<input type="number" name="avg_cost" value="<?php echo $values['avg_cost'] ?>" readonly="" class="form-control">
         							</div>
@@ -114,7 +112,7 @@
         					</div>
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3">Sale/Retail Price</label>
+        							<label class="control-label col-md-3"><?php echo lang('unit') . ' '. lang('price'); ?></label>
         							<div class="col-md-9">
         								<input type="number" name="unit_price" step="0.001" value="<?php echo $values['unit_price'] ?>" class="form-control">
         							</div>
@@ -136,7 +134,7 @@
                             
         					<div class="col-md-6">
         						<div class="form-group">
-        							<label class="control-label col-md-3">Description</label>
+        							<label class="control-label col-md-3"><?php echo lang('description'); ?></label>
         							<div class="col-md-9">
         								<textarea class="form-control" name="description"><?php echo $values['description'] ?></textarea>
         							</div>
@@ -205,8 +203,8 @@
         					<div class="col-md-6">
         						<div class="row">
         							<div class="col-md-offset-3 col-md-9">
-        								<button type="submit" class="btn btn-success">Update</button>
-        								<button type="button" onclick="window.history.back();" class="btn btn-default">Cancel</button>
+        								<button type="submit" class="btn btn-success"><?php echo lang('update'); ?></button>
+        								<button type="button" onclick="window.history.back();" class="btn btn-default"><?php echo lang('back'); ?></button>
         							</div>
         						</div>
         					</div>

@@ -13,7 +13,7 @@ class TermOfUse extends CI_Controller{
         $data['main'] = 'Privay Policy';
         
         // $this->load->view('templates/header',$data);
-        $this->load->view('privacy_policy',$data);
+        $this->load->view('term_of_use',$data);
         // $this->load->view('templates/footer');
     }
     

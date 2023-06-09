@@ -68,9 +68,9 @@
                                 <th>ID</th>
                                 <th><?php echo lang('name'); ?></th>
                                 <th><?php echo lang('type'); ?></th>
-                                <th>Qty</th>
+                                <th><?php echo lang('quantity'); ?></th>
                                 <th><?php echo lang('unit'); ?></th>
-                                <th><?php echo lang('cost') . ' ' . lang('price'); ?>(avg)</th>
+                                <th><?php echo lang('cost') . ' ' . lang('price'); ?></th>
                                 <th><?php echo lang('unit') . ' ' . lang('price'); ?></th>
                                 <th><?php echo lang('action'); ?></th>
                             </tr>

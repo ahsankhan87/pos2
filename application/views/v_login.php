@@ -449,7 +449,7 @@
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		<?php echo date("Y"); ?> &copy; guvenfi.com | <a href="<?php echo site_url().$langs;?>/PrivacyPolicy" target="_blank">Privacy Policy</a> and <a href="<?php echo site_url().$langs;?>/TermOfUse"  target="_blank">Term of Use</a>
+		<?php echo date("Y"); ?> &copy; guvenfi.com | <a href="<?php echo site_url();?>en/PrivacyPolicy" target="_blank">Privacy Policy</a> and <a href="<?php echo site_url();?>en/TermOfUse"  target="_blank">Term of Use</a>
 	</div>
 	<!-- END COPYRIGHT -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
