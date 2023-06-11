@@ -18,11 +18,11 @@
     <main>
         <section>
             <h2>1 . Tanıtım</h2>
-            <p>GüvenFi Muhasebe’ye Hoş Geldiniz (“Şirket”, “biz”, “bizim”, “biz”)!</p>
-            <p>GüvenFi Muhasebe tarafından işletilen www.guvenfi.com adresinde bulunan web sitemizi (birlikte veya ayrı ayrı "Hizmet") kullanımınızı düzenler.</p>
+            <p><strong>GüvenFi Muhasebe’ye</strong> Hoş Geldiniz (“Şirket”, “biz”, “bizim”, “biz”)!</p>
+            <p><strong>GüvenFi Muhasebe tarafından işletilen www.guvenfi.com</strong> adresinde bulunan web sitemizi (birlikte veya ayrı ayrı "Hizmet") kullanımınızı düzenler.</p>
             <p>Gizlilik Politikamız ayrıca Hizmetimizi kullanımınızı yönetir ve web sayfalarımızı kullanımınızdan kaynaklanan bilgileri nasıl topladığımızı, koruduğumuzu ve ifşa ettiğimizi açıklar.</p>
             <p>Bizimle olan sözleşmeniz, bu Koşulları ve Gizlilik Politikamızı ("Sözleşmeler") içerir. Sözleşmeleri okuyup anladığınızı ve bunlara bağlı kalmayı kabul ettiğinizi kabul etmektesiniz.</p>
-            <p>Sözleşmeleri kabul etmiyorsanız (veya bunlara uyamıyorsanız), Hizmeti kullanamayabilirsiniz ancak bir çözüm bulmaya çalışabilmemiz için lütfen destek@guvenfi.com adresine e-posta göndererek bize bildirin. Bu Koşullar, Hizmete erişmek veya Hizmeti kullanmak isteyen tüm ziyaretçiler, kullanıcılar ve diğerleri için geçerlidir .</p>
+            <p>Sözleşmeleri kabul etmiyorsanız (veya bunlara uyamıyorsanız), Hizmeti kullanamayabilirsiniz ancak bir çözüm bulmaya çalışabilmemiz için lütfen <strong>destek@guvenfi.com adresine e-posta göndererek bize bildirin. Bu Koşullar,</strong> Hizmete erişmek veya Hizmeti kullanmak isteyen tüm ziyaretçiler, kullanıcılar ve diğerleri için geçerlidir .</p>
             <h2>2 . İletişim</h2>
             <p>Hizmetimizi kullanarak haber bültenlerine, pazarlama veya promosyon malzemelerine ve gönderebileceğimiz diğer bilgilere abone olmayı kabul edersiniz. Ancak abonelikten çıkma bağlantısını takip ederek veya destek@guvenfi.com adresine e-posta göndererek bizden bu iletişimlerin herhangi birini veya tamamını almaktan vazgeçebilirsiniz .</p>
             <h2>3 . satın almalar</h2>
@@ -47,7 +47,7 @@
             <p>Abonelik ücreti değişikliği yürürlüğe girdikten sonra Hizmeti kullanmaya devam etmeniz, değiştirilen Abonelik ücreti tutarını ödemeyi kabul ettiğiniz anlamına gelir.</p>
 
             <h2>7 . Geri ödemeler</h2>
-            <p>Sözleşmenin orijinal olarak satın alınmasından sonraki 14 gün içinde Sözleşmeler için geri ödeme yaparız .</p>
+            <p>Sözleşmenin orijinal olarak satın alınmasından sonraki <strong>14 gün</strong> içinde Sözleşmeler için geri ödeme yaparız .</p>
             <h2>8 . İçerik</h2>
             <p>Bu Hizmette veya bu Hizmet aracılığıyla bulunan içerik GüvenFi'nin mülkiyetindedir . Muhasebe veya izin alınarak kullanılmıştır. Söz konusu İçeriği, tamamen veya kısmen, ticari amaçlarla veya kişisel kazanç için, bizden önceden yazılı izin almadan dağıtamaz, değiştiremez, iletemez, yeniden kullanamaz, indiremez, yeniden gönderemez, kopyalayamaz veya kullanamazsınız.</p>
             <h2>9 . Yasaklanmış Kullanımlar</h2>
@@ -120,7 +120,7 @@
             <h2>23 . Teşekkür</h2>
             <p>HİZMETİ VEYA TARAFIMIZDAN SAĞLANAN DİĞER HİZMETLERİ KULLANARAK, BU HİZMET ŞARTLARINI OKUDUĞUNUZU VE ONLARA UYGUN OLACAĞINIZI KABUL ETMİŞ OLURSUNUZ.</p>
             <h2>24 . Bize Ulaşın</h2>
-            <p>Lütfen görüşlerinizi, yorumlarınızı, teknik destek taleplerinizi e-posta ile gönderin: destek@guvenfi.com .</p>
+            <p>Lütfen görüşlerinizi, yorumlarınızı, teknik destek taleplerinizi e-posta ile gönderin: <strong>destek@guvenfi.com</strong>.</p>
 
         </section>
     </main>

@@ -20,15 +20,15 @@
         <p><strong>GüvenFi Muhasebe'ye </strong>Hoş Geldiniz.</p>
 
         <p>
-          GüvenFi Muhasebe (“biz”, “biz” veya “bizim”) www.guvenfi.com'u (bundan
-          sonra “Hizmet” olarak anılacaktır ) işletmektedir.
+        <strong>GüvenFi Muhasebe </strong>(“biz”, “biz” veya “bizim”) <strong>www.guvenfi.com'u (bundan
+          sonra “Hizmet”</strong> olarak anılacaktır ) işletmektedir.
         </p>
         <p>
           If you have additional questions or require more information about our
           Privacy Policy, do not hesitate to contact us.
         </p>
         <p>
-          www.guvenfi.com ziyaretinizi yönetir ve Hizmetimizi kullanımınızdan
+        <strong>www.guvenfi.com</strong> ziyaretinizi yönetir ve Hizmetimizi kullanımınızdan
           kaynaklanan bilgileri nasıl topladığımızı, koruduğumuzu ve ifşa
           ettiğimizi açıklar
         </p>
@@ -41,48 +41,48 @@
         </p>
         <p><br /></p>
         <p>
-          Hüküm ve Koşullarımız ( "Şartlar" ) Hizmetimizin tüm kullanımını
+          Hüküm ve Koşullarımız <strong>( "Şartlar" )</strong> Hizmetimizin tüm kullanımını
           yönetir ve Gizlilik Politikası ile birlikte bizimle yaptığınız
-          sözleşmeyi ( "sözleşme" ) oluşturur.
+          sözleşmeyi <strong>( "sözleşme" )</strong> oluşturur.
         </p>
         <p><br /></p>
         <h2>2 . Tanımlar</h2>
-        <p><br /></p>
+        
         <p>
-          HİZMET, GüvenFi tarafından işletilen www.guvenfi.com web sitesini
-          ifade eder. Muhasebe . KİŞİSEL VERİLER, bu verilerden (veya elimizde
+          <strong>HİZMET,</strong> GüvenFi tarafından işletilen www.guvenfi.com web sitesini
+          ifade eder. Muhasebe . <strong>KİŞİSEL VERİLER,</strong> bu verilerden (veya elimizde
           bulunan veya elimize geçmesi muhtemel olanlardan ve diğer bilgilerden)
           tanımlanabilen yaşayan bir birey hakkındaki veriler anlamına gelir.
         </p>
         <p>
-          KULLANIM VERİLERİ, Hizmetin kullanımıyla veya Hizmet altyapısının
+        <strong>KULLANIM VERİLERİ, Hizmetin</strong> kullanımıyla veya Hizmet altyapısının
           kendisinden otomatik olarak toplanan verilerdir (örneğin, bir sayfa
           ziyaretinin süresi).
         </p>
 
         <p>
-          ÇEREZLER , cihazınızda (bilgisayar veya mobil cihaz) saklanan küçük
+        <strong>ÇEREZLER,</strong> cihazınızda (bilgisayar veya mobil cihaz) saklanan küçük
           dosyalardır.
         </p>
         <p>
-          VERİ DENETLEYİCİSİ, (tek başına veya müştereken veya diğer kişilerle
+        <strong>VERİ DENETLEYİCİSİ,</strong> (tek başına veya müştereken veya diğer kişilerle
           birlikte) herhangi bir kişisel verinin hangi amaçlarla ve ne şekilde
           işleneceği veya işleneceğine karar veren gerçek veya tüzel kişi
           anlamına gelir. Bu Gizlilik Politikasının amacı doğrultusunda,
           verilerinizin Veri Denetleyicisiyiz.
         </p>
         <p>
-          VERİ İŞLEMCİLER (VEYA HİZMET SAĞLAYICILAR) Veri Sorumlusu adına
+        <strong>VERİ İŞLEMCİLER (VEYA HİZMET SAĞLAYICILAR)</strong> Veri Sorumlusu adına
           verileri işleyen gerçek veya tüzel kişiyi ifade eder . Verilerinizi
           daha etkin bir şekilde işlemek için çeşitli Hizmet Sağlayıcıların
           hizmetlerini kullanabiliriz.
         </p>
         <p>
-          VERİ SAHİBİ , Kişisel Verilerin konusu olan yaşayan herhangi bir
+        <strong>VERİ SAHİBİ</strong> , Kişisel Verilerin konusu olan yaşayan herhangi bir
           bireydir.
         </p>
         <p>
-          KULLANICI , Hizmetimizi kullanan kişidir. Kullanıcı, Kişisel Verilerin
+        <strong>KULLANICI </strong>, Hizmetimizi kullanan kişidir. Kullanıcı, Kişisel Verilerin
           konusu olan Veri Sahibini ifade etmektedir.
         </p>
 
@@ -94,7 +94,7 @@
         <h2>4 . Toplanan Veri Türleri</h2>
         <p><strong>Kişisel veri</strong></p>
         <p>
-          “Kişisel Veriler” ) bize vermenizi isteyebiliriz . Kişisel olarak
+        <strong>“Kişisel Veriler” )</strong> bize vermenizi isteyebiliriz . Kişisel olarak
           tanımlanabilir bilgiler şunları içerebilir, ancak bunlarla sınırlı
           değildir:
         </p>
@@ -117,7 +117,7 @@
         <p>
           Ayrıca, Hizmetimizi her ziyaret ettiğinizde veya Hizmete herhangi bir
           cihaz aracılığıyla veya aracılığıyla eriştiğinizde tarayıcınızın
-          gönderdiği bilgileri ( "Kullanım Verileri" ) toplayabiliriz.
+          gönderdiği bilgileri <strong>( "Kullanım Verileri" )</strong> toplayabiliriz.
         </p>
         <p>
           Bu Kullanım Verileri, bilgisayarınızın İnternet Protokol adresi ( örn.
@@ -136,8 +136,8 @@
 
         <h2>Konum verileri</h2>
         <p>
-          Bize izin verirseniz, konumunuzla ilgili bilgileri ( “Konum Verileri”
-          ) kullanabilir ve saklayabiliriz. Bu verileri, Hizmetimizin
+          Bize izin verirseniz, konumunuzla ilgili bilgileri <strong>( “Konum Verileri”
+          )</strong> kullanabilir ve saklayabiliriz. Bu verileri, Hizmetimizin
           özelliklerini sağlamak, Hizmetimizi iyileştirmek ve özelleştirmek için
           kullanırız.
         </p>
@@ -291,7 +291,7 @@
           dahil olursa, Kişisel Verileriniz aktarılabilir.
         </p>
 
-        <p>0.2. Diğer durumlar. Bilgilerinizi ayrıca ifşa edebiliriz:</p>
+        <p><strong>0.2. Diğer durumlar. Bilgilerinizi ayrıca ifşa edebiliriz:</strong></p>
         <p>0.2.1. bağlı şirket ve iştiraklerimize ;</p>
         <p>
           0.2.2. işimizi desteklemek için kullandığımız yükleniciler, hizmet
