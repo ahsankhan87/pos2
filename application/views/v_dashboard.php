@@ -238,8 +238,8 @@
 						<table class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>Account</th>
-									<th class="text-right">Balance</th>
+									<th><?php echo lang('account');?></th>
+									<th class="text-right"><?php echo lang('balance');?></th>
 								</tr>
 							</thead>
 							<tbody>

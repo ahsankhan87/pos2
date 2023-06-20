@@ -108,13 +108,13 @@
 
                                     if($sale_type != "cash")
                                     {
-                                        echo '<td> <span class="'.$label.'">' . $status . '</span></td>';
+                                        echo '<td> <span class="'.$label.'">' . lang(strtolower($status)) . '</span></td>';
                                     }
                                    
                                    echo '<td class="text-right">';
                                    if($sale_type == "credit" && $status != 'Paid')
                                    {
-                                    echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/receivePayment/' . $list['customer_id'] .'/'.$list['invoice_no'].'" title="Receive Payment" >Receive Payment</a> | ';
+                                    echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/receivePayment/' . $list['customer_id'] .'/'.$list['invoice_no'].'" title="" >'.lang('payment').' '.lang('receive').'</a> | ';
                                    }
                                    echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
                                     | <a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/printReceipt/' . $list['invoice_no'] .'" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>

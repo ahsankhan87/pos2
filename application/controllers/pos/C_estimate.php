@@ -105,7 +105,7 @@ class C_estimate extends MY_Controller{
                     'currency_id' => $currency_id,
                     'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
-                    'status' => "In Progress",
+                    'status' => "in_progress",
                     //'is_taxable' => $is_taxable,
                     //'due_date'=>$due_date,
                     //'business_address'=>$business_address,
@@ -308,14 +308,19 @@ class C_estimate extends MY_Controller{
         $Company = $this->M_companies->get_companies($company_id);
         $customer =  @$this->M_customers->get_customers(@$sales_items[0]['customer_id']);
         
-        $this->load->library('Pdf_f');
-        $pdf = new Pdf_f("P", 'mm', 'A4');
-
+        // $this->load->library('Pdf_f');
+        // $pdf = new Pdf_f("P", 'mm', 'A4');
+        $this->load->library('tfpdf/TFPDF');
+        $pdf = new TFPDF();
+       
+        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+        $pdf->AddFont('DejaVuBold','B','DejaVuSansCondensed-Bold.ttf',true);
+        
         $pdf->AddPage();
         //Display Company Info
-        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->SetFont('DejaVuBold','B', 14);
         $pdf->Cell(50, 10, $Company[0]['name'], 0, 1);
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
         $pdf->Cell(50, 7, "PH : ".$Company[0]['contact_no'], 0, 1);
@@ -323,7 +328,7 @@ class C_estimate extends MY_Controller{
         //Display INVOICE text
         $pdf->SetY(15);
         $pdf->SetX(-60);
-        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->SetFont('DejaVuBold','B', 18);
         $pdf->Cell(50, 10, strtoupper(lang("estimate")), 0, 1);
 
         //Display Horizontal line
@@ -332,11 +337,11 @@ class C_estimate extends MY_Controller{
         //Billing Details // Body
         $pdf->SetY(49);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('DejaVuBold','B', 12);
         $pdf->Cell(50, 10, lang('bill').' '.lang('to').": ", 0, 1);
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(50, 7, $customer[0]["first_name"], 0, 1);
-        $pdf->Cell(50, 7, $customer[0]["address"], 0, 1);
+        $pdf->SetFont('DejaVu','', 12);
+        $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
+        $pdf->Cell(50, 7, @$customer[0]["address"], 0, 1);
         //$pdf->Cell(50, 7, $customer[0]["city"], 0, 1);
 
         //Display Invoice no
@@ -352,12 +357,12 @@ class C_estimate extends MY_Controller{
         //Display Table headings
         $pdf->SetY(85);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('DejaVuBold','B', 12);
         $pdf->Cell(80, 9, strtoupper(lang("description")), 1, 0);
         $pdf->Cell(40, 9, strtoupper(lang("price")), 1, 0, "C");
         $pdf->Cell(30, 9, strtoupper(lang("quantity")), 1, 0, "C");
         $pdf->Cell(40, 9, strtoupper(lang("total")), 1, 1, "C");
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         
         $discount = 0;
         $total_cost = 0;
@@ -383,16 +388,16 @@ class C_estimate extends MY_Controller{
             $pdf->Cell(40, 9, "", "R", 1, "R");
         }
         //Display table total row
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('DejaVuBold','B', 12);
         $pdf->Cell(150, 9, strtoupper(lang("total")), 1, 0, "R");
         $pdf->Cell(40, 9, number_format($total,2), 1, 1, "R");
 
         //Display amount in words
         // $pdf->SetY(215);
         // $pdf->SetX(10);
-        // $pdf->SetFont('Arial', 'B', 12);
+        // $pdf->SetFont('DejaVuBold','B', 12);
         // $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
-        // $pdf->SetFont('Arial', '', 12);
+        // $pdf->SetFont('DejaVu','', 12);
         // $pdf->Cell(0, 9, number_format($total,2), 0, 1);
         ///////////////
         ///body
@@ -402,9 +407,9 @@ class C_estimate extends MY_Controller{
         //$pdf->SetFont('helvetica', 'B', 12);
         //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
         $pdf->Ln(15);
-        $pdf->SetFont('helvetica', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
-        $pdf->SetFont('helvetica', '', 10);
+        $pdf->SetFont('DejaVu','', 10);
 
         //Display Footer Text
         $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");

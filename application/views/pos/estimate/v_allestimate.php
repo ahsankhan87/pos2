@@ -59,16 +59,16 @@
 
                             echo '<td class="text-right">' . number_format($list['total_amount'], 2) . '</td>';
                             //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
-                            if ($list['status'] == 'In Progress') {
+                            if (strtolower($list['status']) == 'in_progress') {
 
                                 $label = "label label-info";
-                            } else if ($list['status'] == 'Rejected') {
+                            } else if (strtolower($list['status']) == 'rejected') {
                                 $label = "label label-danger";
                             } else {
                                 $label = "label label-success";
                             }
                             // echo '<td><span class="'.$label.'">'.$list['payment_status'].'</span></td>';
-                            echo '<td>' . anchor('#', '<span class="' . $label . '">' . $list['status'] . '</span>', ' data-toggle="modal" data-target="#status_' . $sno . '"') . '</td>';
+                            echo '<td>' . anchor('#', '<span class="' . $label . '">' . lang(strtolower($list['status'])) . '</span>', ' data-toggle="modal" data-target="#status_' . $sno . '"') . '</td>';
 
                             echo '<td>';
                             //echo '<a href="'.site_url($langs).'/pos/C_estimate/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | ';
@@ -83,7 +83,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Estimate No. <?php echo $list['invoice_no']; ?></h5>
+                                            <h5 class="modal-title" id="exampleModalLabel"><?php echo lang('estimate'). ' '.lang('no'); ?> <?php echo $list['invoice_no']; ?></h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -92,7 +92,7 @@
                                             <form class="form-vertical" action="<?php echo site_url('pos/C_estimate/updateStatus');?>" method="post">
                                                 
                                                 <div class="form-group">
-                                                    <label class="control-label col-sm-3" for="no">Estimate No:</label>
+                                                    <label class="control-label col-sm-3" for="no"><?php echo lang('estimate'). ' '.lang('no'); ?>:</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" value="<?php echo $list['invoice_no']; ?>" name="invoice_no" class="form-control" readonly>
                                                         
@@ -101,12 +101,12 @@
                                                 </br>
                                             </br>
                                                 <div class="form-group">
-                                                    <label class="control-label col-sm-3" for="status">Status:</label>
+                                                    <label class="control-label col-sm-3" for="status"><?php echo lang('status'); ?>:</label>
                                                     <div class="col-sm-9">
                                                         <select name="status" id="status" class="form-control">
-                                                            <option>In Progress</option>
-                                                            <option>Approved</option>
-                                                            <option>Rejected</option>
+                                                            <option value="in_progress"><?php echo lang('in_progress'); ?></option>
+                                                            <option value="approved"><?php echo lang('approved'); ?></option>
+                                                            <option value="rejected"><?php echo lang('rejected'); ?></option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -115,8 +115,8 @@
                                             </br>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary"><?php echo lang('save'); ?></button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo lang('close'); ?></button>
                                         </div>
                                         </form>
                                     </div>

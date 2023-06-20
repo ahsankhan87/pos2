@@ -7,15 +7,15 @@ class C_login extends CI_Controller
     {
         parent::__construct();
         //session_start();
-
+        $this->lang->load('index');
     }
 
     function index()
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = "Login ";
-        $data['main'] = 'Login';
+        $data['title'] = lang("login");
+        $data['main'] = lang("login");
 
         $data['currencyDropDown'] = $this->M_currencies->getcurrencyDropDown();
 
@@ -53,9 +53,9 @@ class C_login extends CI_Controller
     //verify username and password
     public function verify()
     {
-        $data['title'] = "Login ";
+        $data['title'] = lang("login");
         //$data['nav_list'] = $this->M_category->get_category();
-        $data['main'] = 'Login';
+        $data['main'] = lang("login");
 
         if ($this->input->post('username')) {
             $username = $this->input->post('username');
@@ -71,8 +71,10 @@ class C_login extends CI_Controller
     {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $email = $this->input->post('email_forgot');
+            
+            $user = $this->M_users->get_users_by_email($email);
 
-            if ($this->M_users->email_exist($email)) {
+            if (strlen(@$user[0]['email']) > 0) {
 
                 $verification_key = md5(rand());
                 $data = array(
@@ -82,8 +84,8 @@ class C_login extends CI_Controller
                 $this->db->update('users', $data, array('email' => $email));
 
                 $subject = "Forget Password verification link";
-                $message = "Please click this " . site_url() . "en/C_login/forget_password_reset/" . $verification_key . "
-                \nOnce you click this link you can reset you password and you can login into system.\n\nThanks for choosing GuvenFi,";
+                $message = "Please click this " . site_url() . "tr/C_login/forget_password_reset/" . $verification_key . "
+                \nOnce you click this link you can reset you password and you can login into system.\nusername:".@$user[0]['username']."\n\nThanks for choosing GuvenFi,";
                 
                 $this->load->library('email');
 
@@ -134,8 +136,8 @@ class C_login extends CI_Controller
             }
         }
 
-        $data['title'] = 'Forget Password Reset';
-        $data['main'] = 'Forget Password Reset';
+        $data['title'] = lang('forget_password');
+        $data['main'] = lang('forget_password');
         $data['forgot_pass_identity'] = $forgot_pass_identity;
 
         //$this->load->view('templates/header', $data);

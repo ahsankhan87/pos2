@@ -31,7 +31,7 @@
 						</div>
                         
                         <div class="form-group">
-							<label class="control-label col-md-3">Account Code <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('acc_code'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -39,7 +39,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">Title <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('title'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -47,7 +47,7 @@
 							</div>
 						</div>
                         <div class="form-group">
-							<label class="control-label col-md-3">Title 2 (local) <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('title') . ' 2 ('. lang('local').')'; ?><span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -75,7 +75,7 @@
 							</div>
 						</div> -->
                         <div class="form-group">
-							<label class="control-label col-md-3">Type <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('type'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -84,7 +84,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">Parent Account <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('parent').' ' .lang('account'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -92,7 +92,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">Account Type <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('account').' '.lang('type'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -101,7 +101,7 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-md-3">Level <span class="required">
+							<label class="control-label col-md-3"><?php echo lang('level'); ?> <span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -113,8 +113,8 @@
 					</div>
 					<div class="form-actions fluid">
 						<div class="col-md-offset-3 col-md-9">
-							<button type="submit" class="btn btn-success">Update</button>
-							<button type="button" onclick="window.history.back();" class="btn btn-default">Cancel</button>
+							<button type="submit" class="btn btn-success"><?php echo lang('update'); ?></button>
+							<button type="button" onclick="window.history.back();" class="btn btn-default"><?php echo lang('back'); ?></button>
 						</div>
 					</div>
 				</form>

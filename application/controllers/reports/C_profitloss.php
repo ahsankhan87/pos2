@@ -105,24 +105,29 @@ class C_profitloss extends MY_Controller
         
         $langs = $this->session->userdata('lang');
 
-        $this->load->library('Pdf_f');
-        $pdf = new Pdf_f("P", 'mm', 'A4');
-
+        // $this->load->library('Pdf_f');
+        // $pdf = new Pdf_f("P", 'mm', 'A4');
+        $this->load->library('tfpdf/TFPDF');
+        $pdf = new TFPDF();
+       
+        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+        $pdf->AddFont('DejaVuBold','B','DejaVuSansCondensed-Bold.ttf',true);
+        
         $pdf->AddPage();
         //Display Company Info
         $pdf->SetY(15);
         $pdf->SetX(80);
-        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->SetFont('DejaVuBold','B', 18);
         $pdf->Cell(50, 10, $company_name, 0, 1, "C");
 
         $pdf->SetY(22);
         $pdf->SetX(80);
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         $pdf->Cell(50, 10, lang("profit_loss"), 0, 1, "C");
 
         $pdf->SetY(28);
         $pdf->SetX(80);
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         $pdf->Cell(50, 7, date('d-m-Y', strtotime($from_date)) . " to " . date('d-m-Y', strtotime($to_date)), 0, 1, "C");
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
         //$pdf->Cell(50, 7, "To ".$to_date, 0, 1);
@@ -130,12 +135,12 @@ class C_profitloss extends MY_Controller
         //Display Table headings
         $pdf->SetY(45);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('DejaVuBold','B', 12);
         $pdf->Cell(150, 9, strtoupper(lang("account")), 1, 0);
         // $pdf->Cell(40, 9, "", 1, 0, "C");
         // $pdf->Cell(30, 9, "", 1, 0, "C");
         $pdf->Cell(40, 9, strtoupper(lang("total")), 1, 1, "C");
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
 
         $total = 0;
         //Display table product rows
@@ -144,7 +149,7 @@ class C_profitloss extends MY_Controller
             $pl_report = $this->M_reports->get_profit_loss($_SESSION['company_id'], $values['account_code'], $from_date, $to_date);
 
             $account_title = (count($pl_report) > 0 ? ($langs == 'en' ? $values['title'] : $values['title_ur']) : '');
-            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->SetFont('DejaVuBold','B', 12);
             $pdf->Cell(150, 9, $account_title, "LR", 0);
             $pdf->Cell(40, 9, '', "R", 1, "R");
 
@@ -152,7 +157,7 @@ class C_profitloss extends MY_Controller
                 $balance = ($list['credit']) - ($list['debit']);
 
                 $total += $balance;
-                $pdf->SetFont('Arial', '', 12);
+                $pdf->SetFont('DejaVu','', 12);
                 $pdf->Cell(150, 9, ($langs == 'en' ? '   ' . $list['title'] : '   ' . $list['title_ur']), "LR", 0);
                 //$pdf->Cell(40, 9, '', "R", 0, "C");
                 //$pdf->Cell(30, 9, '', "R", 0, "R");
@@ -169,7 +174,7 @@ class C_profitloss extends MY_Controller
         }
 
         //Display table total row
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('DejaVuBold','B', 12);
         $pdf->Cell(150, 9, lang("net_income"), 1, 0, "");
         //$pdf->Cell(30, 9, '', 1, 0, "R");
         $pdf->Cell(40, 9, number_format($total, 2), 1, 1, "R");

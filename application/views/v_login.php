@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Login | GuvenFI Accounting Software</title>
+	<title><?php echo $title; ?> | GuvenFI Accounting Software</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<meta content="GuvenFI Accounting Software to run your business, Point of Sale, Accounts Management Systems" name="description">
@@ -39,7 +39,7 @@
 	<div class="logo animated bounceIn">
 		<!-- <h1 class="form-title  logo-color">GuvenFi</h1> -->
 		<a href="<?php echo base_url(); ?>">
-			<img src="<?php echo base_url(); ?>assets/img/logo.png"  alt="Logo">
+			<img src="<?php echo base_url(); ?>assets/img/logo.png" alt="Logo">
 		</a>
 	</div>
 	<!-- END LOGO -->
@@ -63,14 +63,14 @@
 			?>
 			<div id="success-msg" class="alert alert-success display-hide">
 				<button class="close" data-close="alert"></button>
-				<span>Account Created successfully</span>
+				<span><?php echo lang('account') . ' ' . lang('created'); ?></span>
 			</div>
 			<div class="alert alert-danger display-hide">
 				<button class="close" data-close="alert"></button>
 				<span>Enter username and password. </span>
 			</div>
-			<h3 class="form-title">Login to your account</h3>
-			
+			<h3 class="form-title"><?php echo lang('login_to_account'); ?></h3>
+
 			<!-- <div class="form-group">
 			ie8, ie9 does not support html5 placeholder, so we just show field title for that
 			<label class="control-label visible-ie8 visible-ie9">Role</label>
@@ -84,102 +84,103 @@
 		</div>-->
 			<div class="form-group">
 				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-				<label class="control-label visible-ie8 visible-ie9">Username</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('username'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-user"></i>
-					<input class="form-control placeholder-no-fix" type="text" autofocus="" autocomplete="off" placeholder="Username" name="username">
+					<input class="form-control placeholder-no-fix" type="text" autofocus="" autocomplete="off" placeholder="<?php echo lang('username'); ?>" name="username">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Password</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('password'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-lock"></i>
-					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password">
+					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<?php echo lang('password'); ?>" name="password">
 				</div>
 			</div>
 			<div class="form-actions">
 				<label class="checkbox">
 					<!-- <div class="checker"><span><input type="checkbox" name="remember" value="1"></span></div> Remember me </label> -->
 					<button type="submit" class="btn btn-info signin-button">
-						Login </button>
+						<?php echo lang('login'); ?> </button>
 			</div>
 
 			<div class="forget-password">
-				<h4>Forgot your password ?</h4>
+				<h4><?php echo lang('forget_password'); ?></h4>
 				<p>
-					click <a href="javascript:;" id="forget-password">here</a>
-					to reset your password.
+					<?php echo lang('click'); ?> <a href="javascript:;" id="forget-password"><?php echo lang('here'); ?></a>
+					<?php echo lang('reset_your_password'); ?>
 				</p>
 			</div>
-			<!-- <div class="create-account">
+			<div class="create-account">
 				<p>
-					Don't have an account yet ?&nbsp; <a href="javascript:;" id="register-btn">Create an account</a>
+				<?php echo lang('dont_have_account'); ?>&nbsp; <a href="javascript:;" id="register-btn"><?php echo lang('create_account'); ?></a>
 				</p>
-			</div> -->
+			</div>
 
 		</form>
 		<!-- END LOGIN FORM -->
 		<!-- BEGIN FORGOT PASSWORD FORM -->
-		<form class="forget-form"  method="post" novalidate="novalidate">
-			
+		<form class="forget-form" method="post" novalidate="novalidate">
+
 			<div id="success-forgot-msg" class="alert alert-success display-hide">
 				<button class="close" data-close="alert"></button>
-				<span>Forgot Password </span>
+				<span><?php echo lang('forget') . ' ' . lang('password'); ?> </span>
 			</div>
 			<div class="alert alert-danger display-hide">
 				<button class="close" data-close="alert"></button>
 				<span> </span>
 			</div>
-			<h3>Forget Password ?</h3>
+			<h3><?php echo lang('forget') . ' ' . lang('password'); ?> ?</h3>
 			<p>
-				Enter your e-mail address below to reset your password.
+				<?php echo lang('enter_email'); ?>
 			</p>
 			<input type="hidden" id="forget_pwd_url" value="<?php echo site_url('en/C_login/forget_password_email') ?>" />
 
 			<div class="form-group">
 				<div class="input-icon">
 					<i class="fa fa-envelope"></i>
-					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email_forgot">
+					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<?php echo lang('email'); ?>" name="email_forgot">
 				</div>
 			</div>
 			<div class="form-actions">
 				<button type="button" id="back-btn" class="btn btn-default">
-					<i class="m-icon-swapleft"></i> Back </button>
-				<input type="submit" value="Submit" name="submit" class="btn btn-info pull-right" />
-					 
+					<i class="m-icon-swapleft"></i> <?php echo lang('back'); ?> 
+				</button>
+				<input type="submit" value="<?php echo lang('submit'); ?>" name="submit" class="btn btn-info pull-right" />
+
 			</div>
 		</form>
 		<!-- END FORGOT PASSWORD FORM -->
 		<!-- BEGIN REGISTRATION FORM -->
 		<form class="register-form" action="" method="post" novalidate="novalidate">
 
-			<h3>Create New Account</h3>
+			<h3><?php echo lang('create_account'); ?></h3>
 			<p>
-				Enter your personal details below:
+				<?php echo lang('enter_company_detail'); ?>
 			</p>
 
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Company Name</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('company'). ' '.lang('name'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-font"></i>
 					<input type="hidden" id="url" value="<?php echo site_url('en/companies/C_newStore/create') ?>" />
 
-					<input class="form-control placeholder-no-fix" type="text" placeholder="Company Name" name="name">
+					<input class="form-control placeholder-no-fix" type="text" placeholder="<?php echo lang('company'). ' '.lang('name'); ?>" name="name">
 				</div>
 			</div>
 			<div class="form-group">
 				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-				<label class="control-label visible-ie8 visible-ie9">Email</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('email'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-envelope"></i>
-					<input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email">
+					<input class="form-control placeholder-no-fix" type="text" placeholder="<?php echo lang('email'); ?>" name="email">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Address</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('address'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-check"></i>
-					<input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address">
+					<input class="form-control placeholder-no-fix" type="text" placeholder="<?php echo lang('address'); ?>" name="address">
 				</div>
 			</div>
 			<!-- <div class="form-group">
@@ -346,7 +347,7 @@
         </div> -->
 
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Currency:</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('currency'); ?>:</label>
 				<div class="input-icon">
 					<!--<i class="fa fa-dollar"></i> -->
 					<?php echo form_dropdown('currency_id', $currencyDropDown, '', 'class="form-control placeholder-no-fix"'); ?>
@@ -366,35 +367,35 @@
         </div> -->
 
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Contact</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('contact'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-user"></i>
-					<input class="form-control placeholder-no-fix" type="number" autocomplete="off" placeholder="Contact No" name="contact_no">
+					<input class="form-control placeholder-no-fix" type="number" autocomplete="off" placeholder="<?php echo lang('contact'); ?>" name="contact_no">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Fiscal Start Date</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('fiscal_start_date'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-date"></i>
-					FY start<input class="form-control placeholder-no-fix" type="date" autocomplete="off" placeholder="Fiscal Start Date" name="fy_start_date">
+					<?php echo lang('start').' '.lang('date'); ?><input class="form-control placeholder-no-fix" type="date" autocomplete="off" placeholder="<?php echo lang('fiscal_start_date'); ?>" name="fy_start_date">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Fiscal End Date</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('fiscal_end_date'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-date"></i>
-					FY end<input class="form-control placeholder-no-fix" type="date" autocomplete="off" placeholder="Fiscal End Date" name="fy_end_date">
+					<?php echo lang('end').' '.lang('date'); ?><input class="form-control placeholder-no-fix" type="date" autocomplete="off" placeholder="<?php echo lang('fiscal_end_date'); ?>" name="fy_end_date">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Fiscal Year</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('fiscal_year'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-date"></i>
-					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Fiscal Year" name="fy_year">
+					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<?php echo lang('fiscal_year'); ?>" name="fy_year">
 				</div>
 			</div>
 			<p>
-				Enter your account details below:
+				<?php echo lang('enter_account_detail'); ?>
 			</p>
 			<!--<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Role:</label>
@@ -404,31 +405,31 @@
 						</select>
 				</div>--->
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Username</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('username'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-user"></i>
-					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" id="u_name" name="u_name">
+					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<?php echo lang('username'); ?>" id="u_name" name="u_name">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Password</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('password'); ?></label>
 				<div class="input-icon">
 					<i class="fa fa-lock"></i>
-					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password">
+					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="<?php echo lang('password'); ?>" name="password">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Re-type Your Password</label>
+				<label class="control-label visible-ie8 visible-ie9"><?php echo lang('re_type_password'); ?></label>
 				<div class="controls">
 					<div class="input-icon">
 						<i class="fa fa-check"></i>
-						<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword">
+						<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<?php echo lang('re_type_password'); ?>" name="rpassword">
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<label>
-					<div class=""><span><input type="checkbox" name="tnc"></span></div> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+					<div class=""><span><input type="checkbox" name="tnc"></span></div> <?php echo lang('agree_to'); ?> <a href="<?php echo site_url(); ?>en/PrivacyPolicy" target="_blank"><?php echo lang('privacy_policy'); ?></a> <?php echo lang('and'); ?> <a href="<?php echo site_url(); ?>en/TermOfUse" target="_blank"><?php echo lang('term_of_service'); ?></a>
 				</label>
 				<div id="register_tnc_error">
 				</div>
@@ -436,9 +437,9 @@
 
 			<div class="form-actions">
 				<button id="register-back-btn" type="button" class="btn btn-default">
-					<i class="m-icon-swapleft"></i> Back </button>
+					<i class="m-icon-swapleft"></i> <?php echo lang('back'); ?> </button>
 				<button type="submit" id="register-submit-btn" class="btn btn-info pull-right">
-					Sign Up <i class="m-icon-swapright m-icon-white"></i>
+					<?php echo lang('signup'); ?> <i class="m-icon-swapright m-icon-white"></i>
 				</button>
 				<img src="<?php echo base_url('images/wait.gif') ?>" width="20" height="20" class="loading  pull-right" />
 
@@ -449,7 +450,7 @@
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		<?php echo date("Y"); ?> &copy; guvenfi.com | <a href="<?php echo site_url();?>en/PrivacyPolicy" target="_blank">Privacy Policy</a> and <a href="<?php echo site_url();?>en/TermOfUse"  target="_blank">Term of Use</a>
+		<?php echo date("Y"); ?> &copy; Guvenfi.com | <a href="<?php echo site_url(); ?>en/PrivacyPolicy" target="_blank"><?php echo lang('privacy_policy'); ?></a> <?php echo lang('and'); ?> <a href="<?php echo site_url(); ?>en/TermOfUse" target="_blank"><?php echo lang('term_of_service'); ?></a>
 	</div>
 	<!-- END COPYRIGHT -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -484,7 +485,7 @@
 			var base_url = '<?php echo base_url(); ?>';
 
 			//console.log(site_url);
-			
+
 
 			App.init();
 			//   Login();
@@ -492,7 +493,7 @@
 			handleForgetPassword();
 			handleRegister();
 			var action = location.hash.substr(1);
-			
+
 			if (action == 'createaccount') {
 				$('.register-form').show();
 				$('.login-form').hide();
@@ -503,7 +504,7 @@
 				$('.forget-form').show();
 			}
 
-			
+
 			function handleLogin() {
 				$('.login-form').validate({
 					errorElement: 'span', //default input error message container
@@ -601,26 +602,26 @@
 					},
 
 					submitHandler: function(form) {
-						
-					/* Serialize the submitted form control values to be sent to the web server with the request */
-					//var formData = new FormData(this);
-					// Send the form data using post
+
+						/* Serialize the submitted form control values to be sent to the web server with the request */
+						//var formData = new FormData(this);
+						// Send the form data using post
 						$.ajax({
-							url : $('#forget_pwd_url').val(), 
+							url: $('#forget_pwd_url').val(),
 							type: 'POST',
 							data: $('.forget-form').serialize(),
-							success: function(data, textStatus, jqXHR){
+							success: function(data, textStatus, jqXHR) {
 								// Display the returned data in browser
 								// toastr.success("Password reset successfully",'Success');
 								$("#success-forgot-msg").show();
 								$("#success-forgot-msg").html(data);
 
 								//console.log(data);
-							
-								},
-							error: function(jqXHR, textStatus, errorThrown){
+
+							},
+							error: function(jqXHR, textStatus, errorThrown) {
 								//if fails     
-								console.log(jqXHR+' '+textStatus);
+								console.log(jqXHR + ' ' + textStatus);
 							}
 
 						});
@@ -855,8 +856,7 @@
 			//if registration querystring is true then show the register page
 			var registration = '<?php echo (@$_GET['reg'] == 'true' ? true : false); ?>';
 			console.log(registration);
-			if(registration == '1')
-			{
+			if (registration == '1') {
 				// $("#register-btn").trigger("click");
 				jQuery('.login-form').hide();
 				jQuery('.register-form').show();

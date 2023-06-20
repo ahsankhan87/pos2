@@ -34,6 +34,12 @@ class M_users extends CI_Model
         }
     }
 
+    function get_users_by_email($email)
+    {
+        $query = $this->db->get_where('users', array('email' => $email));
+        return $query->result_array();
+    }
+
     function has_sub_module_permission($module_id, $user_id)
     {
         $this->db->where('sub_module', $module_id);

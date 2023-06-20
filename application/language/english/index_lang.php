@@ -67,7 +67,8 @@ $lang['dec']='December';
 $lang['entriesList']='List of journal entries';
 $lang['entriesListToday']='List of today journal entries';
 $lang['add_entry']='Add New Entry';
-$lang['all_acc_bal_cfy'] = 'All accounts balances of current financial year '.FY_YEAR;
+$lang['all_acc_bal_cfy'] = 'All accounts balances of current financial year ';
+$lang['journal_entry'] = 'Journal Entry';
 $lang['total'] = 'Total';
 $lang['balance'] = 'Balance';
 //Chart of Accounts
@@ -221,3 +222,35 @@ $lang['submit']= 'Submit';
 $lang['select']= 'Select';
 $lang['picture']= 'Picture';
 $lang['initial']= 'Initial';
+
+$lang['login']= 'Login';
+$lang['login_to_account']= 'Login to your account';
+$lang['forget_password']= 'Forget your password ?';
+$lang['reset_your_password']= 'to reset your password';
+$lang['click']= 'click';
+$lang['here']= 'here';
+$lang['forget']= 'Forget';
+$lang['enter_email']= 'Enter you email below to reset your password.';
+$lang['create_account']= 'Create an account';
+$lang['dont_have_account']= 'Don\'t have an account yet ?';
+$lang['enter_company_detail']= 'Enter your company details below:';
+$lang['enter_account_detail']= 'Enter your account details below:';
+$lang['fiscal_start_date']= 'Fiscal Start Date';
+$lang['fiscal_end_date']= 'Fiscal End Date';
+$lang['re_type_password']= 'Re-type your password';
+$lang['agree_to']= 'I agree to the';
+$lang['term_of_service']= 'Term of Service';
+$lang['privacy_policy']= 'Privacy Policy';
+$lang['signup']= 'Signup';
+$lang['website']= 'Website';
+$lang['receive']= 'Receive';
+$lang['parent']= 'Parant';
+$lang['local']= 'local';
+
+$lang['paid']= 'Paid';
+$lang['partialy paid']= 'Partialy Paid';
+$lang['unpaid']= 'Unpaid';
+$lang['in_progress']= 'in Progress';
+$lang['approved']= 'Approved';
+$lang['rejected']= 'Rejected';
+

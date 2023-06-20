@@ -48,24 +48,29 @@ class C_trial_balance extends MY_Controller{
         $trialBalance = $this->M_groups->get_detail_accounts(FALSE,$_SESSION['company_id']);
         $langs = $this->session->userdata('lang');
 
-        $this->load->library('Pdf_f');
-        $pdf = new Pdf_f("P", 'mm', 'A4');
-
+        // $this->load->library('Pdf_f');
+        // $pdf = new Pdf_f("P", 'mm', 'A4');
+        $this->load->library('tfpdf/TFPDF');
+        $pdf = new TFPDF();
+       
+        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+        $pdf->AddFont('DejaVuBold','B','DejaVuSansCondensed-Bold.ttf',true);
+        
         $pdf->AddPage();
         //Display Company Info
         $pdf->SetY(15);
         $pdf->SetX(80);
-        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->SetFont('DejaVuBold','B', 18);
         $pdf->Cell(50, 10, $company_name, 0, 1,"C");
 
         $pdf->SetY(22);
         $pdf->SetX(80);
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         $pdf->Cell(50, 10, lang("trial_balance"), 0, 1,"C");
         
         $pdf->SetY(28);
         $pdf->SetX(80);
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         $pdf->Cell(50, 7, date('d-m-Y', strtotime($from_date))." to ".date('d-m-Y', strtotime($to_date)), 0, 1,"C");
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
         //$pdf->Cell(50, 7, "To ".$to_date, 0, 1);
@@ -73,12 +78,12 @@ class C_trial_balance extends MY_Controller{
         //Display Table headings
         $pdf->SetY(45);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('DejaVuBold','B', 12);
         $pdf->Cell(80, 9, strtoupper(lang("account")), 1, 0);
         $pdf->Cell(40, 9, "", 1, 0, "C");
         $pdf->Cell(30, 9, strtoupper(lang("debit")), 1, 0, "C");
         $pdf->Cell(40, 9, strtoupper(lang("credit")), 1, 1, "C");
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('DejaVu','', 12);
         
         $dr_net_total = 0;
         $cr_net_total = 0;
@@ -118,7 +123,7 @@ class C_trial_balance extends MY_Controller{
         }
         
         //Display table total row
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('DejaVuBold','B', 12);
         $pdf->Cell(120, 9, strtoupper(lang("total")), 1, 0, "");
         $pdf->Cell(30, 9, number_format($dr_net_total,2), 1, 0, "R");
         $pdf->Cell(40, 9, number_format($cr_net_total,2), 1, 1, "R");
@@ -132,9 +137,9 @@ class C_trial_balance extends MY_Controller{
         //$pdf->SetFont('helvetica', 'B', 12);
         //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
         // $pdf->Ln(15);
-        // $pdf->SetFont('helvetica', '', 12);
+        // $pdf->SetFont('DejaVu','', 12);
         // $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
-        // $pdf->SetFont('helvetica', '', 10);
+        // $pdf->SetFont('DejaVu','', 10);
 
         //Display Footer Text
         $pdf->Cell(0, 10, "This is a computer generated report", 0, 1, "C");

@@ -57,7 +57,7 @@ class M_login extends CI_Model
         $admin_query = array();
 
         if (isset($row) && $row->status == 0) {
-            $this->session->set_flashdata('error', 'Your Account has de-activated. Please contact your Administrator!.');
+            $this->session->set_flashdata('error', 'Your account has been suspended. Please contact customer support');
             redirect('C_login', 'refresh');
         } else if (isset($row)) {
             $_SESSION['username'] = $row->username;
@@ -92,7 +92,7 @@ class M_login extends CI_Model
 
                     if ($rows['expire'] < time()) {
                         $this->updateAppLock($rows['id']); //if expire time is less than cur time than set locked = 0
-                        $this->session->set_flashdata('error', 'Your account has been suspended. Please contact your vendor i.e. khybersoft.com');
+                        $this->session->set_flashdata('error', 'Your account has been suspended. Please contact customer support');
                         redirect('C_login', 'refresh');
                     } else {
 
@@ -110,7 +110,7 @@ class M_login extends CI_Model
                         }
                     }
                 } elseif ($rows['locked'] == 0) {
-                    $this->session->set_flashdata('error', 'YYour account has been suspended. Please contact your vendor i.e. khybersoft.com');
+                    $this->session->set_flashdata('error', 'Your account has been suspended. Please contact customer support');
                     redirect('C_login', 'refresh');
                 }
             } else {
