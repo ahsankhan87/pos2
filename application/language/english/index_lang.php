@@ -254,3 +254,16 @@ $lang['in_progress']= 'in Progress';
 $lang['approved']= 'Approved';
 $lang['rejected']= 'Rejected';
 
+$lang['custom']= 'Custom';
+$lang['this_month']= 'This Month';
+$lang['last_month']= 'Last Month';
+$lang['last_week']= 'Last Week';
+$lang['last_year']= 'Last Year';
+$lang['this_year']= 'This Year';
+
+//forget email text
+$lang['email_subject']= 'Forget Password verification link';
+$lang['first_para']= 'Please click this';
+$lang['second_para']= 'Once you click this link you can reset you password and you can login into system.';
+$lang['third_para']= 'Thanks for choosing GuvenFi.';
+

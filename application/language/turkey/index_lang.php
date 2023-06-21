@@ -203,7 +203,7 @@ $lang['company']= 'Teslim etmek';
 $lang['vat']= 'VAT';
 $lang['update']= 'Güncelleme';
 $lang['change']= 'Değiştirmek';
-$lang['password']= 'Şifre';
+$lang['password']= 'Parolanızı';
 
 $lang['role']= 'rol';
 $lang['username']= 'Kullanıcı adı';
@@ -226,12 +226,12 @@ $lang['initial']= 'İlk';
 
 $lang['login']= 'Giriş';
 $lang['login_to_account']= 'Hesabınıza Giriş Yapın';
-$lang['forget_password']= 'Şifreni mi unuttun ?';
+$lang['forget_password']= 'Parolanızı mi unuttun ?';
 $lang['reset_your_password']= 'buraya tıklayın';
 $lang['click']= 'Değiştirmek';
 $lang['here']= 'için';
-$lang['forget']= 'Unutmak';
-$lang['enter_email']= 'Parolanızı sıfırlamak için aşağıya e-postanızı girin.';
+$lang['forget']= 'mı unuttunuz?';
+$lang['enter_email']= 'Parolanızı değiştirmek için aşağıya e-postanızı girin.';
 $lang['create_account']= 'Bir hesap oluşturun';
 $lang['dont_have_account']= 'Henüz bir hesabınız yok mu?';
 $lang['enter_company_detail']= 'Şirket bilgilerinizi aşağıya girin:';
@@ -241,7 +241,7 @@ $lang['fiscal_end_date']= 'Mali Bitiş Tarihi';
 $lang['re_type_password']= 'Parolanızı yeniden yazın';
 $lang['agree_to']= 'Katılıyorum';
 $lang['term_of_service']= 'Şartlar ve koşullar';
-$lang['privacy_policy']= 'Gizlilik Politikası';
+$lang['privacy_policy']= 'Gizlilik şartlar';
 $lang['signup']= 'Üye olmak';
 $lang['website']= 'İnternet sitesi';
 $lang['receive']= 'Kabul Et';
@@ -254,3 +254,16 @@ $lang['unpaid']= 'ödenmemiş';
 $lang['in_progress']= 'Gelişmekte';
 $lang['approved']= 'Onayla';
 $lang['rejected']= 'Reddetmek';
+
+$lang['custom']= 'Custom';
+$lang['this_month']= 'Bu Ay';
+$lang['last_month']= 'Geçen Ay';
+$lang['last_week']= 'Geçen Hafta';
+$lang['last_year']= 'Geçen Sene';
+$lang['this_year']= 'Bu Yıl';
+
+//forget email text
+$lang['email_subject']= 'Şifre bağlantısını değiştir';
+$lang['first_para']= 'Lütfen buna tıklayın';
+$lang['second_para']= 'Bu linke tıkladıktan sonra şifrenizi değiştirebilirsiniz ve sisteme giriş yapabilirsiniz.';
+$lang['third_para']= "GüvenFi'yi tercih ettiğiniz için teşekkürler.";

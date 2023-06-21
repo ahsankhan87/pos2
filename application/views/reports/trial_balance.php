@@ -19,12 +19,12 @@
                     <div class="form-group">
 
                         <select class="form-control" id="report_period" name="report_period">
-                            <option value="custom">Custom</option>
-                            <option value="this_month">This Month</option>
-                            <option value="last_month">Last Month</option>
-                            <option value="last_week">Last Week</option>
-                            <option value="last_year">Last Year</option>
-                            <option value="this_year">This Year</option>
+                            <option value="custom"><?php echo lang('custom');?></option>
+                            <option value="this_month"><?php echo lang('this_month');?></option>
+                            <option value="last_month"><?php echo lang('last_month');?></option>
+                            <option value="last_week"><?php echo lang('last_week');?></option>
+                            <option value="last_year"><?php echo lang('last_year');?></option>
+                            <option value="this_year"><?php echo lang('this_year');?></option>
                         </select>
                     </div>
                     <div class="form-group">

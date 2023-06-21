@@ -44,8 +44,6 @@ class C_login extends CI_Controller
         //session_destroy();
         $this->cart->destroy(); //Destroy the cart if open.
 
-
-
         $this->session->set_flashdata('error', 'You have been logged out.!');
         redirect('C_login', 'refresh');
     }
@@ -69,6 +67,8 @@ class C_login extends CI_Controller
 
     public function forget_password_email()
     {
+        $data = array('langs' => $this->session->userdata('lang'));
+        
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $email = $this->input->post('email_forgot');
             
@@ -83,9 +83,9 @@ class C_login extends CI_Controller
                 );
                 $this->db->update('users', $data, array('email' => $email));
 
-                $subject = "Forget Password verification link";
-                $message = "Please click this " . site_url() . "tr/C_login/forget_password_reset/" . $verification_key . "
-                \nOnce you click this link you can reset you password and you can login into system.\nusername:".@$user[0]['username']."\n\nThanks for choosing GuvenFi,";
+                $subject = lang('email_subject');
+                $message = lang('first_para'). " " . site_url() . "tr/C_login/forget_password_reset/" . $verification_key . "
+                \n".lang('second_para')."\n".lang('username').":".@$user[0]['username']."\n\n".lang('third_para');
                 
                 $this->load->library('email');
 

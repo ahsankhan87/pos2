@@ -124,17 +124,17 @@
 
 			<div id="success-forgot-msg" class="alert alert-success display-hide">
 				<button class="close" data-close="alert"></button>
-				<span><?php echo lang('forget') . ' ' . lang('password'); ?> </span>
+				<span><?php echo lang('password'). ' ' .lang('forget') ; ?> </span>
 			</div>
 			<div class="alert alert-danger display-hide">
 				<button class="close" data-close="alert"></button>
 				<span> </span>
 			</div>
-			<h3><?php echo lang('forget') . ' ' . lang('password'); ?> ?</h3>
+			<h3><?php echo lang('password'). ' ' .lang('forget'); ?></h3>
 			<p>
 				<?php echo lang('enter_email'); ?>
 			</p>
-			<input type="hidden" id="forget_pwd_url" value="<?php echo site_url('en/C_login/forget_password_email') ?>" />
+			<input type="hidden" id="forget_pwd_url" value="<?php echo site_url().$langs.'/C_login/forget_password_email' ?>" />
 
 			<div class="form-group">
 				<div class="input-icon">
