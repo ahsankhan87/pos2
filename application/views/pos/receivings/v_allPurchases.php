@@ -112,12 +112,12 @@
                             }
                             if($purchaseType == "credit")
                             {
-                                echo '<td> <span class="'.$label.'">' . $status . '</span></td>';
+                                echo '<td> <span class="'.$label.'">' . lang(strtolower($status)) . '</span></td>';
                             }
                             echo '<td class="text-right">';
                             if($purchaseType == "credit" && $status != 'Paid')
                             {
-                            echo '<a href="'.site_url($langs).'/trans/'.($purchaseType == "cash" ? "C_receivings" : "C_bills").'/receivePayment/' . $list['supplier_id'] .'/'.$list['invoice_no'].'" title="Payment" >Payment</a> | ';
+                            echo '<a href="'.site_url($langs).'/trans/'.($purchaseType == "cash" ? "C_receivings" : "C_bills").'/receivePayment/' . $list['supplier_id'] .'/'.$list['invoice_no'].'">'.lang('payment').'</a> | ';
                             }
                             echo '<a href="'.site_url($langs).'/trans/'.($purchaseType == "cash" ? "C_receivings" : "C_bills").'/edit/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>';
                             echo '| <a href="'.site_url($langs).'/trans/'.($purchaseType == "cash" ? "C_receivings" : "C_bills").'/printReceipt/' . $list['invoice_no'] .'" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>';

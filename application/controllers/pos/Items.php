@@ -189,7 +189,7 @@ class Items extends MY_Controller{
             //$data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
             //$data['locationDDL'] = $this->M_locations->get_activelocationsDDL();
             //$data['supplierDDL']= $this->M_suppliers->getSupplierDropDown();
-            $data['unitsDDL'] = $this->M_units->get_activeunitsDDL();
+            //$data['unitsDDL'] = $this->M_units->get_activeunitsDDL();
             //$data['sizes'] = $this->M_sizes->get_activeSizes();
             //$data['taxesDDL'] = $this->M_taxes->gettaxDropDown();
             
@@ -353,7 +353,7 @@ class Items extends MY_Controller{
             //$data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
             //$data['sizesDDL'] = $this->M_sizes->get_activeSizesDDL();
             $data['Item'] = $this->M_items->get_items($id);
-            $data['unitsDDL'] = $this->M_units->get_activeunitsDDL();
+            //$data['unitsDDL'] = $this->M_units->get_activeunitsDDL();
             //$data['taxesDDL'] = $this->M_taxes->gettaxDropDown();
             
             

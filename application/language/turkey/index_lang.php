@@ -1,5 +1,5 @@
 <?php
-$lang['add_new']='Yeni ekle';
+$lang['add_new']='Yeni Ekle';
 $lang['edit']='Güncelleme';
 $lang['delete']='Silmek';
 $lang['view_all']='Hepsini gör';
@@ -13,24 +13,24 @@ $lang['title'] = 'Başlık';
 $lang['urdu'] = 'Urdu';
 $lang['acc_code']='Hesap kodu';
 $lang['name']='İsim';
-$lang['type']='tipi';
+$lang['type']='Tip';
 $lang['level']='Seviye';
 $lang['action']='Aksiyon';
 $lang['account']='Hesap';
-$lang['debit']='Borç';
-$lang['credit']='Kredi';
+$lang['debit']='Debit';
+$lang['credit']='Credit';
 $lang['status']='Durum';
 $lang['email']='E-posta';
-$lang['contact']='Temas etmek';
+$lang['contact']='İletişim';
 
 $lang['currency']='Para birimi';
 $lang['city']='Şehir';
-$lang['store']='Mağaza';
+$lang['store']='Şirket';
 
 $lang['receipt']='Fiş';
 $lang['payment']='Ödeme';
 $lang['all']='Tüm';
-$lang['search']='Aramak';
+$lang['search']='Ara';
 $lang['save']='Kaydet';
 
 $lang['deleted']=' başarıyla sildi';
@@ -41,9 +41,9 @@ $lang['error_msg']='Bazı form hatalarınız var. Lütfen alt kısımları kontr
 //
 
 //Reports
-$lang['trial_balance']='Geçici mizan';
+$lang['trial_balance']='Geçici Mizan';
 $lang['income_exp']='Gelir ve Gider';
-$lang['profit_loss']='Kar kaybı';
+$lang['profit_loss']='Gelir & Gider Raporu';
 $lang['balance_sheet']='Bilanço';
 $lang['annual_report']='Yıllık rapor';
 $lang['account_receivable']='Alacak hesapları';
@@ -69,7 +69,7 @@ $lang['entriesListToday']='Bugünün günlük girişlerinin listesi';
 $lang['add_entry']='Yeni Giriş Ekle';
 $lang['all_acc_bal_cfy'] = 'Cari mali yılın tüm hesap bakiyeleri ';
 $lang['total'] = 'Toplam';
-$lang['journal_entry'] = 'Günlük girişi';
+$lang['journal_entry'] = 'Günlük Girişi';
 $lang['balance'] = 'Denge';
 //Chart of Accounts
 $lang['coa'] = 'Hesaplar';
@@ -81,16 +81,16 @@ $lang['amount'] = 'Miktar';
 $lang['description'] = 'Tanım';
 $lang['date'] = 'Tarih';
 $lang['entry'] = 'Giriş';
-$lang['assets'] = 'Varlıklar';
+$lang['Assets'] = 'Varlıklar';
 $lang['libility'] = 'Yükümlülük';
-$lang['owner_equity'] = 'öz sermaye';
+$lang['owner_equity'] = 'Öz Sermaye';
 $lang['invoice'] = 'Fatura';
 $lang['user'] = 'Kullanıcı';
 $lang['supdt'] = 'müfettiş';
 $lang['receiver'] = 'Alıcı';
-$lang['signature'] = 'Sign';
-$lang['number'] = 'Sayı';
-$lang['received'] = 'Kabul edilmiş';
+$lang['signature'] = 'Imza';
+$lang['number'] = 'Numara';
+$lang['received'] = 'Müşteri';
 
 ////
 ////
@@ -100,7 +100,7 @@ $lang['customer']='Müşteri';
 $lang['customers']='Müşteriler';
 $lang['supplier']='Tedarikçi';
 $lang['suppliers']='Tedarikçiler';
-$lang['vendor']='SATICI';
+$lang['vendor']='Satıcı';
 $lang['vendors']='Satıcılar';
 $lang['bank']='Banka';
 $lang['banks']='Bankalar';
@@ -132,7 +132,7 @@ $lang['net_income']='Net Gelir';
 
 //Manufacturings
 $lang['work']='İş';
-$lang['order']='Emir';
+$lang['order']='Sipariş';
 $lang['center']='Merkez';
 $lang['required']='Gerekli';
 $lang['manufactured']='üretilmiş';
@@ -147,7 +147,7 @@ $lang['currencies'] = 'Para birimleri';
 $lang['logs'] = 'Kütükler';
 $lang['logout'] = 'Çıkış Yap';
 $lang['taxes'] = 'Vergiler';
-$lang['address'] = 'Adres';
+$lang['address'] = 'Adresi';
 $lang['cashonhand'] = 'Eldeki nakit';
 
 $lang['categories'] = 'Kategoriler';
@@ -155,20 +155,20 @@ $lang['category'] = 'Kategori';
 $lang['purchases'] = 'Satın almalar';
 $lang['sales'] = 'Satış';
 $lang['transaction'] = 'işlem';
-$lang['grand'] = 'Büyük';
+$lang['grand'] = '';
 $lang['cash'] = 'Peşin';
-$lang['return'] = 'Geri dönmek';
-$lang['orders']= 'Emirler';
-$lang['estimate']= 'Tahmin etmek';
+$lang['return'] = 'Geri dön';
+$lang['orders']= 'Siparişler';
+$lang['estimate']= 'Tahmin ';
 $lang['estimates']= 'Tahminler';
 $lang['report']= 'Rapor';
 $lang['wise']= 'Bilge';
 $lang['summary']= 'Özet';
 $lang['last']= 'Son';
-$lang['register']= 'Kayıt olmak';
+$lang['register']= 'Kayıt ol';
 $lang['mode']= 'Mod';
-$lang['from']= 'İtibaren';
-$lang['to']= 'İle';
+$lang['from']= 'Başlangıç ';
+$lang['to']= '';
 $lang['profit']= 'Kâr';
 $lang['sold']= 'Satılmış';
 ///
@@ -177,40 +177,40 @@ $lang['thanks_for_purchasing']= 'Satın aldığınız için teşekkürler!';
 $lang['sub_total']= 'Ara toplam';
 $lang['discount']= 'İndirim';
 $lang['disc']= 'indirim';
-$lang['tax']= 'Vergi';
-$lang['due_date']= 'Bitiş tarihi';
+$lang['tax']= 'KDV';
+$lang['due_date']= 'Vade Tarihi';
 $lang['delivery_date']= 'Teslim tarihi';
 $lang['business']= 'Işletme';
-$lang['deposit']= 'Depozito';
-$lang['clear']= 'Temizlemek';
+$lang['deposit']= 'Yatırım Hesabı';
+$lang['clear']= 'Temizle';
 $lang['close']= 'Kapat';
 $lang['back']= 'Geri';
 
 ////////////Customers
 $lang['first']= 'Birinci';
 $lang['middle']= 'Orta';
-$lang['country']= 'ülke';
+$lang['country']= 'Ülke';
 $lang['phone']= 'Telefon';
-$lang['mobile']= 'Seyyar';
+$lang['mobile']= 'Telefon';
 $lang['contact_no']= 'İletişim Numarası';
-$lang['method']= 'Yöntem';
+$lang['method']= 'Hesap';
 $lang['bills']= 'Faturalar';
-$lang['transfer']= 'Aktar';
-$lang['fund']= 'para';
+$lang['transfer']= 'Transfer';
+$lang['fund']= '';
 $lang['bill']= 'Fatura';
 
-$lang['company']= 'Teslim etmek';
+$lang['company']= 'Şirket';
 $lang['vat']= 'VAT';
 $lang['update']= 'Güncelleme';
-$lang['change']= 'Değiştirmek';
-$lang['password']= 'Parolanızı';
+$lang['change']= 'Değiştir';
+$lang['password']= 'Parolanız';
 
 $lang['role']= 'rol';
 $lang['username']= 'Kullanıcı adı';
 $lang['information']= 'Bilgi';
 $lang['module']= 'Modül';
 $lang['permission']= 'İzin';
-$lang['confirm']= 'Onaylamak';
+$lang['confirm']= 'Onayla';
 $lang['start']= 'Başlangıç';
 $lang['end']= 'Son';
 $lang['manage']= 'Üstesinden gelmek';
@@ -218,7 +218,7 @@ $lang['rate']= 'Oran';
 $lang['code']= 'Kod';
 $lang['symbol']= 'Sembol';
 $lang['report_period']= 'Rapor Dönemi';
-$lang['submit']= 'Göndermek';
+$lang['submit']= 'Kaydet';
 
 $lang['select']= 'Seçme';
 $lang['picture']= 'Resim';
@@ -242,20 +242,20 @@ $lang['re_type_password']= 'Parolanızı yeniden yazın';
 $lang['agree_to']= 'Katılıyorum';
 $lang['term_of_service']= 'Şartlar ve koşullar';
 $lang['privacy_policy']= 'Gizlilik şartlar';
-$lang['signup']= 'Üye olmak';
+$lang['signup']= 'Üye ol';
 $lang['website']= 'İnternet sitesi';
 $lang['receive']= 'Kabul Et';
 $lang['parent']= 'Ana';
 $lang['local']= 'yerel';
 
-$lang['partialy paid']= 'Kısmen Paralı';
-$lang['paid']= 'Paralı';
-$lang['unpaid']= 'ödenmemiş';
+$lang['partialy paid']= 'Kısmen Ödendi';
+$lang['paid']= 'Ödendi';
+$lang['unpaid']= 'Ödenmemiş';
 $lang['in_progress']= 'Gelişmekte';
 $lang['approved']= 'Onayla';
-$lang['rejected']= 'Reddetmek';
+$lang['rejected']= 'Reddet';
 
-$lang['custom']= 'Custom';
+$lang['custom']= 'Özel Tarihler';
 $lang['this_month']= 'Bu Ay';
 $lang['last_month']= 'Geçen Ay';
 $lang['last_week']= 'Geçen Hafta';
