@@ -822,6 +822,14 @@ class C_receivings extends MY_Controller
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
         $pdf->Cell(50, 7, "PH : ".$Company[0]['contact_no'], 0, 1);
 
+        if($Company[0]['image'] != "")
+        {
+           $pdf->SetY(10);
+           $pdf->SetX(90);
+           $pdf->Image(base_url().'images/company/thumb/'.@$Company[0]['image']);
+
+        }
+        
         //Display INVOICE text
         $pdf->SetY(15);
         $pdf->SetX(-40);
