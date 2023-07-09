@@ -138,7 +138,7 @@ foreach ($Company as $values) :
     <label class="control-label col-sm-2" for="logo">Select Logo:</label>
     <div class="col-sm-10">
       <?php if (!empty($values['image']) || $values['image'] != '') {
-        echo '<img src="' . base_url('images/company/thumb/' . $values['image']) . '" width="100" height="100" class="img-rounded" alt="picture"/>';
+        echo '<img src="' . base_url('images/company/thumb/' . $values['image']) . '" height="100" class="img-rounded" alt="picture"/>';
       }
       ?>
       <input type="hidden" name="image" value="<?php echo $values['image']; ?>" />

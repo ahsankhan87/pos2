@@ -914,7 +914,10 @@ class C_customers extends MY_Controller{
             $outp .= '"'   . round($op_balance_dr+$balance_dr,2). '",';
             $outp .= '"'   . round($op_balance_cr+$balance_cr,2). '",';
             $outp .= '"'. round(($op_balance_dr+$balance_dr)-($op_balance_cr+$balance_cr),2)     . '",';
-            $outp .= "\"<a href='".site_url($lang['langs'])."/pos/C_customers/edit/".$rs['id']."'><i class='fa fa-pencil-square-o fa-fw'></i> | </a><a href='".site_url($lang['langs'])."/pos/C_customers/inactivate/".$rs['id']."' onclick='return confirm('Are you sure you want to delete?')'; title='Make Inactive'><i class='fa fa-trash-o fa-fw'></i></a>\"]";
+            $outp .= "\"<a href='".site_url($lang['langs'])."/pos/C_customers/edit/".$rs['id']."'><i class='fa fa-pencil-square-o fa-fw'></i> </a>";
+            $outp .= " | <a href='".site_url($lang['langs'])."/pos/C_customers/inactivate/".$rs['id']."' onclick='return confirm('Are you sure you want to delete?')'; title='Make Inactive'><i class='fa fa-trash-o fa-fw'></i></a>";
+            $outp .= " | <a href='".site_url($lang['langs'])."/pos/C_customers/edit/".$rs['id']."'>BA</a>";
+            $outp .= "\"]";
              
         }
             
@@ -948,11 +951,77 @@ class C_customers extends MY_Controller{
             
             $outp .= '"'   . trim($rs["address"]). '",';
             
-            $outp .= "\"<a href='".site_url($lang['langs'])."/pos/C_customers/edit/".$rs['id']."'><i class='fa fa-pencil-square-o fa-fw'></i> | </a><a href='".site_url($lang['langs'])."/pos/C_customers/inactivate/".$rs['id']."' onclick='return confirm('Are you sure you want to delete?')'; title='Make Inactive'><i class='fa fa-trash-o fa-fw'></i></a>\"]";
+            $outp .= "\"<a href='".site_url($lang['langs'])."/pos/C_customers/edit/".$rs['id']."'><i class='fa fa-pencil-square-o fa-fw'></i> </a>";
+            $outp .= " | <a href='".site_url($lang['langs'])."/pos/C_customers/inactivate/".$rs['id']."' onclick='return confirm('Are you sure you want to delete?')'; title='Make Inactive'><i class='fa fa-trash-o fa-fw'></i></a>";
+            $outp .= " | <a href='".site_url($lang['langs'])."/pos/C_customers/edit/".$rs['id']."'>BA</a>";
+            $outp .= "\"]";
+
+            //$outp .= "\"<a href='".site_url($lang['langs'])."/pos/C_customers/edit/".$rs['id']."'><i class='fa fa-pencil-square-o fa-fw'></i> | </a><a href='".site_url($lang['langs'])."/pos/C_customers/inactivate/".$rs['id']."' onclick='return confirm('Are you sure you want to delete?')'; title='Make Inactive'><i class='fa fa-trash-o fa-fw'></i></a>\"]";
              
         }
             
         $outp ='{"data": ['.$outp.']}';
         echo $outp;
+    }
+
+    function BA_form_pdf_report($customer_id)
+    {
+       // var_dump($sales_items);
+        $cur_balance = $this->M_customers->get_customer_total_balance($customer_id,FY_START_DATE,FY_END_DATE);
+        $CustomerName = $this->M_customers->get_CustomerName($customer_id);
+        $company_id = $_SESSION['company_id'];
+        $Company = $this->M_companies->get_companies($company_id);
+        
+        $this->load->library('tfpdf/TFPDF');
+        $pdf = new TFPDF();
+        
+        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+        $pdf->AddFont('DejaVuBold','B','DejaVuSansCondensed-Bold.ttf',true);
+
+        $pdf->AddPage();
+        $pdf->SetTitle(lang('ba_title'));
+        
+        //Display form text
+        $pdf->SetY(15);
+        // $pdf->SetX(40);
+        $pdf->SetFont('DejaVu','', 14);
+        $pdf->Cell(180, 10, lang('ba_title'), 0, 10,"C");
+        
+        $pdf->Ln(5);
+        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->Cell(180, 6, lang("dear").' '.$CustomerName.",");
+        
+        $body_text_1 = lang('ba_para_1');
+        $pdf->Ln(10);
+        $pdf->SetFont('DejaVu','', 12);
+        $pdf->MultiCell(180, 6, $body_text_1);
+        
+        $body_text_2 = lang('ba_para_2');
+        $pdf->Ln(5);
+        $pdf->SetFont('DejaVu','', 12);
+        $pdf->MultiCell(180, 6, $body_text_2);
+
+        $pdf->Ln(5);
+        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->Cell(180, 6, lang('period').date('d-m-Y')."");
+
+        $pdf->Ln(5);
+        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->Cell(180, 6, lang('total_amount').number_format(@$cur_balance[0]['total_balance'],2)."");
+       
+        $pdf->Ln(15);
+        $pdf->SetFont('DejaVu','', 12);
+        $pdf->Cell(180, 6, lang('best_regards'));
+        
+        // //Display Company Info
+        $pdf->Ln(8);
+        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->Cell(180, 6, @$Company[0]['name']);
+        // $pdf->SetFont('DejaVu','', 12);
+        // $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
+        // //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
+        // $pdf->Cell(50, 7, "PH : ".$Company[0]['contact_no'], 0, 1);
+
+        $pdf->Output();
     }
 }

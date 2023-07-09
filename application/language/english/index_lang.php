@@ -267,3 +267,18 @@ $lang['first_para']= 'Please click this';
 $lang['second_para']= 'Once you click this link you can reset you password and you can login into system.';
 $lang['third_para']= 'Thanks for choosing GuvenFi.';
 
+
+//BS Form PDF report
+$lang['dear']= "Dear";
+$lang['total_amount']= "Total Amount: ";
+$lang['period']= "Period: ";
+$lang['best_regards']= "Best regards";
+
+$lang['bs_title']= "BS Forum - Balance Sheet Form";
+$lang['bs_para_1']= "According to the Laws and Regulations, a notification form called BA will be provided for purchases of goods and services, and notification forms called BS will be provided for sales of goods and services.";
+$lang['bs_para_2']= "The information for the BS Form related to the period {Date} is presented in the table below:";
+
+//BA Form PDF report
+$lang['ba_title']= "BA Forum - Balance Sheet Form";
+$lang['ba_para_1']= "According to the Laws and Regulations, a notification form called BA will be provided for purchases of goods and services, and notification forms called BS will be provided for sales of goods and services.";
+$lang['ba_para_2']= "The information for the BA Form related to the period {Date} is presented in the table below:";

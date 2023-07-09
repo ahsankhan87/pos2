@@ -334,11 +334,12 @@ var Customers = function () {
                         
                     ],
             "createdRow": function( nRow, aData, iDisplayIndex ) {
-                            $('td:eq(0)', nRow).html('<a href="'+site_url+'/pos/C_customers/customerDetail/' + aData['id'] + '">' +
-                                aData['first_name'] + '</a>');
+                            // $('td:eq(0)', nRow).html('<a href="'+site_url+'/pos/C_customers/customerDetail/' + aData['id'] + '">'+aData['first_name'] + '</a>');
+                            $('td:eq(0)', nRow).html(aData['first_name']+' '+ aData['last_name']);
                                 
-                            $('td:eq(5)', nRow).html('<a href="'+site_url+'/pos/C_customers/edit/' + aData['id'] + 
-                            '"><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | <a href="'+site_url+'/pos/C_customers/delete/' + aData['id'] + '/' + aData['op_balance_dr'] + '/' + aData['op_balance_cr'] + '" onclick="return confirm(\'Are you sure you want to permanent delete customer and his account transactions?\')"; title=\'Permanent Delete\'><i class=\'fa fa-trash-o fa-fw\'></i></a>');
+                            $('td:eq(5)', nRow).html('<a href="'+site_url+'/pos/C_customers/edit/' + aData['id'] + '"><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> '+
+                            '| <a href="'+site_url+'/pos/C_customers/delete/' + aData['id'] + '/' + aData['op_balance_dr'] + '/' + aData['op_balance_cr'] + '" onclick="return confirm(\'Are you sure you want to permanent delete customer and his account transactions?\')"; title=\'Permanent Delete\'><i class=\'fa fa-trash-o fa-fw\'></i></a>'+
+                            ' | <a href="'+site_url+'/pos/C_customers/BA_form_pdf_report/' + aData['id'] + '" target="_blank">BA</a>');
             //                 '<div class="btn-group">'+
             //                 '<button type="button" class="btn btn-success">Sales</button>'+
 			// '<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>'+

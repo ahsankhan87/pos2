@@ -98,7 +98,7 @@ class M_suppliers extends CI_Model{
     
     public function get_supplier_total_balance($supplier_id,$fy_start_date,$fy_end_date)
     {
-        $this->db->select('SUM(debit) as dr_balance, SUM(credit) as cr_balance')->from('pos_supplier_payments sp')->where('sp.supplier_id', $supplier_id);
+        $this->db->select('SUM(debit) as dr_balance, SUM(credit) as cr_balance, SUM(credit-debit) as total_balance')->from('pos_supplier_payments sp')->where('sp.supplier_id', $supplier_id);
         $this->db->where('sp.company_id', $_SESSION['company_id']);
         $this->db->where('date >=', $fy_start_date);
         $this->db->where('date <=', $fy_end_date);

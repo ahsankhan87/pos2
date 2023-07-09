@@ -170,7 +170,7 @@ class C_invoices extends MY_Controller
                 $entry_id = $this->db->insert_id();
                 
                 //CUSTOMER PAYMENT ENTRY
-                $this->M_customers->addCustomerPaymentEntry($deposit_to_acc_code, 0, $sub_total, 0, $customer_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id,$due_date);
+                $this->M_customers->addCustomerPaymentEntry($deposit_to_acc_code, $deposit_to_acc_code, $sub_total, 0, $customer_id, $narration, $new_invoice_no, $sale_date, 1, $entry_id,$due_date);
 
                 foreach ($this->input->post('account_id') as $key => $value) {
                     
@@ -471,7 +471,7 @@ class C_invoices extends MY_Controller
         $pdf->AddFont('DejaVuBold','B','DejaVuSansCondensed-Bold.ttf',true);
 
         $pdf->AddPage();
-        
+        $pdf->SetTitle(strtoupper(lang("invoice"))."#:".$new_invoice_no);
         //Display Company Info
         $pdf->SetFont('DejaVuBold', 'B', 14);
         $pdf->Cell(50, 10, $Company[0]['name'], 0, 1);

@@ -8,7 +8,6 @@ class C_company extends MY_Controller{
        $this->lang->load('index');
     } 
     
-
     function index($company_id=NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));

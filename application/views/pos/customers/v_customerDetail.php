@@ -166,7 +166,7 @@
                                     echo '<td>'.$list['date'].'</td>';
                                     
                                     $account_name = $this->M_groups->get_groups($list['dueTo_acc_code'],$_SESSION['company_id']);
-                                    echo '<td>'.($langs == 'en' ? $account_name[0]['title'] : $account_name[0]['title_ur']).'</td>';
+                                    echo '<td>'.($langs == 'en' ? @$account_name[0]['title'] : @$account_name[0]['title_ur']).'</td>';
                                     echo '<td>'.round($list['debit'],2).'</td>';
                                     echo '<td>'.round($list['credit'],2).'</td>';
                             

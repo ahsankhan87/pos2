@@ -267,3 +267,18 @@ $lang['email_subject']= 'Şifre bağlantısını değiştir';
 $lang['first_para']= 'Lütfen buna tıklayın';
 $lang['second_para']= 'Bu linke tıkladıktan sonra şifrenizi değiştirebilirsiniz ve sisteme giriş yapabilirsiniz.';
 $lang['third_para']= "GüvenFi'yi tercih ettiğiniz için teşekkürler.";
+
+//BS Form PDF report
+$lang['dear']= "Sayin";
+$lang['total_amount']= "Fatura Toplami: ";
+$lang['period']= "Donem: ";
+$lang['best_regards']= "Saygılarımla";
+
+$lang['bs_title']= "BS Formu Mutakabat Formu";
+$lang['bs_para_1']= "Genel Telbligi geregince mal ve hizmet alımlarına iliskin bildirim formu BA ve mal ve hizmet satislarına iliskin bildirim formaları BS verilecektir.";
+$lang['bs_para_2']= "{Date} donemine ait olan BS Formu bilgileri asagidaki tabloda yer almaktadir:";
+
+//BA Form PDF report
+$lang['ba_title']= "BA Formu Mutakabat Formu";
+$lang['ba_para_1']= "Genel Telbligi geregince mal ve hizmet alımlarına iliskin bildirim formu BA ve mal ve hizmet satislarına iliskin bildirim formaları BS verilecektir.";
+$lang['ba_para_2']= "{Date} donemine ait olan BA Formu bilgileri asagidaki tabloda yer almaktadir:";
