@@ -580,9 +580,13 @@ class C_bills extends MY_Controller
          $pdf->Cell(50, 7, lang('invoice')." : " . $new_invoice_no);
  
          //Display Invoice date
-         $pdf->SetY(57);
+         $pdf->SetY(55);
          $pdf->SetX(-60);
          $pdf->Cell(50, 7, lang('invoice').' ' .lang('date')." : " . date('m-d-Y',strtotime($sales_items[0]["receiving_date"])));
+ 
+         $pdf->SetY(61);
+         $pdf->SetX(-60);
+         $pdf->Cell(50, 7, lang('due_date').": " . date('m-d-Y',strtotime($sales_items[0]["due_date"])));
  
          //Display Table headings
          $pdf->SetY(85);

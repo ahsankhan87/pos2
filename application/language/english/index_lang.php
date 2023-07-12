@@ -282,3 +282,5 @@ $lang['bs_para_2']= "The information for the BS Form related to the period {Date
 $lang['ba_title']= "BA Forum - Balance Sheet Form";
 $lang['ba_para_1']= "According to the Laws and Regulations, a notification form called BA will be provided for purchases of goods and services, and notification forms called BS will be provided for sales of goods and services.";
 $lang['ba_para_2']= "The information for the BA Form related to the period {Date} is presented in the table below:";
+
+$lang['unsubscribe']= 'Unsubscribe';

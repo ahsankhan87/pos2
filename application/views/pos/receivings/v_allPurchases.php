@@ -58,7 +58,7 @@
             </div>
             <div class="portlet-body flip-scroll">
 
-                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_1" ><!-- id="sample_receivings_1122" -->
+                <table class="table table-striped table-bordered table-condensed flip-content" id="sales_and_purchases" ><!-- id="sample_receivings_1122" -->
                     <thead class="flip-content">
                         <tr>
                             <th>S.No</th>
@@ -67,8 +67,8 @@
                             <!-- <th><?php echo lang('supplier'); ?> Inv #</th>-->
                             <th><?php echo lang('supplier'); ?></th>
                             <!-- <th><?php echo lang('account'); ?></th> -->
+                            <th class="text-right"><?php echo lang('tax'); ?></th>
                             <th class="text-right"><?php echo lang('amount'); ?></th>
-                            <!-- <th class="text-right"><?php echo lang('taxes'); ?></th> -->
                             <!-- <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th> -->
                             <?php 
                             if($purchaseType == "credit")
@@ -97,7 +97,8 @@
                             echo '<td>'.@$supplier_name.'</td>';
                             //    echo '<td>'.$list['supplier_invoice_no'].'</td>';
                             //    echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
-                            echo '<td class="text-right">'. number_format($total,2). '</td>';
+                            echo '<td class="text-right">'. round($list['total_tax'],2). '</td>';
+                            echo '<td class="text-right">'. round($total,2). '</td>';
                             
                             
                             if($paid >= $total){
@@ -130,9 +131,18 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th></th><th></th>
-                            <th></th><th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
+                            <th><?php echo lang('total') ?></th>
+                            <th class="text-right"></th>
+                            <th class="text-right"></th>
+                            <th></th>
+                            <?php if($purchaseType == "credit")
+                            {
+                                echo '<th></th>';
+                            }
+                            ?>
                         </tr>
                     </tfoot>
                 </table>

@@ -282,3 +282,5 @@ $lang['bs_para_2']= "{Date} donemine ait olan BS Formu bilgileri asagidaki tablo
 $lang['ba_title']= "BA Formu Mutakabat Formu";
 $lang['ba_para_1']= "Genel Telbligi geregince mal ve hizmet alımlarına iliskin bildirim formu BA ve mal ve hizmet satislarına iliskin bildirim formaları BS verilecektir.";
 $lang['ba_para_2']= "{Date} donemine ait olan BA Formu bilgileri asagidaki tabloda yer almaktadir:";
+
+$lang['unsubscribe']= 'Abone Iptal';

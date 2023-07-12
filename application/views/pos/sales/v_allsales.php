@@ -14,7 +14,7 @@
         ?>
 
         <p>
-        <!-- <div class="btn-group">
+            <!-- <div class="btn-group">
             <button type="button" class="btn btn-success"><?php echo lang('new') . ' ' . lang('transaction') ?></button>
             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
             <ul class="dropdown-menu" role="menu">
@@ -33,15 +33,12 @@
             </ul>
         </div>
         </p> -->
-        <?php if($sale_type == "cash")
-        {
-            echo anchor('pos/C_sales/index/'.$sale_type, lang('new').' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
-
-        }else{
-            echo anchor('pos/C_invoices/index/'.$sale_type, lang('new').' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"'); 
-
-        }
-        ?>
+            <?php if ($sale_type == "cash") {
+                echo anchor('pos/C_sales/index/' . $sale_type, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
+            } else {
+                echo anchor('pos/C_invoices/index/' . $sale_type, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
+            }
+            ?>
 
         <div class="portlet">
             <div class="portlet-title">
@@ -57,20 +54,19 @@
             </div>
             <div class="portlet-body flip-scroll">
 
-                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_1">
+                <table class="table table-striped table-bordered table-condensed flip-content" id="sales_and_purchases">
                     <thead class="flip-content">
                         <tr>
                             <th>S.No</th>
                             <th>Inv #</th>
                             <th><?php echo lang('date') ?></th>
                             <th><?php echo lang('customer') ?></th>
-                            <!-- <th><?php echo lang('account') ?></th> -->
+                            <th class="text-right"><?php echo lang('tax') ?></th>
                             <th class="text-right"><?php echo lang('amount') ?></th>
-                            <?php 
-                                if($sale_type != "cash")
-                                {
-                                    echo '<th>'. lang('status') .'</th>';
-                                }
+                            <?php
+                            if ($sale_type != "cash") {
+                                echo '<th>' . lang('status') . '</th>';
+                            }
                             ?>
                             <th class="hidden-print"><?php echo lang('action') ?></th>
                         </tr>
@@ -78,59 +74,65 @@
                     <tbody>
                         <?php
                         $sno = 1;
-                               foreach($sales as $key => $list)
-                               {
-                                    $total = ($list['total_amount']+$list['total_tax']);
-                                    $paid = ($list['paid']);
-                                   echo '<tr>';
-                                   //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                                   //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
-                                   echo '<td>'.$sno++.'</td>';
-                                   echo '<td>'.$list['invoice_no'].'</td>';
-                                   echo '<td>'.date('d-m-Y',strtotime($list['sale_date'])).'</td>';
-                                   $name = $this->M_customers->get_CustomerName($list['customer_id']);
-                                   echo '<td>'.@$name.'</td>';
-                                   //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
-                                   
-                                   echo '<td class="text-right">'. number_format($total,2). '</td>';
-                                   //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
-                                   
-                                   if($paid >= $total){
-                                        $label = "label label-success";
-                                        $status = 'Paid';
-                                   }elseif($paid < $total && $paid > 0) {
-                                        $label = "label label-warning";
-                                        $status = 'Partialy Paid';
-                                   }else {
-                                        $label = "label label-danger";
-                                        $status = 'Unpaid';
-                                    }
+                        foreach ($sales as $key => $list) {
+                            $total = ($list['total_amount'] + $list['total_tax']);
+                            $paid = ($list['paid']);
+                            echo '<tr>';
+                            //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
+                            //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
+                            echo '<td>' . $sno++ . '</td>';
+                            echo '<td>' . $list['invoice_no'] . '</td>';
+                            echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
+                            $name = $this->M_customers->get_CustomerName($list['customer_id']);
+                            echo '<td>' . @$name . '</td>';
+                            //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
 
-                                    if($sale_type != "cash")
-                                    {
-                                        echo '<td> <span class="'.$label.'">' . lang(strtolower($status)) . '</span></td>';
-                                    }
-                                   
-                                   echo '<td class="text-right">';
-                                   if($sale_type == "credit" && $status != 'Paid')
-                                   {
-                                    echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/receivePayment/' . $list['customer_id'] .'/'.$list['invoice_no'].'" title="" >'.lang('payment').' '.lang('receive').'</a> | ';
-                                   }
-                                   echo '<a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
-                                    | <a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/printReceipt/' . $list['invoice_no'] .'" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>
-                                    | <a href="'.site_url($langs).'/pos/'.($sale_type == "cash" ? "C_sales" : "C_invoices").'/delete/' . $list['invoice_no'] .'" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
-                                   echo '</td>';
-                                   echo '</tr>';
-                                } 
-                                   
+                            echo '<td class="text-right">' . round($list['total_tax'], 2) . '</td>';
+                            echo '<td class="text-right">' . round($total, 2) . '</td>';
+                            //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
+
+                            if ($paid >= $total) {
+                                $label = "label label-success";
+                                $status = 'Paid';
+                            } elseif ($paid < $total && $paid > 0) {
+                                $label = "label label-warning";
+                                $status = 'Partialy Paid';
+                            } else {
+                                $label = "label label-danger";
+                                $status = 'Unpaid';
+                            }
+
+                            if ($sale_type != "cash") {
+                                echo '<td> <span class="' . $label . '">' . lang(strtolower($status)) . '</span></td>';
+                            }
+
+                            echo '<td class="text-right">';
+                            if ($sale_type == "credit" && $status != 'Paid') {
+                                echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/receivePayment/' . $list['customer_id'] . '/' . $list['invoice_no'] . '" title="" >' . lang('payment') . ' ' . lang('receive') . '</a> | ';
+                            }
+                            echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/editSales/' . $list['invoice_no'] . '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
+                                    | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>
+                                    | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+
                         ?>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th></th><th></th>
-                            <th></th><th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th><?php echo lang('total') ?></th>
+                            <th class="text-right"></th>
+                            <th class="text-right"></th>
+                            <th></th>
+                            <?php
+                            if ($sale_type != "cash") {
+                                echo '<th></th>';
+                            }
+                            ?>
                         </tr>
                     </tfoot>
                 </table>

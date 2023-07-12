@@ -40,7 +40,7 @@ foreach ($Company as $values) :
       <br/>This product will expire on <strong><?php echo date('F d, Y', $values['expire']) ?></strong>
       <!-- <a href="<?php echo site_url('reports/C_profitloss/run_pl_report') ?>" class="btn btn-success">Run Retained Earning Report</a> -->
         <?php } ?>
-      <a href="<?php echo site_url($langs)?>/companies/C_company/unsubscribe/" class="btn btn-danger text-right">Unsubscribe</a>
+      <a href="<?php echo site_url($langs)?>/companies/C_company/unsubscribe/" class="btn btn-danger text-right"><?php echo lang('unsubscribe') ?></a>
     </p>
     
   </div>
