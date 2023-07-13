@@ -31,9 +31,9 @@ class MY_Controller extends CI_Controller
         ($_SESSION['time_zone'] != "" ? date_default_timezone_set($_SESSION['time_zone']) : "");
 
         //get active financial year
-        define('FY_YEAR', $_SESSION['fy_year']);
-        define('FY_START_DATE', $_SESSION['fy_start_date']);
-        define('FY_END_DATE', $_SESSION['fy_end_date']);
+        define('FY_YEAR', ($_SESSION['fy_year'] == "no f/year" ? date('Y-m-d') : $_SESSION['fy_year']));
+        define('FY_START_DATE', ($_SESSION['fy_start_date'] == "" ? date('Y-m-d') : $_SESSION['fy_start_date']));
+        define('FY_END_DATE', ($_SESSION['fy_end_date'] == "" ? date('Y-m-d') : $_SESSION['fy_end_date']));
 
         //----------------Check Allowed Module------------------ 
         $module_name = $this->uri->segment(2);

@@ -42,8 +42,8 @@ class C_dashboard extends MY_Controller
     //$cur_month = date("Y-m");
     //$data['cur_month'] =  $this->M_dashboard->cur_month_sale($cur_month,$_SESSION["company_id"]);
 
-    $data['monthly_sale'] = $this->M_dashboard->month_sales($_SESSION["company_id"]);
-    $data['banking'] = $this->M_banking->get_activeBanking();
+    $data['monthly_sale'] = array(); //$this->M_dashboard->month_sales($_SESSION["company_id"]);
+    // $data['banking'] = $this->M_banking->get_activeBanking();
 
     //$ledgers= $this->M_ledgers->getLedgerByName('Revenue');
 

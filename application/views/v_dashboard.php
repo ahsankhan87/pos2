@@ -1,21 +1,7 @@
 <div class="row">
 
 	<?php
-	//get total monthly unit price of sold items i.e total monthly sale for the chart
-	$month = ""; //for chart
-	$price = ""; //for chart
-	//var_dump($monthlySaleReport);
-	foreach ($monthly_sale as $values) :
-
-		$month .= '"' . $values['month'] . '",';
-		$price .= abs($values['amount']) . ',';
-
-	endforeach;
-
-	//convert into JSON for Chart
-	$month = '[' . $month . ']';
-	$price = '[' . $price . ']';
-	///////////////////////////////////////
+	
 
 	//for expense
 	//////////////////
@@ -44,39 +30,7 @@
 	?>
 
 	<script>
-		////////////////////////////////////
-		////MONTHLY SALES CHART
-		var months = <?php echo $month; ?>;
-		var price = <?php echo $price; ?>;
-		var barChartData = {
-			labels: months,
-			datasets: [{
-				label: 'Monthly Sales',
-				//fillColor: "rgba(120,220,220,0.5)",
-				//strokeColor: "rgba(140,220,220,0.8)",
-				//highlightFill: "rgba(120,220,220,0.75)",
-				//highlightStroke: "rgba(140,220,220,1)",
-				data: price,
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255,99,132,1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-
-		};
+		
 
 		///////////////////////////
 		//EXPENSE CHART
@@ -252,7 +206,7 @@
 
 									//CURRENT BALANCES
 									// $cur_balance = $this->M_banking->get_bank_total_balance($list['id'], FY_START_DATE, FY_END_DATE);
-									$cur_balance = $this->M_groups->get_account_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']);
+									$cur_balance = $this->M_groups->get_account_total_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']);
 									// $balance_dr = (double) $cur_balance[0]['dr_balance'];
 									// $balance_cr = (double) $cur_balance[0]['cr_balance'];
 

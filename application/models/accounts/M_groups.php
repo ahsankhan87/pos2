@@ -296,6 +296,24 @@ class M_groups extends CI_Model{
             return 0;
         }
     }
+
+    function get_account_total_balance($company_id,$fy_start_date,$fy_end_date,$account_code)
+    {
+        $this->db->select('SUM(debit-credit) as balance');
+        //$this->db->join('acc_entry_items ei','ei.account_code=g.account_code');
+        //$this->db->join('acc_entries e','ei.entry_id=e.id');
+        $this->db->where(array('ei.company_id'=>$company_id,'ei.account_code'=>$account_code));
+        $this->db->where('ei.date >=', $fy_start_date);
+        $this->db->where('ei.date <=', $fy_end_date);
+        
+        $query =$this->db->get('acc_entry_items ei');    
+        if($query->row())
+        {
+            return $query->row()->balance;
+        }else{
+            return 0;
+        }
+    }
     
     function account_has_entry($account_code)
     {
