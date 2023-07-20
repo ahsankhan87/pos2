@@ -48,7 +48,7 @@ class C_bills extends MY_Controller
         $data['receivings'] = $this->M_receivings->get_receivings(false, $start_date, $to_date,'credit');
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/receivings/v_allPurchases', $data);
+        $this->load->view('pos/receivings/v_all_bills', $data);
         $this->load->view('templates/footer');
     }
 

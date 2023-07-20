@@ -284,3 +284,10 @@ $lang['ba_para_1']= "According to the Laws and Regulations, a notification form 
 $lang['ba_para_2']= "The information for the BA Form related to the period {Date} is presented in the table below:";
 
 $lang['unsubscribe']= 'Unsubscribe';
+
+//Email PDF invoice report
+$lang['epdf_para_1']= "Thanks for being a customer. A detailed summary of your invoice is attached.";
+$lang['epdf_para_2']= "If you have questions, we're happy to help.";
+$lang['epdf_para_3']= "Email Sales Email or contact us through other support channels.";
+$lang['epdf_para_4']= "NOTE: Please do not reply to this email. Your response will not be received.";
+

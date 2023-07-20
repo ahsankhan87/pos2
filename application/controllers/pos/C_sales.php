@@ -46,13 +46,13 @@ class C_sales extends MY_Controller
 
         $data['main_small'] = $fiscal_dates;
 
-        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date,'cash');
+        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date, 'cash');
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_allsales', $data);
         $this->load->view('templates/footer');
     }
- 
+
     public function editSales($invoice_no)
     {
         $data = array('langs' => $this->session->userdata('lang'));
@@ -67,13 +67,13 @@ class C_sales extends MY_Controller
 
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
         //$data['customersDDL'] = $this->M_customers->getCustomerDropDown();
-        
+
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_editsales', $data);
         $this->load->view('templates/footer');
     }
 
-    public function sale_transaction($edit = null,$invoice_no=null)
+    public function sale_transaction($edit = null, $invoice_no = null)
     {
         $total_amount = 0;
         $discount = 0;
@@ -84,20 +84,18 @@ class C_sales extends MY_Controller
 
             if (count((array)$this->input->post('account_id')) > 0) {
                 $this->db->trans_start();
-        
+
                 //IF EDIT THEN DELETE ALL INVOICES AND INSERT AGAIN
-                if($edit != null)
-                {
-                    $this->delete($invoice_no,false);
+                if ($edit != null) {
+                    $this->delete($invoice_no, false);
                     $new_invoice_no = $invoice_no;
-                }else{
+                } else {
                     //GET PREVIOISE INVOICE NO  
                     @$prev_invoice_no = $this->M_sales->getMAXSaleInvoiceNo();
                     //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
                     //$new_invoice_no = 'POS'.date("Ymd").$number;
                     $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
                     $new_invoice_no = 'S' . $number;
-
                 }
 
                 //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
@@ -106,11 +104,11 @@ class C_sales extends MY_Controller
                 $sale_date = $this->input->post("sale_date");
                 $customer_id = $this->input->post("customer_id");
                 $emp_id = ''; //$this->input->post("emp_id");
-                $unit_id = '';//$this->input->post("unit_id");
+                $unit_id = ''; //$this->input->post("unit_id");
                 //$posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $narration = ''; //($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'sale'; //$this->input->post("register_mode");
                 $saleType = trim($this->input->post("sale_type"));
                 $is_taxable =  1; //$this->input->post("is_taxable");
@@ -121,13 +119,13 @@ class C_sales extends MY_Controller
                 $sub_total = $this->input->post("sub_total");
                 $tax_acc_code = $this->input->post("tax_acc_code");
                 $tax_rate = $this->input->post("tax_rate");
-                $tax_id = $this->input->post('tax_id'); 
+                $tax_id = $this->input->post('tax_id');
 
                 $data = array(
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
                     'customer_id' => $customer_id,
-                    'deposit_to_acc_code'=>$deposit_to_acc_code,
+                    'deposit_to_acc_code' => $deposit_to_acc_code,
                     'employee_id' => $emp_id,
                     'user_id' => $user_id,
                     'sale_date' => $sale_date,
@@ -139,9 +137,9 @@ class C_sales extends MY_Controller
                     'total_amount' => ($register_mode == 'sale' ? $sub_total : -$sub_total), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     //'is_taxable' => $is_taxable,
-                    'due_date'=>$due_date,
-                    'business_address'=>$business_address,
-                    'tax_rate'=>$tax_rate,
+                    'due_date' => $due_date,
+                    'business_address' => $business_address,
+                    'tax_rate' => $tax_rate,
                     'tax_id' => $tax_id,
 
                 );
@@ -167,20 +165,20 @@ class C_sales extends MY_Controller
                 $this->db->insert('acc_entry_items', $data);
 
                 foreach ($this->input->post('account_id') as $key => $value) {
-                    
+
                     if ($value != 0) {
                         $account_code  = htmlspecialchars(trim($value));
                         $qty = $this->input->post('qty')[$key];
                         $unit_price = $this->input->post('unit_price')[$key];
                         $cost_price = $this->input->post('cost_price')[$key];
                         $description = $this->input->post('description')[$key];
-                        $total_amount = (double)($qty*$unit_price);
-                    
+                        $total_amount = (float)($qty * $unit_price);
+
                         $data = array(
                             'sale_id' => $sale_id,
                             'invoice_no' => $new_invoice_no,
-                            'item_id' => 0,//$item_id,
-                            'account_code'=>$account_code,
+                            'item_id' => 0, //$item_id,
+                            'account_code' => $account_code,
                             'description' => $narration,
                             'quantity_sold' => $qty, //if sales return then insert amount in negative
                             'item_cost_price' => $cost_price, //actually its avg cost comming from sale from
@@ -197,7 +195,7 @@ class C_sales extends MY_Controller
 
                         $this->db->insert('pos_sales_items', $data);
 
-                       
+
                         $data = array(
                             //'entry_id' => $entry_id,
                             'employee_id' => $emp_id,
@@ -216,57 +214,56 @@ class C_sales extends MY_Controller
                         );
                         $this->db->insert('acc_entry_items', $data);
 
-                         //for logging
-                         $msg = 'invoice no ' . $new_invoice_no;
-                         $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
-                         // end logging
-                         
+                        //for logging
+                        $msg = 'invoice no ' . $new_invoice_no;
+                        $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
+                        // end logging
+
                     }
-                    
                 }
-                    ///////////////
-                    //TAX ACCOUNT ENTRY
-                    $data = array(
-                        //'entry_id' => $entry_id,
-                        'employee_id' => $emp_id,
-                        'user_id' => $user_id,
-                        //'entry_no' => $entry_no,
-                        //'name' => $name,
-                        'account_code' => $deposit_to_acc_code, //account_id,
-                        'date' => $sale_date,
-                        //'amount' => $dr_amount,
-                        //'ref_account_id' => $ref_id,
-                        'debit' => $total_tax_amount,
-                        'credit' => 0,
-                        'invoice_no' => $new_invoice_no,
-                        'narration' => $narration,
-                        'company_id' => $company_id,
-                    );
-                    $this->db->insert('acc_entry_items', $data);
-                    
-                    $data = array(
-                        //'entry_id' => $entry_id,
-                        'employee_id' => $emp_id,
-                        'user_id' => $user_id,
-                        //'entry_no' => $entry_no,
-                        //'name' => $name,
-                        'account_code' => $tax_acc_code, //account_id,
-                        'date' => $sale_date,
-                        //'amount' => $dr_amount,
-                        //'ref_account_id' => $ref_id,
-                        'debit' => 0,
-                        'credit' => $total_tax_amount,
-                        'invoice_no' => $new_invoice_no,
-                        'narration' => $narration,
-                        'company_id' => $company_id,
-                    );
-                    $this->db->insert('acc_entry_items', $data);
-                    //////////
+                ///////////////
+                //TAX ACCOUNT ENTRY
+                $data = array(
+                    //'entry_id' => $entry_id,
+                    'employee_id' => $emp_id,
+                    'user_id' => $user_id,
+                    //'entry_no' => $entry_no,
+                    //'name' => $name,
+                    'account_code' => $deposit_to_acc_code, //account_id,
+                    'date' => $sale_date,
+                    //'amount' => $dr_amount,
+                    //'ref_account_id' => $ref_id,
+                    'debit' => $total_tax_amount,
+                    'credit' => 0,
+                    'invoice_no' => $new_invoice_no,
+                    'narration' => $narration,
+                    'company_id' => $company_id,
+                );
+                $this->db->insert('acc_entry_items', $data);
+
+                $data = array(
+                    //'entry_id' => $entry_id,
+                    'employee_id' => $emp_id,
+                    'user_id' => $user_id,
+                    //'entry_no' => $entry_no,
+                    //'name' => $name,
+                    'account_code' => $tax_acc_code, //account_id,
+                    'date' => $sale_date,
+                    //'amount' => $dr_amount,
+                    //'ref_account_id' => $ref_id,
+                    'debit' => 0,
+                    'credit' => $total_tax_amount,
+                    'invoice_no' => $new_invoice_no,
+                    'narration' => $narration,
+                    'company_id' => $company_id,
+                );
+                $this->db->insert('acc_entry_items', $data);
+                //////////
 
                 $this->db->trans_complete();
                 echo '1';
             } //check product count
-            
+
         }
     }
 
@@ -290,7 +287,7 @@ class C_sales extends MY_Controller
 
         $this->load->view('templates/header', $data);
         //$this->load->view('pos/sales/v_receipt_small', $data);
-        $this->load->view('pos/sales/v_receipt',$data);
+        $this->load->view('pos/sales/v_receipt', $data);
         $this->load->view('templates/footer');
     }
 
@@ -409,36 +406,34 @@ class C_sales extends MY_Controller
         $Company = $this->M_companies->get_companies($company_id);
         $customer =  @$this->M_customers->get_customers(@$sales_items[0]['customer_id']);
 
-        
+
         // $this->load->library('Pdf_f');
         // $pdf = new Pdf_f("P", 'mm', 'A4');
         $this->load->library('tfpdf/TFPDF');
         $pdf = new TFPDF();
-        
-        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
-        $pdf->AddFont('DejaVuBold','B','DejaVuSansCondensed-Bold.ttf',true);
+
+        $pdf->AddFont('DejaVu', '', 'DejaVuSansCondensed.ttf', true);
+        $pdf->AddFont('DejaVuBold', 'B', 'DejaVuSansCondensed-Bold.ttf', true);
 
         $pdf->AddPage();
         //Display Company Info
-        $pdf->SetFont('DejaVuBold','B', 14);
+        $pdf->SetFont('DejaVuBold', 'B', 14);
         $pdf->Cell(50, 10, $Company[0]['name'], 0, 1);
-        $pdf->SetFont('DejaVu','', 12);
+        $pdf->SetFont('DejaVu', '', 12);
         $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
-        $pdf->Cell(50, 7, "PH : ".$Company[0]['contact_no'], 0, 1);
-        
-        if($Company[0]['image'] != "")
-        {
-           $pdf->SetY(10);
-           $pdf->SetX(90);
-           $pdf->Image(base_url().'images/company/thumb/'.@$Company[0]['image']);
+        $pdf->Cell(50, 7, "PH : " . $Company[0]['contact_no'], 0, 1);
 
+        if ($Company[0]['image'] != "") {
+            $pdf->SetY(10);
+            $pdf->SetX(90);
+            $pdf->Image(base_url() . 'images/company/thumb/' . @$Company[0]['image']);
         }
-        
+
         //Display INVOICE text
         $pdf->SetY(15);
         $pdf->SetX(-40);
-        $pdf->SetFont('DejaVuBold','B', 18);
+        $pdf->SetFont('DejaVuBold', 'B', 18);
         $pdf->Cell(50, 10, strtoupper(lang("receipt")), 0, 1);
 
         //Display Horizontal line
@@ -447,9 +442,9 @@ class C_sales extends MY_Controller
         //Billing Details // Body
         $pdf->SetY(49);
         $pdf->SetX(10);
-        $pdf->SetFont('DejaVuBold','B', 12);
-        $pdf->Cell(50, 10, lang('bill').' '.lang('to')." : ", 0, 1);
-        $pdf->SetFont('DejaVu','', 12);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(50, 10, lang('bill') . ' ' . lang('to') . " : ", 0, 1);
+        $pdf->SetFont('DejaVu', '', 12);
         $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["address"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["city"], 0, 1);
@@ -458,23 +453,23 @@ class C_sales extends MY_Controller
         //Display Invoice no
         $pdf->SetY(49);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('invoice')." No : " . $new_invoice_no);
+        $pdf->Cell(50, 7, lang('invoice') . " No : " . $new_invoice_no);
 
         //Display Invoice date
         $pdf->SetY(57);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('invoice').' ' .lang('date')." : " . date('m-d-Y',strtotime($sales_items[0]["sale_date"])));
+        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . " : " . date('m-d-Y', strtotime($sales_items[0]["sale_date"])));
 
         //Display Table headings
         $pdf->SetY(85);
         $pdf->SetX(10);
-        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(105, 9, strtoupper(lang("description")), 1, 0);
         $pdf->Cell(30, 9, strtoupper(lang("price")), 1, 0, "C");
         $pdf->Cell(25, 9, strtoupper(lang("quantity")), 1, 0, "C");
         $pdf->Cell(30, 9, strtoupper(lang("total")), 1, 1, "C");
-        $pdf->SetFont('DejaVu','', 12);
-        
+        $pdf->SetFont('DejaVu', '', 12);
+
         $discount = 0;
         $total_cost = 0;
         $total = 0;
@@ -490,43 +485,43 @@ class C_sales extends MY_Controller
             $cellWidth = 105;
             $cellHeight = 7;
             // check whether the text is overflowing
-            if($pdf->GetStringWidth($row["item_desc"]) < $cellWidth){
-                $line= 1; // if not then do nothing
-            }else{
-                $textLength= strlen($row["item_desc"]);
+            if ($pdf->GetStringWidth($row["item_desc"]) < $cellWidth) {
+                $line = 1; // if not then do nothing
+            } else {
+                $textLength = strlen($row["item_desc"]);
                 $errMargin = 10;
                 $startChar = 0;
                 $maxChar = 1;
                 $textArray = array();
                 $tmpString =  "";
 
-                while($startChar < $textLength){
-                    
-                    while($pdf->GetStringWidth($tmpString) < ($cellWidth-$errMargin) && ($startChar+$maxChar) < $textLength){
+                while ($startChar < $textLength) {
+
+                    while ($pdf->GetStringWidth($tmpString) < ($cellWidth - $errMargin) && ($startChar + $maxChar) < $textLength) {
                         $maxChar++;
-                        $tmpString = substr($row["item_desc"], $startChar,$maxChar);
+                        $tmpString = substr($row["item_desc"], $startChar, $maxChar);
                     }
 
-                    $startChar = $startChar+$maxChar;
-                    array_push($textArray,$tmpString);
+                    $startChar = $startChar + $maxChar;
+                    array_push($textArray, $tmpString);
 
-                    $maxChar=0;
-                    $tmpString='';
+                    $maxChar = 0;
+                    $tmpString = '';
                 }
-                $line=count($textArray);
+                $line = count($textArray);
             }
             $xPos = $pdf->GetX();
             $yPos = $pdf->GetY();
 
-            $pdf->MultiCell($cellWidth, $cellHeight, $row["item_desc"], 1,'L' );
-            $pdf->SetXY($xPos+$cellWidth,$yPos);
+            $pdf->MultiCell($cellWidth, $cellHeight, $row["item_desc"], 1, 'L');
+            $pdf->SetXY($xPos + $cellWidth, $yPos);
             // $pdf->Cell(105, 9, $row["item_desc"],  "LR",0 );
-            $pdf->Cell(30, ($line*$cellHeight), number_format($row["item_unit_price"],2), 1, 0,'R' );
-            $pdf->Cell(25, ($line*$cellHeight), number_format($row["quantity_sold"],2), 1, 0,'R' );
-            $pdf->Cell(30, ($line*$cellHeight), number_format(($row['item_unit_price'] * $row['quantity_sold']),2),  1, 1,'R' );
+            $pdf->Cell(30, ($line * $cellHeight), number_format($row["item_unit_price"], 2), 1, 0, 'R');
+            $pdf->Cell(25, ($line * $cellHeight), number_format($row["quantity_sold"], 2), 1, 0, 'R');
+            $pdf->Cell(30, ($line * $cellHeight), number_format(($row['item_unit_price'] * $row['quantity_sold']), 2),  1, 1, 'R');
         }
-         //Display table empty rows
-         for ($i = 0; $i < 12 - count($sales_items); $i++) {
+        //Display table empty rows
+        for ($i = 0; $i < 12 - count($sales_items); $i++) {
             $pdf->Cell(105, 9, "", "LR", 0);
             $pdf->Cell(30, 9, "", "R", 0, "R");
             $pdf->Cell(25, 9, "", "R", 0, "C");
@@ -534,25 +529,15 @@ class C_sales extends MY_Controller
         }
         //Display table total row
         $total_tax = @$sales_items[0]["total_tax"];
-        $pdf->SetFont('DejaVuBold','B', 12);
-        $pdf->Cell(160, 9, strtoupper(lang("total").' '.lang("tax")), 1, 0, "R");
-        $pdf->Cell(30, 9, number_format($total_tax,2), 1, 1, "R");
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(160, 9, strtoupper(lang("total") . ' ' . lang("tax")), 1, 0, "R");
+        $pdf->Cell(30, 9, number_format($total_tax, 2), 1, 1, "R");
 
         //Display table total row
         $total = (@$sales_items[0]["total_amount"] + $total_tax);
-        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(160, 9, strtoupper(lang("total")), 1, 0, "R");
-        $pdf->Cell(30, 9, number_format($total,2), 1, 1, "R");
-
-        //Display amount in words
-        // $pdf->SetY(215);
-        // $pdf->SetX(10);
-        // $pdf->SetFont('DejaVuBold','B', 12);
-        // $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
-        // $pdf->SetFont('DejaVu','', 12);
-        // $pdf->Cell(0, 9, number_format($total,2), 0, 1);
-        ///////////////
-        ///body
+        $pdf->Cell(30, 9, number_format($total, 2), 1, 1, "R");
 
         //set footer position
         $pdf->SetY(-60);
@@ -568,5 +553,218 @@ class C_sales extends MY_Controller
         ///////////////
 
         $pdf->Output();
+    }
+
+
+    function send_email_inv($customer_id, $invoice_no)
+    {
+        //////////
+        /////////Output PDF agains for email invoice
+        $sales_items = $this->M_sales->get_sales_items($invoice_no);
+        //$sales_items = $data['sales_items'];
+
+        $company_id = $_SESSION['company_id'];
+        $Company = $this->M_companies->get_companies($company_id);
+        $customer =  @$this->M_customers->get_customers(@$sales_items[0]['customer_id']);
+        $this->load->library('tfpdf/TFPDF');
+        $pdf = new TFPDF();
+
+        $pdf->AddFont('DejaVu', '', 'DejaVuSansCondensed.ttf', true);
+        $pdf->AddFont('DejaVuBold', 'B', 'DejaVuSansCondensed-Bold.ttf', true);
+
+        $pdf->AddPage();
+        //Display Company Info
+        $pdf->SetFont('DejaVuBold', 'B', 14);
+        $pdf->Cell(50, 10, $Company[0]['name'], 0, 1);
+        $pdf->SetFont('DejaVu', '', 12);
+        $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
+        //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
+        $pdf->Cell(50, 7, "PH : " . $Company[0]['contact_no'], 0, 1);
+
+        if ($Company[0]['image'] != "") {
+            $pdf->SetY(10);
+            $pdf->SetX(90);
+            $pdf->Image(base_url() . 'images/company/thumb/' . @$Company[0]['image']);
+        }
+
+        //Display INVOICE text
+        $pdf->SetY(15);
+        $pdf->SetX(-40);
+        $pdf->SetFont('DejaVuBold', 'B', 18);
+        $pdf->Cell(50, 10, strtoupper(lang("receipt")), 0, 1);
+
+        //Display Horizontal line
+        $pdf->Line(0, 42, 210, 42);
+
+        //Billing Details // Body
+        $pdf->SetY(49);
+        $pdf->SetX(10);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(50, 10, lang('bill') . ' ' . lang('to') . " : ", 0, 1);
+        $pdf->SetFont('DejaVu', '', 12);
+        $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
+        $pdf->Cell(50, 5, @$customer[0]["address"], 0, 1);
+        $pdf->Cell(50, 5, @$customer[0]["city"], 0, 1);
+        $pdf->Cell(50, 5, @$customer[0]["phone_no"], 0, 1);
+
+        //Display Invoice no
+        $pdf->SetY(49);
+        $pdf->SetX(-60);
+        $pdf->Cell(50, 7, lang('invoice') . " No : " . $invoice_no);
+
+        //Display Invoice date
+        $pdf->SetY(57);
+        $pdf->SetX(-60);
+        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . " : " . date('m-d-Y', strtotime($sales_items[0]["sale_date"])));
+
+        //Display Table headings
+        $pdf->SetY(85);
+        $pdf->SetX(10);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(105, 9, strtoupper(lang("description")), 1, 0);
+        $pdf->Cell(30, 9, strtoupper(lang("price")), 1, 0, "C");
+        $pdf->Cell(25, 9, strtoupper(lang("quantity")), 1, 0, "C");
+        $pdf->Cell(30, 9, strtoupper(lang("total")), 1, 1, "C");
+        $pdf->SetFont('DejaVu', '', 12);
+
+        $discount = 0;
+        $total_cost = 0;
+        $total = 0;
+        $total_tax = 0;
+        //Display table product rows
+        foreach ($sales_items as $row) {
+            //$total_cost = ($row['item_unit_price'] * $row['quantity_sold']) - $row['discount_value'];
+            //$total += ($row['item_unit_price'] * $row['quantity_sold']);
+            //$discount += $row['discount_value'];
+            // $tax_amount = $total_cost * $row['tax_rate'] / 100;
+            //$account_name = $this->M_groups->get_accountName($row['account_code']);
+
+            $cellWidth = 105;
+            $cellHeight = 7;
+            // check whether the text is overflowing
+            if ($pdf->GetStringWidth($row["item_desc"]) < $cellWidth) {
+                $line = 1; // if not then do nothing
+            } else {
+                $textLength = strlen($row["item_desc"]);
+                $errMargin = 10;
+                $startChar = 0;
+                $maxChar = 1;
+                $textArray = array();
+                $tmpString =  "";
+
+                while ($startChar < $textLength) {
+
+                    while ($pdf->GetStringWidth($tmpString) < ($cellWidth - $errMargin) && ($startChar + $maxChar) < $textLength) {
+                        $maxChar++;
+                        $tmpString = substr($row["item_desc"], $startChar, $maxChar);
+                    }
+
+                    $startChar = $startChar + $maxChar;
+                    array_push($textArray, $tmpString);
+
+                    $maxChar = 0;
+                    $tmpString = '';
+                }
+                $line = count($textArray);
+            }
+            $xPos = $pdf->GetX();
+            $yPos = $pdf->GetY();
+
+            $pdf->MultiCell($cellWidth, $cellHeight, $row["item_desc"], 1, 'L');
+            $pdf->SetXY($xPos + $cellWidth, $yPos);
+            // $pdf->Cell(105, 9, $row["item_desc"],  "LR",0 );
+            $pdf->Cell(30, ($line * $cellHeight), number_format($row["item_unit_price"], 2), 1, 0, 'R');
+            $pdf->Cell(25, ($line * $cellHeight), number_format($row["quantity_sold"], 2), 1, 0, 'R');
+            $pdf->Cell(30, ($line * $cellHeight), number_format(($row['item_unit_price'] * $row['quantity_sold']), 2),  1, 1, 'R');
+        }
+        //Display table empty rows
+        for ($i = 0; $i < 12 - count($sales_items); $i++) {
+            $pdf->Cell(105, 9, "", "LR", 0);
+            $pdf->Cell(30, 9, "", "R", 0, "R");
+            $pdf->Cell(25, 9, "", "R", 0, "C");
+            $pdf->Cell(30, 9, "", "R", 1, "R");
+        }
+        //Display table total row
+        $total_tax = @$sales_items[0]["total_tax"];
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(160, 9, strtoupper(lang("total") . ' ' . lang("tax")), 1, 0, "R");
+        $pdf->Cell(30, 9, number_format($total_tax, 2), 1, 1, "R");
+
+        //Display table total row
+        $total = (@$sales_items[0]["total_amount"] + $total_tax);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(160, 9, strtoupper(lang("total")), 1, 0, "R");
+        $pdf->Cell(30, 9, number_format($total, 2), 1, 1, "R");
+
+        //set footer position
+        $pdf->SetY(-60);
+        //$pdf->SetFont('helvetica', 'B', 12);
+        //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
+        $pdf->Ln(15);
+        $pdf->SetFont('DejaVu', '', 12);
+        $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
+        $pdf->SetFont('DejaVu', '', 10);
+
+        //Display Footer Text
+        $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");
+        ///////////////
+
+        $pdf_invoice = $pdf->Output('S');
+        ///////// pdf creation end
+        ////////
+
+        //$customer = $this->M_customers->get_customers($customer_id);
+        //$company_id = $_SESSION['company_id'];
+        //$Company = $this->M_companies->get_companies($company_id);
+
+        if ($customer[0]['email'] !== '') {
+            if ($Company[0]['email'] !== '') {
+
+                // Load PHPMailer library
+                $this->load->library('PHPMailer_Lib');
+                $mail = new PHPMailer_Lib();
+                // PHPMailer object
+                // $mail->PHPMailer_Lib->load();
+                //$mail = new PHPMailer;
+
+                $mail->From = $Company[0]['email'];
+                $mail->FromName = $Company[0]['name'];
+
+                $mail->addAddress($customer[0]['email'], $customer[0]['first_name']);
+
+                $mail->AddStringAttachment($pdf_invoice, $invoice_no . '.pdf', 'base64', 'application/pdf'); //Filename is optional
+                //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
+
+                $mail->Subject = $Company[0]['name'] . " ".strtoupper(lang("receipt")."#".$invoice_no);
+                $body = "<p>".lang('dear')." " . $customer[0]['first_name'] . ",</p>";
+                $body .= "<p><i>".lang('epdf_para_1')."</i></p>";
+                $body .= "<p>".lang('epdf_para_2')."</p>";
+                $body .= "<p>".lang('epdf_para_3')."</p>";
+                $body .= "<p>".lang('epdf_para_4')."</p>";
+                $body .= "<p>\n".lang('best_regards')."</p>";
+                $body .= "<p>".$Company[0]['name']."</p>";
+
+                $mail->Body = $body;
+
+                // Set email format to HTML
+                $mail->isHTML(true);
+
+                // Send email
+                if (!$mail->send()) {
+
+                    $this->session->set_flashdata('error', 'Message could not be sent. ' . $mail->ErrorInfo);
+                    redirect('pos/C_sales/all/', 'refresh');
+                } else {
+                    $this->session->set_flashdata('message', 'Email sent to ' . $customer[0]['first_name'] . ' successfully.');
+                    redirect('pos/C_sales/all/', 'refresh');
+                }
+            } else { //company email
+                $this->session->set_flashdata('error', 'Company email not available');
+                redirect('pos/C_customers/customerDetail/' . $customer_id, 'refresh');
+            }
+        } else { //company email
+            $this->session->set_flashdata('error', 'Customer email not available');
+            redirect('pos/C_sales/all/', 'refresh');
+        }
     }
 }

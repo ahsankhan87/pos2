@@ -284,3 +284,9 @@ $lang['ba_para_1']= "Genel Telbligi geregince mal ve hizmet alımlarına iliskin
 $lang['ba_para_2']= "{Date} donemine ait olan BA Formu bilgileri asagidaki tabloda yer almaktadir:";
 
 $lang['unsubscribe']= 'Abone Iptal';
+
+//Email PDF invoice report
+$lang['epdf_para_1']= "Müşteri olduğunuz için teşekkürler. Faturanızın ayrıntılı bir özeti ektedir.";
+$lang['epdf_para_2']= "Sorularınız varsa, yardımcı olmaktan memnuniyet duyarız.";
+$lang['epdf_para_3']= "E-posta Satış E-postası gönderin veya diğer destek kanalları aracılığıyla bizimle iletişime geçin.";
+$lang['epdf_para_4']= "NOT: Lütfen bu e-postayı yanıtlamayın. Yanıtınız alınmayacaktır.";

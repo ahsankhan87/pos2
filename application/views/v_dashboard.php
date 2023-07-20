@@ -141,7 +141,7 @@
 				<div class="lead text-center"><?php echo lang('net_income') ?> <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($net_income, 2); ?></div>
 				<?php echo lang('income') ?> <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_revenue, 2); ?>
 				<div class="progress">
-					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="<?php echo $income_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $income_percent . '%' ?>">
+					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $income_percent . '%' ?>">
 						<span class="sr-only">
 							<?php echo $income_percent . '% Income' ?>
 						</span>
@@ -149,7 +149,7 @@
 				</div>
 				<?php echo lang('expenses') ?> <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?>
 				<div class="progress">
-					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $expense_percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $expense_percent . '%' ?>">
+					<div class="progress-bar progress-bar-danger" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $expense_percent.'%'?>">
 						<span class="sr-only">
 							<?php echo $expense_percent . '% Expense' ?>
 						</span>

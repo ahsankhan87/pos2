@@ -54,15 +54,17 @@
             </div>
             <div class="portlet-body flip-scroll">
 
-                <table class="table table-striped table-bordered table-condensed flip-content" id="sales_and_purchases">
+                <table class="table table-striped table-bordered table-condensed flip-content" id="invoices_and_bills">
                     <thead class="flip-content">
                         <tr>
                             <th>S.No</th>
                             <th>Inv #</th>
                             <th><?php echo lang('date') ?></th>
+                            <th><?php echo lang('due_date') ?></th>
                             <th><?php echo lang('customer') ?></th>
                             <th class="text-right"><?php echo lang('tax') ?></th>
                             <th class="text-right"><?php echo lang('amount') ?></th>
+                            <th class="text-center"><?php echo lang('status') ?></th>
                             <th class="hidden-print"><?php echo lang('action') ?></th>
                         </tr>
                     </thead>
@@ -78,6 +80,8 @@
                             echo '<td>' . $sno++ . '</td>';
                             echo '<td>' . $list['invoice_no'] . '</td>';
                             echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
+                            echo '<td>' . date('d-m-Y', strtotime($list['due_date'])) . '</td>';
+                            
                             $name = $this->M_customers->get_CustomerName($list['customer_id']);
                             echo '<td>' . @$name . '</td>';
                             //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
@@ -85,7 +89,24 @@
                             echo '<td class="text-right">' . round($list['total_tax'], 2) . '</td>';
                             echo '<td class="text-right">' . round($total, 2) . '</td>';
                             //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
-                            echo '<td>';
+
+                            if ($paid >= $total) {
+                                $label = "label label-success";
+                                $status = 'Paid';
+                            } elseif ($paid < $total && $paid > 0) {
+                                $label = "label label-warning";
+                                $status = 'Partialy Paid';
+                            } else {
+                                $label = "label label-danger";
+                                $status = 'Unpaid';
+                            }
+
+                            echo '<td class="text-center"> <span class="' . $label . '">' . lang(strtolower($status)) . '</span></td>';
+
+                            echo '<td class="text-right">';
+                            if ($sale_type == "credit" && $status != 'Paid') {
+                                echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/receivePayment/' . $list['customer_id'] . '/' . $list['invoice_no'] . '" title="" >' . lang('payment') . ' ' . lang('receive') . '</a> | ';
+                            }
                             echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/editSales/' . $list['invoice_no'] . '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
                                     | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>
                                     | <a href="'. site_url($langs) .'/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/send_email_inv/'. $list['customer_id'] . '/' . $list['invoice_no'] . '" title="Email Invoice">Email</a>
@@ -101,11 +122,13 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th><?php echo lang('total') ?></th>
                             <th class="text-right"></th>
                             <th class="text-right"></th>
-                            <th></th>
                             
+                            <th></th>
+                            <th></th>
                         </tr>
                     </tfoot>
                 </table>

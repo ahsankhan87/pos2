@@ -896,7 +896,140 @@ var Transaction = function () {
             ],
             columnDefs: [{
                 targets: 0,
-                // visible: false
+                visible: false
+            }],
+
+        });
+
+        var tableWrapper = $('#account_detail_wrapper'); // datatable creates the table wrapper by adding with id {your_table_jd}_wrapper
+        tableWrapper.find('.dataTables_length select').select2(); // initialize select2 dropdown
+    }
+
+    //////////
+
+    ////////////
+    //FOR SALES REPORTS USAGES
+    var invoices_and_bills = function () {
+        var table = $('#invoices_and_bills');
+
+        var oTable = table.dataTable({
+
+            //GET TOTAL AT FOOTER OF GRID
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\Cr,\Dr,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                            i : 0;
+
+                };
+
+                // Total over all pages
+                total = api
+                    .column(6)
+                    .data()
+                    .reduce(function (a, b) {
+                        var x = parseFloat(a) || 0;
+                        var y = parseFloat(b) || 0;
+
+                        return intVal(parseFloat(a)) + intVal(parseFloat(b));
+                    }, 0);
+
+               
+                // Total over this page
+                pageTotal_5 = api
+                    .column(5, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(parseFloat(a)) + intVal(parseFloat(b));
+                    }, 0);
+
+                pageTotal_6 = api
+                    .column(6, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        // a = +(a.toString().replace(",", ""));
+                        // a = (isNaN(a)) ? Number.MAX_VALUE : a;
+
+                        // b = +(b.toString().replace(",", ""));
+                        // b = (isNaN(b)) ? Number.MAX_VALUE : b;
+                        return intVal(parseFloat(a)) + intVal(parseFloat(b));
+                    }, 0);
+
+
+                $(api.column(5).footer()).html(
+                    pageTotal_5.toFixed(2)
+                );
+
+
+                $(api.column(6).footer()).html(
+                    (pageTotal_6).toFixed(2)
+                );
+
+
+            },
+            ///////////////////////////
+
+            "order": [
+                [0, 'desc']
+            ],
+            "lengthMenu": [
+                [20, 50, 100, -1],
+                [20, 50, 100, "All"] // change per page values here
+            ],
+            "pageLength": 20,
+            dom: 'Bflrtip',
+            buttons: [
+                'copy',
+                {
+                    extend: 'excel',
+                    footer: true,
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    title: function () {
+                        return $('#print_title').text();
+                    },
+                    //messageTop: 'The information in this table is copyright to khybersoft Inc.'
+                },
+                {
+                    extend: 'pdf',
+                    footer: true,
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    title: function () {
+                        return $('#print_title').text();
+                    },
+                    //messageBottom: 'Powered by: khybersoft.com'
+                },
+                {
+                    extend: 'print',
+                    key: 'p',
+                    footer: true,
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    title: '',
+                    autoPrint: false,
+                    messageTop: function () {
+                        var header = '<p style="text-align:center; font-size:18px;color:#999;">';
+                        //header += '<img src="'+path+'images/company/thumb/company_logo.jpg" style="height:100px; left:100px;" />';
+                        header += $('.company_name').text() + '</p>';
+                        header += '<p style="font-size:14px">' + $('#print_title').text() + "</p>";
+
+                        return header;
+                    },
+                   // messageBottom: '<span style="text-align:center;">Powered by: khybersoft.com</span>',
+                },
+                'colvis'
+            ],
+            columnDefs: [{
+                targets: 0,
+                visible: false
             }],
 
         });
@@ -1083,6 +1216,7 @@ var Transaction = function () {
             sample_estimate();
             sample_receivings();
             account_detail();
+            invoices_and_bills();
         }
 
     };
