@@ -120,11 +120,23 @@ class m_sales extends CI_Model{
        return $query->result_array();
        
     }
+    
     function getMAXSaleInvoiceNo()
     {   
         $this->db->order_by('CAST(SUBSTR(invoice_no,2) AS UNSIGNED) DESC');
         $this->db->select('SUBSTR(invoice_no,2) as invoice_no');
         $this->db->where('company_id', $_SESSION['company_id']);
+        $query = $this->db->get('pos_sales',1);
+        return $query->row()->invoice_no;
+    }
+    
+    function getMAXInvoiceNo()
+    {   
+        $this->db->order_by('invoice_no DESC');
+        //$this->db->select('SUBSTR(invoice_no,4) as invoice_no');
+        $this->db->select('invoice_no');
+        $this->db->where('company_id', $_SESSION['company_id']);
+        $this->db->where('SUBSTR(invoice_no,1,4)','inv-');
         $query = $this->db->get('pos_sales',1);
         return $query->row()->invoice_no;
     }

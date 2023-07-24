@@ -293,6 +293,19 @@ class M_customers extends CI_Model{
         return '';
     }
     
+    public function get_customer_store_name($Customer_id)
+    {
+        $options = array('id'=> $Customer_id,'company_id'=> $_SESSION['company_id']);
+        
+        $query = $this->db->get_where('pos_customers',$options);
+        if($row = $query->row())
+        {
+            return $row->store_name;
+        }
+        
+        return '';
+    }
+    
     function deleteCustomer($id)
     {
        $this->db->trans_start();

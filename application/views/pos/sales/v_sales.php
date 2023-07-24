@@ -486,7 +486,7 @@
 
                 $.each(data, function(index, value) {
 
-                    customer_ddl += '<option value="' + value.id + '">' + value.first_name+ '</option>';
+                    customer_ddl += '<option value="' + value.id + '">' + value.store_name+ '</option>';
 
                 });
 

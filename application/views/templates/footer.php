@@ -7,7 +7,7 @@
 <!-- BEGIN FOOTER -->
 <div class="footer">
 	<div class="footer-inner">
-		 <?php echo date("Y"); ?> &copy; guvenfi.com | <a href="<?php echo site_url();?>en/PrivacyPolicy" target="_blank">Privacy Policy</a> and <a href="<?php echo site_url();?>en/TermOfUse"  target="_blank">Term of Use</a>
+		 <?php echo date("Y"); ?> &copy; LedgersFi.com | <a href="<?php echo site_url();?>en/PrivacyPolicy" target="_blank">Privacy Policy</a> and <a href="<?php echo site_url();?>en/TermOfUse"  target="_blank">Term of Use</a>
 	</div>
 	<div class="footer-tools">
 		<span class="go-top">

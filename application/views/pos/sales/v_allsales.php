@@ -38,6 +38,7 @@
             } else {
                 echo anchor('pos/C_invoices/index/' . $sale_type, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
             }
+            
             ?>
 
         <div class="portlet">
@@ -68,6 +69,7 @@
                     </thead>
                     <tbody>
                         <?php
+                        
                         $sno = 1;
                         foreach ($sales as $key => $list) {
                             $total = ($list['total_amount'] + $list['total_tax']);
@@ -78,7 +80,7 @@
                             echo '<td>' . $sno++ . '</td>';
                             echo '<td>' . $list['invoice_no'] . '</td>';
                             echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
-                            $name = $this->M_customers->get_CustomerName($list['customer_id']);
+                            $name = $this->M_customers->get_customer_store_name($list['customer_id']);
                             echo '<td>' . @$name . '</td>';
                             //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
 

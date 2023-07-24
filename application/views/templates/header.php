@@ -5,10 +5,10 @@
 
 <head>
 	<meta charset="utf-8">
-	<title><?php echo $title; ?> | GuvenFI Accounting Software</title>
+	<title><?php echo $title; ?> | LedgersFI Accounting Software</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<meta content="GuvenFI Accounting Software, E-Accountant, Point of Sales" name="description">
+	<meta content="LedgersFI Accounting Software, E-Accountant, Point of Sales" name="description">
 	<meta content="Ahsan Khan" name="author">
 	<meta name="MobileOptimized" content="320">
 
@@ -90,17 +90,17 @@
 		<div class="header-inner">
 			<!-- BEGIN LOGO -->
 			<div class="page-logo">
-				<!-- <h3 class="form-title logo-color">&nbsp;&nbsp;&nbsp;&nbsp;GuvenFi</h3>	 -->
+				<!-- <h3 class="form-title logo-color">&nbsp;&nbsp;&nbsp;&nbsp;LedgersFi</h3>	 -->
 				<a href="<?php echo site_url('Dashboard/C_dashboard'); ?>">
-					<img src="<?php echo base_url(); ?>assets/img/logo-2.png" width="100" height="" alt="logo">
+					<img src="<?php echo base_url(); ?>assets/img/ledgers-logo-2.png" width="100" height="" alt="logo">
 				</a>
 			</div>
-			<form class="search-form search-form-header" role="form" action="<?php echo site_url('search/C_search/index'); ?>">
+			<!-- <form class="search-form search-form-header" role="form" action="<?php echo site_url('search/C_search/index'); ?>">
 				<div class="input-icon right">
 					<i class="icon-magnifier"></i>
 					<input type="text" class="form-control input-sm" name="keyword" placeholder="<?php echo lang('search'); ?>...">
 				</div>
-			</form>
+			</form> -->
 			<!-- END LOGO -->
 			<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 			<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

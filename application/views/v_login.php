@@ -4,10 +4,10 @@
 
 <head>
 	<meta charset="utf-8">
-	<title><?php echo $title; ?> | GuvenFI Accounting Software</title>
+	<title><?php echo $title; ?> | LedgersFI Accounting Software</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<meta content="GuvenFI Accounting Software to run your business, Point of Sale, Accounts Management Systems" name="description">
+	<meta content="LedgersFI Accounting Software to run your business, Point of Sale, Accounts Management Systems" name="description">
 	<meta content="Ahsan khan" name="author">
 	<meta name="MobileOptimized" content="320">
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -37,9 +37,9 @@
 <body class="login">
 	<!-- BEGIN LOGO -->
 	<div class="logo animated bounceIn">
-		<!-- <h1 class="form-title  logo-color">GuvenFi</h1> -->
+		<!-- <h1 class="form-title  logo-color">LedgersFi</h1> -->
 		<a href="<?php echo base_url(); ?>">
-			<img src="<?php echo base_url(); ?>assets/img/logo.png" alt="Logo">
+			<img src="<?php echo base_url(); ?>assets/img/ledgers-logo.png" alt="Logo">
 		</a>
 	</div>
 	<!-- END LOGO -->
@@ -450,7 +450,7 @@
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		<?php echo date("Y"); ?> &copy; Guvenfi.com | <a href="<?php echo site_url(); ?>en/PrivacyPolicy" target="_blank"><?php echo lang('privacy_policy'); ?></a> <?php echo lang('and'); ?> <a href="<?php echo site_url(); ?>en/TermOfUse" target="_blank"><?php echo lang('term_of_service'); ?></a>
+		<?php echo date("Y"); ?> &copy; Ledgersfi.com | <a href="<?php echo site_url(); ?>en/PrivacyPolicy" target="_blank"><?php echo lang('privacy_policy'); ?></a> <?php echo lang('and'); ?> <a href="<?php echo site_url(); ?>en/TermOfUse" target="_blank"><?php echo lang('term_of_service'); ?></a>
 	</div>
 	<!-- END COPYRIGHT -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->

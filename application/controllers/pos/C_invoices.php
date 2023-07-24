@@ -94,11 +94,13 @@ class C_invoices extends MY_Controller
                     $new_invoice_no = $invoice_no;
                 }else{
                     //GET PREVIOISE INVOICE NO  
-                    @$prev_invoice_no = $this->M_sales->getMAXSaleInvoiceNo();
+                    @$prev_invoice_no = $this->M_sales->getMAXInvoiceNo();
+                    $prev_invoice_no = substr($prev_invoice_no,4)+1;
+                    $new_invoice_no = sprintf("INV-%u",$prev_invoice_no);
                     //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
                     //$new_invoice_no = 'POS'.date("Ymd").$number;
-                    $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                    $new_invoice_no = 'S' . $number;
+                    //$number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                    //$new_invoice_no = 'INV-' . $number;
 
                 }
 
@@ -503,7 +505,7 @@ class C_invoices extends MY_Controller
         $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(50, 10, lang('bill').' '.lang('to').": ", 0, 1);
         $pdf->SetFont('DejaVu', '', 12);
-        $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
+        $pdf->Cell(50, 7, @$customer[0]["store_name"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["address"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["city"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["phone_no"], 0, 1);
@@ -672,7 +674,7 @@ class C_invoices extends MY_Controller
         $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(50, 10, lang('bill').' '.lang('to').": ", 0, 1);
         $pdf->SetFont('DejaVu', '', 12);
-        $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
+        $pdf->Cell(50, 7, @$customer[0]["store_name"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["address"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["city"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["phone_no"], 0, 1);

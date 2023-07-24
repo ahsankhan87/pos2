@@ -445,7 +445,7 @@ class C_sales extends MY_Controller
         $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(50, 10, lang('bill') . ' ' . lang('to') . " : ", 0, 1);
         $pdf->SetFont('DejaVu', '', 12);
-        $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
+        $pdf->Cell(50, 7, @$customer[0]["store_name"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["address"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["city"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["phone_no"], 0, 1);
@@ -602,7 +602,7 @@ class C_sales extends MY_Controller
         $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(50, 10, lang('bill') . ' ' . lang('to') . " : ", 0, 1);
         $pdf->SetFont('DejaVu', '', 12);
-        $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
+        $pdf->Cell(50, 7, @$customer[0]["store_name"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["address"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["city"], 0, 1);
         $pdf->Cell(50, 5, @$customer[0]["phone_no"], 0, 1);
