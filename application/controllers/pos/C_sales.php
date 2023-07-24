@@ -120,7 +120,8 @@ class C_sales extends MY_Controller
                 $tax_acc_code = $this->input->post("tax_acc_code");
                 $tax_rate = $this->input->post("tax_rate");
                 $tax_id = $this->input->post('tax_id');
-
+                $amount_received = ($this->input->post("amount_received") == '' ? 0 : $this->input->post("amount_received"));
+                
                 $data = array(
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
@@ -137,6 +138,7 @@ class C_sales extends MY_Controller
                     'total_amount' => ($register_mode == 'sale' ? $sub_total : -$sub_total), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     //'is_taxable' => $is_taxable,
+                    'paid'=>$amount_received,
                     'due_date' => $due_date,
                     'business_address' => $business_address,
                     'tax_rate' => $tax_rate,

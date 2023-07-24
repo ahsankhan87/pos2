@@ -133,7 +133,7 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array('pos/M_items','pos/M_sizes','pos/M_units','pos/M_areas','pos/M_suppliers','pos/M_locations','pos/M_postingTypes',
-                           'pos/M_colors','pos/M_category','pos/M_sales','pos/M_pos_reports','pos/M_receivings',
+                           'pos/M_colors','pos/M_category','pos/M_invoices','pos/M_sales','pos/M_pos_reports','pos/M_receivings',
                            'pos/M_banking','pos/M_taxes','pos/M_estimate','pos/M_purchaseorder',
                            'accounts/M_groups','accounts/M_ledgers','accounts/M_entries','accounts/M_reports',
                            'pos/M_companies','M_login','M_dashboard','M_modules','pos/M_employees','pos/M_customers',

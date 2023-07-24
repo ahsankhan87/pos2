@@ -46,7 +46,7 @@ class C_invoices extends MY_Controller
 
         $data['main_small'] = $fiscal_dates;
 
-        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date,'credit');
+        $data['sales'] = $this->M_invoices->get_sales(false, $start_date, $to_date,'credit');
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_all_invoices', $data);
@@ -71,7 +71,7 @@ class C_invoices extends MY_Controller
         // $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/v_editsales', $data);
+        $this->load->view('pos/sales/v_edit_invoices', $data);
         $this->load->view('templates/footer');
     }
 
@@ -90,11 +90,11 @@ class C_invoices extends MY_Controller
                 //IF EDIT THEN DELETE ALL INVOICES AND INSERT AGAIN
                 if($edit != null)
                 {
-                    $this->delete($invoice_no,false);
+                    $this->delete($invoice_no,false,true);
                     $new_invoice_no = $invoice_no;
                 }else{
                     //GET PREVIOISE INVOICE NO  
-                    @$prev_invoice_no = $this->M_sales->getMAXInvoiceNo();
+                    @$prev_invoice_no = $this->M_invoices->getMAXInvoiceNo();
                     $prev_invoice_no = substr($prev_invoice_no,4)+1;
                     $new_invoice_no = sprintf("INV-%u",$prev_invoice_no);
                     //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
@@ -126,7 +126,8 @@ class C_invoices extends MY_Controller
                 $tax_acc_code = $this->input->post("tax_acc_code");
                 $tax_rate = $this->input->post("tax_rate");
                 $tax_id = $this->input->post('tax_id'); 
-
+                $amount_received = ($this->input->post("amount_received") == '' ? 0 : $this->input->post("amount_received"));
+                
                 $data = array(
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
@@ -143,13 +144,14 @@ class C_invoices extends MY_Controller
                     'total_amount' => ($register_mode == 'sale' ? $sub_total : -$sub_total), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     //'is_taxable' => $is_taxable,
+                    'paid'=>$amount_received,
                     'due_date'=>$due_date,
                     'business_address'=>$business_address,
                     'tax_rate'=>$tax_rate,
                     'tax_id' => $tax_id,
 
                 );
-                $this->db->insert('pos_sales', $data);
+                $this->db->insert('pos_invoices', $data);
                 $sale_id = $this->db->insert_id();
                 ////////
                 $data = array(
@@ -203,7 +205,7 @@ class C_invoices extends MY_Controller
                             //'inventory_acc_code' => '', //$this->input->post('inventory_acc_code')[$key]
                         );
 
-                        $this->db->insert('pos_sales_items', $data);
+                        $this->db->insert('pos_invoices_items', $data);
 
                        
                         $data = array(
@@ -285,7 +287,7 @@ class C_invoices extends MY_Controller
         $data['title'] = lang('receive'). ' '.lang('payment');
         $data['main'] = lang('receive'). ' '.lang('payment');
         
-        $data['sales'] = $this->M_sales->get_sales_by_invoice($invoice_no);
+        $data['sales'] = $this->M_invoices->get_sales_by_invoice($invoice_no);
         $data['customer'] = $this->M_customers->get_customers($customer_id);
         
         $this->load->view('templates/header',$data);
@@ -320,7 +322,7 @@ class C_invoices extends MY_Controller
             $data = array(
                 'paid' => ($paid_amount+$amount),
                 );
-            $this->M_sales->updatePaidAmount($invoice_no,$data);
+            $this->M_invoices->updatePaidAmount($invoice_no,$data);
             
             ////////
             $data = array(
@@ -392,7 +394,7 @@ class C_invoices extends MY_Controller
     public function receipt($new_invoice_no)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        $data['sales_items'] = $this->M_sales->get_sales_items($new_invoice_no);
+        $data['sales_items'] = $this->M_invoices->get_sales_items($new_invoice_no);
         $sales_items = $data['sales_items'];
 
         //////////////////////////////
@@ -419,7 +421,7 @@ class C_invoices extends MY_Controller
         $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last year"));
         $to_date = FY_END_DATE; //date("Y-m-d");
 
-        print_r(json_encode($this->M_sales->get_selected_sales($start_date, $to_date)));
+        print_r(json_encode($this->M_invoices->get_selected_sales($start_date, $to_date)));
     }
 
     public function getCustomerCurrencyJSON($customer_id)
@@ -428,10 +430,10 @@ class C_invoices extends MY_Controller
         echo json_encode($customersCurrency);
     }
 
-    public function delete($invoice_no, $redirect = true)
+    public function delete($invoice_no, $redirect = true,$edit=false)
     {
         
-        $this->M_sales->delete($invoice_no);
+        $this->M_invoices->delete($invoice_no,$edit);
         
         if ($redirect === true) {
             $this->session->set_flashdata('message', 'Entry Deleted');
@@ -441,14 +443,14 @@ class C_invoices extends MY_Controller
 
     function getSalesItemsJSON($invoice_no)
     {
-        $data = $this->M_sales->get_sales_items_only($invoice_no);
+        $data = $this->M_invoices->get_sales_items_only($invoice_no);
         print_r(json_encode($data));
     }
 
 
     function getSalesJSON($invoice_no)
     {
-        $data = $this->M_sales->get_sales_by_invoice($invoice_no);
+        $data = $this->M_invoices->get_sales_by_invoice($invoice_no);
         print_r(json_encode($data));
        
     }
@@ -456,7 +458,7 @@ class C_invoices extends MY_Controller
     //Print Invoice in PDF
     function printReceipt($new_invoice_no)
     {
-        $sales_items = $this->M_sales->get_sales_items($new_invoice_no);
+        $sales_items = $this->M_invoices->get_sales_items($new_invoice_no);
         // var_dump($sales_items);
 
         $company_id = $_SESSION['company_id'];
@@ -626,7 +628,7 @@ class C_invoices extends MY_Controller
     {
         //////////
         /////////Output PDF agains for email invoice
-        $sales_items = $this->M_sales->get_sales_items($invoice_no);
+        $sales_items = $this->M_invoices->get_sales_items($invoice_no);
         //$sales_items = $data['sales_items'];
 
         $company_id = $_SESSION['company_id'];
