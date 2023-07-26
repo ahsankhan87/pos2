@@ -1,472 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GuvenFi Privacy Policy</title>
-    <style>
-      /* Add your custom CSS styles here */
-    </style>
-  </head>
 
-  <body style="margin: 30px">
-    <header style="text-align: center">
-      <h1>GİZLİLİK POLİTİKASI</h1>
-    </header>
-    <div>Yürürlük tarihi: 2023-06-06</div>
-    <main>
-      <section>
-        <h2>1 . Tanıtım</h2>
-        <p><strong>GüvenFi Muhasebe'ye </strong>Hoş Geldiniz.</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LedgersFi Privacy Policy</title>
+  <style>
+    /* Add your custom CSS styles here */
+  </style>
+</head>
 
-        <p>
-        <strong>GüvenFi Muhasebe </strong>(“biz”, “biz” veya “bizim”) <strong>www.guvenfi.com'u (bundan
-          sonra “Hizmet”</strong> olarak anılacaktır ) işletmektedir.
-        </p>
-        <p>
-          If you have additional questions or require more information about our
-          Privacy Policy, do not hesitate to contact us.
-        </p>
-        <p>
-        <strong>www.guvenfi.com</strong> ziyaretinizi yönetir ve Hizmetimizi kullanımınızdan
-          kaynaklanan bilgileri nasıl topladığımızı, koruduğumuzu ve ifşa
-          ettiğimizi açıklar
-        </p>
-        <p>
-          Verilerinizi Hizmet sağlamak ve iyileştirmek için kullanırız. Hizmeti
-          kullanarak, bilgilerin bu politikaya uygun olarak toplanmasını ve
-          kullanılmasını kabul etmiş olursunuz. Bu Gizlilik Politikasında aksi
-          belirtilmedikçe, bu Gizlilik Politikasında kullanılan terimler, Hüküm
-          ve Koşullarımızdaki anlamlarla aynıdır.
-        </p>
-        <p><br /></p>
-        <p>
-          Hüküm ve Koşullarımız <strong>( "Şartlar" )</strong> Hizmetimizin tüm kullanımını
-          yönetir ve Gizlilik Politikası ile birlikte bizimle yaptığınız
-          sözleşmeyi <strong>( "sözleşme" )</strong> oluşturur.
-        </p>
-        <p><br /></p>
-        <h2>2 . Tanımlar</h2>
-        
-        <p>
-          <strong>HİZMET,</strong> GüvenFi tarafından işletilen www.guvenfi.com web sitesini
-          ifade eder. Muhasebe . <strong>KİŞİSEL VERİLER,</strong> bu verilerden (veya elimizde
-          bulunan veya elimize geçmesi muhtemel olanlardan ve diğer bilgilerden)
-          tanımlanabilen yaşayan bir birey hakkındaki veriler anlamına gelir.
-        </p>
-        <p>
-        <strong>KULLANIM VERİLERİ, Hizmetin</strong> kullanımıyla veya Hizmet altyapısının
-          kendisinden otomatik olarak toplanan verilerdir (örneğin, bir sayfa
-          ziyaretinin süresi).
-        </p>
+<body style="margin: 30px">
+  <header style="text-align: center">
+  <h1>Privacy Policy</h1>
+  </header>
+  
+  <main>
+    <section>
+      <h2>1. Introduction</h2>
+      <p>Welcome to <strong>LedgersFi Accounting.</strong></p>
 
-        <p>
-        <strong>ÇEREZLER,</strong> cihazınızda (bilgisayar veya mobil cihaz) saklanan küçük
-          dosyalardır.
-        </p>
-        <p>
-        <strong>VERİ DENETLEYİCİSİ,</strong> (tek başına veya müştereken veya diğer kişilerle
-          birlikte) herhangi bir kişisel verinin hangi amaçlarla ve ne şekilde
-          işleneceği veya işleneceğine karar veren gerçek veya tüzel kişi
-          anlamına gelir. Bu Gizlilik Politikasının amacı doğrultusunda,
-          verilerinizin Veri Denetleyicisiyiz.
-        </p>
-        <p>
-        <strong>VERİ İŞLEMCİLER (VEYA HİZMET SAĞLAYICILAR)</strong> Veri Sorumlusu adına
-          verileri işleyen gerçek veya tüzel kişiyi ifade eder . Verilerinizi
-          daha etkin bir şekilde işlemek için çeşitli Hizmet Sağlayıcıların
-          hizmetlerini kullanabiliriz.
-        </p>
-        <p>
-        <strong>VERİ SAHİBİ</strong> , Kişisel Verilerin konusu olan yaşayan herhangi bir
-          bireydir.
-        </p>
-        <p>
-        <strong>KULLANICI </strong>, Hizmetimizi kullanan kişidir. Kullanıcı, Kişisel Verilerin
-          konusu olan Veri Sahibini ifade etmektedir.
-        </p>
+      <p>
+        <strong>LedgersFi Accounting </strong>(“us”, “we”, or “our”) <strong>www.ledgersfi.com</strong> (hereinafter referred to as <strong>“Service”</strong>).
+      </p>
+      <p>
+        Our Privacy Policy governs your visit to <strong>www.ledgersfi.com</strong>, and explains how we collect, safeguard and disclose information that results from your use of our Service.
+        We use your data to provide and improve Service. By using Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our Terms and Conditions.
 
-        <h2>3 . Bilgi Toplama ve Kullanma</h2>
-        <p>
-          Size Hizmetimizi sağlamak ve geliştirmek için çeşitli amaçlarla birkaç
-          farklı türde bilgi topluyoruz.
-        </p>
-        <h2>4 . Toplanan Veri Türleri</h2>
-        <p><strong>Kişisel veri</strong></p>
-        <p>
-        <strong>“Kişisel Veriler” )</strong> bize vermenizi isteyebiliriz . Kişisel olarak
-          tanımlanabilir bilgiler şunları içerebilir, ancak bunlarla sınırlı
-          değildir:
-        </p>
-        <p>0.1. E-posta adresi</p>
-        <p>0.2. Ad ve soyad</p>
-        <p>0.3. Telefon numarası</p>
-        <p>0.4. Adres, Ülke, Eyalet, İl, Posta Kodu, Şehir</p>
-        <p>0,5. Çerezler ve Kullanım Verileri</p>
-        <p>0.6. kredi kartı bilgisi</p>
-        <p>0.7. Ticari Tüzel Kişilik Adı</p>
-        <p>
-          Kişisel Verilerinizi, sizinle haber bültenleri, pazarlama veya tanıtım
-          materyalleri ve ilginizi çekebilecek diğer bilgilerle iletişim kurmak
-          için kullanabiliriz. Abonelikten çıkma bağlantısını takip ederek
-          bizden bu iletişimlerin herhangi birini veya tamamını almaktan
-          vazgeçebilirsiniz.
-        </p>
+      </p>
+      <p>
+        Our Terms and Conditions <strong>(“Terms”)</strong> govern all use of our Service and together with the Privacy Policy constitutes your agreement with us <strong>(“agreement”)</strong>.
+      </p>
 
-        <h2>Kullanım verisi</h2>
-        <p>
-          Ayrıca, Hizmetimizi her ziyaret ettiğinizde veya Hizmete herhangi bir
-          cihaz aracılığıyla veya aracılığıyla eriştiğinizde tarayıcınızın
-          gönderdiği bilgileri <strong>( "Kullanım Verileri" )</strong> toplayabiliriz.
-        </p>
-        <p>
-          Bu Kullanım Verileri, bilgisayarınızın İnternet Protokol adresi ( örn.
-          IP adresi), tarayıcı türü, tarayıcı sürümü, Hizmetimizin ziyaret
-          ettiğiniz sayfaları, ziyaretinizin saati ve tarihi, bu sayfalarda
-          geçirilen süre, benzersiz cihaz tanımlayıcıları ve diğer teşhis
-          verileri.
-        </p>
-        <p>
-          Hizmete bir cihazla eriştiğinizde, bu Kullanım Verileri, kullandığınız
-          cihazın türü, cihazınızın benzersiz kimliği, cihazınızın IP adresi,
-          cihazınızın işletim sistemi, kullandığınız İnternet tarayıcısının
-          türü, benzersiz cihaz gibi bilgileri içerebilir . tanımlayıcılar ve
-          diğer teşhis verileri.
-        </p>
+      <p><br /></p>
+      <h2>2. Definitions</h2>
 
-        <h2>Konum verileri</h2>
-        <p>
-          Bize izin verirseniz, konumunuzla ilgili bilgileri <strong>( “Konum Verileri”
-          )</strong> kullanabilir ve saklayabiliriz. Bu verileri, Hizmetimizin
-          özelliklerini sağlamak, Hizmetimizi iyileştirmek ve özelleştirmek için
-          kullanırız.
-        </p>
-        <p>
-          Hizmetimizi kullandığınızda istediğiniz zaman cihaz ayarlarınızdan
-          konum hizmetlerini etkinleştirebilir veya devre dışı bırakabilirsiniz.
-        </p>
+      <p>
+        <strong>SERVICE</strong> means the www.ledgersfi.com website operated by LedgersFi Accounting.
+        <strong>PERSONAL DATA</strong> means data about a living individual who can be identified from those data (or from those and other information either in our possession or likely to come into our possession).
 
-        <h2>Çerez Verilerini İzleme</h2>
-        <p>
-          Hizmetimizdeki etkinliği izlemek için tanımlama bilgileri ve benzer
-          izleme teknolojileri kullanıyoruz ve belirli bilgileri saklıyoruz.
-        </p>
-        <p>
-          Tanımlama bilgileri, anonim benzersiz bir tanımlayıcı içerebilen az
-          miktarda veri içeren dosyalardır. Çerezler bir web sitesinden
-          tarayıcınıza gönderilir ve cihazınızda saklanır. Bilgi toplamak ve
-          izlemek ve Hizmetimizi iyileştirmek ve analiz etmek için işaretçiler,
-          etiketler ve komut dosyaları gibi diğer izleme teknolojileri de
-          kullanılır.
-        </p>
-        <p>
-          Tarayıcınıza tüm tanımlama bilgilerini reddetmesi veya bir tanımlama
-          bilgisi gönderildiğinde bunu belirtmesi talimatını verebilirsiniz.
-          Ancak tanımlama bilgilerini kabul etmezseniz Hizmetimizin bazı
-          bölümlerini kullanamayabilirsiniz.
-        </p>
-        <p>Kullandığımız Çerez örnekleri:</p>
+      </p>
+      <p>
+        <strong>USAGE DATA</strong> USAGE DATA is data collected automatically either generated by the use of Service or from Service infrastructure itself (for example, the duration of a page visit).
+      </p>
 
-        <p>
-          0.1. Oturum Çerezleri: Hizmetimizi çalıştırmak için Oturum Çerezleri
-          kullanıyoruz.
-        </p>
-        <p>
-          0.2. Tercih Çerezleri: Tercihlerinizi ve çeşitli ayarlarınızı
-          hatırlamak için Tercih Çerezlerini kullanırız.
-        </p>
-        <p>
-          0.3. Güvenlik Çerezleri: Güvenlik amacıyla Güvenlik Çerezleri
-          kullanıyoruz.
-        </p>
-        <p>
-          0.4. Reklam Çerezleri: Reklam Çerezleri, sizinle ve ilgi alanlarınızla
-          alakalı olabilecek reklamların size sunulması için kullanılır.
-        </p>
+      <p>
+        <strong>COOKIES</strong> are small files stored on your device (computer or mobile device).
+      </p>
+      <p>
+        <strong>DATA CONTROLLER</strong> means a natural or legal person who (either alone or jointly or in common with other persons) determines the purposes for which and the manner in which any personal data are, or are to be, processed. For the purpose of this Privacy Policy, we are a Data Controller of your data.
+      </p>
+      <p>
+        <strong>DATA PROCESSORS (OR SERVICE PROVIDERS)</strong> means any natural or legal person who processes the data on behalf of the Data Controller. We may use the services of various Service Providers in order to process your data more effectively.
+      </p>
+      <p>
+        <strong>DATA SUBJECT</strong> is any living individual who is the subject of Personal Data.
+      </p>
+      <p>
+        <strong>THE USER</strong> is the individual using our Service. The User corresponds to the Data Subject, who is the subject of Personal Data.
+      </p>
 
-        <h2>Diğer veri</h2>
-        <p>
-          Hizmetimizi kullanırken aşağıdaki bilgileri de toplayabiliriz:
-          cinsiyet, yaş, doğum tarihi, doğum yeri, pasaport bilgileri,
-          vatandaşlık, ikamet yerindeki kayıt ve gerçek adres, telefon numarası
-          (iş, cep telefonu), belge detayları eğitim, nitelik, mesleki eğitim,
-          istihdam sözleşmeleri, NDA sözleşmeleri , ikramiyeler ve tazminat
-          bilgileri, medeni durum, aile üyeleri, sosyal güvenlik (veya diğer
-          vergi mükellefi kimliği) numarası, ofis konumu ve diğer veriler
-          hakkında bilgiler.
-        </p>
+      <h2>3. Information Collection and Use</h2>
+      <p>
+        We collect several different types of information for various purposes to provide and improve our Service to you.
+      </p>
+      <h2>4 . Types of Data Collected</h2>
+      <p><strong>Personal Data</strong></p>
+      <p>
+        While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you <strong>(“Personal Data”)</strong>. Personally identifiable information may include, but is not limited to:
+      </p>
+      <p>0.1. Email address</p>
+      <p>0.2. First name and last name</p>
+      <p>0.3. Phone number</p>
+      <p>0.4. Address, Country, State, Province, ZIP/Postal code, City</p>
+      <p>0,5. Cookies and Usage Data</p>
+      <p>0.6. Bank and Credit Card Information</p>
+      <p>0.7. Business Legal Entity Name</p>
+      <p>
+        We may use your Personal Data to contact you with newsletters, marketing or promotional materials and other information that may be of interest to you. You may opt out of receiving any, or all, of these communications from us by following the unsubscribe link.
+      </p>
 
-        <h2>5 . Verilerin Kullanımı</h2>
-        <p>GüvenFi Muhasebe, toplanan verileri çeşitli amaçlarla kullanır:</p>
-        <p>0.1. Hizmetimizi sağlamak ve sürdürmek ;</p>
-        <p>
-          0.2. Hizmetimizdeki değişiklikler hakkında sizi bilgilendirmek için ;
-        </p>
-        <p>
-          0.3. seçtiğinizde Hizmetimizin etkileşimli özelliklerine katılmanıza
-          izin vermek için ;
-        </p>
-        <p>0.4. müşteri desteği sağlamak ;</p>
-        <p>
-          0,5. Hizmetimizi iyileştirebilmemiz için analiz veya değerli bilgiler
-          toplamak ;
-        </p>
-        <p>0.6. Hizmetimizin kullanımını izlemek için ;</p>
-        <p>0.7. teknik sorunları tespit etmek, önlemek ve ele almak ;</p>
-        <p>0.8. sağladığınız diğer herhangi bir amacı yerine getirmek için ;</p>
-        <p>
-          0.9. faturalama ve tahsilat da dahil olmak üzere sizinle bizim
-          aramızda akdedilen herhangi bir sözleşmeden doğan yükümlülüklerimizi
-          yerine getirmek ve haklarımızı uygulamak ;
-        </p>
-        <p>
-          0.10. sona erme ve yenileme bildirimleri, e-posta talimatları vb.
-          dahil olmak üzere hesabınız ve/veya aboneliğiniz hakkında size
-          bildirimler sağlamak için;
-        </p>
-        <p>
-          0.11. bu tür bilgileri almamayı seçmediğiniz sürece, halihazırda satın
-          aldığınız veya sorguladığınız ürünlere benzer, sunduğumuz diğer
-          mallar, hizmetler ve etkinlikler hakkında size haberler, özel
-          teklifler ve genel bilgiler sağlamak ;
-        </p>
-        <p>
-          0.12. bilgileri sağladığınızda açıklayabileceğimiz başka herhangi bir
-          şekilde ;
-        </p>
-        <p>0.13. izninizle başka herhangi bir amaç için.</p>
+      <h2>Usage Data</h2>
+      <p>
+        We may also collect information that your browser sends whenever you visit our Service or when you access Service by or through any device <strong>(“Usage Data”).</strong>
+      </p>
+      <p>
+        This Usage Data may include information such as your computer’s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.
+      </p>
+      <p>
+        When you access Service with a device, this Usage Data may include information such as the type of device you use, your device unique ID, the IP address of your device, your device operating system, the type of Internet browser you use, unique device identifiers and other diagnostic data.
+      </p>
 
-        <h2>6 . Verilerin Saklanması</h2>
-        <p>
-          Kişisel Verilerinizi yalnızca bu Gizlilik Politikasında belirtilen
-          amaçlar için gerekli olduğu sürece saklayacağız. Kişisel Verilerinizi
-          yasal yükümlülüklerimize uymak (örneğin, geçerli yasalara uymak için
-          verilerinizi saklamamız gerekiyorsa), anlaşmazlıkları çözmek ve yasal
-          sözleşmelerimizi ve politikalarımızı uygulamak için gerekli olduğu
-          ölçüde saklayacak ve kullanacağız .
-        </p>
-        <p>
-          Kullanım Verilerini dahili analiz amaçları için de saklayacağız.
-          Kullanım Verileri, bu verilerin güvenliği güçlendirmek veya
-          Hizmetimizin işlevselliğini geliştirmek için kullanıldığı veya yasal
-          olarak bu verileri daha uzun süreler boyunca saklamak zorunda
-          olduğumuz durumlar dışında, genellikle daha kısa bir süre için
-          saklanır.
-        </p>
-        <h2>7 . Veri Aktarımı</h2>
-        <p>
-          Kişisel Veriler de dahil olmak üzere bilgileriniz, eyaletinizin,
-          ilinizin, ülkenizin veya veri koruma yasalarının sizin yargı
-          alanınızdakinden farklı olabileceği diğer resmi yetki alanlarının
-          dışında bulunan bilgisayarlara aktarılabilir ve bu bilgisayarlarda
-          saklanabilir.
-        </p>
-        <p>
-          Türkiye dışında bulunuyorsanız ve bize bilgi vermeyi seçerseniz,
-          Kişisel Veriler dahil olmak üzere verileri Türkiye'ye aktardığımızı ve
-          orada işlediğimizi lütfen unutmayın.
-        </p>
-        <p>
-          Bu Gizlilik Politikasına onay vermeniz ve ardından bu tür bilgileri
-          göndermeniz, bu aktarıma ilişkin anlaşmanızı temsil eder.
-        </p>
-        <p>
-          GüvenFi Muhasebe, verilerinizin güvenli bir şekilde ve bu Gizlilik
-          Politikasına uygun olarak işlenmesini sağlamak için makul olarak
-          gerekli tüm adımları atacaktır ve Kişisel Verilerinizin güvenliği de
-          dahil olmak üzere yeterli kontroller olmadıkça Kişisel Verileriniz
-          herhangi bir kuruluşa veya ülkeye aktarılmayacaktır. verileriniz ve
-          diğer kişisel bilgileriniz.
-        </p>
+      <h2>Location Data</h2>
+      <p>
+        We may use and store information about your location if you give us permission to do so <strong>(“Location Data”)</strong>. We use this data to provide features of our Service, to improve and customize our Service.
+      </p>
+      <p>
+        You can enable or disable location services when you use our Service at any time by way of your device settings.
+      </p>
 
-        <h2>8 . Verilerin Açıklanması</h2>
-        <p>
-          Topladığımız veya sizin sağladığınız kişisel bilgileri ifşa
-          edebiliriz:
-        </p>
-        <p></p>
-        <h2>0.1. Ticari işlem.</h2>
-        <p>
-          Biz veya iştiraklerimiz bir birleşme, devralma veya varlık satışına
-          dahil olursa, Kişisel Verileriniz aktarılabilir.
-        </p>
+      <h2>Tracking Cookies Data</h2>
+      <p>
+        We use cookies and similar tracking technologies to track the activity on our Service and we hold certain information.
+      </p>
+      <p>
+        Cookies are files with a small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device. Other tracking technologies are also used such as beacons, tags and scripts to collect and track information and to improve and analyze our Service.
+      </p>
+      <p>
+        You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.
+      </p>
+      <p>Examples of Cookies we use:</p>
 
-        <p><strong>0.2. Diğer durumlar. Bilgilerinizi ayrıca ifşa edebiliriz:</strong></p>
-        <p>0.2.1. bağlı şirket ve iştiraklerimize ;</p>
-        <p>
-          0.2.2. işimizi desteklemek için kullandığımız yükleniciler, hizmet
-          sağlayıcılar ve diğer üçüncü taraflara ;
-        </p>
-        <p>0.2.3. sağladığınız amacı yerine getirmek için ;</p>
-        <p>0.2.4. web sitemizde firmanızın logosuna yer verilmesi amacıyla ;</p>
-        <p>
-          0.2.5. bilgileri sağladığınızda tarafımızca açıklanan diğer herhangi
-          bir amaç için ;
-        </p>
-        <p>0.2.6. diğer durumlarda sizin izninizle ;</p>
-        <p>
-          0.2.7. Şirketin, müşterilerimizin veya başkalarının haklarını,
-          mülkiyetini veya güvenliğini korumak için açıklamanın gerekli veya
-          uygun olduğuna inanıyorsak.
-        </p>
+      <p>
+        0.1. <strong>Session Cookies:</strong> We use Session Cookies to operate our Service.
+      </p>
+      <p>
+        0.2. <strong>Preference Cookies:</strong> We use Preference Cookies to remember your preferences and various settings.
+      </p>
+      <p>
+        0.3. <strong>Security Cookies:</strong> We use Security Cookies for security purposes.
+      </p>
+      <p>
+        0.4. <strong>Advertising Cookies:</strong> Advertising Cookies are used to serve you with advertisements that may be relevant to you and your interests.
+      </p>
 
-        <h2>9 . Veri Güvenliği</h2>
-        <p>
-          Verilerinizin güvenliği bizim için önemlidir, ancak internet üzerinden
-          hiçbir aktarım yönteminin veya elektronik depolama yönteminin %100
-          güvenli olmadığını unutmayın. Kişisel Verilerinizi korumak için ticari
-          olarak kabul edilebilir yöntemleri kullanmaya çabalasak da, bunların
-          mutlak güvenliğini garanti edemeyiz.
-        </p>
-        <p>
-          0.1. Sizinle ilgili hangi kişisel bilgilere sahibiz? Bu talebi
-          yaparsanız, size geri döneceğiz:
-        </p>
-        <p>0.0.1. Hakkınızda topladığımız kişisel bilgi kategorileri.</p>
-        <p>
-          0.0.2. Kişisel bilgilerinizi topladığımız kaynakların kategorileri.
-        </p>
-        <p>
-          0.0.3. Kişisel bilgilerinizi toplamak veya satmak için ticari veya
-          ticari amaç.
-        </p>
-        <p>0.0.4. Kişisel bilgileri paylaştığımız üçüncü taraf kategorileri.</p>
-        <p>0.0.5. Hakkınızda topladığımız belirli kişisel bilgi parçaları.</p>
-        <p>
-          0.0.6. Sattığımız diğer herhangi bir şirketin kategorisiyle birlikte
-          sattığımız kişisel bilgi kategorilerinin bir listesi. Kişisel
-          bilgilerinizi satmadıysak, sizi bu konuda bilgilendireceğiz.
-        </p>
-        <p>
-          0.0.7. Bir iş amacıyla ifşa ettiğimiz kişisel bilgi kategorilerinin
-          listesi ve bunları paylaştığımız diğer şirketlerin kategorisi.
-        </p>
-        <p>
-          Lütfen unutmayın, bizden bu bilgileri size on iki aylık bir süre
-          içinde en fazla iki kez vermemizi isteme hakkınız vardır. Bu talepte
-          bulunduğunuzda, sağlanan bilgiler sizin hakkınızda son 12 ayda
-          topladığımız kişisel bilgilerle sınırlı olabilir.
-        </p>
+      <h2>5. Use of Data</h2>
+      <p>LedgersFi Accounting uses the collected data for various purposes:</p>
+      <p>0.1. to provide and maintain our Service;</p>
+      <p>
+        0.2. to notify you about changes to our Service;
+      </p>
+      <p>
+        0.3. to allow you to participate in interactive features of our Service when you choose to do so;
+      </p>
+      <p>0.4. to provide customer support;</p>
+      <p>
+        0,5. to gather analysis or valuable information so that we can improve our Service;
+      </p>
+      <p>0.6. to monitor the usage of our Service;</p>
+      <p>0.7. to detect, prevent and address technical issues;</p>
+      <p>0.8. to fulfil any other purpose for which you provide it;</p>
+      <p>
+        0.9. to carry out our obligations and enforce our rights arising from any contracts entered into between you and us, including for billing and collection;
+      </p>
+      <p>
+        0.10. to provide you with notices about your account and/or subscription, including expiration and renewal notices, email-instructions, etc.;
+      </p>
+      <p>
+        0.11. to provide you with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless you have opted not to receive such information;
+      </p>
+      <p>
+        0.12. in any other way we may describe when you provide the information;
+      </p>
+      <p>0.13. for any other purpose with your consent.</p>
 
-        <p>
-          <strong
-            >0.2. Kişisel bilgilerinizi silmek için. Bu talepte bulunursanız,
-            talebinizin tarihi itibariyle hakkınızda tuttuğumuz kişisel
-            bilgileri kayıtlarımızdan sileriz ve tüm hizmet sağlayıcıları da
-            aynısını yapmaya yönlendiririz. Bazı durumlarda, silme, bilgilerin
-            kimliğinin gizlenmesi yoluyla gerçekleştirilebilir. Kişisel
-            bilgilerinizi silmeyi seçerseniz, kişisel bilgilerinizin çalışmasını
-            gerektiren belirli işlevleri kullanamayabilirsiniz.</strong
-          >
-        </p>
-        <p>
-          <strong
-            >0.3. Kişisel bilgilerinizi satmayı durdurmak için. Kişisel
-            bilgilerinizi herhangi bir amaçla üçüncü şahıslara satmayız veya
-            kiralamayız. Kişisel bilgilerinizi para karşılığı satmıyoruz.
-            Bununla birlikte, bazı durumlarda, kişisel bilgilerin parasal bir
-            karşılık olmaksızın üçüncü bir tarafa veya şirketler ailemize
-            aktarılması, Kaliforniya yasalarına göre bir "satış" olarak kabul
-            edilebilir. Kişisel Verilerinizin tek sahibi sizsiniz ve istediğiniz
-            zaman açıklama veya silme talebinde bulunabilirsiniz.</strong
-          >
-        </p>
-        <p>
-          Kişisel bilgilerinizi satmayı durdurmak için bir talepte bulunursanız,
-          bu tür aktarımları durduracağız.
-        </p>
-        <p>
-          Verilerinizi silmemizi veya satışını durdurmamızı isterseniz, bunun
-          bizimle olan deneyiminizi etkileyebileceğini ve kişisel bilgilerinizin
-          çalışmasını gerektiren belirli programlara veya üyelik hizmetlerine
-          katılamayabileceğinizi lütfen unutmayın. Ancak hiçbir koşulda ,
-          haklarınızı kullandığınız için size karşı ayrımcılık yapmayacağız.
-        </p>
+      <h2>6. Retention of Data</h2>
+      <p>
+        We will retain your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your Personal Data to the extent necessary to comply with our legal obligations (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and policies.
+      </p>
+      <p>
+        We will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period, except when this data is used to strengthen the security or to improve the functionality of our Service, or we are legally obligated to retain this data for longer time periods.
+      </p>
+      <h2>7. Transfer of Data</h2>
+      <p>
+        Your information, including Personal Data, may be transferred to – and maintained on – computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ from those of your jurisdiction.
+      </p>
+      <p>
+        LedgersFi Accounting will take all the steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.
+      </p>
 
-        <h2>13 . Servis sağlayıcıları</h2>
-        <p>
-          "Hizmet Sağlayıcılar" ) kolaylaştırmak, bizim adımıza Hizmet sağlamak,
-          Hizmetle ilgili hizmetleri gerçekleştirmek veya Hizmetimizin nasıl
-          kullanıldığını analiz etmemize yardımcı olmak için üçüncü taraf
-          şirketleri ve bireyleri görevlendirebiliriz .
-        </p>
-        <p>
-          Bu üçüncü taraflar, Kişisel Verilerinize yalnızca bu görevleri bizim
-          adımıza gerçekleştirmek için erişebilir ve bunları ifşa etmemek veya
-          başka herhangi bir amaçla kullanmamakla yükümlüdür.
-        </p>
-        <h2>14 . Analitik</h2>
-        <p>
-          Hizmetimizin kullanımını izlemek ve analiz etmek için üçüncü taraf
-          Hizmet Sağlayıcıları kullanabiliriz.
-        </p>
-        <h2>15 . CI/CD araçları</h2>
-        <p>
-          Hizmetimizin geliştirme sürecini otomatikleştirmek için üçüncü taraf
-          Hizmet Sağlayıcıları kullanabiliriz.
-        </p>
-        <h2>16 . Reklam</h2>
-        <p>
-          Hizmetimizi desteklemeye ve sürdürmeye yardımcı olmak için size reklam
-          göstermek için üçüncü taraf Hizmet Sağlayıcıları kullanabiliriz.
-        </p>
-        <h2>17 . Davranışsal Yeniden Pazarlama</h2>
-        <p>
-          Hizmetimizi ziyaret ettikten sonra size üçüncü taraf web sitelerinde
-          reklam vermek için yeniden pazarlama hizmetlerini kullanabiliriz . Biz
-          ve üçüncü taraf satıcılarımız, Hizmetimize yaptığınız geçmiş
-          ziyaretlere dayalı olarak reklamları bilgilendirmek, optimize etmek ve
-          sunmak için tanımlama bilgileri kullanırız.
-        </p>
-        <h2>18 . ödemeler</h2>
-        <p>
-          Hizmet dahilinde ücretli ürünler ve/veya hizmetler sağlayabiliriz. Bu
-          durumda, ödeme işleme için üçüncü taraf hizmetleri ( örneğin, ödeme
-          işlemcileri) kullanırız .
-        </p>
-        <p>
-          Ödeme kartı bilgilerinizi saklamayacağız veya toplamayacağız. Bu
-          bilgiler doğrudan, kişisel bilgilerinizin kullanımı Gizlilik
-          Politikasına tabi olan üçüncü taraf ödeme işlemcilerimize sağlanır. Bu
-          ödeme işlemcileri, Visa, Mastercard, American Express ve Discover gibi
-          markaların ortak çabası olan PCI Güvenlik Standartları Konseyi
-          tarafından yönetilen PCI-DSS tarafından belirlenen standartlara
-          uygundur. PCI-DSS gereksinimleri, ödeme bilgilerinin güvenli bir
-          şekilde işlenmesini sağlamaya yardımcı olur.
-        </p>
-        <h2>19 . Diğer Sitelere Bağlantılar</h2>
-        <p>
-          Hizmetimiz, bizim tarafımızdan işletilmeyen diğer sitelere bağlantılar
-          içerebilir. Bir üçüncü taraf bağlantısını tıklarsanız , o üçüncü
-          tarafın sitesine yönlendirileceksiniz. Ziyaret ettiğiniz her sitenin
-          Gizlilik Politikasını gözden geçirmenizi önemle tavsiye ederiz.
-        </p>
-        <h2>20 . Bu Gizlilik Politikasındaki Değişiklikler</h2>
-        <p>
-          Gizlilik Politikamızı zaman zaman güncelleyebiliriz. Bu sayfada yeni
-          Gizlilik Politikasını yayınlayarak herhangi bir değişikliği size
-          bildireceğiz.
-        </p>
-        <p>
-          Değişikliğin yürürlüğe girmesinden ve bu Gizlilik Politikasının üst
-          kısmındaki "yürürlük tarihi"ni güncellemeden önce e-posta ve/veya
-          Hizmetimizde öne çıkan bir bildirim yoluyla sizi bilgilendireceğiz.
-        </p>
-        <p>
-          Herhangi bir değişiklik için bu Gizlilik Politikasını periyodik olarak
-          gözden geçirmeniz tavsiye edilir. Bu Gizlilik Politikasında yapılan
-          değişiklikler, bu sayfada yayınlandığında yürürlüğe girer.
-        </p>
-        <h2>21 . Bize Ulaşın</h2>
-        <p>
-          Bu Gizlilik Politikası ile ilgili herhangi bir sorunuz varsa, lütfen
-          bize e-posta ile ulaşın: destek@guvenfi.com .
-        </p>
-      </section>
-    </main>
+      <h2>8. Disclosure of Data</h2>
+      <p>
+        We may disclose personal information that we collect, or you provide:
+      </p>
+      <p>
+      <strong>0.1. Business Transaction.</strong>
+      </p>
+      <p>
+        If we or our subsidiaries are involved in a merger, acquisition or asset sale, your Personal Data may be transferred.
+      </p>
 
-    <footer>
-      <!-- Add your footer content here -->
-    </footer>
-  </body>
+      <p><strong>0.2. Other cases. We may disclose your information also:</strong></p>
+      <p>
+        0.2.1. to our subsidiaries and affiliates;
+      </p>
+      <p>0.2.2. to contractors, service providers, and other third parties we use to support our business;</p>
+      <p>
+        0.2.3. to fulfill the purpose for which you provide it;
+      </p>
+      <p>0.2.4. for the purpose of including your company’s logo on our website;</p>
+      <p>
+        0.2.5. for any other purpose disclosed by us when you provide the information;
+      </p>
+      <p>0.2.6. with your consent in any other cases;</p>
+      <p>
+        0.2.7. if we believe disclosure is necessary or appropriate to protect the rights, property, or safety of the Company, our customers, or others.
+      </p>
+
+      <h2>9. Security of Data</h2>
+      <p>
+        The security of your data is important to us but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.
+      </p>
+      <h2>10. Your Data Protection Rights Under General Data Protection Regulation (GDPR)</h2>
+      <p>
+        If you are a resident of the European Union (EU) and European Economic Area (EEA), you have certain data protection rights, covered by GDPR.
+      </p>
+      <p>
+        We aim to take reasonable steps to allow you to correct, amend, delete, or limit the use of your Personal Data.
+      </p>
+      <p>If you wish to be informed what Personal Data we hold about you and if you want it to be removed from our systems, please email us at <strong>support@ledgersfi.com.</strong>
+        In certain circumstances, you have the following data protection rights:
+      </p>
+      <p>0.0.1. the right to access, update or to delete the information we have on you;</p>
+      <p>
+        0.0.2. the right of rectification. You have the right to have your information rectified if that information is inaccurate or incomplete;
+      </p>
+      <p>
+        0.0.3. the right to object. You have the right to object to our processing of your Personal Data;
+      </p>
+      <p>0.0.4. the right of restriction. You have the right to request that we restrict the processing of your personal information;</p>
+      <p>0.0.5. the right to data portability. You have the right to be provided with a copy of your Personal Data in a structured, machine-readable and commonly used format;</p>
+      <p>
+        0.0.6. the right to withdraw consent. You also have the right to withdraw your consent at any time where we rely on your consent to process your personal information;
+      </p>
+      <p>
+        Please note that we may ask you to verify your identity before responding to such requests. Please note, we may not able to provide Service without some necessary data.
+      </p>
+      <p>
+        You have the right to complain to a Data Protection Authority about our collection and use of your Personal Data. For more information, please contact your local data protection authority in the European Economic Area (EEA).
+      </p>
+      <h2>11. Your Data Protection Rights under the California Privacy Protection Act (CalOPPA)</h2>
+      <p>
+        CalOPPA is the first state law in the nation to require commercial websites and online services to post a privacy policy. The law’s reach stretches well beyond California to require a person or company in the United States (and conceivable the world) that operates websites collecting personally identifiable information from California consumers to post a conspicuous privacy policy on its website stating exactly the information being collected and those individuals with whom it is being shared, and to comply with this policy.
+      </p>
+      <p>
+        According to CalOPPA we agree to the following:
+      </p>
+      <p>
+        0.1. users can visit our site anonymously;
+      </p>
+      <p>0.2. our Privacy Policy link includes the word “Privacy”, and can easily be found on the home page of our website;</p>
+      <p>0.3. users will be notified of any privacy policy changes on our Privacy Policy Page;</p>
+      <p>0.4. users are able to change their personal information by emailing us at <strong>support@ledgersfi.com.</strong> Our Policy on “Do Not Track” Signals:</p>
+      <p>We honor Do Not Track signals and do not track, plant cookies, or use advertising when a Do Not Track browser mechanism is in place. Do Not Track is a preference you can set in your web browser to inform websites that you do not want to be tracked.</p>
+      <p>You can enable or disable Do Not Track by visiting the Preferences or Settings page of your web browser.</p>
+      <h2>12. Your Data Protection Rights under the California Consumer Privacy Act (CCPA)</h2>
+      <p>If you are a California resident, you are entitled to learn what data we collect about you, ask to delete your data and not to sell (share) it. To exercise your data protection rights, you can make certain requests and ask us:</p>
+
+      <p><strong>0.1. What personal information we have about you. If you make this request, we will return to you:</strong></p>
+      <p>0.0.1. The categories of personal information we have collected about you.</p>
+      <p>0.0.2. The categories of sources from which we collect your personal information.</p>
+      <p>0.0.3. The business or commercial purpose for collecting or selling your personal information.</p>
+      <p>0.0.4. The categories of third parties with whom we share personal information.</p>
+      <p>0.0.5. The specific pieces of personal information we have collected about you.</p>
+      <p>0.0.6. A list of categories of personal information that we have sold, along with the category of any other company we sold it to. If we have not sold your personal information, we will inform you of that fact.</p>
+      <p>0.0.7. A list of categories of personal information that we have disclosed for a business purpose, along with the category of any other company we shared it with.</p>
+      <p>Please note, you are entitled to ask us to provide you with this information up to two times in a rolling twelve-month period. When you make this request, the information provided may be limited to the personal information we collected about you in the previous 12 months.</p>
+      <p><strong>0.2. To delete your personal information. If you make this request, we will delete the personal information we hold about you as of the date of your request from our records and direct any service providers to do the same. In some cases, deletion may be accomplished through de-identification of the information. If you choose to delete your personal information, you may not be able to use certain functions that require your personal information to operate.</strong></p>
+      <p>Please note, if you ask us to delete, it may impact your experience with us, and you may not be able to participate in certain programs or membership services which require the usage of your personal information to function. But in no circumstances, we will discriminate against you for exercising your rights.</p>
+
+      <h2>13 . Service Providers</h2>
+      <p>
+        We may employ third party companies and individuals to facilitate our Service <strong>(“Service Providers”)</strong>, provide Service on our behalf, perform Service-related services or assist us in analyzing how our Service is used.
+      </p>
+      <p>
+        These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.
+      </p>
+      <h2>14. Analytics</h2>
+      <p>
+        We may use third-party Service Providers to monitor and analyze the use of our Service.
+      </p>
+      <h2>15. CI/CD tools</h2>
+      <p>
+        We may use third-party Service Providers to automate the development process of our Service.
+      </p>
+      <h2>16. Advertising</h2>
+      <p>
+        We may use third-party Service Providers to show advertisements to you to help support and maintain our Service.
+      </p>
+      <h2>17. Behavioral Remarketing</h2>
+      <p>
+        We may use remarketing services to advertise on third party websites to you after you visited our Service. We and our third-party vendors use cookies to inform, optimize and serve ads based on your past visits to our Service.
+      </p>
+      <h2>18. Payments</h2>
+      <p>
+        We may provide paid products and/or services within Service. In that case, we use third-party services for payment processing (e.g. payment processors).
+      </p>
+      <p>
+        We will not store or collect your payment card details. That information is provided directly to our third-party payment processors whose use of your personal information is governed by their Privacy Policy. These payment processors adhere to the standards set by PCI-DSS as managed by the PCI Security Standards Council, which is a joint effort of brands like Visa, Mastercard, American Express and Discover. PCI-DSS requirements help ensure the secure handling of payment information.
+      </p>
+      <h2>19. Links to Other Sites</h2>
+      <p>
+        Our Service may contain links to other sites that are not operated by us. If you click a third party link, you will be directed to that third party’s site. We strongly advise you to review the Privacy Policy of every site you visit.
+      </p>
+      <h2>20. Changes to This Privacy Policy</h2>
+      <p>
+        We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+      </p>
+      <p>
+        We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update “effective date” at the top of this Privacy Policy.
+      </p>
+      <p>
+        You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.
+      </p>
+      <h2>21. Contact Us</h2>
+      <p>
+        If you have any questions about this Privacy Policy, please contact us by email: <strong>support@ledgersfi.com.</strong>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <!-- Add your footer content here -->
+  </footer>
+</body>
+
 </html>

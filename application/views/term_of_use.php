@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuvenFi Term of Use</title>
+    <title>LedgersFi Term of Use</title>
     <style>
         /* Add your custom CSS styles here */
     </style>
@@ -12,115 +12,137 @@
 
 <body style="margin: 30px">
     <header style="text-align: center">
-        <h1>ŞARTLAR VE KOŞULLAR</h1>
+        <h1>TERMS AND CONDITIONS</h1>
     </header>
-    <div>Son güncelleme: 2023-06-06</div>
+
     <main>
         <section>
-            <h2>1 . Tanıtım</h2>
-            <p><strong>GüvenFi Muhasebe’ye</strong> Hoş Geldiniz (“Şirket”, “biz”, “bizim”, “biz”)!</p>
-            <p><strong>GüvenFi Muhasebe tarafından işletilen www.guvenfi.com</strong> adresinde bulunan web sitemizi (birlikte veya ayrı ayrı "Hizmet") kullanımınızı düzenler.</p>
-            <p>Gizlilik Politikamız ayrıca Hizmetimizi kullanımınızı yönetir ve web sayfalarımızı kullanımınızdan kaynaklanan bilgileri nasıl topladığımızı, koruduğumuzu ve ifşa ettiğimizi açıklar.</p>
-            <p>Bizimle olan sözleşmeniz, bu Koşulları ve Gizlilik Politikamızı ("Sözleşmeler") içerir. Sözleşmeleri okuyup anladığınızı ve bunlara bağlı kalmayı kabul ettiğinizi kabul etmektesiniz.</p>
-            <p>Sözleşmeleri kabul etmiyorsanız (veya bunlara uyamıyorsanız), Hizmeti kullanamayabilirsiniz ancak bir çözüm bulmaya çalışabilmemiz için lütfen <strong>destek@guvenfi.com adresine e-posta göndererek bize bildirin. Bu Koşullar,</strong> Hizmete erişmek veya Hizmeti kullanmak isteyen tüm ziyaretçiler, kullanıcılar ve diğerleri için geçerlidir .</p>
-            <h2>2 . İletişim</h2>
-            <p>Hizmetimizi kullanarak haber bültenlerine, pazarlama veya promosyon malzemelerine ve gönderebileceğimiz diğer bilgilere abone olmayı kabul edersiniz. Ancak abonelikten çıkma bağlantısını takip ederek veya destek@guvenfi.com adresine e-posta göndererek bizden bu iletişimlerin herhangi birini veya tamamını almaktan vazgeçebilirsiniz .</p>
-            <h2>3 . satın almalar</h2>
-            <p>Hizmet aracılığıyla sağlanan herhangi bir ürün veya hizmeti satın almak isterseniz ("Satın Alma"), kredi veya banka kartı numaranız, kartınızın son kullanma tarihi dahil ancak bunlarla sınırlı olmamak üzere Satın Alma işleminizle ilgili belirli bilgileri sağlamanız istenebilir. , fatura adresiniz ve gönderim bilgileriniz.</p>
-            <p>Şunları beyan ve garanti ediyorsunuz: ( i ) herhangi bir Satın Alma işlemiyle bağlantılı olarak herhangi bir kartı/kartı/kartları veya diğer ödeme yöntemini/yöntemlerini kullanma konusunda yasal hakkınız var; ve (ii) bize sağladığınız bilgilerin doğru, doğru ve eksiksiz olduğunu.</p>
-            <p>Ödemeyi kolaylaştırmak ve Satın Alma İşlemlerini tamamlamak amacıyla üçüncü taraf hizmetlerinden yararlanabiliriz . Bilgilerinizi göndererek, bize Gizlilik Politikamıza tabi olarak bu üçüncü taraflara bilgi verme hakkını vermiş olursunuz.</p>
-            <p>, ürün veya hizmetin açıklamasında veya fiyatındaki hatalar, siparişinizdeki hata veya diğer nedenler dahil ancak bunlarla sınırlı olmamak üzere, herhangi bir zamanda siparişinizi reddetme veya iptal etme hakkını saklı tutarız .</p>
-            <p>Dolandırıcılık veya yetkisiz veya yasa dışı bir işlemden şüpheleniliyorsa, siparişinizi reddetme veya iptal etme hakkını saklı tutarız.</p>
-            <h2>4 . Abonelikler</h2>
-            <p>Hizmetin bazı bölümleri abonelik temelinde faturalandırılır ("Abonelik(ler)"). Yinelenen ve periyodik olarak ("Faturalandırma Döngüsü") önceden faturalandırılacaksınız. Faturalandırma döngüleri, bir Abonelik satın alırken seçtiğiniz abonelik planının türüne göre belirlenir.</p>
-            <p>Her Fatura Döngüsünün sonunda Aboneliğiniz, siz iptal etmedikçe veya GüvenFi Muhasebe iptal eder. Abonelik yenilemenizi online hesap yönetimi sayfanız üzerinden veya destek@guvenfi.com müşteri destek ekibi ile iletişime geçerek iptal edebilirsiniz .</p>
-            <p>Aboneliğinizin ödemesini işlemek için geçerli bir ödeme yöntemi gereklidir. GüvenFi'yi sağlayacaksınız Tam ad, adres, eyalet, posta veya posta kodu, telefon numarası ve geçerli bir ödeme yöntemi bilgilerini içeren ancak bunlarla sınırlı olmayan doğru ve eksiksiz fatura bilgileriyle Muhasebe . Bu tür ödeme bilgilerini göndererek, GüvenFi'yi otomatik olarak yetkilendirmiş olursunuz. Muhasebe, hesabınız üzerinden oluşan tüm Abonelik ücretlerini bu tür ödeme araçlarından tahsil edecektir.</p>
-            <p>Otomatik faturalandırmanın herhangi bir nedenle gerçekleşmemesi durumunda GüvenFi Muhasebe, Hizmete erişiminizi derhal geçerli olmak üzere sonlandırma hakkını saklı tutar.</p>
-            <h2>5 . Ücretsiz deneme</h2>
-            <p>GüvenFi Muhasebe , tamamen kendi takdirine bağlı olarak, sınırlı bir süre için ücretsiz deneme ("Ücretsiz Deneme") içeren bir Abonelik sunabilir .</p>
-            <p>Ücretsiz Denemeye kaydolmak için fatura bilgilerinizi girmeniz gerekebilir .</p>
-            <p>GüvenFi tarafından ücretlendirilmezsiniz. Ücretsiz Deneme süresi dolana kadar Muhasebe . Ücretsiz Deneme süresinin son gününde, Aboneliğinizi iptal etmediğiniz sürece , seçtiğiniz Abonelik türü için geçerli Abonelik ücretleri sizden otomatik olarak tahsil edilecektir.</p>
-            <p>Herhangi bir zamanda ve haber vermeksizin, GüvenFi Muhasebe, ( i ) Ücretsiz Deneme teklifinin Hizmet Koşullarını değiştirme veya (ii) Ücretsiz Deneme teklifini iptal etme hakkını saklı tutar .</p>
-            <h2>6 . Ücret Değişiklikleri</h2>
-            <p>GüvenFi Muhasebe , tamamen kendi takdirine bağlı olarak ve herhangi bir zamanda, Abonelikler için Abonelik ücretlerinde değişiklik yapabilir. Herhangi bir Abonelik ücreti değişikliği, o sırada geçerli olan Faturalandırma Döngüsünün sonunda geçerli olacaktır.</p>
-            <p>GüvenFi Muhasebe , Abonelik ücretlerindeki herhangi bir değişikliği, söz konusu değişiklik yürürlüğe girmeden önce Aboneliğinizi feshetme fırsatı vermek için size makul bir ön bildirimde bulunacaktır .</p>
-            <p>Abonelik ücreti değişikliği yürürlüğe girdikten sonra Hizmeti kullanmaya devam etmeniz, değiştirilen Abonelik ücreti tutarını ödemeyi kabul ettiğiniz anlamına gelir.</p>
+            <h2>1.Introduction</h2>
+            <p>Welcome to <strong>Ledgersfi Accounting</strong> (“Company”, “we”, “our”, “us”)!</p>
 
-            <h2>7 . Geri ödemeler</h2>
-            <p>Sözleşmenin orijinal olarak satın alınmasından sonraki <strong>14 gün</strong> içinde Sözleşmeler için geri ödeme yaparız .</p>
-            <h2>8 . İçerik</h2>
-            <p>Bu Hizmette veya bu Hizmet aracılığıyla bulunan içerik GüvenFi'nin mülkiyetindedir . Muhasebe veya izin alınarak kullanılmıştır. Söz konusu İçeriği, tamamen veya kısmen, ticari amaçlarla veya kişisel kazanç için, bizden önceden yazılı izin almadan dağıtamaz, değiştiremez, iletemez, yeniden kullanamaz, indiremez, yeniden gönderemez, kopyalayamaz veya kullanamazsınız.</p>
-            <h2>9 . Yasaklanmış Kullanımlar</h2>
-            Hizmeti yalnızca yasal amaçlarla ve Koşullara uygun olarak kullanabilirsiniz . Hizmeti kullanmamayı kabul ediyorsunuz:</p>
-            <p>0.1. Geçerli herhangi bir ulusal veya uluslararası yasa veya düzenlemeyi ihlal eden herhangi bir şekilde.</p>
-            <p>0.2. Reşit olmayanları uygunsuz içeriğe veya başka bir şekilde maruz bırakarak herhangi bir şekilde istismar etmek, zarar vermek veya istismar etmeye veya zarar vermeye teşebbüs etmek amacıyla.</p>
-            <p>0.3. Herhangi bir "önemsiz posta", "zincirleme mektup", "istenmeyen posta" veya diğer benzer talepler dahil olmak üzere herhangi bir reklam veya tanıtım materyalini iletmek veya gönderilmesini sağlamak.</p>
-            <p>0.4. Şirketi , bir Şirket çalışanını, başka bir kullanıcıyı veya başka herhangi bir kişi veya kuruluşu taklit etmek veya taklit etmeye çalışmak .</p>
-            <p>0,5. Başkalarının haklarını ihlal eden herhangi bir şekilde veya herhangi bir şekilde yasa dışı, tehdit edici, hileli veya zararlı veya yasa dışı, yasa dışı, hileli veya zararlı herhangi bir amaç veya faaliyetle bağlantılı olarak.</p>
-            <p>0.6. Herhangi birinin Hizmeti kullanmasını veya Hizmetten yararlanmasını kısıtlayan veya engelleyen veya bizim tarafımızdan belirlendiği üzere Şirkete veya Hizmet kullanıcılarına zarar verebilecek veya onları rahatsız edebilecek veya onları sorumluluğa maruz bırakabilecek başka herhangi bir davranışta bulunmak.</p>
-            <p>Ek olarak, şunları yapmamayı kabul edersiniz:</p>
-            <p>0.1. Hizmeti devre dışı bırakabilecek, aşırı yükleyebilecek, zarar verebilecek veya bozabilecek herhangi bir şekilde kullanın veya Hizmet aracılığıyla gerçek zamanlı faaliyetlerde bulunma yetenekleri dahil olmak üzere herhangi bir diğer tarafın Hizmeti kullanımına müdahale edin.</p>
-            <p>0.2. Hizmetteki herhangi bir materyali izlemek veya kopyalamak da dahil olmak üzere herhangi bir amaçla Hizmete erişmek için herhangi bir robot, örümcek veya başka bir otomatik cihaz, süreç veya araç kullanmak.</p>
-            <p>0.3. Hizmetteki herhangi bir materyali izlemek veya kopyalamak için veya önceden yazılı iznimiz olmadan herhangi bir yetkisiz amaç için herhangi bir manuel işlemi kullanmak.</p>
-            <p>0.4. Hizmetin düzgün çalışmasına müdahale eden herhangi bir cihaz, yazılım veya rutin kullanmak.</p>
-            <p>0,5. Kötü amaçlı veya teknolojik olarak zararlı olan virüsleri, truva atlarını, solucanları, mantık bombalarını veya diğer materyalleri tanıtın.</p>
-            <p>0.6. Hizmetin herhangi bir bölümüne, Hizmetin depolandığı sunucuya veya Hizmete bağlı herhangi bir sunucuya, bilgisayara veya veritabanına yetkisiz erişim sağlamaya, bunlara müdahale etmeye, hasar vermeye veya bozmaya çalışmak.</p>
-            <p>0.7. Bir hizmet reddi saldırısı veya dağıtılmış bir hizmet reddi saldırısı yoluyla Hizmete Saldırın.</p>
-            <p>0.8. Şirket derecelendirmesine zarar verebilecek veya tahrif edebilecek herhangi bir eylemde bulunmayın.</p>
-            <p>0.9. Aksi takdirde, Hizmetin düzgün çalışmasına müdahale etmeye çalışın .</p>
-            <h2>10 . Analitik</h2>
-            <p>Hizmetimizin kullanımını izlemek ve analiz etmek için üçüncü taraf Hizmet Sağlayıcıları kullanabiliriz.</p>
-            <h2>11 . hesaplar</h2>
-            <p>Bizde bir hesap oluşturduğunuzda, 18 yaşının üzerinde olduğunuzu ve bize sağladığınız bilgilerin her zaman doğru, eksiksiz ve güncel olduğunu garanti edersiniz . Hatalı, eksik veya geçersiz bilgiler, Hizmet'teki hesabınızın derhal feshedilmesine neden olabilir.</p>
-            <p>Bilgisayarınıza ve/veya hesabınıza erişimin kısıtlanması dahil ancak bunlarla sınırlı olmamak üzere hesabınızın ve parolanızın gizliliğini korumaktan siz sorumlusunuz. Parolanız Hizmetimizde veya bir üçüncü taraf hizmetinde olsun, hesabınız ve/veya parolanız altında gerçekleşen her türlü faaliyet veya eylemin sorumluluğunu kabul edersiniz . Hesabınızın herhangi bir güvenlik ihlalinden veya yetkisiz kullanımından haberdar olduğunuzda derhal bize haber vermelisiniz.</p>
-            <p>Başka bir kişi veya kuruluşun adını veya yasal olarak kullanıma açık olmayan, sizden başka bir kişi veya kuruluşun haklarına tabi olan bir adı veya ticari markayı uygun yetkilendirme olmadan kullanıcı adı olarak kullanamazsınız. Kullanıcı adı olarak saldırgan, kaba veya müstehcen herhangi bir isim kullanamazsınız.</p>
-            <p>Tamamen kendi takdirimize bağlı olarak hizmeti reddetme, hesapları feshetme, içeriği kaldırma veya düzenleme veya siparişleri iptal etme hakkını saklı tutarız.</p>
-            <h2>12 . Fikri mülkiyet</h2>
-            <p>GüvenFi'nin mülkiyetindedir ve öyle kalacaktır. Muhasebe ve lisans verenleri. Hizmet, telif hakkı, ticari marka ve diğer ülkelerin ve yabancı ülkelerin yasalarıyla korunmaktadır . Markalarımız, GüvenFi'nin önceden yazılı izni olmaksızın herhangi bir ürün veya hizmetle bağlantılı olarak kullanılamaz. Muhasebe .</p>
-            <h2>13 . Telif Hakkı Politikası</h2>
-            <p>Başkalarının fikri mülkiyet haklarına saygı duyuyoruz. Hizmette yayınlanan İçeriğin herhangi bir kişi veya kuruluşun telif hakkını veya diğer fikri mülkiyet haklarını ("İhlal") ihlal ettiği iddiasına yanıt vermek politikamızdır.</p>
-            <p>Telif hakkı sahibiyseniz veya onun adına yetkili iseniz ve telif hakkıyla korunan çalışmanın telif hakkı ihlali teşkil edecek şekilde kopyalandığını düşünüyorsanız, lütfen talebinizi e-posta yoluyla destek@guvenfi.com adresine konu satırıyla birlikte gönderin : "Telif Hakkı İhlali" ve "Telif Hakkı İhlali İddiaları için DMCA Bildirimi ve Prosedürü " başlığı altında, iddia edilen İhlalin aşağıda ayrıntıları verilen ayrıntılı bir açıklamasını talebinize ekleyin.</p>
-            <p>Telif hakkınız üzerinde ve/veya Hizmet aracılığıyla bulunan herhangi bir İçeriğin ihlaline ilişkin yanlış beyan veya kötü niyetli iddialar için zararlardan (masraflar ve avukat ücretleri dahil) sorumlu tutulabilirsiniz.</p>
-            <h2>14 . Telif Hakkı İhlal İddiaları için DMCA Bildirimi ve Prosedürü</h2>
-            <p>Telif Hakkı Temsilcimize aşağıdaki bilgileri yazılı olarak sağlayarak Dijital Binyıl Telif Hakkı Yasası (DMCA) uyarınca bir bildirim gönderebilirsiniz (daha fazla ayrıntı için bkz. 17 USC 512(c)(3)):</p>
-                <p>0.1. telif hakkı sahibi adına hareket etmeye yetkili kişinin elektronik veya fiziksel imzası ;</p>
-                <p>0.2. telif hakkıyla korunan çalışmanın bulunduğu yerin URL'si (yani web sayfası adresi) veya telif hakkıyla korunan çalışmanın bir kopyası dahil olmak üzere, ihlal edildiğini iddia ettiğiniz telif hakkıyla korunan çalışmanın bir açıklaması ;</p>
-                <p>0.3. ihlal ettiğini iddia ettiğiniz materyalin bulunduğu Hizmet üzerindeki URL'nin veya diğer belirli konumun tanımlanması ;</p>
-                <p>0.4. adresiniz, telefon numaranız ve e-posta adresiniz;</p>
-                <p>0,5. ihtilaflı kullanıma telif hakkı sahibi, temsilcisi veya yasa tarafından izin verilmediğine iyi niyetle inandığınıza dair tarafınızdan yapılan bir beyan ;</p>
-                <p>0.6. bildiriminizdeki yukarıdaki bilgilerin doğru olduğuna ve telif hakkı sahibi olduğunuza veya telif hakkı sahibi adına hareket etmeye yetkili olduğunuza dair yalan yere yemin cezası altında yaptığınız bir beyan.</p>
-                <p>destek@guvenfi.com adresinden e-posta yoluyla iletişime geçebilirsiniz .</p>
-            <h2>15 . Hata Raporlama ve Geri Bildirim</h2>
-            <p>Hatalar, iyileştirme önerileri, fikirler, sorunlar, şikayetler ve Hizmetimiz ile ilgili diğer konularda bize doğrudan destek@guvenfi.com adresinden veya üçüncü taraf siteler ve araçlar aracılığıyla bilgi ve geri bildirim sağlayabilirsiniz (“Geri Bildirim” ) . Şunları kabul ve beyan edersiniz: ( i ) Geribildirime ilişkin herhangi bir fikri mülkiyet hakkı veya başka bir hak, unvan veya menfaati muhafaza etmeyecek, edinmeyecek veya ileri sürmeyeceksiniz; (ii) Şirket, Geri Bildirime benzer geliştirme fikirlerine sahip olabilir; (iii) Geribildirim, sizden veya herhangi bir üçüncü şahıstan gizli bilgi veya özel bilgi içermez; ve (iv) Şirket, Geribildirime ilişkin herhangi bir gizlilik yükümlülüğü altında değildir. Yürürlükteki zorunlu yasalar nedeniyle Geribildirimin mülkiyetinin devrinin mümkün olmaması durumunda, Şirkete ve bağlı kuruluşlarına münhasır, devredilebilir, geri alınamaz, bedelsiz, alt lisanslanabilir, sınırsız ve kalıcı bir kullanım hakkı verirsiniz ( kopyalamak, değiştirmek, türev eserler oluşturmak, yayınlamak, dağıtmak ve ticarileştirmek dahil olmak üzere) Herhangi bir şekilde ve herhangi bir amaçla Geribildirim.</p>
-            <h2>16 . Diğer Web Sitelerine Bağlantılar</h2>
-            <p>GüvenFi tarafından sahip olunmayan veya denetlenmeyen üçüncü taraf web sitelerine veya hizmetlere bağlantılar içerebilir. Muhasebe .</p>
-            <p>GüvenFi Muhasebe , herhangi bir üçüncü şahıs web sitesi veya hizmetinin içeriği, gizlilik politikaları veya uygulamaları üzerinde herhangi bir kontrole sahip değildir ve hiçbir sorumluluk üstlenmez . Bu kuruluşların/kişilerin veya web sitelerinin tekliflerini garanti etmiyoruz.</p>
+            <p>These Terms of Service (“Terms”, “Terms of Service”) govern your use of our website located at <strong>www.ledgersfi.com</strong> (together or individually “Service”) operated by <strong>Ledgersfi Accounting.</strong>
+                Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages.
+            </p>
+            <p>Your agreement with us includes these Terms and our Privacy Policy (“Agreements”). You acknowledge that you have read and understood Agreements and agree to be bound of them.</p>
+            <p>If you do not agree with (or cannot comply with) Agreements, then you may not use the Service, but please let us know by emailing at <strong>support@ledgersfi.com</strong> so we can try to find a solution. These Terms apply to all visitors, users and others who wish to access or use Service.</p>
+            
+            <h2>2. Communications</h2>
+            <p>By using our Service, you agree to subscribe to newsletters, marketing or promotional materials and other information we may send. However, you may opt out of receiving any, or all, of these communications from us by following the unsubscribe link or by emailing at <strong>support@ledgersfi.com.</strong></p>
+            
+            <h2>3. Purchases</h2>
+            <p>If you wish to purchase any product or service made available through Service (“Purchase”), you may be asked to supply certain information relevant to your Purchase including but not limited to, your credit or debit card number, the expiration date of your card, your billing address, and your shipping information.</p>
+            <p>You represent and warrant that: (i) you have the legal right to use any card(s) or other payment method(s) in connection with any Purchase; and that (ii) the information you supply to us is true, correct and complete.</p>
+            <p>We may employ the use of third party services for the purpose of facilitating payment and the completion of Purchases. By submitting your information, you grant us the right to provide the information to these third parties subject to our Privacy Policy.</p>
+            <p>We reserve the right to refuse or cancel your order at any time for reasons including but not limited to: product or service availability, errors in the description or price of the product or service, error in your order or other reasons.</p>
+            <p>We reserve the right to refuse or cancel your order if fraud or an unauthorized or illegal transaction is suspected.</p>
+            
+            <h2>4. Subscriptions</h2>
+            <p>Some parts of Service are billed on a subscription basis ("Subscription(s)"). You will be billed in advance on a recurring and periodic basis ("Billing Cycle"). Billing cycles will be set depending on the type of subscription plan you select when purchasing a Subscription.</p>
+            <p>At the end of each Billing Cycle, your Subscription will automatically renew under the exact same conditions unless you cancel it or Ledgersfi Accounting cancels it. You may cancel your Subscription renewal either through your online account management page or by contacting support@ledgersfi.com customer support team.</p>
+            <p>A valid payment method is required to process the payment for your subscription. You shall provide Ledgersfi Accounting with accurate and complete billing information that may include but not limited to full name, address, state, postal or zip code, telephone number, and a valid payment method information. By submitting such payment information, you automatically authorize Ledgersfi Accounting to charge all Subscription fees incurred through your account to any such payment instruments.</p>
+            <p>Should automatic billing fail to occur for any reason, Ledgersfi Accounting reserves the right to terminate your access to the Service with immediate effect.</p>
+            
+            <h2>5. Free Trial</h2>
+            <p>Ledgersfi Accounting may, at its sole discretion, offer a Subscription with a free trial for a limited period of time ("Free Trial").</p>
+            <p>You may be required to enter your billing information in order to sign up for Free Trial.</p>
+            <p>If you do enter your billing information when signing up for Free Trial, you will not be charged by Ledgersfi Accounting until Free Trial has expired. On the last day of Free Trial period, unless you cancelled your Subscription, you will be automatically charged the applicable Subscription fees for the type of Subscription you have selected.</p>
+            <p>At any time and without notice, Ledgersfi Accounting reserves the right to (i) modify Terms of Service of Free Trial offer, or (ii) cancel such Free Trial offer.</p>
+            
+            <h2>6. Fee Changes</h2>
+            <p>Ledgersfi Accounting , in its sole discretion and at any time, may modify Subscription fees for the Subscriptions. Any Subscription fee change will become effective at the end of the then-current Billing Cycle.</p>
+            <p>Ledgersfi Accounting will provide you with a reasonable prior notice of any change in Subscription fees to give you an opportunity to terminate your Subscription before such change becomes effective.</p>
+            <p>Your continued use of Service after Subscription fee change comes into effect constitutes your agreement to pay the modified Subscription fee amount.</p>
 
-            <p>ZİYARET ETTİĞİNİZ ÜÇÜNCÜ TARAF WEB SİTELERİNİN VEYA HİZMETLERİNİN HİZMET ŞARTLARINI VE GİZLİLİK POLİTİKALARINI OKUMANIZI ŞİDDETLE TAVSİYE EDERİZ.</p>
-            <h2>17 . Garanti Reddi </h2>
-            <p>BU HİZMETLER ŞİRKET TARAFINDAN "OLDUĞU GİBİ" VE "MEVCUT OLDUĞU GİBİ" TEMELİNDE SAĞLANMAKTADIR. ŞİRKET HİZMETLERİNİN İŞLETİMİNE VEYA BUNLARDA BULUNAN BİLGİ, İÇERİK VEYA MATERYALLERE İLİŞKİN AÇIK VEYA ZIMNİ HERHANGİ BİR BEYAN VEYA GARANTİDE BULUNMAZ. BU HİZMETLERİ, İÇERİKLERİNİ VE BİZDEN ELDE EDİLEN HERHANGİ BİR HİZMET VEYA ÖĞEYİ KULLANMANIZIN RİSKİNİN YALNIZCA SİZE AİT OLDUĞUNU AÇIKÇA KABUL ETMİŞ OLURSUNUZ.</p>
-            <p>ŞİRKET İLE İLGİLİ HİÇBİR KİŞİ HİZMETLERİN TAMLIĞI, GÜVENLİĞİ, GÜVENİLİRLİĞİ, KALİTESİ, DOĞRULUĞU VEYA KULLANILABİLİRLİĞİ KONUSUNDA HERHANGİ BİR GARANTİ VEYA BEYANDA BULUNMAZ. YUKARIDAKİ HUSUSLARI SINIRLAMAKSIZIN, HİÇBİR ŞİRKET VEYA ŞİRKET İLE İLGİLİ KİŞİ HİZMETLERİN, İÇERİKLERİNİN VEYA HİZMETLER ÜZERİNDEN ELDE EDİLEN HERHANGİ BİR HİZMETİN VEYA ÖĞENİN DOĞRU, GÜVENİLİR, HATASIZ VEYA KESİNTİSİZ OLACAĞINI, KUSURLARIN DÜZELTİLECEĞİNİ BEYAN VEYA GARANTİ ETMEZ. TED, HİZMETLERDE VEYA HİZMETLERİ KULLANILABİLİR KILAN SUNUCUDA VİRÜSLER VEYA DİĞER ZARARLI BİLEŞENLER BULUNMADIĞI VEYA HİZMETLER VEYA HİZMETLER ARACILIĞIYLA ELDE EDİLEN HERHANGİ BİR HİZMET VEYA ÖĞELERİN İHTİYAÇ VEYA BEKLENTİLERİNİZİ KARŞILAYACAĞI.</p>
-            <p>ŞİRKET, SATILABİLİRLİK, İHLAL ETMEME VE BELİRLİ BİR AMACA UYGUNLUK GARANTİLERİ DAHİL ANCAK BUNLARLA SINIRLI OLMAMAK ÜZERE, AÇIK VEYA ZIMNİ, YASAL VEYA DİĞER HER TÜRDEKİ GARANTİLERİ REDDEDER.</p>
-            <p>YUKARIDA BELİRTİLENLER, GEÇERLİ YASALAR KAPSAMINDA HARİÇ TUTULAMAYAN VEYA SINIRLANDIRILMAYAN HİÇBİR GARANTİYİ ETKİLEMEZ.</p>
-            <h2>18 . Sorumluluğun Sınırlandırılması _</h2>
-            <p>YASALARLA YASAKLANANLAR HARİÇ, HER TÜRLÜ DOLAYLI, CEZAİ, ÖZEL, ARIZİ VEYA DOLAYLI ZARARDAN BİZİ VE GÖREVLİLERİMİZİ, DİREKTÖRLERİMİZİ, ÇALIŞANLARIMIZI VE TEMSİLCİLERİMİZİ, NASIL OLURSA OLSUN (AVUKATLIK ÜCRETLERİ VE İLGİLİ TÜM MASRAFLAR VE GİDERLER DAHİL) DAVA VE TAHKİM, VEYA VARSA, DAVA VEYA TAHKİM KURULMUŞ OLSA OLMAMASI, SÖZLEŞME, İHMAL VEYA DİĞER HAKSIZ EYLEMLERE BAĞLI OLARAK VEYA BU SÖZLEŞMEDEN DOĞAN VEYA BU SÖZLEŞMEYLE BAĞLANTILI OLARAK DOĞAN HUSUSLAR SINIRLAMA OLMAKSIZIN, BU SÖZLEŞMEDEN KAYNAKLANAN HERHANGİ BİR KİŞİSEL YARALANMA VEYA MAL HASARI İLE İLGİLİ HERHANGİ BİR FEDERAL, EYALET VEYA YEREL YASA, TÜZÜK, KURAL VEYA YÖNETMELİKLERİ İHLAL ETMEK, ŞİRKETE BU TÜR HASAR OLASILIĞI DAHA ÖNCE BİLDİRİLMİŞ OLSA DAHİ . KANUNLARLA YASAKLANANLAR HARİÇ, ŞİRKETİN SORUMLULUK BULUNMASI DURUMUNDA, ÜRÜN VE/VEYA HİZMETLER İÇİN ÖDENEN MİKTARLA SINIRLI OLACAK VE HİÇBİR ŞEKİLDE DOLAYLI VEYA CEZAİ ZARAR OLMAYACAKTIR. BAZI EYALETLER CEZAİ, ARIZİ VEYA DOLAYLI ZARARLARIN HARİÇ TUTULMASINA VEYA SINIRLANDIRILMASINA İZİN VERMEZ, BU NEDENLE ÖNCEKİ SINIRLAMA VEYA HARİÇ TUTMA SİZİN İÇİN GEÇERLİ OLMAYABİLİR.</p>
-            <h2>19 . Sonlandırma</h2>
-            <p>Koşulların ihlali dahil ancak bunlarla sınırlı olmamak üzere, herhangi bir nedenle ve herhangi bir sınırlama olmaksızın, tamamen kendi takdirimize bağlı olarak, önceden bildirimde bulunmadan veya yükümlülük altına girmeden hesabınızı sonlandırabilir veya askıya alabilir ve Hizmete erişiminizi engelleyebiliriz.</p>
-            <p>Hesabınızı sonlandırmak isterseniz, Hizmeti kullanmayı bırakabilirsiniz.</p>
-            <p>Doğaları gereği fesihten sonra geçerli olması gereken Şartların tüm hükümleri, mülkiyet hükümleri, garanti feragatnameleri, tazminat ve sorumluluk sınırlamaları dahil ancak bunlarla sınırlı olmamak üzere fesihten sonra da geçerli olacaktır.</p>
-            <h2>20 . Geçerli Hukuk</h2>
-            <p>, kanuni ihtilaf hükümlerine bakılmaksızın, anlaşmaya tabi olan kanunun geçerli olduğu Türkiye kanunlarına göre yönetilecek ve yorumlanacaktır .</p>
-            <p>Bu Koşulların herhangi bir hakkını veya hükmünü uygulamamamız, bu haklardan feragat edildiği anlamına gelmez. Bu Koşulların herhangi bir hükmünün bir mahkeme tarafından geçersiz veya uygulanamaz olduğuna karar verilirse, bu Koşulların geri kalan hükümleri yürürlükte kalacaktır. Bu Koşullar, Hizmetimizle ilgili olarak aramızdaki sözleşmenin tamamını oluşturur ve Hizmetle ilgili olarak aramızda daha önce yapmış olabileceğimiz tüm sözleşmelerin yerine geçer ve yerini alır.</p>
-            <h2>21 . Hizmet Değişiklikleri _</h2>
-            <p>Hizmetimizi ve Hizmet aracılığıyla sağladığımız herhangi bir hizmeti veya materyali tamamen kendi takdirimize bağlı olarak bildirimde bulunmaksızın geri çekme veya değiştirme hakkını saklı tutarız. Herhangi bir nedenle Hizmetin tamamı veya bir kısmı herhangi bir zamanda veya herhangi bir süre için kullanılamıyorsa sorumlu olmayacağız . Zaman zaman, Hizmetin bazı bölümlerine veya Hizmetin tamamına erişimi kayıtlı kullanıcılar da dahil olmak üzere kullanıcılarla kısıtlayabiliriz .</p>
-            <h2>22 . Koşullarda Değişiklikler _</h2>
-            <p>Değiştirilen şartları bu sitede yayınlayarak herhangi bir zamanda Şartları değiştirebiliriz. Bu Koşulları periyodik olarak gözden geçirmek sizin sorumluluğunuzdadır.</p>
-            <p>Revize edilmiş Koşulların yayınlanmasının ardından Platformu kullanmaya devam etmeniz, değişiklikleri kabul ettiğiniz ve kabul ettiğiniz anlamına gelir. Sizi bağlayıcı nitelikteki değişikliklerden haberdar olmanız için bu sayfayı sık sık kontrol etmeniz beklenmektedir .</p>
-            <p>Herhangi bir revizyon yürürlüğe girdikten sonra Hizmetimize erişmeye veya Hizmetimizi kullanmaya devam ederek, revize edilen şartlara bağlı kalmayı kabul edersiniz. Yeni şartları kabul etmiyorsanız, artık Hizmeti kullanma yetkiniz yoktur .</p>
-            <h2>23 . Teşekkür</h2>
-            <p>HİZMETİ VEYA TARAFIMIZDAN SAĞLANAN DİĞER HİZMETLERİ KULLANARAK, BU HİZMET ŞARTLARINI OKUDUĞUNUZU VE ONLARA UYGUN OLACAĞINIZI KABUL ETMİŞ OLURSUNUZ.</p>
-            <h2>24 . Bize Ulaşın</h2>
-            <p>Lütfen görüşlerinizi, yorumlarınızı, teknik destek taleplerinizi e-posta ile gönderin: <strong>destek@guvenfi.com</strong>.</p>
+            <h2>7. Refunds</h2>
+            <p>We issue refunds for Contracts within <strong>14 days</strong> of the original purchase of the Contract.</p>
+            
+            <h2>8. Content</h2>
+            <p>Content found on or through this Service are the property of Ledgersfi Accounting or used with permission. You may not distribute, modify, transmit, reuse, download, repost, copy, or use said Content, whether in whole or in part, for commercial purposes or for personal gain, without express advance written permission from us.</p>
+            
+            <h2>9. Prohibited Uses</h2>
+            <p>You may use Service only for lawful purposes and in accordance with Terms. You agree not to use Service:</p>
+            <p>0.1. In any way that violates any applicable national or international law or regulation.</p>
+            <p>0.2. For the purpose of exploiting, harming, or attempting to exploit or harm minors in any way by exposing them to inappropriate content or otherwise.</p>
+            <p>0.3. To transmit, or procure the sending of, any advertising or promotional material, including any “junk mail”, “chain letter,” “spam,” or any other similar solicitation.</p>
+            <p>0.4. To impersonate or attempt to impersonate Company, a Company employee, another user, or any other person or entity.</p>
+            <p>0.5. In any way that infringes upon the rights of others, or in any way is illegal, threatening, fraudulent, or harmful, or in connection with any unlawful, illegal, fraudulent, or harmful purpose or activity.</p>
+            <p>0.6. To engage in any other conduct that restricts or inhibits anyone’s use or enjoyment of Service, or which, as determined by us, may harm or offend Company or users of Service or expose them to liability.</p>
+
+            <p>Additionally, you agree not to:</p>
+            <p>0.1. Use Service in any manner that could disable, overburden, damage, or impair Service or interfere with any other party’s use of Service, including their ability to engage in real time activities through Service.</p>
+            <p>0.2. Use any robot, spider, or other automatic device, process, or means to access Service for any purpose, including monitoring or copying any of the material on Service.</p>
+            <p>0.3. Use any manual process to monitor or copy any of the material on Service or for any other unauthorized purpose without our prior written consent.</p>
+            <p>0.4. Use any device, software, or routine that interferes with the proper working of Service.</p>
+            <p>0.5. Introduce any viruses, trojan horses, worms, logic bombs, or other material which is malicious or technologically harmful.</p>
+            <p>0.6. Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of Service, the server on which Service is stored, or any server, computer, or database connected to Service.</p>
+            <p>0.7. Attack Service via a denial-of-service attack or a distributed denial-of-service attack.</p>
+            <p>0.8. Take any action that may damage or falsify Company rating.</p>
+            <p>0.9. Otherwise attempt to interfere with the proper working of Service.</p>
+
+            <h2>10. Analytics</h2>
+            <p>We may use third-party Service Providers to monitor and analyze the use of our Service.</p>
+
+            <h2>11. Accounts</h2>
+            When you create an account with us, you guarantee that you are above the age of 18, and that the information you provide us is accurate, complete, and current at all times. Inaccurate, incomplete, or obsolete information may result in the immediate termination of your account on Service.</p>
+            <p>You are responsible for maintaining the confidentiality of your account and password, including but not limited to the restriction of access to your computer and/or account. You agree to accept responsibility for any and all activities or actions that occur under your account and/or password, whether your password is with our Service or a third-party service. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.</p>
+            <p>You may not use as a username the name of another person or entity or that is not lawfully available for use, a name or trademark that is subject to any rights of another person or entity other than you, without appropriate authorization. You may not use as a username any name that is offensive, vulgar or obscene.</p>
+            <p>We reserve the right to refuse service, terminate accounts, remove or edit content, or cancel orders in our sole discretion.</p>
+
+            <h2>12. Intellectual Property</h2>
+            <p>Service and its original content (excluding Content provided by users), features and functionality are and will remain the exclusive property of Ledgersfi Accounting and its licensors. Service is protected by copyright, trademark, and other laws of and foreign countries. Our trademarks may not be used in connection with any product or service without the prior written consent of Ledgersfi Accounting.</p>
+
+            <h2>13. Copyright Policy</h2>
+            <p>We respect the intellectual property rights of others. It is our policy to respond to any claim that Content posted on Service infringes on the copyright or other intellectual property rights (“Infringement”) of any person or entity.</p>
+            <p>If you are a copyright owner, or authorized on behalf of one, and you believe that the copyrighted work has been copied in a way that constitutes copyright infringement, please submit your claim via email to support@ledgersfi.com, with the subject line: “Copyright Infringement” and include in your claim a detailed description of the alleged Infringement as detailed below, under “DMCA Notice and Procedure for Copyright Infringement Claims”</p>
+            <p>You may be held accountable for damages (including costs and attorneys’ fees) for misrepresentation or bad-faith claims on the infringement of any Content found on and/or through Service on your copyright.</p>
+
+            <h2>14. DMCA Notice and Procedure for Copyright Infringement Claims</h2>
+            <p>You may submit a notification pursuant to the Digital Millennium Copyright Act (DMCA) by providing our Copyright Agent with the following information in writing (see 17 U.S.C 512(c)(3) for further detail):</p>
+            <p>0.1. an electronic or physical signature of the person authorized to act on behalf of the owner of the copyright’s interest;</p>
+            <p>0.2. a description of the copyrighted work that you claim has been infringed, including the URL (i.e., web page address) of the location where the copyrighted work exists or a copy of the copyrighted work;</p>
+            <p>0.3. identification of the URL or other specific location on Service where the material that you claim is infringing is located;</p>
+            <p>0.4. your address, telephone number, and email address;</p>
+            <p>0.5. a statement by you that you have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law;</p>
+            <p>0.6. a statement by you, made under penalty of perjury, that the above information in your notice is accurate and that you are the copyright owner or authorized to act on the copyright owner’s behalf.</p>
+            <p>You can contact our Copyright Agent via email at support@ledgersfi.com.</p>
+
+            <h2>15. Error Reporting and Feedback</h2>
+            <p>You may provide us either directly at ledgers@ledgersfi.com or via third party sites and tools with information and feedback concerning errors, suggestions for improvements, ideas, problems, complaints, and other matters related to our Service (“Feedback”). You acknowledge and agree that: (i) you shall not retain, acquire or assert any intellectual property right or other right, title or interest in or to the Feedback; (ii) Company may have development ideas similar to the Feedback; (iii) Feedback does not contain confidential information or proprietary information from you or any third party; and (iv) Company is not under any obligation of confidentiality with respect to the Feedback. In the event the transfer of the ownership to the Feedback is not possible due to applicable mandatory laws, you grant Company and its affiliates an exclusive, transferable, irrevocable, free-of-charge, sub-licensable, unlimited and perpetual right to use (including copy, modify, create derivative works, publish, distribute and commercialize) Feedback in any manner and for any purpose.</p>
+
+            <h2>16. Links To Other Web Sites</h2>
+            <p>Our Service may contain links to third party web sites or services that are not owned or controlled by Ledgersfi Accounting.</p>
+            <p>Ledgersfi Accounting has no control over, and assumes no responsibility for the content, privacy policies, or practices of any third party web sites or services. We do not warrant the offerings of any of these entities/individuals or their websites.</p>
+            <p>For example, the outlined Terms of Use have been created using PolicyMaker.io, a free web application for generating high-quality legal documents. PolicyMaker’s Terms and Conditions generator is an easy-to-use free tool for creating an excellent standard Terms of Service template for a website, blog, e-commerce store or app.</p>
+            <p>YOU ACKNOWLEDGE AND AGREE THAT COMPANY SHALL NOT BE RESPONSIBLE OR LIABLE, DIRECTLY OR INDIRECTLY, FOR ANY DAMAGE OR LOSS CAUSED OR ALLEGED TO BE CAUSED BY OR IN CONNECTION WITH USE OF OR RELIANCE ON ANY SUCH CONTENT, GOODS OR SERVICES AVAILABLE ON OR THROUGH ANY SUCH THIRD PARTY WEB SITES OR SERVICES.</p>
+            <p>WE STRONGLY ADVISE YOU TO READ THE TERMS OF SERVICE AND PRIVACY POLICIES OF ANY THIRD PARTY WEB SITES OR SERVICES THAT YOU VISIT.</p>
+
+            <h2>17. Disclaimer Of Warranty </h2>
+            <p>THESE SERVICES ARE PROVIDED BY COMPANY ON AN “AS IS” AND “AS AVAILABLE” BASIS. COMPANY MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THEIR SERVICES, OR THE INFORMATION, CONTENT OR MATERIALS INCLUDED THEREIN. YOU EXPRESSLY AGREE THAT YOUR USE OF THESE SERVICES, THEIR CONTENT, AND ANY SERVICES OR ITEMS OBTAINED FROM US IS AT YOUR SOLE RISK.</p>
+            <p>NEITHER COMPANY NOR ANY PERSON ASSOCIATED WITH COMPANY MAKES ANY WARRANTY OR REPRESENTATION WITH RESPECT TO THE COMPLETENESS, SECURITY, RELIABILITY, QUALITY, ACCURACY, OR AVAILABILITY OF THE SERVICES. WITHOUT LIMITING THE FOREGOING, NEITHER COMPANY NOR ANYONE ASSOCIATED WITH COMPANY REPRESENTS OR WARRANTS THAT THE SERVICES, THEIR CONTENT, OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE SERVICES WILL BE ACCURATE, RELIABLE, ERROR-FREE, OR UNINTERRUPTED, THAT DEFECTS WILL BE CORRECTED, THAT THE SERVICES OR THE SERVER THAT MAKES IT AVAILABLE ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS OR THAT THE SERVICES OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE SERVICES WILL OTHERWISE MEET YOUR NEEDS OR EXPECTATIONS.</p>
+            <p>COMPANY HEREBY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR PARTICULAR PURPOSE.</p>
+            <p>THE FOREGOING DOES NOT AFFECT ANY WARRANTIES WHICH CANNOT BE EXCLUDED OR LIMITED UNDER APPLICABLE LAW.</p>
+
+            <h2>18. Limitation Of Liability</h2>
+            <p>EXCEPT AS PROHIBITED BY LAW, YOU WILL HOLD US AND OUR OFFICERS, DIRECTORS, EMPLOYEES, AND AGENTS HARMLESS FOR ANY INDIRECT, PUNITIVE, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGE, HOWEVER IT ARISES (INCLUDING ATTORNEYS’ FEES AND ALL RELATED COSTS AND EXPENSES OF LITIGATION AND ARBITRATION, OR AT TRIAL OR ON APPEAL, IF ANY, WHETHER OR NOT LITIGATION OR ARBITRATION IS INSTITUTED), WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE, OR OTHER TORTIOUS ACTION, OR ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT, INCLUDING WITHOUT LIMITATION ANY CLAIM FOR PERSONAL INJURY OR PROPERTY DAMAGE, ARISING FROM THIS AGREEMENT AND ANY VIOLATION BY YOU OF ANY FEDERAL, STATE, OR LOCAL LAWS, STATUTES, RULES, OR REGULATIONS, EVEN IF COMPANY HAS BEEN PREVIOUSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. EXCEPT AS PROHIBITED BY LAW, IF THERE IS LIABILITY FOUND ON THE PART OF COMPANY, IT WILL BE LIMITED TO THE AMOUNT PAID FOR THE PRODUCTS AND/OR SERVICES, AND UNDER NO CIRCUMSTANCES WILL THERE BE CONSEQUENTIAL OR PUNITIVE DAMAGES. SOME STATES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF PUNITIVE, INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE PRIOR LIMITATION OR EXCLUSION MAY NOT APPLY TO YOU.</p>
+
+            <h2>19. Termination</h2>
+            <p>We may terminate or suspend your account and bar access to Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of Terms.</p>
+            <p>If you wish to terminate your account, you may simply discontinue using Service.</p>
+            <p>All provisions of Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.</p>
+
+            <h2>20. Changes To Service</h2>
+            <p>We reserve the right to withdraw or amend our Service, and any service or material we provide via Service, in our sole discretion without notice. We will not be liable if for any reason all or any part of Service is unavailable at any time or for any period. From time to time, we may restrict access to some parts of Service, or the entire Service, to users, including registered users.</p>
+
+            <h2>21. Amendments To Terms</h2>
+            <p> We may amend Terms at any time by posting the amended terms on this site. It is your responsibility to review these Terms periodically.</p>
+            <p>Your continued use of the Platform following the posting of revised Terms means that you accept and agree to the changes. You are expected to check this page frequently, so you are aware of any changes, as they are binding on you.</p>
+            <p>By continuing to access or use our Service after any revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, you are no longer authorized to use Service.</p>
+
+            <h2>22. Acknowledgement</h2>
+            <p>BY USING SERVICE OR OTHER SERVICES PROVIDED BY US, YOU ACKNOWLEDGE THAT YOU HAVE READ THESE TERMS OF SERVICE AND AGREE TO BE BOUND BY THEM.</p>
+
+            <h2>23. Contact Us</h2>
+            <p>Please send your feedback, comments, requests for technical support by email: <strong>support@ledgersfi.com.</strong></p>
 
         </section>
     </main>
