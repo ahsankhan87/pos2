@@ -2,6 +2,7 @@
 
 	<?php
 	
+	echo 'client id'. getenv("CLIENT_ID");
 
 	//for expense
 	//////////////////

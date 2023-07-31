@@ -4,10 +4,10 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Password Reset | GuvenFI Accounting Software</title>
+	<title>Password Reset | LedgersFi Accounting Software</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<meta content="GuvenFI Accounting Software to run your business, Point of Sale, Accounts Management Systems" name="description">
+	<meta content="LedgersFi Accounting Software to run your business, Point of Sale, Accounts Management Systems" name="description">
 	<meta content="Ahsan khan" name="author">
 	<meta name="MobileOptimized" content="320">
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -37,7 +37,7 @@
 <body class="login">
 	<!-- BEGIN LOGO -->
 	<div class="logo animated bounceIn">
-		<h1 class="form-title  logo-color">GuvenFi</h1>
+		<h1 class="form-title  logo-color">LedgersFi</h1>
 		<!-- <a href="<?php echo base_url(); ?>">
 	<img src="<?php echo base_url(); ?>assets/img/logo.jpg" width="200" height="70" alt="Logo">
 	</a> -->
@@ -102,7 +102,7 @@
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		<?php echo date("Y"); ?> &copy; guvenfi.com
+		<?php echo date("Y"); ?> &copy; LedgersFi.com
 	</div>
 	<!-- END COPYRIGHT -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
