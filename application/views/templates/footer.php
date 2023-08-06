@@ -133,12 +133,6 @@ jQuery(document).ready(function() {
 
 <!-- <link href="https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css" rel="stylesheet" type="text/css" /> -->
 
-<?php if($this->db->dbdriver !== 'sqlite3'){ ?>
-<!-- BEGIN GLOBAL MANDATORY STYLES--> 
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="preload" rel="stylesheet" type="text/css">
-
-<?php } ?>
-
 <!-- END BODY -->
 </body>
 </html>
