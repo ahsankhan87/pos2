@@ -85,7 +85,7 @@
     <!-- /.col-sm-12 -->
 </div>
 <!-- /.row -->
-<button id="link-button1">Link Account</button>
+<button id="link-button">Link Account</button>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <script type="text/javascript">
@@ -98,7 +98,7 @@
         
         const handler1 = Plaid.create({
             token: get_link_token,
-            receivedRedirectUri: window.location.href,
+            //receivedRedirectUri: window.location.href,
             onSuccess: (public_token, metadata) => {
                 console.debug("onSuccess");
                 console.log('public_token: ' + public_token);
@@ -122,8 +122,8 @@
 
         var handler = Plaid.create({
             // Create a new link_token to initialize Link
-            token: (await $.post(site_url + 'banking/C_connections/create_link_token')).link_token,
-            receivedRedirectUri: window.location.href,
+            token: get_link_token,
+            //receivedRedirectUri: window.location.href,
             onLoad: function() {
                 // Optional, called when Link loads
             },
@@ -132,9 +132,14 @@
                 // The metadata object contains info about the institution the
                 // user selected and the account ID or IDs, if the
                 // Account Select view is enabled.
-                $.post('/exchange_public_token', {
+                console.log('public_token: ' + public_token);
+                // $.post(site_url + 'banking/C_connections/exchange_public_token', {
+                //     public_token: public_token,
+                // });
+                const access_token = JSON.parse($.post(site_url + 'banking/C_connections/exchange_public_token/'+public_token, {
                     public_token: public_token,
-                });
+                })).access_token;
+                console.log(access_token);
             },
             onExit: function(err, metadata) {
                 // The user exited the Link flow.

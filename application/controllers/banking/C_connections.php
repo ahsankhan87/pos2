@@ -7,7 +7,7 @@ class C_connections extends MY_Controller
     {
         parent::__construct();
         $this->lang->load('index');
-        $this->load->library('curl');
+        $this->load->model('plaid/Plaid');
     }
 
     public function index()
@@ -36,58 +36,26 @@ class C_connections extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-
     function create_link_token()
     {
-        $url = "https://sandbox.plaid.com";
-        $api = "/link/token/create"; //"/einvoicing";
-        $urn = ''; //"/oauth2/token";
-        $uri = $url . $api . $urn;
+        $result = $this->Plaid->create_link_token();
+        echo $result;
+    }
 
-        $client_id = getenv('PLAID_CLIENT_ID');
-        $client_secret = getenv('PLAID_SECRET'); //ponto secret id
-        $headers = [
-            //"Accept: application/vnd.api+json",
-            // "Authorization: Basic " . base64_encode($ponto_client_id . ":" . $ponto_client_secret),
-            "Content-Type: application/json"
-        ];
+    function exchange_public_token($public_token)
+    {
+        // $public_token = $this->input->post('public_token');
+        $result = $this->Plaid->public_token_exchange($public_token);
+        //echo $result->access_token;
+        // echo '</br>ahsan ';
+        // echo $result['access_token'];
+        // $access_token = ($result ? $result->access_token : '');
         
-        $post_fields_1 = [
-            "client_id" => $client_id,
-            "secret" => $client_secret,
-            "client_name" => "Plaid Test App",
-            "user" => ["client_user_id" => "user-id"],
-            "products" => ["identity"],
-            "country_codes" => ["US"],
-            "language" => "en",
-            "webhook" => "https://webhook.example.com",
-            "redirect_uri" => getenv('PLAID_REDIRECT_URI'),
-        ];
+        // //update refresh token in db
+        // $this->M_companies->update_access_token($_SESSION['company_id'],$access_token);
+        // ///
 
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $uri,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => json_encode((object)$post_fields_1, JSON_HEX_APOS | JSON_HEX_QUOT),
-            CURLOPT_HTTPHEADER => $headers,
-        ]);
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo $err;
-            // echo null;
-        } else {
-            echo $response;
-        }
+        //echo $result;
+        
     }
 }

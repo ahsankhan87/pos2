@@ -31,6 +31,24 @@ class M_companies extends CI_Model{
         $data = $query->result_array();
         return $data;
     }
+     
+    function update_access_token($id,$access_token)
+    {
+        $query = $this->db->update('companies',array('access_token'=>$access_token),array('id'=>$id));
+    }
+    
+    public function get_access_token($company_id)
+    {
+        $options = array('id'=> $company_id);
+        
+        $query = $this->db->get_where('companies',$options);
+        if($row = $query->row())
+        {
+            return $row->access_token;
+        }
+        
+        return '';
+    }
     
     //get all companies and also only one companies and active and inactive too.
     public function get_activeCompanies($id = FALSE, $limit = 1000000, $offset = 0)

@@ -2598,4 +2598,6 @@ CREATE TABLE `pos_invoices_items` (
  PRIMARY KEY (`sale_item_id`),
  KEY `invoice_no` (`invoice_no`,`sale_id`,`item_id`),
  KEY `company_id` (`company_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `companies` ADD `access_token` VARCHAR(256) NULL AFTER `tax_no`;
