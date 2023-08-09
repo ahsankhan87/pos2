@@ -12,10 +12,8 @@
             echo '</div>';
         }
         ?>
-        <?php
-        echo anchor('banking/C_bankDeposit/', lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id=""');
-        ?>
-
+        
+        <button class="btn btn-success" id="link-button">Link Account</button>
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
@@ -30,54 +28,31 @@
             </div>
             <div class="portlet-body flip-scroll">
 
-                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_1">
+                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_">
                     <thead class="flip-content">
                         <tr>
-                            <th>S.No</th>
-                            <th>Inv #</th>
-                            <th><?php echo lang('date') ?></th>
-                            <!-- <th><?php echo lang('customer') ?></th> -->
-                            <!-- <th><?php echo lang('account') ?></th> -->
+                            <th><?php echo lang('name') ?></th>
+                            <th><?php echo lang('type') ?></th>
+                            <th>Sub Type</th>
                             <th class="text-right"><?php echo lang('amount') ?></th>
-                            <th class="hidden-print"><?php echo lang('action') ?></th>
+                            <!-- <th class="hidden-print"><?php echo lang('action') ?></th> -->
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php
-                        $sno = 1;
-                        foreach ($connections as $key => $list) {
-                            echo '<tr>';
-                            //echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                            //echo '<td><a href="'.site_url('pos/C_connections/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
-                            echo '<td>' . $sno++ . '</td>';
-                            echo '<td>' . $list['invoice_no'] . '</td>';
-                            echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
-                            //$name = $this->M_customers->get_CustomerName($list['customer_id']);
-                            //echo '<td>'.@$name.'</td>';
-                            //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
-
-                            echo '<td class="text-right">' . number_format($list['total_amount'], 2) . '</td>';
-                            //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
-                            echo '<td>';
-                            //    echo '<a href="'.site_url($langs).'/banking/C_bankDeposit/editconnections/' . $list['invoice_no'] .'" title="Edit connections" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>';
-                            //    echo ' | <a href="'.site_url($langs).'/banking/C_bankDeposit/receipt/' . $list['invoice_no'] .'" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a>';
-                            echo ' <a href="' . site_url($langs) . '/banking/C_bankDeposit/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
-                            echo '</td>';
-                            echo '</tr>';
-                        }
-
-                        ?>
+                    <tbody class="create_table">
                     </tbody>
                     <tfoot>
                         <tr>
+                           
                             <th></th>
                             <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>Total</th>
+                            <th class="grand_total text-right"></th>
+                            <!-- <th></th> -->
                         </tr>
                     </tfoot>
                 </table>
+                <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif")?>" alt="loader"></div>
+
             </div>
         </div>
 
@@ -85,41 +60,39 @@
     <!-- /.col-sm-12 -->
 </div>
 <!-- /.row -->
-<button id="link-button">Link Account</button>
+<!-- Modal -->
+<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form-horizontal" id="customerForm" action="">
+                <div class="modal-body">
+                    <p id="modal_message"></p>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="submit" id="get_new_access_token" class="btn btn-primary">Get New Access Token</button> -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- modal end -->
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 <script type="text/javascript">
     (async function($) {
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
-        
-        const get_link_token = JSON.parse(await $.post(site_url + 'banking/C_connections/create_link_token')).link_token;
-        console.log(get_link_token);
-        
-        const handler1 = Plaid.create({
-            token: get_link_token,
-            //receivedRedirectUri: window.location.href,
-            onSuccess: (public_token, metadata) => {
-                console.debug("onSuccess");
-                console.log('public_token: ' + public_token);
-                console.log('account ID: ' + metadata.account_id);
-            },
-            onLoad: () => {
-                console.debug("onLoad");
-            },
-            onExit: (err, metadata) => {
-                console.debug("onExit");
-                console.log('metadata ' + metadata);
-            },
-            onEvent: (eventName, metadata) => {
-                console.debug("onEvent");
-            },
-            
-        });
-        $('#link-button1').on('click', function(e) {
-            handler1.open();
-        });
 
+        const get_link_token = JSON.parse(await $.post(site_url + 'banking/C_connections/create_link_token')).link_token;
         var handler = Plaid.create({
             // Create a new link_token to initialize Link
             token: get_link_token,
@@ -132,14 +105,25 @@
                 // The metadata object contains info about the institution the
                 // user selected and the account ID or IDs, if the
                 // Account Select view is enabled.
-                console.log('public_token: ' + public_token);
-                // $.post(site_url + 'banking/C_connections/exchange_public_token', {
-                //     public_token: public_token,
-                // });
-                const access_token = JSON.parse($.post(site_url + 'banking/C_connections/exchange_public_token/'+public_token, {
-                    public_token: public_token,
-                })).access_token;
-                console.log(access_token);
+                //console.log('public_token: ' + public_token);
+                //
+                $.post(site_url + 'banking/C_connections/exchange_public_token/', {
+                        public_token: public_token,
+
+                    })
+                    .done(function(data) {
+                        //console.log(data);
+                        //console.log('access_token: ' + data.access_token);
+                        var json_data = JSON.parse(data);
+                        //Store access token into database
+                        $.post(site_url + 'banking/C_connections/store_access_token/', {
+                            access_token: json_data.access_token });
+                        ////////////
+                        
+                        get_list_accounts();
+
+                    });
+
             },
             onExit: function(err, metadata) {
                 // The user exited the Link flow.
@@ -151,21 +135,64 @@
                 // Storing this information can be helpful for support.
             },
             onEvent: function(eventName, metadata) {
-                // Optionally capture Link flow events, streamed through
-                // this callback as your users connect an Item to Plaid.
-                // For example:
-                // eventName = "TRANSITION_VIEW"
-                // metadata  = {
-                //   link_session_id: "123-abc",
-                //   mfa_type:        "questions",
-                //   timestamp:       "2017-09-14T14:42:19.350Z",
-                //   view_name:       "MFA",
-                // }
+                
             }
         });
 
         $('#link-button').on('click', function(e) {
             handler.open();
         });
+
+        $(".loader").show();
+        ////
+        get_list_accounts();
+        ////////////////////////
+        //GET get_ponto_list_accounts
+        function get_list_accounts() {
+
+            $.ajax({
+                url: site_url + "banking/C_connections/get_accounts",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(response) {
+                    //console.log(response);
+
+                    var grand_total = 0;
+                    if (response.error_code != undefined && Object.keys(response.error_code).length > 0) {
+
+                        $('#popupModal').modal('toggle');
+                        $('#modal_title').html(response.error_code);
+                        $('#modal_message').html(response.error_message);
+
+                    } else {
+                        let i = 0;
+                        $.each(response.accounts, function(index, value) {
+                            
+                            grand_total +=value.balances.current;
+                            var div = '<tr>' +
+                                '<td>' + value.name + '</td>' +
+                                '<td>' + value.type + '</td>' +
+                                '<td>' + value.subtype + '</td>' +
+                                '<td class="text-right">' + value.balances.current + value.balances.iso_currency_code + '</td>' +
+                                //'<td><a href="' + site_url + 'pos/Main/get_list_transactions/' + value.account_id + '">Get Transaction</a></td>' +
+                                '</tr>';
+
+                            $('.create_table').append(div);
+                            
+                            i++;
+                        });
+                        $(".loader").hide();
+                        $(".grand_total").html(grand_total.toFixed(2));
+
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ///////////////////
+
     })(jQuery);
 </script>

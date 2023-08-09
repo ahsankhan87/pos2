@@ -26,8 +26,8 @@ class C_connections extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = lang('all') . ' ' . lang('bank') . ' ' . lang('deposit');
-        $data['main'] = lang('all') . ' ' . lang('bank') . ' ' . lang('deposit');
+        $data['title'] = lang('all') . ' ' . lang('banks');
+        $data['main'] = lang('all') . ' ' . lang('banks');
 
         $data['connections'] = array(); // $this->M_connections->get_connections(false, $start_date, $to_date,null);
         
@@ -42,20 +42,27 @@ class C_connections extends MY_Controller
         echo $result;
     }
 
-    function exchange_public_token($public_token)
+    function exchange_public_token()
     {
-        // $public_token = $this->input->post('public_token');
+        $public_token = $this->input->post('public_token');
         $result = $this->Plaid->public_token_exchange($public_token);
-        //echo $result->access_token;
-        // echo '</br>ahsan ';
-        // echo $result['access_token'];
-        // $access_token = ($result ? $result->access_token : '');
         
-        // //update refresh token in db
-        // $this->M_companies->update_access_token($_SESSION['company_id'],$access_token);
-        // ///
+        echo $result;
+        
+    }
 
-        //echo $result;
-        
+    function store_access_token()
+    {
+        $access_token = $this->input->post('access_token');
+        //update access_token in db
+        $this->M_companies->update_access_token($_SESSION['company_id'],$access_token);
+        // ///
+    }
+     
+    function get_accounts()
+    {
+        $access_token = $this->M_companies->get_access_token($_SESSION['company_id']);
+        $result = $this->Plaid->get_accounts($access_token);
+        echo $result;
     }
 }

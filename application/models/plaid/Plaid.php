@@ -7,8 +7,8 @@ class Plaid extends CI_Model
     {
         parent::__construct();
         $this->load->database();
-        $this->load->model('Plaid/Http_verbs');
-        $this->load->model('Plaid/Uri_path');
+        $this->load->model('plaid/Http_verbs');
+        $this->load->model('plaid/Uri_path');
         // $this->load->model('Plaid/Schema');
 
         //var_dump($this->Http_verbs->get('ponto-connect'));
@@ -50,6 +50,7 @@ class Plaid extends CI_Model
         return $this->Http_verbs->post($uri, $headers, $post_fields);
     }
 
+    //Get access token with exchange of public token
     function public_token_exchange($public_token)
     {
         $url = "https://sandbox.plaid.com";
@@ -67,6 +68,28 @@ class Plaid extends CI_Model
             "client_id" => getenv('PLAID_CLIENT_ID'),
             "secret" => getenv('PLAID_SECRET'),
             "public_token"=> $public_token
+        ];
+
+        return $this->Http_verbs->post($uri, $headers, $post_fields);
+    }
+
+    function get_accounts($access_token)
+    {
+        $url = "https://sandbox.plaid.com";
+        $api = "/accounts/get"; 
+        $urn = ''; //"/oauth2/token";
+        $uri = $url . $api . $urn;
+
+        $headers = [
+            //"Accept: application/vnd.api+json",
+            // "Authorization: Basic " . base64_encode($ponto_client_id . ":" . $ponto_client_secret),
+            "Content-Type: application/json"
+        ];
+
+        $post_fields = [
+            "client_id" => getenv('PLAID_CLIENT_ID'),
+            "secret" => getenv('PLAID_SECRET'),
+            "access_token"=> $access_token
         ];
 
         return $this->Http_verbs->post($uri, $headers, $post_fields);
