@@ -2601,3 +2601,4 @@ CREATE TABLE `pos_invoices_items` (
 ) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
 
 ALTER TABLE `companies` ADD `access_token` VARCHAR(256) NULL AFTER `tax_no`;
+ALTER TABLE `companies` ADD `plaid_item_id` VARCHAR(256) NULL AFTER `access_token`;

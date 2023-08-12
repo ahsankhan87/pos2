@@ -32,9 +32,9 @@ class M_companies extends CI_Model{
         return $data;
     }
      
-    function update_access_token($id,$access_token)
+    function update_access_token($id,$access_token,$item_id)
     {
-        $query = $this->db->update('companies',array('access_token'=>$access_token),array('id'=>$id));
+        $query = $this->db->update('companies',array('access_token'=>$access_token,'plaid_item_id'=>$item_id),array('id'=>$id));
     }
     
     public function get_access_token($company_id)

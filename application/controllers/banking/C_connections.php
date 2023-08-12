@@ -14,8 +14,8 @@ class C_connections extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = lang('bank') . ' ' . lang('deposit');
-        $data['main'] = lang('bank') . ' ' . lang('deposit');
+        $data['title'] = lang('bank');
+        $data['main'] = lang('bank');
 
         $this->load->view('templates/header', $data);
         $this->load->view('banking/connections/v_connections', $data);
@@ -33,6 +33,18 @@ class C_connections extends MY_Controller
         
         $this->load->view('templates/header', $data);
         $this->load->view('banking/connections/v_all', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function get_transactions()
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+
+        $data['title'] = lang('all') . ' ' . lang('transaction');
+        $data['main'] = lang('all') . ' ' . lang('transaction');
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('banking/connections/v_transaction_lists', $data);
         $this->load->view('templates/footer');
     }
 
@@ -54,15 +66,21 @@ class C_connections extends MY_Controller
     function store_access_token()
     {
         $access_token = $this->input->post('access_token');
+        $item_id = $this->input->post('item_id');
         //update access_token in db
-        $this->M_companies->update_access_token($_SESSION['company_id'],$access_token);
+        $this->M_companies->update_access_token($_SESSION['company_id'],$access_token,$item_id);
         // ///
     }
      
     function get_accounts()
     {
-        $access_token = $this->M_companies->get_access_token($_SESSION['company_id']);
-        $result = $this->Plaid->get_accounts($access_token);
+        $result = $this->Plaid->get_accounts();
+        echo $result;
+    }
+     
+    function get_transaction_lists_api()
+    {
+        $result = $this->Plaid->get_transaction_lists();
         echo $result;
     }
 }

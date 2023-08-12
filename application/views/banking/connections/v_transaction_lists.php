@@ -12,12 +12,13 @@
             echo '</div>';
         }
         ?>
-        
-        <button class="btn btn-success" id="link-button">Link Account</button>
+        <p>
+
+        </p>
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs"></i><span id="print_title"><?php echo $title; ?></span>
+                    <i class="fa fa-cogs"></i><span id="print_title"><?php echo $main; ?></span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse"></a>
@@ -28,34 +29,37 @@
             </div>
             <div class="portlet-body flip-scroll">
 
-                <table class="table table-striped table-bordered table-condensed flip-content" id="sample_">
+                <table class="table table-striped table-condensed table-bordered flip-content" id="">
                     <thead class="flip-content">
                         <tr>
-                            <th><?php echo lang('name') ?></th>
-                            <th><?php echo lang('type') ?></th>
-                            <th>Sub Type</th>
-                            <th class="text-right"><?php echo lang('amount') ?></th>
-                            <th class="hidden-print"><?php echo lang('action') ?></th>
+                            <th>Id</th>
+                            <th>Bank Trans Code</th>
+                            <th>Name</th>
+                            <th>Reference</th>
+                            <th>Amount</th>
+                            <th class="text-right">Description</th>
+                            <th>created at</th>
+                            <!-- <th><?php echo lang('action'); ?></th> -->
                         </tr>
                     </thead>
                     <tbody class="create_table">
+
                     </tbody>
                     <tfoot>
-                        <tr>
-                           
-                            <th></th>
-                            <th></th>
-                            <th>Total</th>
-                            <th class="grand_total text-right"></th>
-                            <th></th>
-                        </tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Total</th>
+                        <th class="grand_total text-right"></th>
+                        <th></th>
                     </tfoot>
                 </table>
                 <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif")?>" alt="loader"></div>
 
             </div>
+            <!-- /.portlet body -->
         </div>
-
+        <!-- /.portlet -->
     </div>
     <!-- /.col-sm-12 -->
 </div>
@@ -70,9 +74,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form-horizontal" id="customerForm" action="">
+            <form class="form-horizontal" id="customerForm" action="<?php echo site_url($langs).'/pos/Main/ponto_request_access_tokens'; ?>">
+
                 <div class="modal-body">
                     <p id="modal_message"></p>
+                    
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="submit" id="get_new_access_token" class="btn btn-primary">Get New Access Token</button> -->
@@ -85,79 +91,29 @@
 </div>
 <!-- modal end -->
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-<script type="text/javascript">
-    (async function($) {
+<script>
+    $(document).ready(function() {
+
+        const module = '<?php echo $url1 = $this->uri->segment(3); ?>/';
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
-
-        const get_link_token = JSON.parse(await $.post(site_url + 'banking/C_connections/create_link_token')).link_token;
-        var handler = Plaid.create({
-            // Create a new link_token to initialize Link
-            token: get_link_token,
-            //receivedRedirectUri: window.location.href,
-            onLoad: function() {
-                // Optional, called when Link loads
-            },
-            onSuccess: function(public_token, metadata) {
-                // Send the public_token to your app server.
-                // The metadata object contains info about the institution the
-                // user selected and the account ID or IDs, if the
-                // Account Select view is enabled.
-                //console.log('public_token: ' + public_token);
-                //
-                $.post(site_url + 'banking/C_connections/exchange_public_token/', {
-                        public_token: public_token,
-
-                    })
-                    .done(function(data) {
-                        //console.log(data);
-                        //console.log('access_token: ' + data.access_token);
-                        var json_data = JSON.parse(data);
-                        //Store access token into database
-                        $.post(site_url + 'banking/C_connections/store_access_token/', {
-                            access_token: json_data.access_token, item_id:json_data.item_id });
-                        ////////////
-                        
-                        get_list_accounts();
-
-                    });
-
-            },
-            onExit: function(err, metadata) {
-                // The user exited the Link flow.
-                if (err != null) {
-                    // The user encountered a Plaid API error prior to exiting.
-                }
-                // metadata contains information about the institution
-                // that the user selected and the most recent API request IDs.
-                // Storing this information can be helpful for support.
-            },
-            onEvent: function(eventName, metadata) {
-                
-            }
-        });
-
-        $('#link-button').on('click', function(e) {
-            handler.open();
-        });
+        const date = '<?php echo date("Y-m-d") ?>';
 
         $(".loader").show();
         ////
-        get_list_accounts();
+        get_transaction_list();
         ////////////////////////
         //GET get_ponto_list_accounts
-        function get_list_accounts() {
+        function get_transaction_list() {
 
             $.ajax({
-                url: site_url + "banking/C_connections/get_accounts",
-                type: 'GET',
+                url: site_url + "banking/C_connections/get_transaction_lists_api/",
+                type: 'POST',
                 dataType: 'json', // added data type
                 success: function(response) {
-                    //console.log(response);
-
-                    var grand_total = 0;
+                    console.log(response);
+                    var grand_total =0;
+                    
                     if (response.error_code != undefined && Object.keys(response.error_code).length > 0) {
 
                         $('#popupModal').modal('toggle');
@@ -174,7 +130,7 @@
                                 '<td>' + value.type + '</td>' +
                                 '<td>' + value.subtype + '</td>' +
                                 '<td class="text-right">' + value.balances.current + value.balances.iso_currency_code + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_transactions/">Transaction</a></td>' +
+                                '<td><a href="' + site_url + 'banking/C_connections/get_transactions/' + value.account_id + '">Transaction</a></td>' +
                                 '</tr>';
 
                             $('.create_table').append(div);
@@ -194,5 +150,21 @@
         }
         ///////////////////
 
-    })(jQuery);
+
+        // $('#get_new_access_token').on('click', function(e) {
+        //     $.ajax({
+        //         url: site_url + "pos/Main/ponto_request_access_tokens",
+        //         type: 'POST',
+        //         dataType: 'json', // added data type
+        //         success: function(response) {
+        //             console.log(response.errors);
+        //             window.location.reload(true);
+        //         },
+        //         error: function(xhr, ajaxOptions, thrownError) {
+        //             console.log(xhr.status);
+        //             console.log(thrownError);
+        //         }
+        //     });
+        // });
+    });
 </script>
