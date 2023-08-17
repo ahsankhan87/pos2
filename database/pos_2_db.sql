@@ -2602,3 +2602,5 @@ CREATE TABLE `pos_invoices_items` (
 
 ALTER TABLE `companies` ADD `access_token` VARCHAR(256) NULL AFTER `tax_no`;
 ALTER TABLE `companies` ADD `plaid_item_id` VARCHAR(256) NULL AFTER `access_token`;
+
+ALTER TABLE `acc_entry_items` ADD `plaid_trans_id` VARCHAR(256) NULL AFTER `user_id`;

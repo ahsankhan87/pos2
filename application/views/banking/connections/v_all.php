@@ -155,7 +155,7 @@
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(response) {
-                    //console.log(response);
+                    console.log(response);
 
                     var grand_total = 0;
                     if (response.error_code != undefined && Object.keys(response.error_code).length > 0) {
@@ -174,7 +174,7 @@
                                 '<td>' + value.type + '</td>' +
                                 '<td>' + value.subtype + '</td>' +
                                 '<td class="text-right">' + value.balances.current + value.balances.iso_currency_code + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_transactions/">Transaction</a></td>' +
+                                '<td><a href="' + site_url + 'banking/C_connections/get_transactions/' + value.account_id + '">Transaction</a></td>' +
                                 '</tr>';
 
                             $('.create_table').append(div);

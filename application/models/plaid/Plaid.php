@@ -101,7 +101,7 @@ class Plaid extends CI_Model
     function get_transaction_lists()
     {
         $url = getenv('PLAID_HOST');
-        $api = "/transactions/get"; 
+        $api = "/transactions/sync"; 
         $urn = ''; //"/oauth2/token";
         $uri = $url . $api . $urn;
         
@@ -119,13 +119,14 @@ class Plaid extends CI_Model
             "client_id" => getenv('PLAID_CLIENT_ID'),
             "secret" => getenv('PLAID_SECRET'),
             "access_token" => $access_token,
-            "start_date"=> $start_date,
-            "end_date" => $end_date,
-            "options"=> [
-                "count" => 250,
-                "offset" => 0,
-                "include_personal_finance_category" => true
-            ]
+            "count" => 50,
+            //"start_date"=> $start_date,
+            // "end_date" => $end_date,
+            // "options"=> [
+            //     "count" => 250,
+            //     "offset" => 0,
+            //     "include_personal_finance_category" => true
+            // ]
         ];
 
         return $this->Http_verbs->post($uri, $headers, $post_fields);

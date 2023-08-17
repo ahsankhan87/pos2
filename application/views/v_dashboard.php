@@ -1,9 +1,6 @@
 <div class="row">
 
 	<?php
-	
-	echo 'client id'. getenv("CLIENT_ID");
-
 	//for expense
 	//////////////////
 	$exp_balance = '';

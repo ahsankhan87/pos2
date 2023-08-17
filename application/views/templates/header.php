@@ -146,9 +146,9 @@
 						<li>
 							<a href="<?php echo base_url(); ?>en<?php echo substr($this->uri->uri_string(), 2); ?>"><img alt="" src="<?php echo base_url(); ?>assets/img/flags/en.png"> English</a>
 						</li>
-						<li>
+						<!-- <li>
 							<a href="<?php echo base_url(); ?>tr<?php echo substr($this->uri->uri_string(), 2); ?>"><img alt="" src="<?php echo base_url(); ?>assets/img/flags/tr.png"> Turkiye</a>
-						</li>
+						</li> -->
 						<!-- <li>
                     	<a href="<?php echo base_url(); ?>es<?php echo substr($this->uri->uri_string(), 2); ?>" ><img alt="" src="<?php echo base_url(); ?>assets/img/flags/es.png"> Español</a>
                     </li>
