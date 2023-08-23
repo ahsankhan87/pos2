@@ -18,7 +18,7 @@ class C_connections extends MY_Controller
         $data['main'] = lang('bank');
 
         $this->load->view('templates/header', $data);
-        $this->load->view('banking/connections/v_connections', $data);
+        $this->load->view('banking/connections/v_institutions', $data);
         $this->load->view('templates/footer');
     }
 
@@ -26,11 +26,11 @@ class C_connections extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = lang('all') . ' ' . lang('banks');
-        $data['main'] = lang('all') . ' ' . lang('banks');
+        $data['title'] = 'All accounts list';
+        $data['main'] = 'All accounts list';
+        // $data['institution_id'] = $institution_id;
 
-        $data['connections'] = array(); // $this->M_connections->get_connections(false, $start_date, $to_date,null);
-
+        
         $this->load->view('templates/header', $data);
         $this->load->view('banking/connections/v_all', $data);
         $this->load->view('templates/footer');
@@ -72,6 +72,7 @@ class C_connections extends MY_Controller
             $deposit_to_acc_code = $this->input->post("account_id");
             $acc_code_2 = $this->input->post("account_id_2");
             $total_amount = $this->input->post("payment_amount");
+            $plaid_trans_id = $this->input->post("plaid_trans_id");
 
             ////////
             $data = array(
@@ -89,6 +90,7 @@ class C_connections extends MY_Controller
                 'invoice_no' => $new_invoice_no,
                 'narration' => $narration,
                 'company_id' => $company_id,
+                'plaid_trans_id' => $plaid_trans_id,
             );
             $this->db->insert('acc_entry_items', $data);
 
@@ -107,6 +109,7 @@ class C_connections extends MY_Controller
                 'invoice_no' => $new_invoice_no,
                 'narration' => $narration,
                 'company_id' => $company_id,
+                'plaid_trans_id' => $plaid_trans_id,
             );
             $this->db->insert('acc_entry_items', $data);
 
@@ -121,6 +124,8 @@ class C_connections extends MY_Controller
 
     }
 
+    ////////////////////////
+    //API CALL FUNCTION
     function create_link_token()
     {
         $result = $this->Plaid->create_link_token();
@@ -144,15 +149,30 @@ class C_connections extends MY_Controller
         // ///
     }
 
+    function get_institutions()
+    {
+        $result = $this->Plaid->get_institutions();
+        echo $result;
+    }
+
     function get_accounts()
     {
         $result = $this->Plaid->get_accounts();
-        return $result;
+        echo $result;
     }
 
-    function get_transaction_lists_api()
+    function get_transaction_lists()
     {
         $result = $this->Plaid->get_transaction_lists();
-        return $result;
+        echo $result;
     }
+
+    function is_transaction_exist()
+    {
+        $trans_id = $this->input->post('trans_id');
+        $result = $this->Plaid->is_transaction_exist($trans_id);
+        // echo '{"exist":"'.$result.'"}';
+        echo $result;
+    }
+    //////////////////////
 }

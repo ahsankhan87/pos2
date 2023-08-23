@@ -12,9 +12,8 @@
             echo '</div>';
         }
         ?>
-
-        <button class="btn btn-primary" id="link-button">Link Account</button>
-
+        
+        <button class="btn btn-success" id="link-button">Link Account</button>
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
@@ -32,26 +31,16 @@
                 <table class="table table-striped table-bordered table-condensed flip-content" id="sample_">
                     <thead class="flip-content">
                         <tr>
-                            <th><?php echo lang('name') ?></th>
-                            <th><?php echo lang('type') ?></th>
-                            <th>Sub Type</th>
-                            <th class="text-right"><?php echo lang('amount') ?></th>
+                            <th>Ins id</th>
+                            <th>Name</th>
                             <th class="hidden-print"><?php echo lang('action') ?></th>
                         </tr>
                     </thead>
                     <tbody class="create_table">
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th>Total</th>
-                            <th class="grand_total text-right"></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
+                    
                 </table>
-                <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
+                <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif")?>" alt="loader"></div>
 
             </div>
         </div>
@@ -117,12 +106,10 @@
                         var json_data = JSON.parse(data);
                         //Store access token into database
                         $.post(site_url + 'banking/C_connections/store_access_token/', {
-                            access_token: json_data.access_token,
-                            item_id: json_data.item_id
-                        });
+                            access_token: json_data.access_token, item_id:json_data.item_id });
                         ////////////
-
-                        get_list_accounts();
+                        
+                        get_list_institutions();
 
                     });
 
@@ -137,7 +124,7 @@
                 // Storing this information can be helpful for support.
             },
             onEvent: function(eventName, metadata) {
-
+                
             }
         });
 
@@ -147,19 +134,18 @@
 
         $(".loader").show();
         ////
-        get_list_accounts();
+        get_list_institutions();
         ////////////////////////
-        //GET get_ponto_list_accounts
-        function get_list_accounts() {
+        //GET get_ponto_list_institutions
+        function get_list_institutions() {
 
             $.ajax({
-                url: site_url + "banking/C_connections/get_accounts",
+                url: site_url + "banking/C_connections/get_institutions",
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(response) {
                     console.log(response);
 
-                    var grand_total = 0;
                     if (response.error_code != undefined && Object.keys(response.error_code).length > 0) {
 
                         $('#popupModal').modal('toggle');
@@ -168,26 +154,20 @@
 
                     } else {
                         let i = 0;
-                        $.each(response.accounts, function(index, value) {
-
-
-                            grand_total += value.balances.current;
+                        $.each(response.institutions, function(index, value) {
+                            
                             var div = '<tr>' +
+                                '<td>' + value.institution_id + '</td>' +
                                 '<td>' + value.name + '</td>' +
-                                '<td>' + value.type + '</td>' +
-                                '<td>' + value.subtype + '</td>' +
-                                '<td class="text-right">' + value.balances.current + value.balances.iso_currency_code + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_transactions/' + value.account_id + '" class="btn btn-primary btn-sm">Transaction</a></td>' +
+                                '<td><a href="' + site_url + 'banking/C_connections/get_accounts_by_id/' + value.institution_id + '/'+ value.name + '">Accounts</a></td>' +
                                 '</tr>';
 
                             $('.create_table').append(div);
-
+                            
                             i++;
-
                         });
                         $(".loader").hide();
-                        $(".grand_total").html(grand_total.toFixed(2));
-
+                        
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {

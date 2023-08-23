@@ -73,13 +73,36 @@ class Plaid extends CI_Model
         return $this->Http_verbs->post($uri, $headers, $post_fields);
     }
 
+    function get_institutions()
+    {
+        $url = getenv('PLAID_HOST');
+        $api = "/institutions/get"; 
+        $urn = ''; //"/oauth2/token";
+        $uri = $url . $api . $urn;
+
+        
+        $headers = [
+            //"Accept: application/vnd.api+json",
+            // "Authorization: Basic " . base64_encode($ponto_client_id . ":" . $ponto_client_secret),
+            "Content-Type: application/json"
+        ];
+        
+        $post_fields = [
+            "client_id" => getenv('PLAID_CLIENT_ID'),
+            "secret" => getenv('PLAID_SECRET'),
+            "count" =>  500,
+            "offset" =>  0,
+            "country_codes" =>  ["US"]
+        ];
+        return $this->Http_verbs->post($uri, $headers, $post_fields);
+    }
+
     function get_accounts()
     {
         $url = getenv('PLAID_HOST');
         $api = "/accounts/get"; 
         $urn = ''; //"/oauth2/token";
         $uri = $url . $api . $urn;
-
         $access_token = $this->M_companies->get_access_token($_SESSION['company_id']);
         
         $headers = [
@@ -93,6 +116,7 @@ class Plaid extends CI_Model
             "secret" => getenv('PLAID_SECRET'),
             "access_token"=> $access_token
         ];
+
 
         return $this->Http_verbs->post($uri, $headers, $post_fields);
     }
@@ -131,4 +155,19 @@ class Plaid extends CI_Model
 
         return $this->Http_verbs->post($uri, $headers, $post_fields);
     }
+    
+    function is_transaction_exist($trans_id)
+     {
+        $this->db->where(array('plaid_trans_id'=> $trans_id,'company_id'=> $_SESSION['company_id']));
+        $query = $this->db->get('acc_entry_items'); 
+        
+        if($query->num_rows() > 0)
+        {
+            return 1;
+        }else
+        {
+            return 0;
+        }
+     }
+     
 }
