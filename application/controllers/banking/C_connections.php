@@ -36,7 +36,7 @@ class C_connections extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    public function get_transactions($account_id)
+    public function get_transaction_sync($account_id)
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
@@ -161,9 +161,21 @@ class C_connections extends MY_Controller
         echo $result;
     }
 
-    function get_transaction_lists()
+    function transaction_sync()
     {
-        $result = $this->Plaid->get_transaction_lists();
+        $result = $this->Plaid->transaction_sync();
+        echo $result;
+    }
+
+    function get_transactions($start_date, $end_date)
+    {
+        $result = $this->Plaid->get_transactions($start_date, $end_date);
+        echo $result;
+    }
+
+    function transaction_refresh()
+    {
+        $result = $this->Plaid->transaction_refresh();
         echo $result;
     }
 

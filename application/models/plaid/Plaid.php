@@ -121,8 +121,7 @@ class Plaid extends CI_Model
         return $this->Http_verbs->post($uri, $headers, $post_fields);
     }
 
-    
-    function get_transaction_lists()
+    function transaction_sync()
     {
         $url = getenv('PLAID_HOST');
         $api = "/transactions/sync"; 
@@ -130,9 +129,7 @@ class Plaid extends CI_Model
         $uri = $url . $api . $urn;
         
         $access_token = $this->M_companies->get_access_token($_SESSION['company_id']);
-        $start_date = date("Y-m-d",strtotime("-1 month"));
-        $end_date = date("Y-m-d");
-
+        
         $headers = [
             //"Accept: application/vnd.api+json",
             // "Authorization: Basic " . base64_encode($ponto_client_id . ":" . $ponto_client_secret),
@@ -144,13 +141,62 @@ class Plaid extends CI_Model
             "secret" => getenv('PLAID_SECRET'),
             "access_token" => $access_token,
             "count" => 50,
-            //"start_date"=> $start_date,
-            // "end_date" => $end_date,
-            // "options"=> [
-            //     "count" => 250,
-            //     "offset" => 0,
-            //     "include_personal_finance_category" => true
-            // ]
+            
+        ];
+
+        return $this->Http_verbs->post($uri, $headers, $post_fields);
+    }
+    function get_transactions($start_date, $end_date)
+    {
+        $url = getenv('PLAID_HOST');
+        $api = "/transactions/get"; 
+        $urn = ''; //"/oauth2/token";
+        $uri = $url . $api . $urn;
+        
+        $access_token = $this->M_companies->get_access_token($_SESSION['company_id']);
+        
+        $headers = [
+            //"Accept: application/vnd.api+json",
+            // "Authorization: Basic " . base64_encode($ponto_client_id . ":" . $ponto_client_secret),
+            "Content-Type: application/json"
+        ];
+
+        $post_fields = [
+            "client_id" => getenv('PLAID_CLIENT_ID'),
+            "secret" => getenv('PLAID_SECRET'),
+            "access_token" => $access_token,
+            "start_date"=> $start_date,
+            "end_date" => $end_date,
+            "options"=> [
+                "count" => 250,
+                "offset" => 0,
+                "include_personal_finance_category" => true
+            ]
+        ];
+
+        return $this->Http_verbs->post($uri, $headers, $post_fields);
+    }
+
+    function transaction_refresh()
+    {
+        $url = getenv('PLAID_HOST');
+        $api = "/transactions/refresh"; 
+        $urn = ''; //"/oauth2/token";
+        $uri = $url . $api . $urn;
+        
+        $access_token = $this->M_companies->get_access_token($_SESSION['company_id']);
+        
+        $headers = [
+            //"Accept: application/vnd.api+json",
+            // "Authorization: Basic " . base64_encode($ponto_client_id . ":" . $ponto_client_secret),
+            "Content-Type: application/json"
+        ];
+
+        $post_fields = [
+            "client_id" => getenv('PLAID_CLIENT_ID'),
+            "secret" => getenv('PLAID_SECRET'),
+            "access_token" => $access_token,
+            
         ];
 
         return $this->Http_verbs->post($uri, $headers, $post_fields);

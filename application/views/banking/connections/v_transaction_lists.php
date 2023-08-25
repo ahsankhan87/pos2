@@ -22,7 +22,7 @@
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse"></a>
-                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                    <!-- <a href="#portlet-config" data-toggle="modal" class="config"></a> -->
                     <a href="javascript:;" class="reload"></a>
                     <a href="javascript:;" class="remove"></a>
                 </div>
@@ -96,9 +96,10 @@
         const module = '<?php echo $url1 = $this->uri->segment(3); ?>/';
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
-        const date = '<?php echo date("Y-m-d") ?>';
+        const start_date = '<?php echo date("Y-m-d",strtotime("-3 month")) ?>';
+        const end_date = '<?php echo date("Y-m-d") ?>';
         const account_id = '<?php echo $account_id ?>';
-
+        
         $(".loader").show();
         ////
         get_transaction_list(account_id);
@@ -108,12 +109,12 @@
             var div = '';
             $(".loader").show();
             $.ajax({
-                url: site_url + "banking/C_connections/get_transaction_lists",
-                type: 'GET',
+                url: site_url + "banking/C_connections/get_transactions/"+start_date+'/'+end_date,
+                type: 'POST',
                 dataType: 'json', // added data type
                 success: function(json_response) {
                     //json_response = JSON.parse(response);
-                    console.log(json_response.added);
+                    console.log(json_response);
                     var grand_total = 0;
 
                     if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
@@ -124,7 +125,7 @@
 
                     } else {
                         let i = 0;
-                        $.each(json_response.added, function(index, value) {
+                        $.each(json_response.transactions, function(index, value) {
                             
                             if (value.account_id == account_id) {
                                 grand_total += -value.amount;

@@ -177,7 +177,7 @@
                                 '<td>' + value.type + '</td>' +
                                 '<td>' + value.subtype + '</td>' +
                                 '<td class="text-right">' + value.balances.current + value.balances.iso_currency_code + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_transactions/' + value.account_id + '" class="btn btn-primary btn-sm">Transaction</a></td>' +
+                                '<td><a href="' + site_url + 'banking/C_connections/get_transaction_sync/' + value.account_id + '" class="btn btn-primary btn-sm">Transaction</a></td>' +
                                 '</tr>';
 
                             $('.create_table').append(div);
