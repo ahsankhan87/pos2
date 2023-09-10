@@ -22,7 +22,20 @@ class C_companies extends MY_Controller{
         $this->load->view('companies/v_companies',$data);
         $this->load->view('templates/footer');
     }
-    
+
+    function get_transaction_limit()
+    {
+        $result = $this->M_companies->get_transaction_limit();
+        echo $result;
+    }
+
+    function update_transaction_limit()
+    {
+        $limit = (int) $this->input->post("limit",true);
+        $result = $this->M_companies->update_transaction_limit($limit);
+        echo $result;
+    }
+
     function create()
     {
         $data = array('langs' => $this->session->userdata('lang'));
@@ -153,7 +166,7 @@ class C_companies extends MY_Controller{
     function hasLoginUsername()
     {
         $username = $this->input->post('u_name');
-        return 'ahsan';
+        //return 'ahsan';
         if($this->M_companies->checkUsername($username))
         {
             //echo json_encode('This username is already taken! Try another.');

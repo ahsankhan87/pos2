@@ -14,6 +14,8 @@
         ?>
         <p>
             <button class="btn btn-info" onclick="history.go(-1);">Back </button>
+            <button class="btn btn-success" id="load_transactions" disabled>Load Transactions</button>
+
         </p>
         <div class="portlet">
             <div class="portlet-title">
@@ -96,20 +98,79 @@
         const module = '<?php echo $url1 = $this->uri->segment(3); ?>/';
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
-        const start_date = '<?php echo date("Y-m-d",strtotime("-3 month")) ?>';
+        const start_date = '<?php echo date("Y-m-d", strtotime("-3 month")) ?>';
         const end_date = '<?php echo date("Y-m-d") ?>';
         const account_id = '<?php echo $account_id ?>';
-        
-        $(".loader").show();
+        var transaction_limit = 0;
+
+        $(".loader").hide();
         ////
-        get_transaction_list(account_id);
+        /////////////
+        //show transaction button when limit are not exceeded
+        get_transaction_limit();
+
+        function get_transaction_limit() {
+            $.ajax({
+                url: site_url + "companies/C_companies/get_transaction_limit",
+                type: 'GET',
+                // dataType: "JSON",
+                //cache: true,
+                success: function(data) {
+                    console.log(data);
+                    transaction_limit = data;
+                    if (data < 2) {
+                        $('#load_transactions').prop('disabled', false);
+                    } else {
+                        $('#load_transactions').prop('disabled', true);
+                    }
+                    $('#load_transactions').text('Load Transaction ('+transaction_limit+')');
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+
+
+        $('#load_transactions').on('click', function(e) {
+            $(".loader").show();
+            get_transaction_list(account_id);
+            update_transaction_limit(transaction_limit);
+
+        });
+
+        function update_transaction_limit(transaction_limit) {
+            var result = (parseInt(transaction_limit) + parseInt(1));
+
+            //UPDATE TRANSACTION LIMIT FIELD
+            $.ajax({
+                url: site_url + "companies/C_companies/update_transaction_limit",
+                type: 'POST',
+                data: {
+                    limit: result
+                },
+                dataType: "JSON",
+                //cache: true,
+                success: function(data) {
+                    console.log("transactions update " + data);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+            //////
+            get_transaction_limit();
+        }
+        ///////////////
         ////////////////////////
         //GET get_ponto_list_accounts
         function get_transaction_list(account_id) {
             var div = '';
             $(".loader").show();
             $.ajax({
-                url: site_url + "banking/C_connections/get_transactions/"+start_date+'/'+end_date,
+                url: site_url + "banking/C_connections/get_transactions/" + start_date + '/' + end_date,
                 type: 'POST',
                 dataType: 'json', // added data type
                 success: function(json_response) {
@@ -126,7 +187,7 @@
                     } else {
                         let i = 0;
                         $.each(json_response.transactions, function(index, value) {
-                            
+
                             if (value.account_id == account_id) {
                                 grand_total += -value.amount;
                                 div += '<tr>' +
@@ -146,8 +207,8 @@
                                     '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
                                     '<input type="hidden" id="transid_' + i + '" value="' + value.transaction_id + '">' +
                                     '</td>' +
-                                    '</tr>';;
-                                
+                                    '</tr>';
+
                                 i++;
                             }
 
@@ -181,7 +242,7 @@
                         // const transaction_exist = JSON.parse(await $.post(site_url + 'banking/C_connections/is_transaction_exist/'+trans_id)).exist;
                         // console.log(transaction_exist);
                         // return transaction_exist;
-                        
+
                         var result = '';
                         $.ajax({
                             url: site_url + "banking/C_connections/is_transaction_exist/",
@@ -201,7 +262,7 @@
                             }
                         });
                         //console.log(result);
-                                
+
                         return result;
                     }
                     ///////////////////

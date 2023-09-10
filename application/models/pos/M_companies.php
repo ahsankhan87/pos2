@@ -32,6 +32,25 @@ class M_companies extends CI_Model{
         return $data;
     }
      
+    public function get_transaction_limit()
+    {
+        $this->db->select('transactions_limit');
+        $options = array('id'=> $_SESSION['company_id']);
+        
+        $query = $this->db->get_where('companies',$options);
+        if($row = $query->row())
+        {
+            return $row->transactions_limit;
+        }
+        
+        return 0;
+    }
+    
+    function update_transaction_limit($limit)
+    {
+        $query = $this->db->update('companies',array('transactions_limit'=>$limit),array('id'=>$_SESSION['company_id']));
+    }
+    
     function update_access_token($id,$access_token,$item_id)
     {
         $query = $this->db->update('companies',array('access_token'=>$access_token,'plaid_item_id'=>$item_id),array('id'=>$id));
