@@ -136,8 +136,7 @@
         $('#load_transactions').on('click', function(e) {
             $(".loader").show();
             get_transaction_list(account_id);
-            update_transaction_limit(transaction_limit);
-
+            
         });
 
         function update_transaction_limit(transaction_limit) {
@@ -217,6 +216,7 @@
                         $(".loader").hide();
                         $('.create_table').html(div);
                         $(".grand_total").html(grand_total.toFixed(2));
+                        update_transaction_limit(transaction_limit);
 
                         /////////////
                         //Accept and do entry of the transaction

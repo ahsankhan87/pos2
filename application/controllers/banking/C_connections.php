@@ -169,8 +169,18 @@ class C_connections extends MY_Controller
 
     function get_transactions($start_date, $end_date)
     {
-        $result = $this->Plaid->get_transactions($start_date, $end_date);
-        echo $result;
+        $trans_limit = $this->M_companies->get_transaction_limit();
+        if($trans_limit < 2)
+        {
+            echo $this->Plaid->get_transactions($start_date, $end_date);
+        }else{
+            $error = [
+                "error_code"=>"Transaction Limit",
+                "error_message"=> "Transaction limit exceeds 2 times"
+            ];
+            echo json_encode($error);
+        }
+        
     }
 
     function transaction_refresh()
