@@ -75,6 +75,20 @@ class M_groups extends CI_Model{
         return $data;
     }
     
+    public function get_accounts_by_parent($parent_code = FALSE,$company_id)
+    {
+        if($parent_code != FALSE)
+        {
+            $this->db->where('parent_code', $parent_code);
+        }
+        
+        $options = array('type'=>'detail','company_id'=> $company_id);
+        
+        $query = $this->db->get_where('acc_groups',$options);
+        $data = $query->result_array();
+        return $data;
+    }
+    
     public function get_detail_accounts_by_type(array $account_types,$company_id)
     {
         $this->db->select('g.id,g.title,g.title_ur,g.account_code,g.parent_code');

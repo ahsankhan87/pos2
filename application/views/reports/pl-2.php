@@ -27,6 +27,14 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputEmail2">Display</label>
+                        <select class="form-control" id="report_display" name="report_display">
+                            <option value="">Select</option>
+                            <option value="by_month">By month</option>
+                            
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail2"><?php echo lang('from') . ' ' . lang('date') ?></label>
                         <input type="date" class="form-control" name="from_date" id="from_date" value="<?php echo date("Y-m-d"); ?>" placeholder="From Date">
                     </div>

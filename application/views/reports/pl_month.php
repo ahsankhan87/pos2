@@ -18,12 +18,20 @@
                     <div class="form-group">
 
                         <select class="form-control" id="report_period" name="report_period">
-                            <option value="custom"><?php echo lang('custom');?></option>
-                            <option value="this_month"><?php echo lang('this_month');?></option>
-                            <option value="last_month"><?php echo lang('last_month');?></option>
-                            <option value="last_week"><?php echo lang('last_week');?></option>
-                            <option value="last_year"><?php echo lang('last_year');?></option>
-                            <option value="this_year"><?php echo lang('this_year');?></option>
+                            <option value="custom"><?php echo lang('custom'); ?></option>
+                            <option value="this_month"><?php echo lang('this_month'); ?></option>
+                            <option value="last_month"><?php echo lang('last_month'); ?></option>
+                            <option value="last_week"><?php echo lang('last_week'); ?></option>
+                            <option value="last_year"><?php echo lang('last_year'); ?></option>
+                            <option value="this_year"><?php echo lang('this_year'); ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Display</label>
+                        <select class="form-control" id="report_display" name="report_display">
+                            <option value="">Select</option>
+                            <option value="by_month">By month</option>
+                            
                         </select>
                     </div>
                     <div class="form-group">
@@ -56,47 +64,105 @@
             <thead>
                 <tr>
                     <th><?php echo lang('account') ?></th>
-                    <th class="text-right"><?php echo lang('amount') ?></th>
-                    <th class="text-right"><?php echo lang('total') ?></th>
+                    <th><?php echo lang('jan'); ?></th>
+                    <th><?php echo lang('feb'); ?></th>
+                    <th><?php echo lang('mar'); ?></th>
+                    <th><?php echo lang('apr'); ?></th>
+                    <th><?php echo lang('may'); ?></th>
+                    <th><?php echo lang('jun'); ?></th>
+                    <th><?php echo lang('jul'); ?></th>
+                    <th><?php echo lang('aug'); ?></th>
+                    <th><?php echo lang('sep'); ?></th>
+                    <th><?php echo lang('oct'); ?></th>
+                    <th><?php echo lang('nov'); ?></th>
+                    <th><?php echo lang('dec'); ?></th>
+                    <th><?php echo lang('total'); ?></th>
 
                 </tr>
             </thead>
             <tbody>
 
                 <?php
+                //FULL CALANDER VARIABLES
+                $total_jan_report = 0;
+                $total_apr_report = 0;
+                $total_jul_report = 0;
+                $total_oct_report = 0;
+                $total_feb_report = 0;
+                $total_may_report = 0;
+                $total_aug_report = 0;
+                $total_nov_report = 0;
+                $total_mar_report = 0;
+                $total_jun_report = 0;
+                $total_sep_report = 0;
+                $total_dec_report = 0;
                 $total = 0;
+
                 foreach ($proft_loss as $key => $list) {
+                    
+                    $fy_year = date('Y', strtotime($from_date));
+                    $fy_month = date('m', strtotime($from_date));
+
                     echo '<tr><td colspan="3">';
-                    echo '<strong>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
+                    echo '<strong>' .$list['account_code'].' '. ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
                     echo '</td></tr>';
 
                     ///////
-                    $pl_report = $this->M_reports->get_profit_loss($_SESSION['company_id'], $list['account_code'], $from_date, $to_date);
-                    foreach ($pl_report as $key => $values) :
+                    $pl_report = $this->M_groups->get_accounts_by_parent($list['account_code'],$_SESSION['company_id']);
+                    // $pl_report = $this->M_reports->get_profit_loss($_SESSION['company_id'], $list['account_code'], $from_date, $to_date);
+                    foreach ($pl_report as $key => $list) :
 
-                        echo '<tr><td>';
-                        echo '&nbsp;&nbsp;';
-                        echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
-                        echo '</td>';
-                        $balance = $values['credit'] - $values['debit'];
-                        echo '<td class="text-right">';
-                        echo number_format($balance, 2);
-                        echo '</td>';
-                        $total += $balance;
-                        echo '<td class="text-right">';
-                        echo number_format($total, 2);
-                        echo '</td></tr>';
+                        $total += $jan_report = $this->M_reports->year_report($_SESSION['company_id'], '01', $fy_year, $list['account_code']);
+                        $total += $feb_report = $this->M_reports->year_report($_SESSION['company_id'], '02', $fy_year, $list['account_code']);
+                        $total += $mar_report = $this->M_reports->year_report($_SESSION['company_id'], '03', $fy_year, $list['account_code']);
+                        $total += $apr_report = $this->M_reports->year_report($_SESSION['company_id'], '04', $fy_year, $list['account_code']);
+                        $total += $may_report = $this->M_reports->year_report($_SESSION['company_id'], '05', $fy_year, $list['account_code']);
+                        $total += $jun_report = $this->M_reports->year_report($_SESSION['company_id'], '06', $fy_year, $list['account_code']);
+                        $total += $jul_report = $this->M_reports->year_report($_SESSION['company_id'], '07', $fy_year, $list['account_code']);
+                        $total += $aug_report = $this->M_reports->year_report($_SESSION['company_id'], '08', $fy_year, $list['account_code']);
+                        $total += $sep_report = $this->M_reports->year_report($_SESSION['company_id'], '09', $fy_year, $list['account_code']);
+                        $total += $oct_report = $this->M_reports->year_report($_SESSION['company_id'], '10', $fy_year, $list['account_code']);
+                        $total += $nov_report = $this->M_reports->year_report($_SESSION['company_id'], '11', $fy_year, $list['account_code']);
+                        $total += $dec_report = $this->M_reports->year_report($_SESSION['company_id'], '12', $fy_year, $list['account_code']);
+                        
+                        echo '<tr>';
+                        echo '<td>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</td>';
+                        //$report = $this->M_dashboard->monthlySaleReport($_SESSION["company_id"],$fy_year,$list['name']);
+                        echo '<td>' . $jan_report . '</td>';
+                        echo '<td>' . $feb_report . '</td>';
+                        echo '<td>' . $mar_report . '</td>';
+                        echo '<td>' . $apr_report . '</td>';
+                        echo '<td>' . $may_report . '</td>';
+                        echo '<td>' . $jun_report . '</td>';
+                        echo '<td>' . $jul_report . '</td>';
+                        echo '<td>' . $aug_report . '</td>';
+                        echo '<td>' . $sep_report . '</td>';
+                        echo '<td>' . $oct_report . '</td>';
+                        echo '<td>' . $nov_report . '</td>';
+                        echo '<td>' . $dec_report . '</td>';
+                        echo '<td><strong>' . $total . '</strong></td>';
+                        echo '</tr>';
+
+                        $total_jan_report += abs($jan_report);
+                        $total_may_report += abs($may_report);
+                        $total_sep_report += abs($sep_report);
+                        $total_feb_report += abs($feb_report);
+                        $total_jun_report += abs($jun_report);
+                        $total_oct_report += abs($oct_report);
+                        $total_mar_report += abs($mar_report);
+                        $total_jul_report += abs($jul_report);
+                        $total_nov_report += abs($nov_report);
+                        $total_apr_report += abs($apr_report);
+                        $total_aug_report += abs($aug_report);
+                        $total_dec_report += abs($dec_report);
+                        $total += abs($this->M_groups->get_account_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']));
                     endforeach;
                     /////
                 }
                 ?>
             </tbody>
             <tfoot>
-                <tr>
-                    <td><strong><?php echo lang('net_income'); ?></strong></td>
-                    <td></td>
-                    <td class="text-right"><strong><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><?php echo number_format($total, 2); ?></strong></td>
-                </tr>
+                
             </tfoot>
 
         </table>

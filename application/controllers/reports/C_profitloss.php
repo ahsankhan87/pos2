@@ -22,6 +22,8 @@ class C_profitloss extends MY_Controller
         $data['main'] = lang('profit_loss');
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
+        
+        $data['report_display'] = $this->input->post('report_display');
 
         $data['main_small'] = '<br />' . date('d-m-Y', strtotime($data['from_date'])) . ' To ' . date('d-m-Y', strtotime($data['to_date']));
 
@@ -33,7 +35,12 @@ class C_profitloss extends MY_Controller
         // end logging
 
         $this->load->view('templates/header', $data);
-        $this->load->view('reports/pl-2', $data);
+        if($data['report_display'] == "by_month")
+        {
+            $this->load->view('reports/pl_month', $data);
+        }else{
+            $this->load->view('reports/pl-2', $data);
+        }
         $this->load->view('templates/footer');
     }
 
