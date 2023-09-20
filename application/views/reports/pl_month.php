@@ -96,7 +96,7 @@
                 $total_jun_report = 0;
                 $total_sep_report = 0;
                 $total_dec_report = 0;
-                $total = 0;
+                
 
                 foreach ($proft_loss as $key => $list) {
                     
@@ -104,43 +104,44 @@
                     $fy_month = date('m', strtotime($from_date));
 
                     echo '<tr><td colspan="3">';
-                    echo '<strong>' .$list['account_code'].' '. ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
+                    echo '<strong>' .($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
                     echo '</td></tr>';
 
                     ///////
                     $pl_report = $this->M_groups->get_accounts_by_parent($list['account_code'],$_SESSION['company_id']);
                     // $pl_report = $this->M_reports->get_profit_loss($_SESSION['company_id'], $list['account_code'], $from_date, $to_date);
                     foreach ($pl_report as $key => $list) :
-
-                        $total += $jan_report = $this->M_reports->year_report($_SESSION['company_id'], '01', $fy_year, $list['account_code']);
-                        $total += $feb_report = $this->M_reports->year_report($_SESSION['company_id'], '02', $fy_year, $list['account_code']);
-                        $total += $mar_report = $this->M_reports->year_report($_SESSION['company_id'], '03', $fy_year, $list['account_code']);
-                        $total += $apr_report = $this->M_reports->year_report($_SESSION['company_id'], '04', $fy_year, $list['account_code']);
-                        $total += $may_report = $this->M_reports->year_report($_SESSION['company_id'], '05', $fy_year, $list['account_code']);
-                        $total += $jun_report = $this->M_reports->year_report($_SESSION['company_id'], '06', $fy_year, $list['account_code']);
-                        $total += $jul_report = $this->M_reports->year_report($_SESSION['company_id'], '07', $fy_year, $list['account_code']);
-                        $total += $aug_report = $this->M_reports->year_report($_SESSION['company_id'], '08', $fy_year, $list['account_code']);
-                        $total += $sep_report = $this->M_reports->year_report($_SESSION['company_id'], '09', $fy_year, $list['account_code']);
-                        $total += $oct_report = $this->M_reports->year_report($_SESSION['company_id'], '10', $fy_year, $list['account_code']);
-                        $total += $nov_report = $this->M_reports->year_report($_SESSION['company_id'], '11', $fy_year, $list['account_code']);
-                        $total += $dec_report = $this->M_reports->year_report($_SESSION['company_id'], '12', $fy_year, $list['account_code']);
+                        $total = 0;
+                        
+                        $total += $jan_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '01',  $list['account_code']);
+                        $total += $feb_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '02',  $list['account_code']);
+                        $total += $mar_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '03',  $list['account_code']);
+                        $total += $apr_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '04',  $list['account_code']);
+                        $total += $may_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '05',  $list['account_code']);
+                        $total += $jun_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '06',  $list['account_code']);
+                        $total += $jul_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '07',  $list['account_code']);
+                        $total += $aug_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '08',  $list['account_code']);
+                        $total += $sep_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '09',  $list['account_code']);
+                        $total += $oct_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '10',  $list['account_code']);
+                        $total += $nov_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '11',  $list['account_code']);
+                        $total += $dec_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '12',  $list['account_code']);
                         
                         echo '<tr>';
                         echo '<td>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</td>';
                         //$report = $this->M_dashboard->monthlySaleReport($_SESSION["company_id"],$fy_year,$list['name']);
-                        echo '<td>' . $jan_report . '</td>';
-                        echo '<td>' . $feb_report . '</td>';
-                        echo '<td>' . $mar_report . '</td>';
-                        echo '<td>' . $apr_report . '</td>';
-                        echo '<td>' . $may_report . '</td>';
-                        echo '<td>' . $jun_report . '</td>';
-                        echo '<td>' . $jul_report . '</td>';
-                        echo '<td>' . $aug_report . '</td>';
-                        echo '<td>' . $sep_report . '</td>';
-                        echo '<td>' . $oct_report . '</td>';
-                        echo '<td>' . $nov_report . '</td>';
-                        echo '<td>' . $dec_report . '</td>';
-                        echo '<td><strong>' . $total . '</strong></td>';
+                        echo '<td class="text-right">' . number_format($jan_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($feb_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($mar_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($apr_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($may_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($jun_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($jul_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($aug_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($sep_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($oct_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($nov_report,1) . '</td>';
+                        echo '<td class="text-right">' . number_format($dec_report,1) . '</td>';
+                        echo '<td class="text-right"><strong>' . number_format($total,1) . '</strong></td>';
                         echo '</tr>';
 
                         $total_jan_report += abs($jan_report);
@@ -155,7 +156,7 @@
                         $total_apr_report += abs($apr_report);
                         $total_aug_report += abs($aug_report);
                         $total_dec_report += abs($dec_report);
-                        $total += abs($this->M_groups->get_account_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']));
+                        $total += abs($this->M_groups->get_account_total_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']));
                     endforeach;
                     /////
                 }
