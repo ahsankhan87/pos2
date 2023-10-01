@@ -173,6 +173,9 @@
 						</li>
 						<?php if ($_SESSION['role'] == 'admin') { ?>
 							<li>
+								<a href="<?php echo site_url('setting/C_stripePayment'); ?>"><i class="fa fa-tasks"></i> <?php echo lang('payment'); ?></a>
+							</li>
+							<li>
 								<a href="<?php echo site_url('setting/users/C_users'); ?>"><i class="fa fa-tasks"></i> <?php echo lang('users'); ?></a>
 							</li>
 						<?php } ?>
