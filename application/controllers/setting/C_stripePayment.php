@@ -8,7 +8,7 @@ class C_stripePayment extends MY_Controller
         parent::__construct();
         $this->lang->load('index');
         require_once(APPPATH . 'libraries/stripe-php-12.5.0/init.php');
-        $this->load->model('stripe/Stripe');
+        //$this->load->model('stripe/Stripe');
     }
 
     public function index()
@@ -52,10 +52,10 @@ class C_stripePayment extends MY_Controller
         // See your keys here: https://dashboard.stripe.com/apikeys
         $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
         $result =  $stripe->accounts->create(['type' => 'express']);
-        
+
         //$data = array('success' => true, 'data'=> $stripe);
         $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-        
+
         $account_link = $stripe->accountLinks->create([
             'account' => $result->id,
             'refresh_url' => 'https://example.com/reauth',
@@ -64,24 +64,22 @@ class C_stripePayment extends MY_Controller
         ]);
 
         redirect($account_link->url, 'refresh');
-        
     }
 
     public function update_link()
     {
-        $account_id = $this->input->post('account_id',true);
+        $account_id = $this->input->post('account_id', true);
         //$data = array('success' => true, 'data'=> $stripe);
         $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-        
+
         $account_link = $stripe->accountLinks->create([
-            'account' => $account_id ,
+            'account' => $account_id,
             'refresh_url' => 'https://example.com/reauth',
             'return_url' => site_url('setting/C_stripePayment/'),
             'type' => 'account_onboarding',
         ]);
 
         redirect($account_link->url, 'refresh');
-        
     }
     public function delete_account($account_id)
     {
@@ -90,15 +88,14 @@ class C_stripePayment extends MY_Controller
             $account_id,
             []
         );
-        
+
         // echo $result;
-        if($result->deleted)
-        {
-            $this->session->set_flashdata('message', 'Account ID: '.$result->id.' has been deleted.');
-        }else{
+        if ($result->deleted) {
+            $this->session->set_flashdata('message', 'Account ID: ' . $result->id . ' has been deleted.');
+        } else {
             $this->session->set_flashdata('error', 'Record not deleted.');
         }
-        
+
         redirect('setting/C_stripePayment/', 'refresh');
     }
 
