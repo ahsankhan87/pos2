@@ -8,7 +8,7 @@ class C_stripePayment extends MY_Controller
         parent::__construct();
         $this->lang->load('index');
         require_once(APPPATH . 'libraries/stripe-php-12.5.0/init.php');
-        //$this->load->model('stripe/Stripe');
+        $this->load->model('stripe/M_stripe');
     }
 
     public function index()
@@ -132,5 +132,42 @@ class C_stripePayment extends MY_Controller
         $this->session->set_flashdata('success', 'Payment has been successful.');
 
         redirect('setting/C_stripePayment/', 'refresh');
+    }
+
+    function save_stripe_setting()
+    {
+        echo $this->M_stripe->save_stripe_setting();
+    }
+
+    function create_payment_link($account_id = "acct_1NwQY6IETd01p1Sr")
+    {
+        // Set your secret key. Remember to switch to your live secret key in production.
+        // See your keys here: https://dashboard.stripe.com/apikeys
+        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+
+        $data = $stripe->paymentLinks->create([
+            'line_items' => [
+                [
+                    'price' => 'price_1NzNQjIOefQXoKMIUupfIOv9',
+                    'quantity' => 1,
+                ],
+            ],
+            'transfer_data' => ['destination' => $account_id],
+        ]);
+
+        echo $data;
+    }
+
+    function create_login_link($account_id = "acct_1NwQY6IETd01p1Sr")
+    {
+
+        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+        $result = $stripe->accounts->createLoginLink(
+            $account_id,
+            []
+        );
+       
+        redirect($result['url'], 'refresh');
+        //echo $result['url'];
     }
 }

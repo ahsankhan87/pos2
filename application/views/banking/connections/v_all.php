@@ -12,8 +12,9 @@
             echo '</div>';
         }
         ?>
-
-        <button class="btn btn-primary" id="link-button">Link Account</button>
+        <p>
+            <button class="btn btn-primary" id="link-button">Link Account</button>
+        </p>
 
         <div class="portlet">
             <div class="portlet-title">

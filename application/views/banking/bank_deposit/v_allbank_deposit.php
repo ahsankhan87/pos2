@@ -12,9 +12,10 @@
             echo '</div>';
         }
         ?>
-        <?php
-            echo anchor('banking/C_bankDeposit/', lang('new').' ' . lang('transaction'), 'class="btn btn-success" id=""'); 
-        ?> 
+        <p>
+            <?php echo anchor('banking/C_bankDeposit/', lang('new').' ' . lang('transaction'), 'class="btn btn-success" id=""'); ?>
+        </p>
+         
        
         <div class="portlet">
             <div class="portlet-title">
