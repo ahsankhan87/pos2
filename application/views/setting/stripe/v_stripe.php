@@ -12,7 +12,13 @@
             echo '</div>';
         } ?>
         <p>
-            <a href="<?php echo site_url('setting/C_stripePayment/create_account'); ?>" class="btn btn-primary">Create Stripe Account</a>
+            <?php 
+                $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
+                if($stripe_acct_id == "")
+                {
+                    echo '<a href="'.site_url("setting/C_stripePayment/create_account").'" class="btn btn-primary">Create Stripe Account</a>';
+                }
+            ?>
             <a href="#" class="btn btn-warning" id="setting-stripe"><i class="fa fa-gear"></i> Setting</a>
 
         </p>
@@ -72,6 +78,7 @@
                                 echo '</td>';
                                 echo '<td>';
                                 echo '<a href="' . site_url('setting/C_stripePayment/delete_account/' . $account->id) . '">Delete</a>';
+                                echo ' | <a href="' . site_url('setting/C_stripePayment/create_login_link/' . $account->id) . '" target="_blank">Login</a>';
                                 echo '</td>';
                                 echo '</tr>';
                             }

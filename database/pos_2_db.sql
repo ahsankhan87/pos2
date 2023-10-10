@@ -2608,3 +2608,4 @@ ALTER TABLE `acc_entry_items` ADD `plaid_trans_id` VARCHAR(256) NULL AFTER `user
 ALTER TABLE `companies` ADD `transactions_limit` INT(1) NOT NULL DEFAULT '0' AFTER `plaid_item_id`;
 
 ALTER TABLE `companies` ADD `stripe_key` VARCHAR(255) NULL AFTER `transactions_limit`, ADD `stripe_secret_key` VARCHAR(255) NULL AFTER `stripe_key`;
+ALTER TABLE `companies` ADD `stripe_acct_id` VARCHAR(200) NULL AFTER `stripe_secret_key`;

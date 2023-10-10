@@ -28,6 +28,30 @@ class M_stripe extends CI_Model
 
     }
 
+    function save_stripe_account_id($stripe_acct_id)
+    {
+        $data = array(
+            'stripe_acct_id' => $stripe_acct_id,
+        );
+
+        return $query =  $this->db->update('companies', $data, array('id' => $_SESSION['company_id']));
+
+    }
+
+    public function get_stripe_acct_id()
+    {
+        $this->db->where('id',$_SESSION['company_id']);
+        $query = $this->db->get('companies');
+        
+        if($row = $query->row())
+        {
+            return $row->stripe_acct_id;
+        }
+        
+        return '';
+
+    }
+
     function create_login_link($account_id)
     {
         $url = getenv('STRIPE_HOST');
