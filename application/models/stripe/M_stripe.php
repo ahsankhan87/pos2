@@ -9,12 +9,44 @@ class M_stripe extends CI_Model
         $this->load->database();
         $this->load->model('plaid/Http_verbs');
         $this->load->model('plaid/Uri_path');
-        // $this->load->model('Plaid/Schema');
+        require_once(APPPATH . 'libraries/stripe-php-12.5.0/init.php');
+        
+    }
+    function create_payment_link($account_id,$product_name,$unit_price,$quantity,$application_fee,$currency="usd")
+    {
+        try {
+            // Set your secret key. Remember to switch to your live secret key in production.
+            // See your keys here: https://dashboard.stripe.com/apikeys
+            $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
 
-        //var_dump($this->Http_verbs->get('ponto-connect'));
-        //var_dump($this->Schema->api_schema('ponto-connect'));
-        // $ponto_connect_schema = $this->Schema->get_ponto_connect();
+            $result = $stripe->checkout->sessions->create([
+                'mode' => 'payment',
+                'line_items' => [
+                    [
+                        'price_data' => [
+                            'currency' => $currency,
+                            'product_data' => [
+                                'name' => $product_name,
+                            ],
+                            'unit_amount' => $unit_price, // Amount in cents (e.g., 2000 means $20.00)
+                        ],
+                        'quantity' => $quantity,
+                    ],
+                ],
+                'payment_intent_data' => [
+                    'application_fee_amount' => $application_fee,
+                    'transfer_data' => ['destination' => $account_id],
+                ],
+                'success_url' => site_url('Success'),
+                'cancel_url' => site_url('Success/cancel'),
+            ]);
 
+            // redirect($result->url, 'refresh');
+            return $result->url;
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle any API errors that occur during the retrieval
+            return 'Error: ' . $e->getMessage();
+        }
     }
 
     function save_stripe_setting()
@@ -24,7 +56,10 @@ class M_stripe extends CI_Model
             'stripe_secret_key' => $this->input->post('stripe_secret_key'),
         );
 
-        return $query =  $this->db->update('companies', $data, array('id' => $_SESSION['company_id']));
+        $_SESSION['stripe_key'] = $this->input->post('stripe_key');
+        $_SESSION['stripe_secret_key'] = $this->input->post('stripe_secret_key');
+        
+        return $this->db->update('companies', $data, array('id' => $_SESSION['company_id']));
 
     }
 
@@ -34,7 +69,7 @@ class M_stripe extends CI_Model
             'stripe_acct_id' => $stripe_acct_id,
         );
 
-        return $query =  $this->db->update('companies', $data, array('id' => $_SESSION['company_id']));
+        return $this->db->update('companies', $data, array('id' => $_SESSION['company_id']));
 
     }
 
@@ -49,6 +84,23 @@ class M_stripe extends CI_Model
         }
         
         return '';
+
+    }
+
+    public function get_stripe_keys()
+    {
+        $data = array();
+        $this->db->where('id',$_SESSION['company_id']);
+        $query = $this->db->get('companies');
+        
+        if($row = $query->row())
+        {
+            $data['stripe_key'] =  $row->stripe_key;
+            $data['stripe_secret_key'] =  $row->stripe_secret_key;
+            
+        }
+        
+        return $data;
 
     }
 

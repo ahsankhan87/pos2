@@ -71,6 +71,7 @@
                             <th><?php echo lang('store'); ?></th>
                             <th><?php echo lang('address'); ?></th>
                             <th><?php echo lang('city'); ?></th>
+                            <th><?php echo lang('email'); ?></th>
                             <th><?php echo lang('contact'); ?></th>
                             <th><?php echo lang('action'); ?></th>
                         </tr>

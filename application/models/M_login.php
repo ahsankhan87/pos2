@@ -130,6 +130,8 @@ class M_login extends CI_Model
         $_SESSION['company_name'] = $rows['name'];
         $_SESSION['time_zone'] = $rows['time_zone'];
         $_SESSION['multi_currency'] = $rows['is_multi_currency'];
+        $_SESSION['stripe_key'] = $rows['stripe_key'];
+        $_SESSION['stripe_secret_key'] = $rows['stripe_secret_key'];
         
         //GET CURRENCY CODE AND SYMBOL
         $currency_query = $this->db->get_where('pos_currencies', array('id' => $rows['currency_id']));

@@ -18,11 +18,34 @@ class C_stripePayment extends MY_Controller
         $data['title'] = 'Stripe Payment Account';
         $data['main'] = 'Stripe Payment Account';
 
-        //GET ALL THE ACCOUTS FROM STRIPE
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-        $result = $stripe->accounts->all();
+        try {
 
-        $data['list_all'] = $result;
+            //GET ALL THE ACCOUTS FROM STRIPE
+            // $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
+            // $result = $stripe->accounts->all();
+            // $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
+
+            $result = array();
+            $stripe_acct_id = "";
+
+            if ($_SESSION['stripe_secret_key'] != "") {
+                $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
+
+                if ($stripe_acct_id != "") {
+                    $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
+                    $result =   $stripe->accounts->retrieve(
+                        $stripe_acct_id,
+                        []
+                    );
+                }
+            }
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle any API errors that occur during the retrieval
+            echo 'Error: ' . $e->getMessage();
+        }
+
+        $data['stripe_acct_id'] = $stripe_acct_id;
+        $data['account'] = $result;
 
         $this->load->view('templates/header', $data);
         $this->load->view('setting/stripe/v_stripe', $data);
@@ -31,14 +54,14 @@ class C_stripePayment extends MY_Controller
 
     public function list_all_account()
     {
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+        $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
         $data = $stripe->accounts->all(['limit' => 3]);
         return json_encode($data);
     }
 
     public function get_account_by_id($account_id)
     {
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+        $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
         $data =   $stripe->accounts->retrieve(
             $account_id,
             []
@@ -48,27 +71,32 @@ class C_stripePayment extends MY_Controller
 
     public function create_account()
     {
-        // Set your secret key. Remember to switch to your live secret key in production.
-        // See your keys here: https://dashboard.stripe.com/apikeys
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-        $result =  $stripe->accounts->create(['type' => 'express']);
+        try {
+            // Set your secret key. Remember to switch to your live secret key in production.
+            // See your keys here: https://dashboard.stripe.com/apikeys
+            $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
+            $result =  $stripe->accounts->create(['type' => 'express']);
 
-        //$data = array('success' => true, 'data'=> $stripe);
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+            //$data = array('success' => true, 'data'=> $stripe);
+            $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
 
-        //update account id in database
-        $this->M_stripe->save_stripe_account_id($result->id);
-        //
+            //update account id in database
+            $this->M_stripe->save_stripe_account_id($result->id);
+            //
 
-        $account_link = $stripe->accountLinks->create([
-            'account' => $result->id,
-            'refresh_url' => site_url('setting/C_stripePayment/create_account'),
-            'return_url' => site_url('setting/C_stripePayment'),
-            'type' => 'account_onboarding',
-        ]);
+            $account_link = $stripe->accountLinks->create([
+                'account' => $result->id,
+                'refresh_url' => site_url('setting/C_stripePayment/create_account'),
+                'return_url' => site_url('setting/C_stripePayment'),
+                'type' => 'account_onboarding',
+            ]);
 
-       
-        redirect($account_link->url, 'refresh');
+
+            redirect($account_link->url, 'refresh');
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle any API errors that occur during the retrieval
+            echo 'Error: ' . $e->getMessage();
+        }
     }
     public function return($account_id)
     {
@@ -78,44 +106,54 @@ class C_stripePayment extends MY_Controller
 
     public function update_link()
     {
-        $account_id = $this->input->post('account_id', true);
-        //$data = array('success' => true, 'data'=> $stripe);
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+        try {
+            $account_id = $this->input->post('account_id', true);
+            //$data = array('success' => true, 'data'=> $stripe);
+            $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
 
-        $account_link = $stripe->accountLinks->create([
-            'account' => $account_id,
-            'refresh_url' => 'https://example.com/reauth',
-            'return_url' => site_url('setting/C_stripePayment/'),
-            'type' => 'account_onboarding',
-        ]);
+            $account_link = $stripe->accountLinks->create([
+                'account' => $account_id,
+                'refresh_url' => site_url('setting/C_stripePayment/update_link'),
+                'return_url' => site_url('setting/C_stripePayment/'),
+                'type' => 'account_onboarding',
+            ]);
 
-        redirect($account_link->url, 'refresh');
+            redirect($account_link->url, 'refresh');
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle any API errors that occur during the retrieval
+            echo 'Error: ' . $e->getMessage();
+        }
     }
     public function delete_account($account_id)
     {
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-        $result = $stripe->accounts->delete(
-            $account_id,
-            []
-        );
-        $stripe_acct_id = "";
-        $this->M_stripe->save_stripe_account_id($stripe_acct_id);
+        try {
+            $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
+            $result = $stripe->accounts->delete(
+                $account_id,
+                []
+            );
+            $stripe_acct_id = "";
+            $this->M_stripe->save_stripe_account_id($stripe_acct_id);
 
-        // echo $result;
-        if ($result->deleted) {
-            $this->session->set_flashdata('message', 'Account ID: ' . $result->id . ' has been deleted.');
-        } else {
-            $this->session->set_flashdata('error', 'Record not deleted.');
+            // echo $result;
+            if ($result->deleted) {
+                $this->session->set_flashdata('message', 'Account ID: ' . $result->id . ' has been deleted.');
+            } else {
+                $this->session->set_flashdata('error', 'Record not deleted.');
+            }
+
+            redirect('setting/C_stripePayment/', 'refresh');
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle any API errors that occur during the retrieval
+            echo 'Error: ' . $e->getMessage();
         }
-
-        redirect('setting/C_stripePayment/', 'refresh');
     }
 
     function account_link($account_id)
     {
         // Set your secret key. Remember to switch to your live secret key in production.
         // See your keys here: https://dashboard.stripe.com/apikeys
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+        $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
 
         $data = $stripe->accountLinks->create([
             'account' => $account_id,
@@ -134,65 +172,29 @@ class C_stripePayment extends MY_Controller
         echo $this->M_stripe->save_stripe_setting();
     }
 
-    function create_payment_link($account_id = "acct_1NzkxgIpCX5iRCxv")
-    {
-        // Set your secret key. Remember to switch to your live secret key in production.
-        // See your keys here: https://dashboard.stripe.com/apikeys
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-
-          $result = $stripe->checkout->sessions->create([
-            'mode' => 'payment',
-            'line_items' => [
-              [
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => 'ABCZYX Name',
-                    ],
-                    'unit_amount' => 3000, // Amount in cents (e.g., 2000 means $20.00)
-                ],
-                'quantity' => 1,
-              ],
-            ],
-            'payment_intent_data' => [
-              'application_fee_amount' => 100,
-              'transfer_data' => ['destination' => $account_id],
-            ],
-            'success_url' => 'https://example.com/success',
-            'cancel_url' => 'https://example.com/cancel',
-          ]);
-
-        // $data = $stripe->paymentLinks->create([
-        //     'line_items' => [
-        //         [
-        //             'price' => 'price_1NzNQjIOefQXoKMIUupfIOv9',
-        //             'quantity' => 1,
-        //         ],
-        //     ],
-        //     'transfer_data' => ['destination' => $account_id],
-        // ]);
-
-        redirect($result->url, 'refresh');
-    }
-
+    
     function create_login_link($account_id)
     {
+        try {
+            $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
+            $result = $stripe->accounts->createLoginLink(
+                $account_id,
+                []
+            );
 
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-        $result = $stripe->accounts->createLoginLink(
-            $account_id,
-            []
-        );
-       
-        redirect($result->url, 'refresh');
-        //echo $result['url'];
+            redirect($result->url, 'refresh');
+            //echo $result['url'];
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle any API errors that occur during the retrieval
+            echo 'Error: ' . $e->getMessage();
+        }
     }
 
-    
+
     public function handlePayment()
     {
 
-        \Stripe\Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+        \Stripe\Stripe::setApiKey($_SESSION['stripe_secret_key']);
 
         \Stripe\Charge::create([
             "amount" => 1000,
@@ -205,5 +207,4 @@ class C_stripePayment extends MY_Controller
 
         redirect('setting/C_stripePayment/', 'refresh');
     }
-
 }

@@ -12,21 +12,24 @@
             echo '</div>';
         } ?>
         <p>
-            <?php 
-                $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
-                if($stripe_acct_id == "")
-                {
-                    echo '<a href="'.site_url("setting/C_stripePayment/create_account").'" class="btn btn-primary">Create Stripe Account</a>';
+            <?php
+            if ($_SESSION['stripe_secret_key'] != "") {
+                if ($stripe_acct_id == "") {
+                    echo '<a href="' . site_url("setting/C_stripePayment/create_account") . '" class="btn btn-primary">Create Stripe Account</a>';
                 }
+            }
             ?>
-            <a href="#" class="btn btn-warning" id="setting-stripe"><i class="fa fa-gear"></i> Setting</a>
+            <a href="#" class="btn btn-warning" id="setting-stripe"><i class="fa fa-gear"></i> Stripe API Keys Setting</a>
 
         </p>
         <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
 
         <?php
 
-        if (count($list_all)) {
+        if (count($account)) {
+            // echo '<pre>';
+            // var_dump($list_all);
+            // echo '</pre>';
         ?>
             <div class="portlet">
                 <div class="portlet-title">
@@ -55,10 +58,10 @@
 
                         <tbody class="flip-content">
                             <?php
-                            foreach ($list_all->data as $account) {
-                                //echo '<pre>';
+                            //foreach ($list_all as $account) {
+                                // echo '<pre>';
                                 // print_r($account); // Output the account object for debugging
-                                //echo '</pre>';
+                                // echo '</pre>';
 
 
                                 echo '<tr>';
@@ -81,7 +84,7 @@
                                 echo ' | <a href="' . site_url('setting/C_stripePayment/create_login_link/' . $account->id) . '" target="_blank">Login</a>';
                                 echo '</td>';
                                 echo '</tr>';
-                            }
+                            //}
                             ?>
                         </tbody>
                     </table>
@@ -110,16 +113,17 @@
                     <p id="modal_message"></p>
                 </div>
                 <div class="modal-footer">
+                    <?php $stripe_keys = $this->M_stripe->get_stripe_keys(); ?>
 
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="stripe_key">Stripe Key:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="stripe_key" id="stripe_key" value="<?php echo set_value('stripe_key') ?>" />
+                            <input type="text" class="form-control" name="stripe_key" id="stripe_key" value="<?php echo @$stripe_keys['stripe_key'] ?>" autocomplete="off" />
                         </div>
 
                         <label class="control-label col-sm-3" for="stripe_secret_key">Stripe Secret Key:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="stripe_secret_key" id="stripe_secret_key" value="<?php echo set_value('stripe_secret_key') ?>" />
+                            <input type="text" class="form-control" name="stripe_secret_key" id="stripe_secret_key" value="<?php echo @$stripe_keys['stripe_secret_key'] ?>" autocomplete="off" />
                         </div>
 
                     </div>
@@ -140,11 +144,12 @@
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
         $(".loader").hide();
-        
+
         $('#setting-stripe').on('click', function(e) {
             $('#settingModal').modal('toggle');
             $('#modal_title').html("Stipe Account Setting");
             // $('#modal_message').html(response.error_message);
+            
         });
 
         $("#setting_form").on("submit", function(e) {
@@ -172,6 +177,7 @@
                             }
 
                             console.log(data);
+                            location.reload(true);
                         }
                     });
                 } else {

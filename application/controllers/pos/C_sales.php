@@ -719,6 +719,12 @@ class C_sales extends MY_Controller
         //$company_id = $_SESSION['company_id'];
         //$Company = $this->M_companies->get_companies($company_id);
 
+        //Payment link
+        $this->load->model('stripe/M_stripe');
+        $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
+        $total_in_cents = bcmul($total, 100);
+        $paymentLink = $this->M_stripe->create_payment_link($stripe_acct_id, $invoice_no, $total_in_cents, 1, 100);
+        //
         if ($customer[0]['email'] !== '') {
             if ($Company[0]['email'] !== '') {
 
@@ -732,17 +738,18 @@ class C_sales extends MY_Controller
                 $mail->From = $Company[0]['email'];
                 $mail->FromName = $Company[0]['name'];
 
-                $mail->addAddress($customer[0]['email'], $customer[0]['first_name']);
+                $mail->addAddress($customer[0]['email'], $customer[0]['store_name']);
 
                 $mail->AddStringAttachment($pdf_invoice, $invoice_no . '.pdf', 'base64', 'application/pdf'); //Filename is optional
                 //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
 
-                $mail->Subject = $Company[0]['name'] . " ".strtoupper(lang("receipt")."#".$invoice_no);
-                $body = "<p>".lang('dear')." " . $customer[0]['first_name'] . ",</p>";
+                $mail->Subject = "Payment Request for ".strtoupper(lang("receipt")."#".$invoice_no);
+                $body = "<p>".lang('dear')." " . $customer[0]['store_name'] . ",</p>";
                 $body .= "<p><i>".lang('epdf_para_1')."</i></p>";
                 $body .= "<p>".lang('epdf_para_2')."</p>";
                 $body .= "<p>".lang('epdf_para_3')."</p>";
                 $body .= "<p>".lang('epdf_para_4')."</p>";
+                $body .= '<p>please click the following link to pay your invoice: <a href="' . $paymentLink . '">Pay Now</a></p>';
                 $body .= "<p>\n".lang('best_regards')."</p>";
                 $body .= "<p>".$Company[0]['name']."</p>";
 
@@ -757,7 +764,7 @@ class C_sales extends MY_Controller
                     $this->session->set_flashdata('error', 'Message could not be sent. ' . $mail->ErrorInfo);
                     redirect('pos/C_sales/all/', 'refresh');
                 } else {
-                    $this->session->set_flashdata('message', 'Email sent to ' . $customer[0]['first_name'] . ' successfully.');
+                    $this->session->set_flashdata('message', 'Email sent to ' . $customer[0]['store_name'] . ' successfully.');
                     redirect('pos/C_sales/all/', 'refresh');
                 }
             } else { //company email

@@ -30,6 +30,8 @@
 	<link href="<?php echo base_url(); ?>assets/css/animate.min.css" rel="stylesheet" type="text/css">
 	<!-- END THEME STYLES -->
 	<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/flags/favicon.ico">
+	<link rel="manifest" href="<?php echo base_url(); ?>assets/img/flags/site.webmanifest">
+
 
 </head>
 <!-- BEGIN BODY -->
