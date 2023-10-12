@@ -17,7 +17,7 @@ class M_stripe extends CI_Model
         try {
             // Set your secret key. Remember to switch to your live secret key in production.
             // See your keys here: https://dashboard.stripe.com/apikeys
-            $stripe = new \Stripe\StripeClient($_SESSION['stripe_secret_key']);
+            $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
 
             $result = $stripe->checkout->sessions->create([
                 'mode' => 'payment',
@@ -56,9 +56,6 @@ class M_stripe extends CI_Model
             'stripe_secret_key' => $this->input->post('stripe_secret_key'),
         );
 
-        $_SESSION['stripe_key'] = $this->input->post('stripe_key');
-        $_SESSION['stripe_secret_key'] = $this->input->post('stripe_secret_key');
-        
         return $this->db->update('companies', $data, array('id' => $_SESSION['company_id']));
 
     }

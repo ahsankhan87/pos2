@@ -13,19 +13,18 @@
         } ?>
         <p>
             <?php
-            if ($_SESSION['stripe_secret_key'] != "") {
+           
                 if ($stripe_acct_id == "") {
                     echo '<a href="' . site_url("setting/C_stripePayment/create_account") . '" class="btn btn-primary">Create Stripe Account</a>';
                 }
-            }
+           
             ?>
-            <a href="#" class="btn btn-warning" id="setting-stripe"><i class="fa fa-gear"></i> Stripe API Keys Setting</a>
-
+            <!-- <a href="#" class="btn btn-warning" id="setting-stripe"><i class="fa fa-gear"></i> Stripe API Keys Setting</a> -->
+            <a href="#" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a>
         </p>
-        <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
-
+        
         <?php
-
+        
         if (count($account)) {
             // echo '<pre>';
             // var_dump($list_all);
@@ -48,7 +47,7 @@
                     <table class="table table-striped table-condensed table-bordered flip-content" id="">
                         <thead class="flip-content">
                             <tr>
-                                <th><?php echo lang('id'); ?></th>
+                                <th><?php echo lang('account'). ' ' .lang('id'); ?></th>
                                 <th><?php echo lang('name'); ?></th>
                                 <th><?php echo lang('type'); ?></th>
                                 <th><?php echo lang('status'); ?></th>
@@ -113,17 +112,16 @@
                     <p id="modal_message"></p>
                 </div>
                 <div class="modal-footer">
-                    <?php $stripe_keys = $this->M_stripe->get_stripe_keys(); ?>
-
+                    
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="stripe_key">Stripe Key:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="stripe_key" id="stripe_key" value="<?php echo @$stripe_keys['stripe_key'] ?>" autocomplete="off" />
+                            <input type="text" class="form-control" name="stripe_key" id="stripe_key" value="" autocomplete="off" />
                         </div>
 
                         <label class="control-label col-sm-3" for="stripe_secret_key">Stripe Secret Key:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="stripe_secret_key" id="stripe_secret_key" value="<?php echo @$stripe_keys['stripe_secret_key'] ?>" autocomplete="off" />
+                            <input type="text" class="form-control" name="stripe_secret_key" id="stripe_secret_key" value="" autocomplete="off" />
                         </div>
 
                     </div>

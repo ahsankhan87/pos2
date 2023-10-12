@@ -40,9 +40,6 @@ class C_login extends CI_Controller
         unset($_SESSION['home_currency_code']);
         unset($_SESSION['home_currency_symbol']);
         unset($_SESSION['role']);
-        unset($_SESSION['stripe_key']);
-        unset($_SESSION['stripe_secret_key']);
-        
 
         //session_destroy();
         $this->cart->destroy(); //Destroy the cart if open.

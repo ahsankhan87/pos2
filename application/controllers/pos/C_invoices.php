@@ -794,7 +794,9 @@ class C_invoices extends MY_Controller
         $this->load->model('stripe/M_stripe');
         $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
         $total_in_cents = bcmul($total, 100);
-        $paymentLink = $this->M_stripe->create_payment_link($stripe_acct_id, $invoice_no, $total_in_cents, 1, 100);
+        $application_fee = ($total*3.9 /100);
+        $application_fee_in_cent = bcmul($application_fee, 100);
+        $paymentLink = $this->M_stripe->create_payment_link($stripe_acct_id, $invoice_no, $total_in_cents, 1, $application_fee_in_cent);
         //
         if ($customer[0]['email'] !== '') {
             if ($Company[0]['email'] !== '') { //company email check
@@ -820,7 +822,7 @@ class C_invoices extends MY_Controller
                 $body .= "<p>" . lang('epdf_para_2') . "</p>";
                 $body .= "<p>" . lang('epdf_para_3') . "</p>";
                 $body .= "<p>" . lang('epdf_para_4') . "</p>";
-                $body .= '<p>please click the following link to pay your invoice: <a href="' . $paymentLink . '">Pay Now</a></p>';
+                $body .= '<p>please click the following link to pay your invoice: <a href="' . $paymentLink . '" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a></p>';
                 $body .= "<p>\n" . lang('best_regards') . "</p>";
                 $body .= "<p>" . $Company[0]['name'] . "</p>";
 
