@@ -14,7 +14,7 @@
         ?>
         <p>
             <button class="btn btn-info" onclick="history.go(-1);">Back </button>
-            <button class="btn btn-success" id="load_transactions" disabled>Load Transactions</button>
+            <!-- <button class="btn btn-success" id="load_transactions" disabled>Load Transactions</button> -->
 
         </p>
         <div class="portlet">
@@ -101,68 +101,11 @@
         const start_date = '<?php echo date("Y-m-d", strtotime("-3 month")) ?>';
         const end_date = '<?php echo date("Y-m-d") ?>';
         const account_id = '<?php echo $account_id ?>';
-        var transaction_limit = 0;
+        //var transaction_limit = 0;
 
         $(".loader").hide();
-        ////
-        /////////////
-        //show transaction button when limit are not exceeded
-        get_transaction_limit();
-
-        function get_transaction_limit() {
-            $.ajax({
-                url: site_url + "companies/C_companies/get_transaction_limit",
-                type: 'GET',
-                // dataType: "JSON",
-                //cache: true,
-                success: function(data) {
-                    console.log(data);
-                    transaction_limit = data;
-                    if (data < 2) {
-                        $('#load_transactions').prop('disabled', false);
-                    } else {
-                        $('#load_transactions').prop('disabled', true);
-                    }
-                    $('#load_transactions').text('Load Transaction ('+transaction_limit+')');
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-        }
-
-
-        $('#load_transactions').on('click', function(e) {
-            $(".loader").show();
-            get_transaction_list(account_id);
-            
-        });
-
-        function update_transaction_limit(transaction_limit) {
-            var result = (parseInt(transaction_limit) + parseInt(1));
-
-            //UPDATE TRANSACTION LIMIT FIELD
-            $.ajax({
-                url: site_url + "companies/C_companies/update_transaction_limit",
-                type: 'POST',
-                data: {
-                    limit: result
-                },
-                dataType: "JSON",
-                //cache: true,
-                success: function(data) {
-                    console.log("transactions update " + data);
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-            //////
-            get_transaction_limit();
-        }
-        ///////////////
+       
+        get_transaction_list(account_id);
         ////////////////////////
         //GET get_ponto_list_accounts
         function get_transaction_list(account_id) {
@@ -216,7 +159,7 @@
                         $(".loader").hide();
                         $('.create_table').html(div);
                         $(".grand_total").html(grand_total.toFixed(2));
-                        update_transaction_limit(transaction_limit);
+                        //update_transaction_limit(transaction_limit);
 
                         /////////////
                         //Accept and do entry of the transaction
@@ -350,6 +293,65 @@
             e.preventDefault();
         });
 
+        //// Transaction LIMIT Button code
+        /////////////
+        //show transaction button when limit are not exceeded
+        // get_transaction_limit();
+
+        // function get_transaction_limit() {
+        //     $.ajax({
+        //         url: site_url + "companies/C_companies/get_transaction_limit",
+        //         type: 'GET',
+        //         // dataType: "JSON",
+        //         //cache: true,
+        //         success: function(data) {
+        //             console.log(data);
+        //             transaction_limit = data;
+        //             if (data < 2) {
+        //                 $('#load_transactions').prop('disabled', false);
+        //             } else {
+        //                 $('#load_transactions').prop('disabled', true);
+        //             }
+        //             $('#load_transactions').text('Load Transaction ('+transaction_limit+')');
+        //         },
+        //         error: function(xhr, ajaxOptions, thrownError) {
+        //             console.log(xhr.status);
+        //             console.log(thrownError);
+        //         }
+        //     });
+        // }
+
+
+        // $('#load_transactions').on('click', function(e) {
+        //     $(".loader").show();
+        //     get_transaction_list(account_id);
+            
+        // });
+
+        // function update_transaction_limit(transaction_limit) {
+        //     var result = (parseInt(transaction_limit) + parseInt(1));
+
+        //     //UPDATE TRANSACTION LIMIT FIELD
+        //     $.ajax({
+        //         url: site_url + "companies/C_companies/update_transaction_limit",
+        //         type: 'POST',
+        //         data: {
+        //             limit: result
+        //         },
+        //         dataType: "JSON",
+        //         //cache: true,
+        //         success: function(data) {
+        //             console.log("transactions update " + data);
+        //         },
+        //         error: function(xhr, ajaxOptions, thrownError) {
+        //             console.log(xhr.status);
+        //             console.log(thrownError);
+        //         }
+        //     });
+        //     //////
+        //     get_transaction_limit();
+        // }
+        ///////////////
     });
 </script>
 <!-- Accept Payment Modal -->
