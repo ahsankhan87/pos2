@@ -232,27 +232,11 @@ class M_banking extends CI_Model{
     }
     
 
-    function deletebank($id,$op_balance_dr,$op_balance_cr,$bank_acc_code)
+    function deletebank($id)
     {
-        
-        $bank_account = $this->M_groups->get_groups($bank_acc_code,$_SESSION['company_id']);
-           $bank_dr_balance = abs($bank_account[0]['op_balance_dr']);
-           $bank_cr_balance = abs($bank_account[0]['op_balance_cr']);
-                       
-                       
-                       
-       if($bank_dr_balance !== 0 || $bank_cr_balance !== 0)
-       {
-          $dr_balance = ($bank_dr_balance-$op_balance_dr);
-           $cr_balance = ($bank_cr_balance-$op_balance_cr);
-           
-           $this->M_groups->editGroupOPBalance($bank_acc_code,$dr_balance,$cr_balance);
-       }
-                      
-       
         $query = $this->db->delete('pos_banking',array('id'=>$id));
         
-        //for logging
+            //for logging
             $msg = 'Bank id: '.$id;
             $this->M_logs->add_log($msg,"Banking","Deleted","POS");
             // end logging

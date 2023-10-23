@@ -256,8 +256,6 @@
         //GET 
         // is_transaction_exist('jdljdkxpB1Cde3Bw6GGJhVjvVAp4zzuv9VJ9m');
 
-
-
         $("#payment_entry_form").on("submit", function(e) {
             var formValues = $(this).serialize();
             //console.log(formValues);
