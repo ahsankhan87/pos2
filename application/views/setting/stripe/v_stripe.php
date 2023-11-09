@@ -20,7 +20,7 @@
            
             ?>
             <!-- <a href="#" class="btn btn-warning" id="setting-stripe"><i class="fa fa-gear"></i> Stripe API Keys Setting</a> -->
-            <a href="#" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a>
+            <!-- <a href="#" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a> -->
         </p>
         
         <?php

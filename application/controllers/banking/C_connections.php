@@ -30,7 +30,7 @@ class C_connections extends MY_Controller
         $data['main'] = 'All accounts list';
         // $data['institution_id'] = $institution_id;
 
-        
+
         $this->load->view('templates/header', $data);
         $this->load->view('banking/connections/v_all', $data);
         $this->load->view('templates/footer');
@@ -52,11 +52,11 @@ class C_connections extends MY_Controller
     public function bank_entry_transaction()
     {
         $total_amount = 0;
-        
+
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
             $this->db->trans_start();
-            
+
             //GET PREVIOISE INVOICE NO  
             @$prev_invoice_no = $this->M_entries->getMAXEntryInvoiceNo('JV');
             $number = (int) substr($prev_invoice_no, 2) + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
@@ -68,7 +68,7 @@ class C_connections extends MY_Controller
             $company_id = $_SESSION['company_id'];
             $sale_date = $this->input->post("date");
             $emp_id = ''; //$this->input->post("emp_id");
-            $narration = 'Payee: '.($this->input->post("payee") == '' ? '' : $this->input->post("payee"));
+            $narration = 'Payee: ' . ($this->input->post("payee") == '' ? '' : $this->input->post("payee"));
             $deposit_to_acc_code = $this->input->post("account_id");
             $acc_code_2 = $this->input->post("account_id_2");
             $total_amount = $this->input->post("payment_amount");
@@ -144,9 +144,32 @@ class C_connections extends MY_Controller
     {
         $access_token = $this->input->post('access_token');
         $item_id = $this->input->post('item_id');
-        //update access_token in db
+        // update access_token in db
         $this->M_companies->update_access_token($_SESSION['company_id'], $access_token, $item_id);
-        // ///
+        /////
+
+        $this->insert_bank_details();
+    }
+
+    public function insert_bank_details()
+    {
+        $plaidResponse = json_decode($this->Plaid->get_accounts(), true);
+
+        foreach ($plaidResponse['accounts'] as $values) {
+            if (!$this->Plaid->is_account_exist($values['account_id'])) {
+                $bankData = array(
+                    'user_id' => $_SESSION['user_id'],
+                    'company_id' => $_SESSION['company_id'],
+                    //'institution_name' => $plaidResponse['institution']['name'],
+                    'account_id' => $values['account_id'],
+                    'account_name' => $values['name'],
+                    'account_type' => $values['type'],
+                    'subtype' => $values['subtype']
+                );
+
+                $this->Plaid->insert_bank_details($bankData);
+            }
+        }
     }
 
     function get_institutions()
@@ -157,8 +180,17 @@ class C_connections extends MY_Controller
 
     function get_accounts()
     {
-        $result = $this->Plaid->get_accounts();
-        echo $result;
+        //$plaidResponse = $this->Plaid->get_accounts();
+        // echo $plaidResponse;
+
+        echo json_encode($this->Plaid->get_user_banks());
+    }
+
+    function get_account_balance($account_id)
+    {
+        $bankData = array($account_id);
+        $plaidResponse = json_decode($this->Plaid->get_account_balance($bankData), true);
+        echo $plaidResponse['accounts'][0]['balances']["current"];
     }
 
     function transaction_sync()
@@ -170,7 +202,7 @@ class C_connections extends MY_Controller
     function get_transactions($start_date, $end_date)
     {
         echo $this->Plaid->get_transactions($start_date, $end_date);
-        
+
         // $trans_limit = $this->M_companies->get_transaction_limit();
         // if($trans_limit < 2)
         // {
@@ -182,7 +214,7 @@ class C_connections extends MY_Controller
         //     ];
         //     echo json_encode($error);
         // }
-        
+
     }
 
     function transaction_refresh()

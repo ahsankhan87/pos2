@@ -2609,3 +2609,5 @@ ALTER TABLE `companies` ADD `transactions_limit` INT(1) NOT NULL DEFAULT '0' AFT
 
 ALTER TABLE `companies` ADD `stripe_key` VARCHAR(255) NULL AFTER `transactions_limit`, ADD `stripe_secret_key` VARCHAR(255) NULL AFTER `stripe_key`;
 ALTER TABLE `companies` ADD `stripe_acct_id` VARCHAR(200) NULL AFTER `stripe_secret_key`;
+
+CREATE TABLE pos_plaid_banks ( id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, company_id INT, institution_name VARCHAR(255), account_id VARCHAR(255), account_name VARCHAR(255), account_type VARCHAR(50), balance DECIMAL(15, 2), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )

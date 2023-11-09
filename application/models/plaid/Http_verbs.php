@@ -71,10 +71,10 @@ class Http_verbs extends CI_Model
         curl_close($curl);
 
         if ($err) {
-            echo $err;
+            return $err;
             // echo null;
         } else {
-            echo $response;
+            return $response;
         }
     }
 

@@ -36,7 +36,7 @@
                             <th><?php echo lang('name') ?></th>
                             <th><?php echo lang('type') ?></th>
                             <th>Sub Type</th>
-                            <th class="text-right"><?php echo lang('amount') ?></th>
+                            <!-- <th class="text-right"><?php echo lang('balance') ?></th> -->
                             <th class="hidden-print"><?php echo lang('action') ?></th>
                         </tr>
                     </thead>
@@ -113,13 +113,14 @@
 
                     })
                     .done(function(data) {
-                        //console.log(data);
-                        //console.log('access_token: ' + data.access_token);
                         var json_data = JSON.parse(data);
+                        // console.log(json_data);
+                        // console.log('access_token: ' + json_data.access_token);
                         //Store access token into database
                         $.post(site_url + 'banking/C_connections/store_access_token/', {
                             access_token: json_data.access_token,
-                            item_id: json_data.item_id
+                            item_id: json_data.item_id,
+
                         });
                         ////////////
 
@@ -169,15 +170,24 @@
 
                     } else {
                         let i = 0;
-                        $.each(response.accounts, function(index, value) {
+                        $.each(response, function(index, value) {
 
+                            // var account_balance = 0;
+                            // $.ajax({
+                            //     url: site_url + 'banking/C_connections/get_account_balance/' + value.account_id,
+                            //     type: 'GET',
+                            //     dataType: 'json', // added data type
+                            //     success: function(response) {
+                            //         account_balance = response;
+                            //     }
+                            // });
 
-                            grand_total += value.balances.current;
+                            grand_total += value.balance;
                             var div = '<tr>' +
-                                '<td>' + value.name + '</td>' +
-                                '<td>' + value.type + '</td>' +
+                                '<td>' + value.account_name + '</td>' +
+                                '<td>' + value.account_type + '</td>' +
                                 '<td>' + value.subtype + '</td>' +
-                                '<td class="text-right">' + value.balances.current + value.balances.iso_currency_code + '</td>' +
+                                // '<td class="text-right">' + account_balance + '</td>' +
                                 '<td><a href="' + site_url + 'banking/C_connections/get_transaction_sync/' + value.account_id + '" class="btn btn-primary btn-sm">Transaction</a></td>' +
                                 '</tr>';
 
