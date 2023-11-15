@@ -74,15 +74,15 @@
 
                                 echo '<td>';
                                 //echo  anchor(site_url('up_bank_images/upload_images/'.$list['id']),' upload Images');
-                                ?>
+                            ?>
                                 <?php echo anchor('banking/C_banking/edit/' . $list['id'], '<i class="fa fa-pencil-square-o fa-fw"></i> |', 'title="Edit"'); ?>
                                 <a href="<?php echo site_url('banking/C_banking/delete/' . $list['id']) ?>" title="Delete" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash-o fa-fw"></i></a>
-   
-                           <?php 
-                                 echo '</td>';
-                                 echo '<td><a href="' . site_url('banking/C_banking/bank_transactions/' . $list['id']) . '">Transactions</a></td>';
 
-                                 echo '</tr>';
+                            <?php
+                                echo '</td>';
+                                echo '<td><a href="' . site_url('banking/C_banking/bank_transactions/' . $list['id']) . '/' . $list['bank_acc_code'] . '">Transactions</a></td>';
+
+                                echo '</tr>';
                             }
                             ?>
                         </tbody>
@@ -95,12 +95,12 @@
                             </tr>
                         </tfoot> -->
                     </table>
-                      
+
                 </div>
                 <!-- /.portlet body -->
             </div>
             <!-- /.portlet -->
-        <?php 
+        <?php
         }
         ?>
     </div>

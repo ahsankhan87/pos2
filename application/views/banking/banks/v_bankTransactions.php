@@ -64,6 +64,7 @@
         const module = '<?php echo $url1 = $this->uri->segment(2); ?>/';
         const site_url = '<?php echo site_url($langs); ?>';
         const path = '<?php echo base_url(); ?>';
+        const bank_acc_code = <?php echo str_replace("#", "", $bank_acc_code); ?>;
 
         $("#importForm").submit(function(event) {
             // Stop form from submitting normally
@@ -121,13 +122,15 @@
                     //Accept and do entry of the transaction
                     $('.payment_entry').on('click', function(e) {
                         var curId = this.id.split("_")[1];
+                        //console.log($("#date_" + curId).val());
 
-                        accountsDDL();
+                        accountsDDL(bank_acc_code);
+                        accountsDDL_2();
                         // $('#account_id').select2();
                         // $('#account_id_2').select2();
                         $('#paymentEntryModal').modal('toggle');
                         $('#payment_entry_title').html("Accept Transaction ");
-                        //$('#date').val($("#date_" + curId).val());
+                        $('#date').val($("#date_" + curId).val());
                         $('#amount').val($("#amount_" + curId).val());
                         $('#description').val($("#description_" + curId).val());
 
@@ -159,7 +162,7 @@
         accountsDDL();
         ////////////////////////
         //GET Accounts DROPDOWN LIST
-        function accountsDDL(index = 0) {
+        function accountsDDL(account_code = 0) {
 
             let accounts_ddl = '';
             var account_type = ['liability', 'equity', 'cos', 'revenue', 'expense', 'asset'];
@@ -178,11 +181,45 @@
 
                     $.each(data, function(index, value) {
 
-                        accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
+                        accounts_ddl += '<option value="' + value.account_code + '" ' + (value.account_code == account_code ? "selected" : "") + '>' + value.title + '</option>';
 
                     });
 
                     $('#account_id').html(accounts_ddl);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ///////////////////
+        ////////////////////////
+        //GET Accounts DROPDOWN LIST
+        function accountsDDL_2(account_code = 0) {
+
+            let accounts_ddl = '';
+            var account_type = ['liability', 'equity', 'cos', 'revenue', 'expense', 'asset'];
+            $.ajax({
+                url: site_url + "/accounts/C_groups/get_detail_accounts_by_type",
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    account_types: account_type
+                },
+                cache: true,
+                success: function(data) {
+                    // console.log(data);
+                    let i = 0;
+                    accounts_ddl += '<option value="0">Select Account</option>';
+
+                    $.each(data, function(index, value) {
+
+                        accounts_ddl += '<option value="' + value.account_code + '" ' + (value.account_code == account_code ? "selected" : "") + '>' + value.title + '</option>';
+
+                    });
+
                     $('#account_id_2').html(accounts_ddl);
 
                 },
@@ -246,13 +283,13 @@
                     <div class="container-fluid">
                         <div class="row">
                             <p>
-                            
+
                                 <label for="import_file"><?php echo 'Upload csv file'; ?>:</label>
-                                <div>
-                                    <input type="file" class="form-control import_file" name="import_file" id="import_file" required="">
-                                </div>
-                                <p><a href="<?php echo base_url('images/bank_transactions/ledgersfi-sample-bank.csv') ?>">Download Sample file</a></p>
-                            
+                            <div>
+                                <input type="file" class="form-control import_file" name="import_file" id="import_file" required="">
+                            </div>
+                            <p><a href="<?php echo base_url('images/bank_transactions/ledgersfi-sample-bank.csv') ?>">Download Sample file</a></p>
+
                             </p>
                         </div>
                     </div>
@@ -296,7 +333,7 @@
                                 <td width="25%"><select class="form-control " id="account_id_2" name="account_id_2"></select></td>
                                 <td class=""><input type="text" readonly class="form-control" id="amount" name="amount" autocomplete="off"></td>
                                 <td class=""><input type="text" readonly class="form-control" id="description" name="description" autocomplete="off">
-                                <input type="hidden" readonly class="form-control" id="bank_id" name="bank_id" value="<?php echo $bank_id; ?>" autocomplete="off">
+                                    <input type="hidden" readonly class="form-control" id="bank_id" name="bank_id" value="<?php echo $bank_id; ?>" autocomplete="off">
                                 </td>
                             </tr>
                         </tbody>

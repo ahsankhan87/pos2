@@ -18,22 +18,22 @@
                     <div class="form-group">
 
                         <select class="form-control" id="report_period" name="report_period">
-                            <option value="custom"><?php echo lang('custom');?></option>
-                            <option value="this_month"><?php echo lang('this_month');?></option>
-                            <option value="last_month"><?php echo lang('last_month');?></option>
-                            <option value="last_week"><?php echo lang('last_week');?></option>
-                            <option value="last_year"><?php echo lang('last_year');?></option>
-                            <option value="this_year"><?php echo lang('this_year');?></option>
+                            <option value="custom"><?php echo lang('custom'); ?></option>
+                            <option value="this_month"><?php echo lang('this_month'); ?></option>
+                            <option value="last_month"><?php echo lang('last_month'); ?></option>
+                            <option value="last_week"><?php echo lang('last_week'); ?></option>
+                            <option value="last_year"><?php echo lang('last_year'); ?></option>
+                            <option value="this_year"><?php echo lang('this_year'); ?></option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="exampleInputEmail2">Display</label>
                         <select class="form-control" id="report_display" name="report_display">
                             <option value="">Select</option>
                             <option value="by_month">By month</option>
                             
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="exampleInputEmail2"><?php echo lang('from') . ' ' . lang('date') ?></label>
                         <input type="date" class="form-control" name="from_date" id="from_date" value="<?php echo date("Y-m-d"); ?>" placeholder="From Date">

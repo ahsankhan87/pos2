@@ -42,7 +42,7 @@
                     </thead>
                     <tbody class="create_table">
                     </tbody>
-                    <tfoot>
+                    <!-- <tfoot>
                         <tr>
                             <th></th>
                             <th></th>
@@ -50,7 +50,7 @@
                             <th class="grand_total text-right"></th>
                             <th></th>
                         </tr>
-                    </tfoot>
+                    </tfoot> -->
                 </table>
                 <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
 
@@ -188,7 +188,7 @@
                                 '<td>' + value.account_type + '</td>' +
                                 '<td>' + value.subtype + '</td>' +
                                 // '<td class="text-right">' + account_balance + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_transaction_sync/' + value.account_id + '" class="btn btn-primary btn-sm">Transaction</a></td>' +
+                                '<td><a href="' + site_url + 'banking/C_connections/get_transaction_sync/' + value.account_id + '" class="btn btn-success btn-sm">Transaction</a></td>' +
                                 '</tr>';
 
                             $('.create_table').append(div);

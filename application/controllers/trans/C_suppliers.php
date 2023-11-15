@@ -62,9 +62,9 @@ class C_suppliers extends MY_Controller
 
         echo json_encode($data['suppliers']);
     }
-    public function get_activeSuppliers()
+    public function get_activeSuppliers($id = FALSE)
     {
-        $data['suppliers'] = $this->M_suppliers->get_activeSuppliers();
+        $data['suppliers'] = $this->M_suppliers->get_activeSuppliers($id);
 
         echo json_encode($data['suppliers']);
     }
