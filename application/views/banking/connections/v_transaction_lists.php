@@ -104,7 +104,7 @@
         //var transaction_limit = 0;
 
         $(".loader").hide();
-       
+
         get_transaction_list(account_id);
         ////////////////////////
         //GET get_ponto_list_accounts
@@ -323,7 +323,7 @@
         // $('#load_transactions').on('click', function(e) {
         //     $(".loader").show();
         //     get_transaction_list(account_id);
-            
+
         // });
 
         // function update_transaction_limit(transaction_limit) {
