@@ -8,6 +8,7 @@ class C_connections extends MY_Controller
         parent::__construct();
         $this->lang->load('index');
         $this->load->model('plaid/Plaid');
+        $this->load->model('plaid/M_institution');
     }
 
     public function index()
@@ -17,22 +18,39 @@ class C_connections extends MY_Controller
         $data['title'] = lang('bank');
         $data['main'] = lang('bank');
 
+
         $this->load->view('templates/header', $data);
         $this->load->view('banking/connections/v_institutions', $data);
         $this->load->view('templates/footer');
     }
 
-    public function all()
+    function get_items_json()
+    {
+        $result = json_encode($this->M_institution->retrieveItems());
+        echo $result;
+    }
+
+    function retrieveAccountsByItemID_json($item_id)
+    {
+        $result = json_encode($this->M_institution->retrieveAccountsByItemID($item_id));
+        echo $result;
+    }
+    function retrieveTransactionsByAccountID($account_id)
+    {
+        $result = json_encode($this->M_institution->retrieveTransactionsByAccountID($account_id));
+        echo $result;
+    }
+    public function all($item_id)
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
         $data['title'] = 'All accounts list';
         $data['main'] = 'All accounts list';
-        // $data['institution_id'] = $institution_id;
+        $data['item_id'] = $item_id;
 
 
         $this->load->view('templates/header', $data);
-        $this->load->view('banking/connections/v_all', $data);
+        $this->load->view('banking/connections/v_allAccounts', $data);
         $this->load->view('templates/footer');
     }
 
@@ -113,6 +131,11 @@ class C_connections extends MY_Controller
             );
             $this->db->insert('acc_entry_items', $data);
 
+            $data1 = array(
+                'posted' => 1,
+            );
+            $this->db->update('pos_plaid_transactions', $data1, array('plaid_transaction_id' =>  $plaid_trans_id, 'company_id' => $_SESSION['company_id']));
+
             //for logging
             $msg = 'invoice no ' . $new_invoice_no;
             $this->M_logs->add_log($msg, "Accept bank transaction", "created", "Banking");
@@ -144,46 +167,148 @@ class C_connections extends MY_Controller
     {
         $access_token = $this->input->post('access_token');
         $item_id = $this->input->post('item_id');
-        // update access_token in db
-        $this->M_companies->update_access_token($_SESSION['company_id'], $access_token, $item_id);
-        /////
 
-        $this->insert_bank_details();
+        //insert plaid items, accounts and trasactions data into database
+        $this->insert_plaid_items($access_token);
+        $this->insert_plaid_transactions_month($access_token);
+        $this->insert_plaid_accounts($item_id, $access_token);
     }
 
-    public function insert_bank_details()
+    public function insert_plaid_items($plaid_access_token)
     {
-        $plaidResponse = json_decode($this->Plaid->get_accounts(), true);
+        $plaidResponse = json_decode($this->Plaid->get_plaid_items($plaid_access_token), true);
 
-        foreach ($plaidResponse['accounts'] as $values) {
-            if (!$this->Plaid->is_account_exist($values['account_id'])) {
-                $bankData = array(
-                    'user_id' => $_SESSION['user_id'],
-                    'company_id' => $_SESSION['company_id'],
-                    //'institution_name' => $plaidResponse['institution']['name'],
-                    'account_id' => $values['account_id'],
-                    'account_name' => $values['name'],
-                    'account_type' => $values['type'],
-                    'subtype' => $values['subtype']
-                );
+        //when get plaid item detail then get institution name from plaid via institution id
+        $institution_response = json_decode($this->Plaid->get_institution_by_id($plaidResponse['item']['institution_id']), true);
 
-                $this->Plaid->insert_bank_details($bankData);
-            }
+        // echo '<pre>';
+        // echo var_dump($plaidResponse);
+        // echo '</pre>';
+        // return;
+
+
+        if (!$this->M_institution->is_ItemByPlaidInstitutionId($plaidResponse['item']['institution_id'])) {
+            $bankData = array(
+                'user_id' => $_SESSION['user_id'],
+                'company_id' => $_SESSION['company_id'],
+                'plaid_access_token' => $plaid_access_token,
+                'plaid_institution_id' => $plaidResponse['item']['institution_id'],
+                'institution_name' => $institution_response['institution']["name"],
+                'plaid_item_id' => $plaidResponse['item']['item_id'],
+                // 'status' => $values['status']
+            );
+
+            $this->M_institution->insert_plaid_items($bankData);
         }
     }
 
-    function get_institutions()
+    public function insert_plaid_accounts($item_id, $plaid_access_token)
     {
-        $result = $this->Plaid->get_institutions();
+        $plaidResponse = json_decode($this->Plaid->get_accounts($plaid_access_token), true);
+        // echo '<pre>';
+        // echo var_dump($plaidResponse['accounts']);
+        // echo '</pre>';
+        //return;
+
+        foreach ($plaidResponse['accounts'] as $values) {
+            if (!$this->M_institution->is_account_exist($values['account_id'])) {
+                $bankData = array(
+                    'user_id' => $_SESSION['user_id'],
+                    'company_id' => $_SESSION['company_id'],
+                    'item_id' => $item_id,
+                    'plaid_account_id' => $values['account_id'],
+                    'name' => $values['name'],
+                    'mask' => $values['mask'],
+                    'official_name' => $values['official_name'],
+                    'current_balance' => $values['balances']['current'],
+                    'available_balance' => $values['balances']['available'],
+                    'iso_currency_code' => $values["balances"]['iso_currency_code'],
+                    'unofficial_currency_code' => $values["balances"]['unofficial_currency_code'],
+                    'type' => $values['type'],
+                    'subtype' => $values['subtype']
+                );
+
+                $this->M_institution->insert_plaid_accounts($bankData);
+            }
+        }
+    }
+    public function insert_plaid_transactions_month($plaid_access_token, $month = "-1 month", $refresh = false)
+    {
+        $start_date = date("Y-m-d", strtotime($month));
+        $end_date = date("Y-m-d");
+
+        $plaidResponse = json_decode($this->Plaid->get_transactions($start_date, $end_date, $plaid_access_token), true);
+
+
+        foreach ($plaidResponse['transactions'] as $values) {
+            if (!$this->M_institution->is_plaid_transaction_exist($values['transaction_id'])) {
+                $bankData = array(
+                    // 'user_id' => $_SESSION['user_id'],
+                    'company_id' => $_SESSION['company_id'],
+                    'plaid_transaction_id' => $values['transaction_id'],
+                    'account_id' => $values['account_id'],
+                    'plaid_category_id' => $values['category_id'],
+                    'category' => json_encode($values['category']),
+                    // 'subcategory' => $values['subcategory'],
+                    'name' => $values['name'],
+                    'amount' => $values['amount'],
+                    'iso_currency_code' => $values['iso_currency_code'],
+                    'unofficial_currency_code' => $values['unofficial_currency_code'],
+                    'type' => $values['transaction_type'],
+                    'pending' => $values['pending'],
+                    'account_owner' => $values['account_owner'],
+                    'date' => $values['date'],
+
+                );
+
+                $this->M_institution->insert_plaid_transactions($bankData);
+            }
+        }
+
+        // echo '<pre>';
+        // echo var_dump($plaid_access_token);
+        // echo var_dump($plaidResponse);
+        // echo '</pre>';
+        //echo $plaidResponse['transactions'][0]['account_id'];
+    }
+
+    function plaid_transaction_refresh($plaid_item_id)
+    {
+        $access_token = $this->M_institution->retrieveItems($plaid_item_id)[0]['plaid_access_token'];
+
+        $this->insert_plaid_transactions_month($access_token);
+        //redirect('banking/C_connections/get_transaction_sync/' . $plaid_item_id);
+    }
+
+    function remove_plaid_item($plaid_item_id)
+    {
+        $access_token = $this->M_institution->retrieveItems($plaid_item_id)[0]['plaid_access_token'];
+
+        $result = $this->Plaid->get_plaid_item_remove($access_token);
+        if (strlen($result) > 0) {
+            $this->delete_plaid_item($plaid_item_id);
+            redirect('banking/C_connections', 'refresh');
+        }
         echo $result;
     }
 
-    function get_accounts()
+    function get_institution_by_id($institution_id)
+    {
+        $result = $this->Plaid->get_institution_by_id($institution_id);
+        echo $result;
+    }
+
+    function get_plaid_items($token)
+    {
+        $result = $this->Plaid->get_plaid_items($token);
+        echo $result;
+    }
+    function retrieveAccountsByItemID($item_id)
     {
         //$plaidResponse = $this->Plaid->get_accounts();
         // echo $plaidResponse;
 
-        echo json_encode($this->Plaid->get_user_banks());
+        echo json_encode($this->M_institution->retrieveAccountsByItemID($item_id));
     }
 
     function get_account_balance($account_id)
@@ -202,19 +327,6 @@ class C_connections extends MY_Controller
     function get_transactions($start_date, $end_date)
     {
         echo $this->Plaid->get_transactions($start_date, $end_date);
-
-        // $trans_limit = $this->M_companies->get_transaction_limit();
-        // if($trans_limit < 2)
-        // {
-        //     echo $this->Plaid->get_transactions($start_date, $end_date);
-        // }else{
-        //     $error = [
-        //         "error_code"=>"Transaction Limit",
-        //         "error_message"=> "Transaction limit exceeds 2 times"
-        //     ];
-        //     echo json_encode($error);
-        // }
-
     }
 
     function transaction_refresh()
@@ -231,4 +343,8 @@ class C_connections extends MY_Controller
         echo $result;
     }
     //////////////////////
+    function delete_plaid_item($plaid_item_id)
+    {
+        $this->M_institution->delete_plaid_items($plaid_item_id);
+    }
 }

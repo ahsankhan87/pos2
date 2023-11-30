@@ -2611,3 +2611,47 @@ ALTER TABLE `companies` ADD `stripe_key` VARCHAR(255) NULL AFTER `transactions_l
 ALTER TABLE `companies` ADD `stripe_acct_id` VARCHAR(200) NULL AFTER `stripe_secret_key`;
 
 CREATE TABLE pos_plaid_banks ( id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, company_id INT, institution_name VARCHAR(255), account_id VARCHAR(255), account_name VARCHAR(255), account_type VARCHAR(50), balance DECIMAL(15, 2), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )
+CREATE TABLE pos_plaid_accounts
+(
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `item_id` varchar (255) UNIQUE NOT NULL,
+  `company_id` int NOT null,
+  `plaid_account_id` varchar(255) UNIQUE NOT NULL,
+  `name` text NOT NULL,
+  `mask` text NOT NULL,
+  `official_name` text,
+  `current_balance` decimal(28,10),
+  `available_balance` decimal(28,10),
+  `iso_currency_code` text,
+  `unofficial_currency_code` text,
+  `type` text NOT NULL,
+  `subtype` text NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime
+);
+CREATE TABLE pos_plaid_transactions
+(
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `account_id` varchar (255) NOT NULL,
+  `company_id` integer not null,
+  `plaid_transaction_id` varchar (255) UNIQUE NOT NULL,
+  `plaid_category_id` text,
+  `category` text,
+  `subcategory` text,
+  `type` text NOT NULL,
+  `name` text NOT NULL,
+  `amount` numeric(28,10) NOT NULL,
+  `iso_currency_code` text,
+  `unofficial_currency_code` text,
+  `date` date NOT NULL,
+  `pending` boolean NOT NULL,
+  `account_owner` text,
+  `created_at` datetime default CURRENT_TIMESTAMP,
+  `updated_at` datetime
+);
+ALTER TABLE `pos_plaid_accounts` ADD `user_id` INT(11) NOT NULL AFTER `id`;
+
+CREATE TABLE pos_plaid_items ( `id` SERIAL PRIMARY KEY, `user_id` int null, `company_id` int null, `plaid_access_token` varchar (255) UNIQUE NOT NULL, `plaid_item_id` varchar (255) UNIQUE NOT NULL, `plaid_institution_id` varchar (255) NOT NULL, `status` text NOT NULL, `created_at` datetime DEFAULT CURRENT_TIMESTAMP, `updated_at` datetime, `transactions_cursor` text );
+ALTER TABLE `pos_plaid_items` CHANGE `status` `status` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+ALTER TABLE `pos_plaid_items` ADD `institution_name` TEXT NULL AFTER `transactions_cursor`;
+ALTER TABLE `pos_plaid_transactions` ADD `posted` TINYINT(1) NOT NULL DEFAULT '0' AFTER `updated_at`;

@@ -13,7 +13,7 @@
         }
         ?>
         <p>
-            <button class="btn btn-primary" id="link-button">Link Account</button>
+            <!-- <button class="btn btn-primary" id="link-button">Link Account</button> -->
         </p>
 
         <div class="portlet">
@@ -92,6 +92,7 @@
     (async function($) {
         const site_url = '<?php echo site_url($langs); ?>/';
         const path = '<?php echo base_url(); ?>';
+        const plaid_item_id = '<?php echo @$item_id; ?>';
 
         const get_link_token = JSON.parse(await $.post(site_url + 'banking/C_connections/create_link_token')).link_token;
         var handler = Plaid.create({
@@ -124,7 +125,7 @@
                         });
                         ////////////
 
-                        get_list_accounts();
+                        get_list_accounts(json_data.item_id);
 
                     });
 
@@ -149,13 +150,13 @@
 
         $(".loader").show();
         ////
-        get_list_accounts();
+        get_list_accounts(plaid_item_id);
         ////////////////////////
         //GET get_ponto_list_accounts
-        function get_list_accounts() {
+        function get_list_accounts(plaid_item_id) {
 
             $.ajax({
-                url: site_url + "banking/C_connections/get_accounts",
+                url: site_url + "banking/C_connections/retrieveAccountsByItemID/" + plaid_item_id,
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(response) {
@@ -184,11 +185,11 @@
 
                             grand_total += value.balance;
                             var div = '<tr>' +
-                                '<td>' + value.account_name + '</td>' +
-                                '<td>' + value.account_type + '</td>' +
+                                '<td>' + value.name + '</td>' +
+                                '<td>' + value.type + '</td>' +
                                 '<td>' + value.subtype + '</td>' +
                                 // '<td class="text-right">' + account_balance + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_transaction_sync/' + value.account_id + '" class="btn btn-success btn-sm">Transaction</a></td>' +
+                                '<td><a href="' + site_url + 'banking/C_connections/get_transaction_sync/' + value.plaid_account_id + '" class="btn btn-success btn-sm">Transaction</a></td>' +
                                 '</tr>';
 
                             $('.create_table').append(div);

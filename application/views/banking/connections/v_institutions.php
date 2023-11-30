@@ -11,8 +11,9 @@
             echo $this->session->flashdata('error');
             echo '</div>';
         }
+
         ?>
-        
+
         <button class="btn btn-success" id="link-button">Link Account</button>
         <div class="portlet">
             <div class="portlet-title">
@@ -38,9 +39,9 @@
                     </thead>
                     <tbody class="create_table">
                     </tbody>
-                    
+
                 </table>
-                <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif")?>" alt="loader"></div>
+                <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
 
             </div>
         </div>
@@ -106,9 +107,12 @@
                         var json_data = JSON.parse(data);
                         //Store access token into database
                         $.post(site_url + 'banking/C_connections/store_access_token/', {
-                            access_token: json_data.access_token, item_id:json_data.item_id });
+                            access_token: json_data.access_token,
+                            item_id: json_data.item_id
+                        });
                         ////////////
-                        
+
+
                         get_list_institutions();
 
                     });
@@ -124,7 +128,7 @@
                 // Storing this information can be helpful for support.
             },
             onEvent: function(eventName, metadata) {
-                
+
             }
         });
 
@@ -138,37 +142,30 @@
         ////////////////////////
         //GET get_ponto_list_institutions
         function get_list_institutions() {
+            $(".loader").show();
 
             $.ajax({
-                url: site_url + "banking/C_connections/get_institutions",
+                url: site_url + "banking/C_connections/get_items_json",
                 type: 'GET',
                 dataType: 'json', // added data type
-                success: function(response) {
-                    console.log(response);
+                success: function(data) {
+                    console.log(data);
+                    let i = 0;
+                    var div = '';
+                    $.each(data, function(index, value) {
 
-                    if (response.error_code != undefined && Object.keys(response.error_code).length > 0) {
+                        div += '<tr>' +
+                            '<td>' + value.plaid_institution_id + '</td>' +
+                            '<td>' + value.institution_name + '</td>' +
+                            '<td><a href="' + site_url + 'banking/C_connections/all/' + value.plaid_item_id + '" class="btn btn-success btn-sm">Accounts</a></td>' +
+                            '<td><a href="' + site_url + 'banking/C_connections/remove_plaid_item/' + value.plaid_item_id + '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure, you want to delete?\')">Remove</a></td>' +
+                            '</tr>';
+                        i++;
 
-                        $('#popupModal').modal('toggle');
-                        $('#modal_title').html(response.error_code);
-                        $('#modal_message').html(response.error_message);
+                    });
+                    $('.create_table').html(div);
+                    $(".loader").hide();
 
-                    } else {
-                        let i = 0;
-                        $.each(response.institutions, function(index, value) {
-                            
-                            var div = '<tr>' +
-                                '<td>' + value.institution_id + '</td>' +
-                                '<td>' + value.name + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_accounts_by_id/' + value.institution_id + '/'+ value.name + '">Accounts</a></td>' +
-                                '</tr>';
-
-                            $('.create_table').append(div);
-                            
-                            i++;
-                        });
-                        $(".loader").hide();
-                        
-                    }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);

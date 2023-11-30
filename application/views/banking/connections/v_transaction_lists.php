@@ -13,9 +13,9 @@
         }
         ?>
         <p>
-            <button class="btn btn-info" onclick="history.go(-1);">Back </button>
+            <!-- <button class="btn btn-info" onclick="history.go(-1);">Back </button> -->
             <!-- <button class="btn btn-success" id="load_transactions" disabled>Load Transactions</button> -->
-
+            <a href="<?php echo site_url('banking/C_connections/plaid_transaction_refresh/') . $account_id ?>" class="btn btn-info">Refresh</a>
         </p>
         <div class="portlet">
             <div class="portlet-title">
@@ -36,7 +36,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Name</th>
-                            <th>Payment Channel</th>
+                            <!-- <th>Payment Channel</th> -->
                             <th>Category</th>
                             <th class="text-right">Amount</th>
                             <th></th>
@@ -48,7 +48,7 @@
                     </tbody>
                     <tfoot>
                         <th></th>
-                        <th></th>
+                        <!-- <th></th> -->
                         <th></th>
                         <th>Total</th>
                         <th class="grand_total text-right"></th>
@@ -112,7 +112,7 @@
             var div = '';
             $(".loader").show();
             $.ajax({
-                url: site_url + "banking/C_connections/get_transactions/" + start_date + '/' + end_date,
+                url: site_url + "banking/C_connections/retrieveTransactionsByAccountID/" + account_id,
                 type: 'POST',
                 dataType: 'json', // added data type
                 success: function(json_response) {
@@ -128,31 +128,30 @@
 
                     } else {
                         let i = 0;
-                        $.each(json_response.transactions, function(index, value) {
+                        $.each(json_response, function(index, value) {
 
-                            if (value.account_id == account_id) {
-                                grand_total += -value.amount;
-                                div += '<tr>' +
-                                    '<td>' + value.date + '</td>' +
-                                    '<td>' + value.name + '</td>' +
-                                    '<td>' + value.payment_channel + '</td>' +
-                                    '<td>' + value.category + '</td>' +
-                                    '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>';
+                            grand_total += -value.amount;
+                            div += '<tr>' +
+                                '<td>' + value.date + '</td>' +
+                                '<td>' + value.name + '</td>' +
+                                // '<td>' + value.payment_channel + '</td>' +
+                                '<td>' + value.category + '</td>' +
+                                '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>';
 
-                                if (is_transaction_exist(value.transaction_id) == 1) {
-                                    div += '<td><a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
-                                } else {
-                                    div += '<td><a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
-                                }
-
-                                div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
-                                    '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
-                                    '<input type="hidden" id="transid_' + i + '" value="' + value.transaction_id + '">' +
-                                    '</td>' +
-                                    '</tr>';
-
-                                i++;
+                            if (value.posted == 1) {
+                                div += '<td><a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
+                            } else {
+                                div += '<td><a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
                             }
+
+                            div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
+                                '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
+                                '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
+                                '</td>' +
+                                '</tr>';
+
+                            i++;
+
 
 
                         });
@@ -180,35 +179,6 @@
 
                     }
 
-                    function is_transaction_exist(trans_id) {
-
-                        // const transaction_exist = JSON.parse(await $.post(site_url + 'banking/C_connections/is_transaction_exist/'+trans_id)).exist;
-                        // console.log(transaction_exist);
-                        // return transaction_exist;
-
-                        var result = '';
-                        $.ajax({
-                            url: site_url + "banking/C_connections/is_transaction_exist/",
-                            type: 'POST',
-                            // dataType: "JSON",
-                            async: false,
-                            data: {
-                                trans_id: trans_id
-                            },
-                            //cache: true,
-                            success: function(data) {
-                                result = data;
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                console.log(xhr.status);
-                                console.log(thrownError);
-                            }
-                        });
-                        //console.log(result);
-
-                        return result;
-                    }
-                    ///////////////////
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
