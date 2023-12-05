@@ -170,8 +170,8 @@ class C_connections extends MY_Controller
 
         //insert plaid items, accounts and trasactions data into database
         $this->insert_plaid_items($access_token);
-        $this->insert_plaid_transactions_month($access_token);
         $this->insert_plaid_accounts($item_id, $access_token);
+        $this->insert_plaid_transactions_month($access_token);
     }
 
     public function insert_plaid_items($plaid_access_token)
@@ -232,7 +232,7 @@ class C_connections extends MY_Controller
             }
         }
     }
-    public function insert_plaid_transactions_month($plaid_access_token, $month = "-1 month", $refresh = false)
+    public function insert_plaid_transactions_month($plaid_access_token, $month = "-3 month", $refresh = false)
     {
         $start_date = date("Y-m-d", strtotime($month));
         $end_date = date("Y-m-d");
@@ -264,19 +264,18 @@ class C_connections extends MY_Controller
                 $this->M_institution->insert_plaid_transactions($bankData);
             }
         }
-
+        return json_encode($plaidResponse);
         // echo '<pre>';
         // echo var_dump($plaid_access_token);
         // echo var_dump($plaidResponse);
         // echo '</pre>';
-        //echo $plaidResponse['transactions'][0]['account_id'];
     }
 
     function plaid_transaction_refresh($plaid_item_id)
     {
         $access_token = $this->M_institution->retrieveItems($plaid_item_id)[0]['plaid_access_token'];
 
-        $this->insert_plaid_transactions_month($access_token);
+        echo  $this->insert_plaid_transactions_month($access_token);
         //redirect('banking/C_connections/get_transaction_sync/' . $plaid_item_id);
     }
 

@@ -157,8 +157,8 @@
                         div += '<tr>' +
                             '<td>' + value.plaid_institution_id + '</td>' +
                             '<td>' + value.institution_name + '</td>' +
-                            '<td><a href="' + site_url + 'banking/C_connections/all/' + value.plaid_item_id + '" class="btn btn-success btn-sm">Accounts</a></td>' +
-                            '<td><a href="' + site_url + 'banking/C_connections/remove_plaid_item/' + value.plaid_item_id + '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure, you want to delete?\')">Remove</a></td>' +
+                            '<td><a href="' + site_url + 'banking/C_connections/all/' + value.plaid_item_id + '" class="btn btn-success btn-sm">Accounts</a>' +
+                            ' <a href="' + site_url + 'banking/C_connections/remove_plaid_item/' + value.plaid_item_id + '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure, you want to delete?\')">Remove</a></td>' +
                             '</tr>';
                         i++;
 

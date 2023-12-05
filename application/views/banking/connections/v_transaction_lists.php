@@ -15,7 +15,7 @@
         <p>
             <!-- <button class="btn btn-info" onclick="history.go(-1);">Back </button> -->
             <!-- <button class="btn btn-success" id="load_transactions" disabled>Load Transactions</button> -->
-            <a href="<?php echo site_url('banking/C_connections/plaid_transaction_refresh/') . $account_id ?>" class="btn btn-info">Refresh</a>
+            <a href="#" id="refresh_transactions" class="btn btn-info">Refresh</a>
         </p>
         <div class="portlet">
             <div class="portlet-title">
@@ -30,6 +30,7 @@
                 </div>
             </div>
             <div class="portlet-body flip-scroll">
+                <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
 
                 <table class="table table-striped table-condensed table-bordered flip-content" id="">
                     <thead class="flip-content">
@@ -55,7 +56,6 @@
                         <th></th>
                     </tfoot>
                 </table>
-                <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
 
             </div>
             <!-- /.portlet body -->
@@ -261,6 +261,39 @@
             e.preventDefault();
         });
 
+        //GET get_ponto_list_accounts
+        $('#refresh_transactions').on('click', function(e) {
+
+            $(".loader").show();
+            $.ajax({
+                url: site_url + "banking/C_connections/plaid_transaction_refresh/" + account_id,
+                type: 'POST',
+                dataType: 'json', // added data type
+                success: function(json_response) {
+                    //json_response = JSON.parse(response);
+                    console.log(json_response);
+
+                    if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
+
+                        $('#popupModal').modal('toggle');
+                        $('#modal_title').html(json_response.error_code);
+                        $('#modal_message').html(json_response.error_message);
+
+                    } else {
+                        console.log('inside ' + json_response);
+
+                        get_transaction_list(account_id);
+                        $(".loader").hide();
+                    }
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        });
+        ///////////////////
         //// Transaction LIMIT Button code
         /////////////
         //show transaction button when limit are not exceeded
