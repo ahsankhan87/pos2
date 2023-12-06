@@ -101,6 +101,7 @@
         const start_date = '<?php echo date("Y-m-d", strtotime("-3 month")) ?>';
         const end_date = '<?php echo date("Y-m-d") ?>';
         const account_id = '<?php echo $account_id ?>';
+        const plaid_item_id = '<?php echo $plaid_item_id ?>';
         //var transaction_limit = 0;
 
         $(".loader").hide();
@@ -151,8 +152,6 @@
                                 '</tr>';
 
                             i++;
-
-
 
                         });
                         $(".loader").hide();
@@ -266,7 +265,7 @@
 
             $(".loader").show();
             $.ajax({
-                url: site_url + "banking/C_connections/plaid_transaction_refresh/" + account_id,
+                url: site_url + "banking/C_connections/plaid_transaction_refresh/" + plaid_item_id,
                 type: 'POST',
                 dataType: 'json', // added data type
                 success: function(json_response) {
@@ -284,6 +283,7 @@
 
                         get_transaction_list(account_id);
                         $(".loader").hide();
+                        toastr.success("Latest transactions are fetched.", 'Success');
                     }
 
                 },

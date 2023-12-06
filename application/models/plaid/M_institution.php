@@ -9,10 +9,16 @@ class M_institution extends CI_Model
         $this->load->database();
     }
 
-    function retrieveItems()
+    function retrieveItemsByPlaidItemID($plaid_item_id = FALSE)
     {
-        $this->db->where('company_id', $_SESSION['company_id']);
-        $query = $this->db->get('pos_plaid_items');
+        if ($plaid_item_id === FALSE) {
+            $this->db->where('company_id', $_SESSION['company_id']);
+            $query = $this->db->get('pos_plaid_items');
+        }else{
+            $options = array('plaid_item_id'=> $plaid_item_id,'company_id'=> $_SESSION['company_id']);
+            $query = $this->db->get_where('pos_plaid_items',$options);
+        
+        }
 
         if ($query->num_rows() > 0) {
             return $query->result_array();

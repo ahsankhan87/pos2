@@ -189,7 +189,7 @@
                                 '<td>' + value.type + '</td>' +
                                 '<td>' + value.subtype + '</td>' +
                                 // '<td class="text-right">' + account_balance + '</td>' +
-                                '<td><a href="' + site_url + 'banking/C_connections/get_transaction_sync/' + value.plaid_account_id + '" class="btn btn-success btn-sm">Transaction</a></td>' +
+                                '<td><a href="' + site_url + 'banking/C_connections/get_plaid_transactions/' + value.plaid_account_id + '/' + value.item_id + '" class="btn btn-success btn-sm">Transaction</a></td>' +
                                 '</tr>';
 
                             $('.create_table').append(div);

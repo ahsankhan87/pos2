@@ -26,7 +26,7 @@ class C_connections extends MY_Controller
 
     function get_items_json()
     {
-        $result = json_encode($this->M_institution->retrieveItems());
+        $result = json_encode($this->M_institution->retrieveItemsByPlaidItemID());
         echo $result;
     }
 
@@ -54,13 +54,14 @@ class C_connections extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    public function get_transaction_sync($account_id)
+    public function get_plaid_transactions($account_id, $plaid_item_id)
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
         $data['title'] = lang('all') . ' ' . lang('transaction');
         $data['main'] = lang('all') . ' ' . lang('transaction');
         $data['account_id'] = $account_id;
+        $data['plaid_item_id'] = $plaid_item_id;
 
         $this->load->view('templates/header', $data);
         $this->load->view('banking/connections/v_transaction_lists', $data);
@@ -239,6 +240,10 @@ class C_connections extends MY_Controller
 
         $plaidResponse = json_decode($this->Plaid->get_transactions($start_date, $end_date, $plaid_access_token), true);
 
+        // echo '<pre>';
+        // echo $plaid_access_token;
+        // echo var_dump($plaidResponse);
+        // echo '</pre>';
 
         foreach ($plaidResponse['transactions'] as $values) {
             if (!$this->M_institution->is_plaid_transaction_exist($values['transaction_id'])) {
@@ -264,16 +269,12 @@ class C_connections extends MY_Controller
                 $this->M_institution->insert_plaid_transactions($bankData);
             }
         }
-        return json_encode($plaidResponse);
-        // echo '<pre>';
-        // echo var_dump($plaid_access_token);
-        // echo var_dump($plaidResponse);
-        // echo '</pre>';
+        echo json_encode($plaidResponse);
     }
 
     function plaid_transaction_refresh($plaid_item_id)
     {
-        $access_token = $this->M_institution->retrieveItems($plaid_item_id)[0]['plaid_access_token'];
+        $access_token = $this->M_institution->retrieveItemsByPlaidItemID($plaid_item_id)[0]['plaid_access_token'];
 
         echo  $this->insert_plaid_transactions_month($access_token);
         //redirect('banking/C_connections/get_transaction_sync/' . $plaid_item_id);
@@ -281,7 +282,7 @@ class C_connections extends MY_Controller
 
     function remove_plaid_item($plaid_item_id)
     {
-        $access_token = $this->M_institution->retrieveItems($plaid_item_id)[0]['plaid_access_token'];
+        $access_token = $this->M_institution->retrieveItemsByPlaidItemIDByPlaidItemID($plaid_item_id)[0]['plaid_access_token'];
 
         $result = $this->Plaid->get_plaid_item_remove($access_token);
         if (strlen($result) > 0) {
@@ -323,9 +324,14 @@ class C_connections extends MY_Controller
         echo $result;
     }
 
-    function get_transactions($start_date, $end_date)
+    function get_transactions($plaid_access_token)
     {
-        echo $this->Plaid->get_transactions($start_date, $end_date);
+        $start_date = date("Y-m-d", strtotime('-3 month'));
+        $end_date = date("Y-m-d");
+
+        echo '<pre>';
+        echo $this->Plaid->get_transactions($start_date, $end_date, $plaid_access_token);
+        echo '</pre>';
     }
 
     function transaction_refresh()
