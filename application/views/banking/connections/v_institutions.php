@@ -15,6 +15,7 @@
         ?>
 
         <button class="btn btn-success" id="link-button">Link Account</button>
+        <a class="btn btn-success" href="<?php echo site_url("banking/C_connections/all_plaid_accounts") ?>">All Account</a>
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">

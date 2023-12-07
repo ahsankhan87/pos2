@@ -24,6 +24,20 @@ class C_connections extends MY_Controller
         $this->load->view('templates/footer');
     }
 
+    public function all_plaid_accounts()
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+
+        $data['title'] = lang('bank');
+        $data['main'] = lang('bank');
+
+        $data['plaidItems'] = $this->M_institution->retrieveItemsByPlaidItemID();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('banking/connections/v_plaid_accounts', $data);
+        $this->load->view('templates/footer');
+    }
+
     function get_items_json()
     {
         $result = json_encode($this->M_institution->retrieveItemsByPlaidItemID());
