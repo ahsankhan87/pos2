@@ -17,10 +17,11 @@ class C_connections extends MY_Controller
 
         $data['title'] = lang('bank');
         $data['main'] = lang('bank');
+        $data['plaidItems'] = $this->M_institution->retrieveItemsByPlaidItemID();
 
 
         $this->load->view('templates/header', $data);
-        $this->load->view('banking/connections/v_institutions', $data);
+        $this->load->view('banking/connections/v_plaid_accounts', $data);
         $this->load->view('templates/footer');
     }
 
@@ -31,10 +32,9 @@ class C_connections extends MY_Controller
         $data['title'] = lang('bank');
         $data['main'] = lang('bank');
 
-        $data['plaidItems'] = $this->M_institution->retrieveItemsByPlaidItemID();
 
         $this->load->view('templates/header', $data);
-        $this->load->view('banking/connections/v_plaid_accounts', $data);
+        $this->load->view('banking/connections/v_institutions', $data);
         $this->load->view('templates/footer');
     }
 
@@ -296,7 +296,7 @@ class C_connections extends MY_Controller
 
     function remove_plaid_item($plaid_item_id)
     {
-        $access_token = $this->M_institution->retrieveItemsByPlaidItemIDByPlaidItemID($plaid_item_id)[0]['plaid_access_token'];
+        $access_token = $this->M_institution->retrieveItemsByPlaidItemID($plaid_item_id)[0]['plaid_access_token'];
 
         $result = $this->Plaid->get_plaid_item_remove($access_token);
         if (strlen($result) > 0) {

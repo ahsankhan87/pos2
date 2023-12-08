@@ -34,7 +34,7 @@
                 Below is a list of all your connected banks. Click on a bank to view its associated accounts.
                 </p>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
 
                         <?php foreach ($plaidItems as $values) {
                         ?>
@@ -50,37 +50,79 @@
                                         <a href="javascript:;" class="reload"></a> -->
                                     </div>
                                     <div class="actions">
-                                        <a href="#" class="refresh_transactions btn btn-default btn-sm" id="<?php echo '_' . $values['plaid_item_id'] ?>"><i class="fa fa-refresh"></i> Refresh</a>
-                                        <a href="<?php echo site_url($langs) . '/banking/C_connections/remove_plaid_item/' . $values['plaid_item_id'] ?>" class="btn btn-default btn-sm" onclick="return confirm('Are you sure, you want to delete?')"><i class="fa fa-trash-o"></i> Remove</a>
+                                        <a href="#" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Remove</a>
                                     </div>
                                 </div>
                                 <div class="portlet-body display-hide">
 
                                     <?php
                                     $palid_accounts = $this->M_institution->retrieveAccountsByItemID($values['plaid_item_id']);
+                                    echo '<table class="table table-hover">';
+                                    echo '<tbody>';
 
                                     foreach ($palid_accounts as $palid_accounts_values) {
-                                        echo '<table class="table">';
-                                        echo '<tbody>';
 
                                         echo '<tr>';
-                                        echo '<td>';
+                                        echo '<td><strong>';
                                         echo $palid_accounts_values['name'];
                                         echo '</br>';
-                                        echo ucfirst($palid_accounts_values['subtype']) . ' • Balance ' . $palid_accounts_values['iso_currency_code'] . ' ' . number_format($palid_accounts_values['current_balance'], 2);
-                                        echo '</td>';
+                                        echo $palid_accounts_values['subtype'] . ' ' . $palid_accounts_values['iso_currency_code'] . ' ' . $palid_accounts_values['current_balance'];
+                                        echo '<strong></td>';
                                         echo '<td class="text-right">';
-                                        echo '<a href="#" class="view_transactions btn btn-default" id="viewTransactions_' . $palid_accounts_values['plaid_account_id'] . '">View Transactions</a>';
+                                        echo '<a href="" id="">View Transactions</a>';
                                         echo '</td>';
                                         echo '</tr>';
-                                        echo '</tbody>';
-                                        echo '</table>';
-                                        echo '<div id="transactions_table_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
+
+                                        $palid_transactions = $this->M_institution->retrieveTransactionsByAccountID($palid_accounts_values['plaid_account_id']);
+                                        // var_dump($palid_transactions);
+                                        if (count((array)$palid_transactions) > 0) {
+
+                                            echo '<table class="table table-condenced">';
+                                            echo '<thead>';
+                                            echo '<tr>';
+                                            echo '<th>Name</th>';
+                                            echo '<th>Category</th>';
+                                            echo '<th class="text-right">Amount</th>';
+                                            echo '<th>Date</th>';
+                                            echo '<th></th>';
+                                            echo '</tr>';
+                                            echo '</thead>';
+                                            echo '<tbody>';
+                                            $i = 1;
+                                            foreach ($palid_transactions as $transactions_values) {
+                                                echo '<tr>';
+                                                echo '<td>';
+                                                echo $transactions_values['name'];
+                                                echo '</td>';
+                                                echo '<td>';
+                                                echo $transactions_values['category'];
+                                                echo '</td>';
+                                                echo '<td class="text-right">';
+                                                echo $transactions_values['iso_currency_code'] . ' ' . -number_format($transactions_values['amount'], 2);
+                                                echo '</td>';
+                                                echo '<td>';
+                                                echo date('m-d-Y', strtotime($transactions_values['date']));
+                                                echo '</td>';
+                                                echo '<td>';
+                                                if ($transactions_values['posted'] == 1) {
+                                                    echo '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
+                                                } else {
+                                                    echo '<a id="paymentEntry_' . $i . '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
+                                                }
+                                                echo '<input type="hidden" id="payee_' . $i . '" value="' . $transactions_values['name'] . '">' .
+                                                    '<input type="hidden" id="amount_' . $i . '" value="' . -$transactions_values['amount'] . '">' .
+                                                    '<input type="hidden" id="transid_' . $i . '" value="' . $transactions_values['plaid_transaction_id'] . '">';
+                                                echo '</td>';
+                                                echo '</tr>';
+                                                $i++;
+                                            }
+                                            echo '</tbody>';
+                                            echo '</table>';
+                                        }
                                     }
-
+                                    echo '</tbody>';
+                                    echo '</table>';
                                     ?>
-                                    <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
-
                                 </div>
                             </div>
                             <!-- END Portlet PORTLET-->
@@ -159,7 +201,7 @@
                         ////////////
 
 
-                        window.location.href = site_url + "banking/C_connections";
+                        get_list_institutions();
 
                     });
 
@@ -181,128 +223,22 @@
         $('#link-button').on('click', function(e) {
             handler.open();
         });
+        /////////////
+        //Accept and do entry of the transaction
+        $('.payment_entry').on('click', function(e) {
+            var curId = this.id.split("_")[1];
 
+            accountsDDL();
+            // $('#account_id').select2();
+            // $('#account_id_2').select2();
+            $('#paymentEntryModal').modal('toggle');
+            $('#payment_entry_title').html("Accept Transaction ");
+            $('#payment_payee').val($("#payee_" + curId).val());
+            $('#payment_amount').val($("#amount_" + curId).val());
+            $('#plaid_trans_id').val($("#transid_" + curId).val());
 
-
-    })(jQuery);
-
-    $(document).ready(function() {
-
-        const module = '<?php echo $url1 = $this->uri->segment(3); ?>/';
-        const site_url = '<?php echo site_url($langs); ?>/';
-        const path = '<?php echo base_url(); ?>';
-        const start_date = '<?php echo date("Y-m-d", strtotime("-3 month")) ?>';
-        const end_date = '<?php echo date("Y-m-d") ?>';
-        $(".loader").hide();
-
-        $('.view_transactions').on('click', function(e) {
-            var cur_plaidAccountId = this.id.split("_")[1];
-            $(".loader").show();
-            if ($(this).text() == 'Hide Transactions') {
-                $(this).text('View Transactions');
-                $('#transactions_table_' + cur_plaidAccountId).hide();
-            } else {
-                $(this).text('Hide Transactions');
-                get_transaction_list(cur_plaidAccountId);
-                $('#transactions_table_' + cur_plaidAccountId).show();
-            }
-            $(".loader").hide();
         });
         ///////////////
-
-        ////////////////////////
-        //GET get_ponto_list_accounts
-        function get_transaction_list(account_id) {
-            var div = '';
-            $(".loader").show();
-            $.ajax({
-                url: site_url + "banking/C_connections/retrieveTransactionsByAccountID/" + account_id,
-                type: 'POST',
-                dataType: 'json', // added data type
-                success: function(json_response) {
-                    //json_response = JSON.parse(response);
-                    //console.log(json_response);
-                    var grand_total = 0;
-
-                    if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
-
-                        $('#popupModal').modal('toggle');
-                        $('#modal_title').html(json_response.error_code);
-                        $('#modal_message').html(json_response.error_message);
-
-                    } else {
-                        let i = 0;
-                        div += '<table class="table table-condenced">' +
-                            '<thead>' +
-                            '<tr>' +
-                            '<th>Name</th>' +
-                            '<th>Category</th>' +
-                            '<th class="text-right">Amount</th>' +
-                            '<th>Date</th>' +
-                            '<th></th>' +
-                            '</tr>' +
-                            '</thead>' +
-                            '<tbody>';
-
-                        $.each(json_response, function(index, value) {
-
-                            grand_total += -value.amount;
-
-                            div += '<tr>' +
-                                '<td>' + value.name + '</td>' +
-                                // '<td>' + value.payment_channel + '</td>' +
-                                '<td>' + value.category + '</td>' +
-                                '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>' +
-                                '<td>' + value.date + '</td>';
-
-                            if (value.posted == 1) {
-                                div += '<td><a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
-                            } else {
-                                div += '<td><a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
-                            }
-
-                            div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
-                                '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
-                                '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
-                                '</td>' +
-                                '</tr>';
-
-                            i++;
-
-                        });
-                        div += '</tbody></table>';
-
-                        $(".loader").hide();
-                        $('#transactions_table_' + account_id).html(div);
-
-                        /////////////
-                        //Accept and do entry of the transaction
-                        $('.payment_entry').on('click', function(e) {
-                            var curId = this.id.split("_")[1];
-
-                            accountsDDL();
-                            // $('#account_id').select2();
-                            // $('#account_id_2').select2();
-                            $('#paymentEntryModal').modal('toggle');
-                            $('#payment_entry_title').html("Accept Transaction ");
-                            $('#payment_payee').val($("#payee_" + curId).val());
-                            $('#payment_amount').val($("#amount_" + curId).val());
-                            $('#plaid_trans_id').val($("#transid_" + curId).val());
-
-                        });
-                        ///////////////
-
-                    }
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-        }
-
-        ///////////////////
         $("#payment_entry_form").on("submit", function(e) {
             var formValues = $(this).serialize();
             //console.log(formValues);
@@ -323,8 +259,7 @@
                             if (data == '1') {
                                 toastr.success("transaction saved successfully", 'Success');
                                 $('#paymentEntryModal').modal('toggle');
-                                // get_transaction_list(account_id); // load again 
-                                location.reload();
+                                location.reload(); // load again 
                             } else {
                                 toastr.error("transaction not saved, please try again.", 'Error');
                             }
@@ -338,43 +273,6 @@
             }
             e.preventDefault();
         });
-
-        //GET get_ponto_list_accounts
-        $('.refresh_transactions').on('click', function(e) {
-            var cur_plaidItemId = this.id.split("_")[1];
-
-            $(".loader").show();
-            $.ajax({
-                url: site_url + "banking/C_connections/plaid_transaction_refresh/" + cur_plaidItemId,
-                type: 'POST',
-                dataType: 'json', // added data type
-                success: function(json_response) {
-                    //json_response = JSON.parse(response);
-                    console.log(json_response);
-
-                    if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
-
-                        $('#popupModal').modal('toggle');
-                        $('#modal_title').html(json_response.error_code);
-                        $('#modal_message').html(json_response.error_message);
-
-                    } else {
-                        console.log('inside ' + json_response);
-
-                        get_transaction_list(account_id);
-                        $(".loader").hide();
-                        toastr.success("Latest transactions are fetched.", 'Success');
-                        location.reload();
-                    }
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-        });
-        ///////////////////
         ////////////////////////
         //GET Accounts DROPDOWN LIST
         function accountsDDL(index = 0) {
@@ -411,7 +309,7 @@
             });
         }
         ///////////////////
-    });
+    })(jQuery);
 </script>
 <!-- Accept Payment Modal -->
 <div class="modal fade" id="paymentEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
