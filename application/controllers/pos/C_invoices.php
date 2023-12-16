@@ -38,7 +38,7 @@ class C_invoices extends MY_Controller
         $data = array('langs' => $this->session->userdata('lang'));
         $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last month"));
         $to_date = FY_END_DATE; //date("Y-m-d");
-        $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
+        $fiscal_dates = "(From: " . date('m/d/Y', strtotime($start_date)) . " To:" . date('m/d/Y', strtotime($to_date)) . ")";
 
         $data['title'] = lang('invoice') . ' ' . $fiscal_dates;
         $data['main'] = lang('invoice');
@@ -514,11 +514,11 @@ class C_invoices extends MY_Controller
         //Display Invoice date
         $pdf->SetY(55);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . ": " . date('m-d-Y', strtotime($sales_items[0]["sale_date"])));
+        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . ": " . date('m/d/Y', strtotime($sales_items[0]["sale_date"])));
 
         $pdf->SetY(61);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('due_date') . ": " . date('m-d-Y', strtotime($sales_items[0]["due_date"])));
+        $pdf->Cell(50, 7, lang('due_date') . ": " . date('m/d/Y', strtotime($sales_items[0]["due_date"])));
 
         //Display Table headings
         $pdf->SetY(85);
@@ -681,11 +681,11 @@ class C_invoices extends MY_Controller
         //Display Invoice date
         $pdf->SetY(55);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . ": " . date('m-d-Y', strtotime($sales_items[0]["sale_date"])));
+        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . ": " . date('m/d/Y', strtotime($sales_items[0]["sale_date"])));
 
         $pdf->SetY(61);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('due_date') . ": " . date('m-d-Y', strtotime($sales_items[0]["due_date"])));
+        $pdf->Cell(50, 7, lang('due_date') . ": " . date('m/d/Y', strtotime($sales_items[0]["due_date"])));
 
         //Display Table headings
         $pdf->SetY(85);

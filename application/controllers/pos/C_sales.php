@@ -38,7 +38,7 @@ class C_sales extends MY_Controller
         $data = array('langs' => $this->session->userdata('lang'));
         $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last month"));
         $to_date = FY_END_DATE; //date("Y-m-d");
-        $fiscal_dates = "(From: " . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
+        $fiscal_dates = "(From: " . date('m/d/Y', strtotime($start_date)) . " To:" . date('m/d/Y', strtotime($to_date)) . ")";
 
         $data['title'] = lang('sales') . ' ' . $fiscal_dates;
         $data['main'] = lang('sales');
@@ -121,7 +121,7 @@ class C_sales extends MY_Controller
                 $tax_rate = $this->input->post("tax_rate");
                 $tax_id = $this->input->post('tax_id');
                 $amount_received = ($this->input->post("amount_received") == '' ? 0 : $this->input->post("amount_received"));
-                
+
                 $data = array(
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
@@ -138,7 +138,7 @@ class C_sales extends MY_Controller
                     'total_amount' => ($register_mode == 'sale' ? $sub_total : -$sub_total), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     //'is_taxable' => $is_taxable,
-                    'paid'=>$amount_received,
+                    'paid' => $amount_received,
                     'due_date' => $due_date,
                     'business_address' => $business_address,
                     'tax_rate' => $tax_rate,
@@ -460,7 +460,7 @@ class C_sales extends MY_Controller
         //Display Invoice date
         $pdf->SetY(57);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . " : " . date('m-d-Y', strtotime($sales_items[0]["sale_date"])));
+        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . " : " . date('m/d/Y', strtotime($sales_items[0]["sale_date"])));
 
         //Display Table headings
         $pdf->SetY(85);
@@ -617,7 +617,7 @@ class C_sales extends MY_Controller
         //Display Invoice date
         $pdf->SetY(57);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . " : " . date('m-d-Y', strtotime($sales_items[0]["sale_date"])));
+        $pdf->Cell(50, 7, lang('invoice') . ' ' . lang('date') . " : " . date('m/d/Y', strtotime($sales_items[0]["sale_date"])));
 
         //Display Table headings
         $pdf->SetY(85);
@@ -723,7 +723,7 @@ class C_sales extends MY_Controller
         $this->load->model('stripe/M_stripe');
         $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
         $total_in_cents = bcmul($total, 100);
-        $application_fee = ($total*4.4 /100);
+        $application_fee = ($total * 4.4 / 100);
         $application_fee_in_cent = bcmul($application_fee, 100);
         $paymentLink = $this->M_stripe->create_payment_link($stripe_acct_id, $invoice_no, $total_in_cents, 1, $application_fee_in_cent);
         //
@@ -745,15 +745,15 @@ class C_sales extends MY_Controller
                 $mail->AddStringAttachment($pdf_invoice, $invoice_no . '.pdf', 'base64', 'application/pdf'); //Filename is optional
                 //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
 
-                $mail->Subject = "Payment Request for ".strtoupper(lang("receipt")."#".$invoice_no);
-                $body = "<p>".lang('dear')." " . $customer[0]['store_name'] . ",</p>";
-                $body .= "<p><i>".lang('epdf_para_1')."</i></p>";
-                $body .= "<p>".lang('epdf_para_2')."</p>";
-                $body .= "<p>".lang('epdf_para_3')."</p>";
-                $body .= "<p>".lang('epdf_para_4')."</p>";
+                $mail->Subject = "Payment Request for " . strtoupper(lang("receipt") . "#" . $invoice_no);
+                $body = "<p>" . lang('dear') . " " . $customer[0]['store_name'] . ",</p>";
+                $body .= "<p><i>" . lang('epdf_para_1') . "</i></p>";
+                $body .= "<p>" . lang('epdf_para_2') . "</p>";
+                $body .= "<p>" . lang('epdf_para_3') . "</p>";
+                $body .= "<p>" . lang('epdf_para_4') . "</p>";
                 $body .= '<p>please click the following link to pay your invoice: <a href="' . $paymentLink . '" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a></p>';
-                $body .= "<p>\n".lang('best_regards')."</p>";
-                $body .= "<p>".$Company[0]['name']."</p>";
+                $body .= "<p>\n" . lang('best_regards') . "</p>";
+                $body .= "<p>" . $Company[0]['name'] . "</p>";
 
                 $mail->Body = $body;
 

@@ -18,7 +18,7 @@ class C_reports extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         if($data['from_date'] && $data['to_date'])
         {
@@ -47,7 +47,7 @@ class C_reports extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         $data['proft_loss']= $this->M_reports->get_parentGroups4pl($_SESSION['company_id']);
         
@@ -76,7 +76,7 @@ class C_reports extends MY_Controller{
             $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
             $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
             
-            $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+            $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
             
             $proft_loss = $this->M_reports->get_parentGroups4pl($_SESSION['company_id']);
                 
@@ -134,7 +134,7 @@ class C_reports extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         $data['net_income']= $this->M_reports->get_net_income();
         $data['parentGroups4Assets']= $this->M_reports->get_parentGroups4Assets($_SESSION['company_id']);
@@ -186,7 +186,7 @@ class C_reports extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : 0);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : 0);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         $customer_id= $this->input->post('customer_id');
         $product_id=$this->input->post('item_id');
@@ -225,7 +225,7 @@ class C_reports extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : 0);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : 0);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         //$customer_id= $this->input->post('customer_id');
         //$product_id=$this->input->post('item_id');
@@ -263,7 +263,7 @@ class C_reports extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : 0);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : 0);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         //$customer_id= $this->input->post('customer_id');
         //$product_id=$this->input->post('item_id');
@@ -297,7 +297,7 @@ class C_reports extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : 0);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : 0);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         $supplier_id= $this->input->post('supplier_id');
         $product_id=$this->input->post('item_id');

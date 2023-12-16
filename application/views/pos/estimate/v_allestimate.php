@@ -52,7 +52,7 @@
                             //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
                             echo '<td>' . $sno++ . '</td>';
                             echo '<td>' . $list['invoice_no'] . '</td>';
-                            echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
+                            echo '<td>' . date('m/d/Y', strtotime($list['sale_date'])) . '</td>';
                             $name = $this->M_customers->get_CustomerName($list['customer_id']);
                             echo '<td>' . @$name . '</td>';
                             //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';
@@ -83,23 +83,23 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel"><?php echo lang('estimate'). ' '.lang('no'); ?> <?php echo $list['invoice_no']; ?></h5>
+                                            <h5 class="modal-title" id="exampleModalLabel"><?php echo lang('estimate') . ' ' . lang('no'); ?> <?php echo $list['invoice_no']; ?></h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="form-vertical" action="<?php echo site_url('pos/C_estimate/updateStatus');?>" method="post">
-                                                
+                                            <form class="form-vertical" action="<?php echo site_url('pos/C_estimate/updateStatus'); ?>" method="post">
+
                                                 <div class="form-group">
-                                                    <label class="control-label col-sm-3" for="no"><?php echo lang('estimate'). ' '.lang('no'); ?>:</label>
+                                                    <label class="control-label col-sm-3" for="no"><?php echo lang('estimate') . ' ' . lang('no'); ?>:</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" value="<?php echo $list['invoice_no']; ?>" name="invoice_no" class="form-control" readonly>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 </br>
-                                            </br>
+                                                </br>
                                                 <div class="form-group">
                                                     <label class="control-label col-sm-3" for="status"><?php echo lang('status'); ?>:</label>
                                                     <div class="col-sm-9">
@@ -110,9 +110,9 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            
-                                            </br>
-                                            </br>
+
+                                                </br>
+                                                </br>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary"><?php echo lang('save'); ?></button>

@@ -55,7 +55,7 @@ if (count(@$entries)) {
                             foreach ($entries as $key => $list) {
                                 echo '<tr>';
                                 // echo '<td>'.$sno++.'</td>';
-                                echo '<td>' . $list['date'] . '</td>';
+                                echo '<td>' . date('m/d/Y', strtotime($list['date'])) . '</td>';
                                 echo '<td><a href="' . site_url('accounts/C_entries/entriesByNo/' . $list['entry_no']) . '">' . $list['entry_no'] . '</a></td>';
 
                                 echo '<td>';
@@ -96,7 +96,7 @@ if (count(@$entries)) {
                             echo '</tbody>';
                             echo '<tfoot>';
                             echo '<tr><th></th><th></th><th></th>';
-                            echo '<th>'.lang('total').'</th>';
+                            echo '<th>' . lang('total') . '</th>';
                             echo '<th class="text-right"></th>';
                             echo '<th class="text-right"></th>';
                             echo '<th></th>';

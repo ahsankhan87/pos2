@@ -79,7 +79,7 @@
                             //echo '<td><a href="'.site_url('pos/C_sales/receipt/'.$list['invoice_no']).'" class="hidden-print">'.$list['invoice_no'].'</a></td>';
                             echo '<td>' . $sno++ . '</td>';
                             echo '<td>' . $list['invoice_no'] . '</td>';
-                            echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
+                            echo '<td>' . date('m/d/Y', strtotime($list['sale_date'])) . '</td>';
                             $name = $this->M_customers->get_customer_store_name($list['customer_id']);
                             echo '<td>' . @$name . '</td>';
                             //echo '<td>'.@$this->M_employees->get_empName($list['employee_id']).'</td>';

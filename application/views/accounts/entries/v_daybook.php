@@ -91,8 +91,10 @@
                     var invoice_no = '';
                     var inv_prefix = '';
                     $.each(data, function(index, value) {
+                        var d_date = new Date(value.date);;
+
                         view_journal += '<tr>' +
-                            '<td>' + value.date + '</td>' +
+                            '<td>' + d_date.toLocaleDateString("en-US") + '</td>' +
                             '<td>' + value.entry_id + '</td>';
 
                         invoice_no = value.invoice_no;
@@ -110,23 +112,23 @@
                         }
 
                         view_journal += '<td><a href="' + site_url + '/accounts/C_groups/accountDetail/' + value.account_code + '" title="Account Detail" target="_blank" >' + value.title + '</a>';
-                          
-                                if (value.is_cust == 1 && value.ref_account_id != 0) {
-                                    view_journal += ' <small><a href="' + site_url + '/pos/C_customers/customerDetail/' + value.ref_account_id+ '">(' + value.customer_store_name + ')</a></small>';
-                                }
-                                if (value.is_supp == 1 && value.ref_account_id != 0) {
-                                    view_journal += ' <small><a href="'+ site_url + '/pos/Suppliers/supplierDetail/' + value.ref_account_id + '">(' + value.supplier_name + ')</a></small>';
-                                }
-                                if (value.is_bank == 1 && value.ref_account_id != 0) {
-                                    view_journal += ' <small><a href="'+ site_url + '/pos/C_banking/bankDetail/' + value.ref_account_id + '">(' + value.bank_name + ')</a></small>';
-                                }
 
-                        view_journal +=    '</td><td style="text-align: right;">' + (value.debit == '0' ? '' : parseFloat(value.debit).toFixed(2)) + '</td>' +
+                        if (value.is_cust == 1 && value.ref_account_id != 0) {
+                            view_journal += ' <small><a href="' + site_url + '/pos/C_customers/customerDetail/' + value.ref_account_id + '">(' + value.customer_store_name + ')</a></small>';
+                        }
+                        if (value.is_supp == 1 && value.ref_account_id != 0) {
+                            view_journal += ' <small><a href="' + site_url + '/pos/Suppliers/supplierDetail/' + value.ref_account_id + '">(' + value.supplier_name + ')</a></small>';
+                        }
+                        if (value.is_bank == 1 && value.ref_account_id != 0) {
+                            view_journal += ' <small><a href="' + site_url + '/pos/C_banking/bankDetail/' + value.ref_account_id + '">(' + value.bank_name + ')</a></small>';
+                        }
+
+                        view_journal += '</td><td style="text-align: right;">' + (value.debit == '0' ? '' : parseFloat(value.debit).toFixed(2)) + '</td>' +
                             '<td style="text-align: right;">' + (value.credit == '0' ? '' : parseFloat(value.credit).toFixed(2)) + '</td>' +
                             '<td>' + value.narration + '</td>';
 
 
-                        view_journal += '<td><a href="' + site_url + '/accounts/C_entries/edit/' + invoice_no+ '" title="Edit"><i class="fa fa-pencil fa-fw"></i></a> |';
+                        view_journal += '<td><a href="' + site_url + '/accounts/C_entries/edit/' + invoice_no + '" title="Edit"><i class="fa fa-pencil fa-fw"></i></a> |';
                         view_journal += '<a href="' + site_url + '/accounts/C_entries/delete/' + value.id + '/' + value.entry_id + '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete? All entries associated with this entry will be deleted.\')"><i class="fa fa-trash-o fa-fw"></i></a></td>';
                         view_journal += '</tr>';
                         credit += parseFloat(value.debit);

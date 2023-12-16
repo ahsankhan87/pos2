@@ -21,7 +21,7 @@ class C_accountPayable extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         $data['suppliers']= $this->M_suppliers->get_suppliers();
         
         //if($data['from_date'] && $data['to_date'])
@@ -70,7 +70,7 @@ class C_accountPayable extends MY_Controller{
         $pdf->SetY(28);
         $pdf->SetX(80);
         $pdf->SetFont('DejaVu','', 12);
-        $pdf->Cell(50, 7, date('d-m-Y', strtotime($from_date))." to ".date('d-m-Y', strtotime($to_date)), 0, 1,"C");
+        $pdf->Cell(50, 7, date('m/d/Y', strtotime($from_date))." to ".date('m/d/Y', strtotime($to_date)), 0, 1,"C");
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
         //$pdf->Cell(50, 7, "To ".$to_date, 0, 1);
 

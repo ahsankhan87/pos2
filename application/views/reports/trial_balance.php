@@ -56,7 +56,7 @@ if (count(@$trialBalance)) {
 
                 <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
                 <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
-                <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>
+                <p><?php echo date('m/d/Y', strtotime($from_date)) . ' to ' . date('m/d/Y', strtotime($to_date)); ?></p>
             </div>
 
             <table class="table table-condensed">

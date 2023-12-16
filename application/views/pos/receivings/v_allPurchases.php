@@ -83,7 +83,7 @@
                             //echo '<td><a href="'.site_url('trans/C_receivings/receipt/'.$list['invoice_no']).'">'.$list['invoice_no'].'</a></td>';
                             echo '<td>'.$sno++.'</td>';
                             echo '<td>'.$list['invoice_no'].'</td>';
-                            echo '<td>'.date('d-m-Y',strtotime($list['receiving_date'])).'</td>';
+                            echo '<td>'.date('m/d/Y',strtotime($list['receiving_date'])).'</td>';
                             //echo '<td><img src="'.base_url('images/supplier-images/thumbs/'.$list['supplier_image']).'" width="40" height="40"/></td>';
                             $supplier_name = $this->M_suppliers->get_supplierName($list['supplier_id']);
                             echo '<td>'.@$supplier_name.'</td>';

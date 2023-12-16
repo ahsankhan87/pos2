@@ -77,7 +77,7 @@ if (count((array)@$receivings)) {
 ?>
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="page-header lead"><?php echo ucfirst($sale_type) . ' '; ?>Receivings Report From <strong><?php echo date('d-m-Y', strtotime($from_date)) . ' To ' . date('d-m-Y', strtotime($to_date)); ?></strong></h2>
+            <h2 class="page-header lead"><?php echo ucfirst($sale_type) . ' '; ?>Receivings Report From <strong><?php echo date('m/d/Y', strtotime($from_date)) . ' To ' . date('m/d/Y', strtotime($to_date)); ?></strong></h2>
         </div>
         <!-- /.col-sm-12 -->
     </div>
@@ -106,7 +106,7 @@ if (count((array)@$receivings)) {
 
                     foreach ($receivings as $key => $list) {
                         // echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                        echo '<td>' . date('d-m-Y', strtotime($list['receiving_date'])) . '</td>';
+                        echo '<td>' . date('m/d/Y', strtotime($list['receiving_date'])) . '</td>';
                         //echo '<td>'.anchor(''.$list['receiving_id'],$list['receiving_id']).'</td>';
                         echo '<td><a href="' . site_url('trans/C_receivings/receipt/' . $list['invoice_no']) . '" target="_blank">' . $list['invoice_no'] . '</a></td>';
 

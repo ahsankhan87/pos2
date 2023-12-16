@@ -95,10 +95,11 @@
                     $.each(data, function(index, value) {
                         //counter++;
                         counter = index;
+                        var d_date = new Date(value.date);;
 
                         var div = '<tr><td>' + counter + '</td>' +
 
-                            '<td>' + value.date + '</td>' +
+                            '<td>' + d_date.toLocaleDateString("en-US") + '</td>' +
                             '<td>' + value.description + '</td>' +
                             '<td class="text-right">' + value.amount + '</td>' +
                             '<td class="text-center"><a id="paymentEntry_' + counter + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a></td>' +

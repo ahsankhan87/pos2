@@ -21,7 +21,7 @@ class C_receivingsreport extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : 0);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : 0);
         
-        $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['main_small'] = '<br />'.date('m/d/Y',strtotime($data['from_date'])).' To '.date('m/d/Y',strtotime($data['to_date']));
         
         $supplier_id= $this->input->post('supplier_id');
         $product_id=$this->input->post('item_id');

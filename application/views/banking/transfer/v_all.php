@@ -54,8 +54,8 @@ if (count(@$transfer)) {
 
                             foreach ($transfer as $key => $list) {
                                 echo '<tr>';
-                                echo '<td>'.$sno++.'</td>';
-                                echo '<td>' . $list['date'] . '</td>';
+                                echo '<td>' . $sno++ . '</td>';
+                                echo '<td>' .  date('m/d/Y', strtotime($list['date'])) . '</td>';
 
                                 echo '<td>';
                                 // $inv_prefix = substr($list['invoice_no'], 0, 1);
@@ -88,7 +88,7 @@ if (count(@$transfer)) {
                                 echo '<td class="text-right">' . number_format($list['debit'], 2) . '</td>';
                                 echo '<td>' . $list['narration'] . '</td>';
                                 echo '<td>';
-                                echo '<span class="required text-danger"><a href="' . site_url('banking/C_transfer/delete/' . $list['invoice_no'] ) . '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete?\')"><i class="fa fa-trash-o fa-fw"></i></a></span>';
+                                echo '<span class="required text-danger"><a href="' . site_url('banking/C_transfer/delete/' . $list['invoice_no']) . '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete?\')"><i class="fa fa-trash-o fa-fw"></i></a></span>';
                                 echo '</td>';
 
                                 echo '</tr>';

@@ -247,13 +247,14 @@
                         $.each(json_response, function(index, value) {
 
                             grand_total += -value.amount;
+                            var d_date = new Date(value.date);;
 
                             div += '<tr>' +
                                 '<td>' + value.name + '</td>' +
                                 // '<td>' + value.payment_channel + '</td>' +
                                 '<td>' + value.category + '</td>' +
                                 '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>' +
-                                '<td>' + value.date + '</td>';
+                                '<td>' + d_date.toLocaleDateString("en-US") + '</td>';
 
                             if (value.posted == 1) {
                                 div += '<td><a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
@@ -261,9 +262,11 @@
                                 div += '<td><a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
                             }
 
+
                             div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
                                 '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
                                 '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
+                                '<input type="hidden" id="date_' + i + '" value="' + value.date + '">' +
                                 '</td>' +
                                 '</tr>';
 
@@ -285,6 +288,7 @@
                             // $('#account_id_2').select2();
                             $('#paymentEntryModal').modal('toggle');
                             $('#payment_entry_title').html("Accept Transaction ");
+                            $('#date').val($("#date_" + curId).val());
                             $('#payment_payee').val($("#payee_" + curId).val());
                             $('#payment_amount').val($("#amount_" + curId).val());
                             $('#plaid_trans_id').val($("#transid_" + curId).val());

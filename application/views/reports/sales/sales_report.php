@@ -96,7 +96,7 @@
             ?>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h2 class="page-header lead"><span id="print_title"><?php echo ucfirst($sale_type) . ' Sale '; ?> Report From <strong><?php echo date('d-m-Y', strtotime($from_date)) . ' To ' . date('d-m-Y', strtotime($to_date)); ?></strong></h2></span>
+                        <h2 class="page-header lead"><span id="print_title"><?php echo ucfirst($sale_type) . ' Sale '; ?> Report From <strong><?php echo date('m/d/Y', strtotime($from_date)) . ' To ' . date('m/d/Y', strtotime($to_date)); ?></strong></h2></span>
                     </div>
                     <!-- /.col-sm-12 -->
                 </div>
@@ -128,7 +128,7 @@
 
                                     foreach ($sales_report as $key => $list) {
                                         // echo '<td>'.form_checkbox('p_id[]',$list['id'],false).'</td>';
-                                        echo '<td>' . date('d-m-Y', strtotime($list['sale_date'])) . '</td>';
+                                        echo '<td>' . date('m/d/Y', strtotime($list['sale_date'])) . '</td>';
                                         echo '<td>' . anchor('trans/C_sales/receipt/' . $list['invoice_no'], $list['invoice_no'], 'target="_blank"') . '</td>';
                                         echo '<td>' . $this->M_customers->get_CustomerName($list['customer_id']) . '</td>';
                                         echo '<td>' . $this->M_employees->get_empName($list['employee_id']) . '</td>';
@@ -267,7 +267,7 @@
                     <div class="col-sm-12">
                         <h2 class="page-header lead"><span id="print_title">
                                 <?php echo @$this->M_employees->get_empName($customerWise_sales_report[0]['employee_id']) ?>
-                                Customer Wise Sales Summary From <strong><?php echo date('d-m-Y', strtotime($from_date)) . ' To ' . date('d-m-Y', strtotime($to_date)); ?></strong></h2></span>
+                                Customer Wise Sales Summary From <strong><?php echo date('m/d/Y', strtotime($from_date)) . ' To ' . date('m/d/Y', strtotime($to_date)); ?></strong></h2></span>
                     </div>
                     <!-- /.col-sm-12 -->
                 </div>
@@ -391,7 +391,7 @@
                     <div class="col-sm-12">
                         <h2 class="page-header lead">
                             <span id="print_title"><?php echo $this->M_employees->get_empName($productWise_sales_report[0]['employee_id']) ?>&nbsp;Product Wise Summary From <strong>
-                                    <?php echo date('d-m-Y', strtotime($from_date)) . ' To ' . date('d-m-Y', strtotime($to_date)); ?>
+                                    <?php echo date('m/d/Y', strtotime($from_date)) . ' To ' . date('m/d/Y', strtotime($to_date)); ?>
                                 </strong>
                             </span>
                         </h2>
@@ -594,7 +594,7 @@
                     <div class="col-sm-12">
                         <h2 class="page-header lead">
                             <span id="print_title"><?php echo $this->M_employees->get_empName($categoryWise_sales_report[0]['employee_id']) ?>Category Wise Summary From <strong>
-                                    <?php echo date('d-m-Y', strtotime($from_date)) . ' To ' . date('d-m-Y', strtotime($to_date)); ?>
+                                    <?php echo date('m/d/Y', strtotime($from_date)) . ' To ' . date('m/d/Y', strtotime($to_date)); ?>
                                 </strong>
                             </span>
                         </h2>
