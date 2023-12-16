@@ -38,7 +38,7 @@
             } else {
                 echo anchor('pos/C_invoices/index/' . $sale_type, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
             }
-            
+
             ?>
 
         <div class="portlet">
@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
                         <?php
-                        
+
                         $sno = 1;
                         foreach ($sales as $key => $list) {
                             $total = ($list['total_amount'] + $list['total_tax']);
@@ -90,7 +90,7 @@
                             echo '<td>';
                             echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/editSales/' . $list['invoice_no'] . '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
                                     | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>
-                                    | <a href="'. site_url($langs) .'/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/send_email_inv/'. $list['customer_id'] . '/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to email invoice?\')"; title="Email Invoice">Email</a>
+                                    | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/send_email_inv/' . $list['customer_id'] . '/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to email invoice?\')"; title="Email Invoice">Email</a>
                                     | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
                             echo '</td>';
                             echo '</tr>';
@@ -107,7 +107,7 @@
                             <th class="text-right"></th>
                             <th class="text-right"></th>
                             <th></th>
-                            
+
                         </tr>
                     </tfoot>
                 </table>

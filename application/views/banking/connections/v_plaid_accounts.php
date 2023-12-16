@@ -34,7 +34,7 @@
                 Below is a list of all your connected banks. Click on a bank to view its associated accounts.
                 </p>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
 
                         <?php foreach ($plaidItems as $values) {
                         ?>

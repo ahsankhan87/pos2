@@ -445,7 +445,6 @@ class C_invoices extends MY_Controller
         print_r(json_encode($data));
     }
 
-
     function getSalesJSON($invoice_no)
     {
         $data = $this->M_invoices->get_sales_by_invoice($invoice_no);
@@ -794,7 +793,7 @@ class C_invoices extends MY_Controller
         $this->load->model('stripe/M_stripe');
         $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
         $total_in_cents = bcmul($total, 100);
-        $application_fee = ($total*4.4 /100);
+        $application_fee = ($total * 4.4 / 100);
         $application_fee_in_cent = bcmul($application_fee, 100);
         $paymentLink = $this->M_stripe->create_payment_link($stripe_acct_id, $invoice_no, $total_in_cents, 1, $application_fee_in_cent);
         //
@@ -816,15 +815,28 @@ class C_invoices extends MY_Controller
                 $mail->AddStringAttachment($pdf_invoice, $invoice_no . '.pdf', 'base64', 'application/pdf'); //Filename is optional
                 //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
 
-                $mail->Subject = "Payment Request for " . strtoupper(lang("invoice") . "#" . $invoice_no);
-                $body = "<p>" . lang('dear') . " " . $customer[0]['store_name'] . ",</p>";
-                $body .= "<p><i>" . lang('epdf_para_1') . "</i></p>";
-                $body .= "<p>" . lang('epdf_para_2') . "</p>";
-                $body .= "<p>" . lang('epdf_para_3') . "</p>";
-                $body .= "<p>" . lang('epdf_para_4') . "</p>";
-                $body .= '<p>please click the following link to pay your invoice: <a href="' . $paymentLink . '" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a></p>';
-                $body .= "<p>\n" . lang('best_regards') . "</p>";
-                $body .= "<p>" . $Company[0]['name'] . "</p>";
+                $mail->Subject = "New invoice from " . $Company[0]['name'] . " #" . $invoice_no;
+
+                // $body = "<p>" . lang('dear') . " " . $customer[0]['store_name'] . ",</p>";
+                // $body .= "<p><i>" . lang('epdf_para_1') . "</i></p>";
+                // $body .= "<p>" . lang('epdf_para_2') . "</p>";
+                // $body .= "<p>" . lang('epdf_para_3') . "</p>";
+                // $body .= "<p>" . lang('epdf_para_4') . "</p>";
+                // $body .= '<p>please click the following link to pay your invoice: <a href="' . $paymentLink . '" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a></p>';
+                // $body .= "<p>\n" . lang('best_regards') . "</p>";
+                // $body .= "<p>" . $Company[0]['name'] . "</p>";
+
+                $data['store_name'] = $customer[0]['store_name'];
+                $data['company_name'] = $Company[0]['name'];
+                $data['invoice_no'] = $invoice_no;
+                $data['payment_link'] = $paymentLink;
+                $data['total_amount'] = number_format($total, 2);
+                $data['due_date'] = $sales_items[0]["due_date"];
+                $data['to_email'] = $customer[0]['email'];
+                $data['from_email'] = $Company[0]['email'];
+
+                //load the html invoice template
+                $body = $this->load->view('pos/sales/v_email_invoice_template', $data, TRUE);
 
                 $mail->Body = $body;
 
