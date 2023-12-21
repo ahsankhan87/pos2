@@ -40,7 +40,7 @@ class Plaid extends CI_Model
             "secret" => getenv('PLAID_SECRET'),
             "client_name" => "Plaid Test App",
             "user" => ["client_user_id" => "user-id"],
-            "products" => ["identity"],
+            "products" => ["identity", "transactions"],
             "country_codes" => ["US"],
             "language" => "en",
             "webhook" => "https://webhook.example.com",
@@ -191,7 +191,7 @@ class Plaid extends CI_Model
         return $this->Http_verbs->post($uri, $headers, $post_fields);
     }
 
-    function transaction_sync($plaid_access_token)
+    function transaction_sync($plaid_access_token, $cursor = '')
     {
         $url = getenv('PLAID_HOST');
         $api = "/transactions/sync";
@@ -208,8 +208,8 @@ class Plaid extends CI_Model
             "client_id" => getenv('PLAID_CLIENT_ID'),
             "secret" => getenv('PLAID_SECRET'),
             "access_token" => $plaid_access_token,
-            "count" => 50,
-
+            "count" => 250,
+            "cursor" => $cursor,
         ];
 
         return $this->Http_verbs->post($uri, $headers, $post_fields);

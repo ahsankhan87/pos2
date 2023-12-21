@@ -14,17 +14,16 @@ class M_institution extends CI_Model
         if ($plaid_item_id === FALSE) {
             $this->db->where('company_id', $_SESSION['company_id']);
             $query = $this->db->get('pos_plaid_items');
-        }else{
-            $options = array('plaid_item_id'=> $plaid_item_id,'company_id'=> $_SESSION['company_id']);
-            $query = $this->db->get_where('pos_plaid_items',$options);
-        
-        }
-
-        if ($query->num_rows() > 0) {
-            return $query->result_array();
         } else {
-            return '';
+            $options = array('plaid_item_id' => $plaid_item_id, 'company_id' => $_SESSION['company_id']);
+            $query = $this->db->get_where('pos_plaid_items', $options);
         }
+        return $query->result_array();
+        // if ($query->num_rows() > 0) {
+        //     return $query->result_array();
+        // } else {
+        //     return '';
+        // }
     }
 
     function retrieveAccountsByItemID($item_id)
@@ -42,7 +41,9 @@ class M_institution extends CI_Model
     function retrieveTransactionsByAccountID($account_id)
     {
         $this->db->where(array('account_id' => $account_id, 'company_id' => $_SESSION['company_id']));
+        $this->db->order_by('date desc');
         $query = $this->db->get('pos_plaid_transactions');
+
 
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -130,5 +131,11 @@ class M_institution extends CI_Model
         $this->db->delete('pos_plaid_items', array('plaid_item_id' => $item_id));
 
         $this->db->trans_complete();
+    }
+
+    public function updateItemTransactionsCursor($itemId, $transactionsCursor)
+    {
+        $query = $this->db->update('pos_plaid_items', array('transactions_cursor' => $transactionsCursor), array('plaid_item_id' => $itemId));
+        return $query;
     }
 }

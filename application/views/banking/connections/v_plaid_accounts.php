@@ -35,56 +35,58 @@
                 </p>
                 <div class="row">
                     <div class="col-md-12">
-
-                        <?php foreach ($plaidItems as $values) {
+                        <?php
+                        if (count($plaidItems) > 0) {
+                            foreach ($plaidItems as $values) {
                         ?>
-                            <!-- BEGIN Portlet PORTLET-->
-                            <div class="portlet">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-bank"></i><?php echo $values['institution_name']; ?>
-                                    </div>
-                                    <div class="tools">
-                                        <a href="javascript:;" class="expand"></a>
-                                        <!-- <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                <!-- BEGIN Portlet PORTLET-->
+                                <div class="portlet">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-bank"></i><?php echo $values['institution_name']; ?>
+                                        </div>
+                                        <div class="tools">
+                                            <a href="javascript:;" class="expand"></a>
+                                            <!-- <a href="#portlet-config" data-toggle="modal" class="config"></a>
                                         <a href="javascript:;" class="reload"></a> -->
+                                        </div>
+                                        <div class="actions">
+                                            <a href="#" class="refresh_transactions btn btn-success btn-sm" id="<?php echo '_' . $values['plaid_item_id'] ?>"><i class="fa fa-refresh"></i> Refresh</a>
+                                            <a href="<?php echo site_url($langs) . '/banking/C_connections/remove_plaid_item/' . $values['plaid_item_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure, you want to delete?')"><i class="fa fa-trash-o"></i> Remove</a>
+                                        </div>
                                     </div>
-                                    <div class="actions">
-                                        <a href="#" class="refresh_transactions btn btn-default btn-sm" id="<?php echo '_' . $values['plaid_item_id'] ?>"><i class="fa fa-refresh"></i> Refresh</a>
-                                        <a href="<?php echo site_url($langs) . '/banking/C_connections/remove_plaid_item/' . $values['plaid_item_id'] ?>" class="btn btn-default btn-sm" onclick="return confirm('Are you sure, you want to delete?')"><i class="fa fa-trash-o"></i> Remove</a>
+                                    <div class="portlet-body display-hide">
+
+                                        <?php
+                                        $palid_accounts = $this->M_institution->retrieveAccountsByItemID($values['plaid_item_id']);
+
+                                        foreach ($palid_accounts as $palid_accounts_values) {
+                                            echo '<table class="table">';
+                                            echo '<tbody>';
+
+                                            echo '<tr>';
+                                            echo '<td>';
+                                            echo $palid_accounts_values['name'];
+                                            echo '</br>';
+                                            echo ucfirst($palid_accounts_values['subtype']) . ' • Balance ' . $palid_accounts_values['iso_currency_code'] . ' ' . number_format($palid_accounts_values['current_balance'], 2);
+                                            echo '</td>';
+                                            echo '<td class="text-right">';
+                                            echo '<a href="#" class="view_transactions btn btn-default" id="viewTransactions_' . $palid_accounts_values['plaid_account_id'] . '">View Transactions</a>';
+                                            echo '</td>';
+                                            echo '</tr>';
+                                            echo '</tbody>';
+                                            echo '</table>';
+                                            echo '<div id="transactions_table_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
+                                        }
+
+                                        ?>
+                                        <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
+
                                     </div>
                                 </div>
-                                <div class="portlet-body display-hide">
-
-                                    <?php
-                                    $palid_accounts = $this->M_institution->retrieveAccountsByItemID($values['plaid_item_id']);
-
-                                    foreach ($palid_accounts as $palid_accounts_values) {
-                                        echo '<table class="table">';
-                                        echo '<tbody>';
-
-                                        echo '<tr>';
-                                        echo '<td>';
-                                        echo $palid_accounts_values['name'];
-                                        echo '</br>';
-                                        echo ucfirst($palid_accounts_values['subtype']) . ' • Balance ' . $palid_accounts_values['iso_currency_code'] . ' ' . number_format($palid_accounts_values['current_balance'], 2);
-                                        echo '</td>';
-                                        echo '<td class="text-right">';
-                                        echo '<a href="#" class="view_transactions btn btn-default" id="viewTransactions_' . $palid_accounts_values['plaid_account_id'] . '">View Transactions</a>';
-                                        echo '</td>';
-                                        echo '</tr>';
-                                        echo '</tbody>';
-                                        echo '</table>';
-                                        echo '<div id="transactions_table_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
-                                    }
-
-                                    ?>
-                                    <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
-
-                                </div>
-                            </div>
-                            <!-- END Portlet PORTLET-->
-                        <?php } ?>
+                                <!-- END Portlet PORTLET-->
+                        <?php }
+                        } ?>
                         <!-- END Portlet PORTLET-->
                     </div>
                 </div>
@@ -158,8 +160,8 @@
                         });
                         ////////////
 
-
-                        window.location.href = site_url + "banking/C_connections";
+                        location.reload();
+                        // window.location.href = site_url + "banking/C_connections";
 
                     });
 
@@ -327,7 +329,7 @@
                             if (data == '1') {
                                 toastr.success("transaction saved successfully", 'Success');
                                 $('#paymentEntryModal').modal('toggle');
-                                // get_transaction_list(account_id); // load again 
+                                get_transaction_list(account_id); // load again 
                                 location.reload();
                             } else {
                                 toastr.error("transaction not saved, please try again.", 'Error');

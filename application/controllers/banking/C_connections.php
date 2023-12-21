@@ -181,12 +181,12 @@ class C_connections extends MY_Controller
     function store_access_token()
     {
         $access_token = $this->input->post('access_token');
-        $item_id = $this->input->post('item_id');
+        $plaid_item_id = $this->input->post('item_id');
 
         //insert plaid items, accounts and trasactions data into database
         $this->insert_plaid_items($access_token);
-        $this->insert_plaid_accounts($item_id, $access_token);
-        $this->insert_plaid_transactions_month($access_token);
+        $this->insert_plaid_accounts($plaid_item_id, $access_token);
+        $this->insert_plaid_transactions_sync($plaid_item_id, $access_token);
     }
 
     public function insert_plaid_items($plaid_access_token)
@@ -217,7 +217,7 @@ class C_connections extends MY_Controller
         }
     }
 
-    public function insert_plaid_accounts($item_id, $plaid_access_token)
+    public function insert_plaid_accounts($plaid_item_id, $plaid_access_token)
     {
         $plaidResponse = json_decode($this->Plaid->get_accounts($plaid_access_token), true);
         // echo '<pre>';
@@ -230,7 +230,7 @@ class C_connections extends MY_Controller
                 $bankData = array(
                     'user_id' => $_SESSION['user_id'],
                     'company_id' => $_SESSION['company_id'],
-                    'item_id' => $item_id,
+                    'item_id' => $plaid_item_id,
                     'plaid_account_id' => $values['account_id'],
                     'name' => $values['name'],
                     'mask' => $values['mask'],
@@ -247,6 +247,72 @@ class C_connections extends MY_Controller
             }
         }
     }
+    public function insert_plaid_transactions_sync($plaid_item_id, $plaid_access_token, $transactions_cursor = '')
+    {
+        $plaidResponse = json_decode($this->Plaid->transaction_sync($plaid_access_token, $transactions_cursor), true);
+
+        //echo '<pre>';
+        // echo $plaid_access_token;
+        // echo var_dump($plaidResponse);
+        // echo '</pre>';
+        //return;
+
+        foreach ($plaidResponse['added'] as $values) {
+            if (!$this->M_institution->is_plaid_transaction_exist($values['transaction_id'])) {
+                $bankData = array(
+                    // 'user_id' => $_SESSION['user_id'],
+                    'company_id' => $_SESSION['company_id'],
+                    'plaid_transaction_id' => $values['transaction_id'],
+                    'account_id' => $values['account_id'],
+                    'plaid_category_id' => $values['category_id'],
+                    'category' => json_encode($values['category']),
+                    // 'subcategory' => $values['subcategory'],
+                    'name' => $values['name'],
+                    'amount' => $values['amount'],
+                    'iso_currency_code' => $values['iso_currency_code'],
+                    'unofficial_currency_code' => $values['unofficial_currency_code'],
+                    'type' => $values['transaction_type'],
+                    'pending' => $values['pending'],
+                    'account_owner' => $values['account_owner'],
+                    'date' => $values['date'],
+
+                );
+
+                $this->M_institution->insert_plaid_transactions($bankData);
+            }
+        }
+
+        foreach ($plaidResponse['modified'] as $values) {
+            if (!$this->M_institution->is_plaid_transaction_exist($values['transaction_id'])) {
+                $bankData = array(
+                    // 'user_id' => $_SESSION['user_id'],
+                    'company_id' => $_SESSION['company_id'],
+                    'plaid_transaction_id' => $values['transaction_id'],
+                    'account_id' => $values['account_id'],
+                    'plaid_category_id' => $values['category_id'],
+                    'category' => json_encode($values['category']),
+                    // 'subcategory' => $values['subcategory'],
+                    'name' => $values['name'],
+                    'amount' => $values['amount'],
+                    'iso_currency_code' => $values['iso_currency_code'],
+                    'unofficial_currency_code' => $values['unofficial_currency_code'],
+                    'type' => $values['transaction_type'],
+                    'pending' => $values['pending'],
+                    'account_owner' => $values['account_owner'],
+                    'date' => $values['date'],
+
+                );
+
+                $this->M_institution->insert_plaid_transactions($bankData);
+            }
+        }
+
+        //update transaction cursor
+        $this->M_institution->updateItemTransactionsCursor($plaid_item_id, $plaidResponse['next_cursor']);
+        ////
+        echo json_encode($plaidResponse);
+    }
+
     public function insert_plaid_transactions_month($plaid_access_token, $month = "-3 month", $refresh = false)
     {
         $start_date = date("Y-m-d", strtotime($month));
@@ -288,9 +354,11 @@ class C_connections extends MY_Controller
 
     function plaid_transaction_refresh($plaid_item_id)
     {
-        $access_token = $this->M_institution->retrieveItemsByPlaidItemID($plaid_item_id)[0]['plaid_access_token'];
+        $data = $this->M_institution->retrieveItemsByPlaidItemID($plaid_item_id);
+        $access_token = $data[0]['plaid_access_token'];
+        $transactions_cursor = $data[0]['transactions_cursor'];
 
-        echo  $this->insert_plaid_transactions_month($access_token);
+        echo  $this->insert_plaid_transactions_sync($plaid_item_id, $access_token, $transactions_cursor);
         //redirect('banking/C_connections/get_transaction_sync/' . $plaid_item_id);
     }
 
