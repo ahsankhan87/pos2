@@ -354,7 +354,7 @@ class C_entries extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    function delete($id, $entry_id)
+    function delete($id, $entry_id = '')
     {
         $this->db->trans_start();
 
