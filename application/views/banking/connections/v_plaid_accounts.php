@@ -63,7 +63,6 @@
                                         foreach ($palid_accounts as $palid_accounts_values) {
                                             echo '<table class="table">';
                                             echo '<tbody>';
-
                                             echo '<tr>';
                                             echo '<td>';
                                             echo $palid_accounts_values['name'];
@@ -76,12 +75,12 @@
                                             echo '</tr>';
                                             echo '</tbody>';
                                             echo '</table>';
+                                            echo '<div class="note note-success trans_note" id="note_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
                                             echo '<div id="transactions_table_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
                                         }
 
                                         ?>
                                         <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
-
                                     </div>
                                 </div>
                                 <!-- END Portlet PORTLET-->
@@ -196,6 +195,7 @@
         const start_date = '<?php echo date("Y-m-d", strtotime("-3 month")) ?>';
         const end_date = '<?php echo date("Y-m-d") ?>';
         $(".loader").hide();
+        $('.note').hide();
 
         $('.view_transactions').on('click', function(e) {
             var cur_plaidAccountId = this.id.split("_")[1];
@@ -237,6 +237,7 @@
                         div += '<table class="table table-condenced">' +
                             '<thead>' +
                             '<tr>' +
+                            '<th></th>' +
                             '<th>Name</th>' +
                             '<th>Category</th>' +
                             '<th class="text-right">Amount</th>' +
@@ -249,9 +250,13 @@
                         $.each(json_response, function(index, value) {
 
                             grand_total += -value.amount;
-                            var d_date = new Date(value.date);;
+                            var d_date = new Date(value.date);
 
                             div += '<tr>' +
+                                '<td>' +
+                                '<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -value.amount + '" id="transID_' + value.plaid_transaction_id + '" ' + (value.posted == 1 ? 'disabled' : '') + '/>' +
+                                '</td>' +
+
                                 '<td>' + value.name + '</td>' +
                                 // '<td>' + value.payment_channel + '</td>' +
                                 '<td>' + value.category + '</td>' +
@@ -264,10 +269,10 @@
                                 div += '<td><a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
                             }
 
-
                             div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
                                 '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
                                 '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
+                                '<input type="hidden" id="plaidAccountId_' + i + '" value="' + value.account_id + '">' +
                                 '<input type="hidden" id="date_' + i + '" value="' + value.date + '">' +
                                 '</td>' +
                                 '</tr>';
@@ -294,10 +299,44 @@
                             $('#payment_payee').val($("#payee_" + curId).val());
                             $('#payment_amount').val($("#amount_" + curId).val());
                             $('#plaid_trans_id').val($("#transid_" + curId).val());
+                            $('#plaid_account_id').val($("#plaidAccountId_" + curId).val());
 
                         });
-                        ///////////////
 
+
+                        //GET transaction Amount from the selected checkboxes
+                        $('.checkboxes').on('click', function(e) {
+                            //var cur_plaidAccountId = $(this).id.split("_")[1];
+                            var arr = [];
+                            var total = 0;
+                            $.each($("input[name='chkbox_plaid_trans_id']:checked"), function() {
+                                arr.push(this.id.split("_")[1]);
+                                total += parseFloat($(this).val());
+                                // $('input[name=""]').val($("#transid_" + curId).val());
+                            });
+                            // console.log(total);
+                            $('#note_' + account_id).show();
+                            $('#note_' + account_id).html(arr.length + ' money out transactions: ' + total.toFixed(3) + ' <a id="group_accept" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>');
+                            //console.log("Your selected languages are: " + arr.join(", "));
+
+                            $('.payment_entry').on('click', function(e) {
+                                var curId = this.id.split("_")[1];
+
+                                accountsDDL();
+                                // $('#account_id').select2();
+                                // $('#account_id_2').select2();
+                                $('#paymentEntryModal').modal('toggle');
+                                $('#payment_entry_title').html("Accept Transaction ");
+                                $('#date').val(end_date);
+                                // $('#payment_payee').val($("#payee_" + curId).val());
+                                $('#payment_amount').val(total.toFixed(3));
+                                $('#plaid_trans_id').val(arr.join(", "));
+                                $('#plaid_account_id').val(account_id);
+
+
+                            });
+                        });
+                        ///////////////////
                     }
 
                 },
@@ -311,10 +350,10 @@
         ///////////////////
         $("#payment_entry_form").on("submit", function(e) {
             var formValues = $(this).serialize();
+            var plaid_account_id = $('input[name=plaid_account_id]').val();
             //console.log(formValues);
-            // alert(formValues);
-            var submit_btn = document.activeElement.id;
-            // return false;
+            // var submit_btn = document.activeElement.id;
+            //return false;
 
             var confirmSale = confirm('Are you sure you want to accept transaction?');
 
@@ -329,8 +368,11 @@
                             if (data == '1') {
                                 toastr.success("transaction saved successfully", 'Success');
                                 $('#paymentEntryModal').modal('toggle');
-                                get_transaction_list(account_id); // load again 
-                                location.reload();
+                                get_transaction_list(plaid_account_id); // load again 
+                                $('#note_' + plaid_account_id).html();
+                                $('#note_' + plaid_account_id).hide();
+                                //console.log('account id ' + plaid_account_id);
+                                //location.reload();
                             } else {
                                 toastr.error("transaction not saved, please try again.", 'Error');
                             }
@@ -381,6 +423,7 @@
             });
         });
         ///////////////////
+
         ////////////////////////
         //GET Accounts DROPDOWN LIST
         function accountsDDL(index = 0) {
@@ -451,6 +494,7 @@
                                 <td width="25%"><select class="form-control " id="account_id_2" name="account_id_2"></select></td>
                                 <td class=""><input type="text" readonly class="form-control" id="payment_amount" name="payment_amount" autocomplete="off">
                                     <input type="hidden" name="plaid_trans_id" id="plaid_trans_id">
+                                    <input type="hidden" name="plaid_account_id" id="plaid_account_id">
                                 </td>
                             </tr>
                         </tbody>

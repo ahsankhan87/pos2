@@ -149,7 +149,11 @@ class C_connections extends MY_Controller
             $data1 = array(
                 'posted' => 1,
             );
-            $this->db->update('pos_plaid_transactions', $data1, array('plaid_transaction_id' =>  $plaid_trans_id, 'company_id' => $_SESSION['company_id']));
+
+            $str = explode(", ", $plaid_trans_id); // split trans id into array and save in db
+            foreach ($str as $values) {
+                $this->db->update('pos_plaid_transactions', $data1, array('plaid_transaction_id' =>  $values, 'company_id' => $_SESSION['company_id']));
+            }
 
             //for logging
             $msg = 'invoice no ' . $new_invoice_no;
