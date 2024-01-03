@@ -793,7 +793,7 @@ class C_invoices extends MY_Controller
         $this->load->model('stripe/M_stripe');
         $stripe_acct_id = $this->M_stripe->get_stripe_acct_id();
         $total_in_cents = bcmul($total, 100);
-        $application_fee = ($total * 4.4 / 100);
+        $application_fee = ($total * 3.9 / 100); //application fee is 3.9%
         $application_fee_in_cent = bcmul($application_fee, 100);
         $paymentLink = $this->M_stripe->create_payment_link($stripe_acct_id, $invoice_no, $total_in_cents, 1, $application_fee_in_cent);
         //

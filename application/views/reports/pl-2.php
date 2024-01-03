@@ -97,6 +97,42 @@
                     endforeach;
                     /////
                 }
+                echo '<tr>';
+                echo '<th>Gross Profit</th>';
+                echo '<td></td>';
+                echo '<th class="text-right">' . number_format($total, 2) . '</th>';
+                echo '</tr>';
+                $expense_total = 0;
+                foreach ($expenses as $key => $list) {
+                    echo '<tr><td colspan="3">';
+                    echo '<strong>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</strong>';
+                    echo '</td></tr>';
+
+                    ///////
+                    $pl_report = $this->M_reports->get_profit_loss($_SESSION['company_id'], $list['account_code'], $from_date, $to_date);
+                    foreach ($pl_report as $key => $values) :
+
+                        echo '<tr><td>';
+                        echo '&nbsp;&nbsp;';
+                        echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                        echo '</td>';
+                        $balance = $values['credit'] - $values['debit'];
+                        echo '<td class="text-right">';
+                        echo number_format($balance, 2);
+                        echo '</td>';
+                        $expense_total += $balance;
+                        $total += $balance;
+                        echo '<td class="text-right">';
+                        echo number_format($total, 2);
+                        echo '</td></tr>';
+                    endforeach;
+                    /////
+                }
+                echo '<tr>';
+                echo '<th>Total Expenses</th>';
+                echo '<th class="text-right">' . number_format($expense_total, 2) . '</th>';
+                echo '<td></td>';
+                echo '</tr>';
                 ?>
             </tbody>
             <tfoot>

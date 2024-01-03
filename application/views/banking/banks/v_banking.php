@@ -80,7 +80,7 @@
 
                             <?php
                                 echo '</td>';
-                                echo '<td><a href="' . site_url('banking/C_banking/bank_transactions/' . $list['id']) . '/' . $list['bank_acc_code'] . '">Transactions</a></td>';
+                                echo '<td><a href="' . site_url('banking/C_banking/bank_transactions/' . $list['id']) . '/' . $list['bank_acc_code'] . '" class="btn btn-primary">Transactions</a></td>';
 
                                 echo '</tr>';
                             }

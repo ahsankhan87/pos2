@@ -34,7 +34,21 @@ class M_reports extends CI_Model
         $this->db->join('account_types at', 'at.id=g.account_type_id');
         $this->db->where('g.company_id', $company_id);
         $this->db->where('g.level', 2);
-        $this->db->where_in('at.name', array("expense", 'cos', "revenue"));
+        $this->db->where_in('at.name', array('cos', "revenue"));
+
+        $query = $this->db->get('acc_groups g');
+        $data = $query->result_array();
+        return $data;
+    }
+
+    public function get_parentGroups4Expense($company_id)
+    {
+        $this->db->order_by('g.account_code', 'asc');
+        $this->db->select('g.title,g.title_ur,g.account_code,g.parent_code');
+        $this->db->join('account_types at', 'at.id=g.account_type_id');
+        $this->db->where('g.company_id', $company_id);
+        $this->db->where('g.level', 2);
+        $this->db->where_in('at.name', array("expense"));
 
         $query = $this->db->get('acc_groups g');
         $data = $query->result_array();
@@ -210,7 +224,7 @@ class M_reports extends CI_Model
         // $this->db->join('acc_entry_items ei', 'ei.account_code=g.account_code');
 
         $query = $this->db->get('acc_entry_items ei');
-        
+
         if ($data = $query->row()) {
             return $data->balance;
         } else {

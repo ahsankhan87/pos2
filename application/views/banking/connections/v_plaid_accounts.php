@@ -303,10 +303,13 @@
 
                         });
 
-
                         //GET transaction Amount from the selected checkboxes
                         $('.checkboxes').on('click', function(e) {
                             //var cur_plaidAccountId = $(this).id.split("_")[1];
+                            checkbox_change();
+                        });
+                        ///////////////////
+                        function checkbox_change() {
                             var arr = [];
                             var total = 0;
                             $.each($("input[name='chkbox_plaid_trans_id']:checked"), function() {
@@ -316,7 +319,7 @@
                             });
                             // console.log(total);
                             $('#note_' + account_id).show();
-                            $('#note_' + account_id).html(arr.length + ' money out transactions: ' + total.toFixed(3) + ' <a id="group_accept" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>');
+                            $('#note_' + account_id).html('<strong>' + arr.length + ' money out transactions: ' + total.toFixed(3) + ' <a id="group_accept" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a></strong>');
                             //console.log("Your selected languages are: " + arr.join(", "));
 
                             $('.payment_entry').on('click', function(e) {
@@ -335,8 +338,7 @@
 
 
                             });
-                        });
-                        ///////////////////
+                        }
                     }
 
                 },

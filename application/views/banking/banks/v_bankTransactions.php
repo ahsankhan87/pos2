@@ -31,11 +31,11 @@
                 </div>
             </div>
             <div class="portlet-body flip-scroll">
-
-                <table class="table table-striped table-condensed table-bordered flip-content" id="bank_trans_table">
+                <div class="note note-success trans_note" id="trans_note"></div>
+                <table class=" table table-striped table-condensed table-bordered flip-content" id="bank_trans_table">
                     <thead class="flip-content">
                         <tr>
-                            <th>Sr.#</th>
+                            <th><input type="checkbox" id="checkAll" name="checkAll" /></th>
                             <th>Date</th>
                             <th>Description</th>
                             <th class="text-right">Amount</th>
@@ -65,11 +65,14 @@
         const site_url = '<?php echo site_url($langs); ?>';
         const path = '<?php echo base_url(); ?>';
         const bank_acc_code = <?php echo str_replace("#", "", $bank_acc_code); ?>;
+        $(".loader").hide();
+        const cur_date = '<?php echo date("Y-m-d") ?>';
+        $('#trans_note').hide();
 
         $("#importForm").submit(function(event) {
             // Stop form from submitting normally
             event.preventDefault();
-
+            $(".loader").show();
             /* Serialize the submitted form control values to be sent to the web server with the request */
             var formData = new FormData(this);
             var files = $('.import_file')[0].files;
@@ -97,7 +100,10 @@
                         counter = index;
                         var d_date = new Date(value.date);;
 
-                        var div = '<tr><td>' + counter + '</td>' +
+                        var div = '<tr>' +
+                            '<td>' +
+                            '<input type="checkbox" class="checkboxes" name="chkbox_trans_id" value="' + value.amount + '" id="transID_' + counter + '" />' +
+                            '</td>' +
 
                             '<td>' + d_date.toLocaleDateString("en-US") + '</td>' +
                             '<td>' + value.description + '</td>' +
@@ -138,6 +144,47 @@
                     });
                     ///////////////
 
+                    $("#checkAll").click(function() {
+                        $('input:checkbox').not(this).prop('checked', this.checked);
+                        checkbox_change()
+                    });
+
+                    //GET transaction Amount from the selected checkboxes
+                    $('.checkboxes').on('click change', function(e) {
+                        //var cur_plaidAccountId = $(this).id.split("_")[1];
+                        checkbox_change()
+                    });
+
+                    function checkbox_change() {
+                        var arr = [];
+                        var total = 0;
+                        $.each($("input[name='chkbox_trans_id']:checked"), function() {
+                            arr.push(this.id.split("_")[1]);
+                            total += parseFloat($(this).val());
+                            // $('input[name=""]').val($("#transid_" + curId).val());
+                        });
+                        // console.log(total);
+                        $('#trans_note').show();
+                        $('#trans_note').html('<strong>' + arr.length + ' money out transactions: ' + total.toFixed(3) + ' <a id="group_accept" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a></strong>');
+                        //console.log("Your selected languages are: " + arr.join(", "));
+
+                        $('.payment_entry').on('click', function(e) {
+                            var curId = this.id.split("_")[1];
+
+                            accountsDDL(bank_acc_code);
+                            accountsDDL_2();
+                            // $('#account_id').select2();
+                            // $('#account_id_2').select2();
+                            $('#paymentEntryModal').modal('toggle');
+                            $('#payment_entry_title').html("Accept Transaction ");
+                            $('#date').val(cur_date);
+                            // $('#payment_payee').val($("#payee_" + curId).val());
+                            $('#amount').val(total.toFixed(3));
+
+
+                        });
+                    }
+                    ///////////////////
                 },
                 error: function(data) {
                     console.log("error");

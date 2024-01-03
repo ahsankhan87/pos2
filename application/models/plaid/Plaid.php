@@ -208,7 +208,7 @@ class Plaid extends CI_Model
             "client_id" => getenv('PLAID_CLIENT_ID'),
             "secret" => getenv('PLAID_SECRET'),
             "access_token" => $plaid_access_token,
-            "count" => 250,
+            "count" => 600,
             "cursor" => $cursor,
         ];
 
