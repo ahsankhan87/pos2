@@ -37,7 +37,10 @@
                     <div class="col-md-12">
                         <?php
                         if (count($plaidItems) > 0) {
+                            $i = 0;
                             foreach ($plaidItems as $values) {
+                                $palid_accounts = $this->M_institution->retrieveAccountsByItemID($values['plaid_item_id']);
+
                         ?>
                                 <!-- BEGIN Portlet PORTLET-->
                                 <div class="portlet">
@@ -51,14 +54,13 @@
                                         <a href="javascript:;" class="reload"></a> -->
                                         </div>
                                         <div class="actions">
-                                            <a href="#" class="refresh_transactions btn btn-success btn-sm" id="<?php echo '_' . $values['plaid_item_id'] ?>"><i class="fa fa-refresh"></i> Refresh</a>
+                                            <a href="#" class="refresh_transactions btn btn-success btn-sm" id="<?php echo '_' . $values['plaid_item_id'] ?>" data-plaid_account_id="<?php echo $palid_accounts[$i]['plaid_account_id']; ?>"><i class="fa fa-refresh"></i> Refresh</a>
                                             <a href="<?php echo site_url($langs) . '/banking/C_connections/remove_plaid_item/' . $values['plaid_item_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure, you want to delete?')"><i class="fa fa-trash-o"></i> Remove</a>
                                         </div>
                                     </div>
                                     <div class="portlet-body display-hide">
-
+                                        <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
                                         <?php
-                                        $palid_accounts = $this->M_institution->retrieveAccountsByItemID($values['plaid_item_id']);
 
                                         foreach ($palid_accounts as $palid_accounts_values) {
                                             echo '<table class="table">';
@@ -80,11 +82,12 @@
                                         }
 
                                         ?>
-                                        <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
+
                                     </div>
                                 </div>
                                 <!-- END Portlet PORTLET-->
                         <?php }
+                            $i++;
                         } ?>
                         <!-- END Portlet PORTLET-->
                     </div>
@@ -379,7 +382,7 @@
                                 toastr.error("transaction not saved, please try again.", 'Error');
                             }
 
-                            console.log(data);
+                            //console.log(data);
                         }
                     });
                 } else {
@@ -392,6 +395,7 @@
         //GET get_ponto_list_accounts
         $('.refresh_transactions').on('click', function(e) {
             var cur_plaidItemId = this.id.split("_")[1];
+            var plaid_account_id = $(this).data('plaid_account_id');
 
             $(".loader").show();
             $.ajax({
@@ -400,7 +404,7 @@
                 dataType: 'json', // added data type
                 success: function(json_response) {
                     //json_response = JSON.parse(response);
-                    console.log(json_response);
+                    //console.log(json_response);
 
                     if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
 
@@ -409,12 +413,12 @@
                         $('#modal_message').html(json_response.error_message);
 
                     } else {
-                        console.log('inside ' + json_response);
+                        //console.log('inside ' + json_response);
 
-                        get_transaction_list(account_id);
+                        get_transaction_list(plaid_account_id);
                         $(".loader").hide();
                         toastr.success("Latest transactions are fetched.", 'Success');
-                        location.reload();
+                        //location.reload();
                     }
 
                 },

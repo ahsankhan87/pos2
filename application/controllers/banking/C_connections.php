@@ -190,7 +190,8 @@ class C_connections extends MY_Controller
         //insert plaid items, accounts and trasactions data into database
         $this->insert_plaid_items($access_token);
         $this->insert_plaid_accounts($plaid_item_id, $access_token);
-        $this->insert_plaid_transactions_sync($plaid_item_id, $access_token);
+        // $this->insert_plaid_transactions_sync($plaid_item_id, $access_token);
+        $this->insert_plaid_transactions_month($access_token);
     }
 
     public function insert_plaid_items($plaid_access_token)
@@ -360,9 +361,9 @@ class C_connections extends MY_Controller
     {
         $data = $this->M_institution->retrieveItemsByPlaidItemID($plaid_item_id);
         $access_token = $data[0]['plaid_access_token'];
-        $transactions_cursor = $data[0]['transactions_cursor'];
-
-        echo  $this->insert_plaid_transactions_sync($plaid_item_id, $access_token, $transactions_cursor);
+        //$transactions_cursor = $data[0]['transactions_cursor'];
+        echo $this->insert_plaid_transactions_month($access_token);
+        // echo  $this->insert_plaid_transactions_sync($plaid_item_id, $access_token, $transactions_cursor);
         //redirect('banking/C_connections/get_transaction_sync/' . $plaid_item_id);
     }
 

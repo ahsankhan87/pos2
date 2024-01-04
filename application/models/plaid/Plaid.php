@@ -187,7 +187,6 @@ class Plaid extends CI_Model
             ]
         ];
 
-
         return $this->Http_verbs->post($uri, $headers, $post_fields);
     }
 
@@ -234,7 +233,7 @@ class Plaid extends CI_Model
             "start_date" => $start_date,
             "end_date" => $end_date,
             "options" => [
-                "count" => 250,
+                "count" => 600,
                 "offset" => 0,
                 "include_personal_finance_category" => true
             ]
