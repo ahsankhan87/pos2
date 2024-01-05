@@ -318,7 +318,7 @@
             $("#sale_table > tbody").empty();
             $('#top_net_total').html('');
             $('#customer_id').val('').trigger('change');
-            $('#deposit_to_acc_code').val('').trigger('change');
+            // $('#deposit_to_acc_code').val('').trigger('change');
 
             $('#business_address').val('');
             $('#description').val('');

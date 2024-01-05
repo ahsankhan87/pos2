@@ -109,6 +109,7 @@ class C_profitloss extends MY_Controller
     {
         $company_name = ucfirst($this->session->userdata("company_name"));
         $profit_loss = $this->M_reports->get_parentGroups4pl($_SESSION['company_id']);;
+        $expenses = $this->M_reports->get_parentGroups4Expense($_SESSION['company_id']);
 
         $langs = $this->session->userdata('lang');
 
@@ -149,7 +150,7 @@ class C_profitloss extends MY_Controller
         $pdf->Cell(40, 9, strtoupper(lang("total")), 1, 1, "C");
         $pdf->SetFont('DejaVu', '', 12);
 
-        $total = 0;
+        $gross_total = 0;
         //Display table product rows
 
         foreach ($profit_loss as $key => $values) {
@@ -163,7 +164,7 @@ class C_profitloss extends MY_Controller
             foreach ($pl_report as $key => $list) {
                 $balance = ($list['credit']) - ($list['debit']);
 
-                $total += $balance;
+                $gross_total += $balance;
                 $pdf->SetFont('DejaVu', '', 12);
                 $pdf->Cell(150, 9, ($langs == 'en' ? '   ' . $list['title'] : '   ' . $list['title_ur']), "LR", 0);
                 //$pdf->Cell(40, 9, '', "R", 0, "C");
@@ -182,10 +183,52 @@ class C_profitloss extends MY_Controller
 
         //Display table total row
         $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(150, 9, "Gross Profit", 1, 0, "");
+        //$pdf->Cell(30, 9, '', 1, 0, "R");
+        $pdf->Cell(40, 9, number_format($gross_total, 2), 1, 1, "R");
+        ///body
+
+        $total_expense = 0;
+        //Display table product rows
+
+        foreach ($expenses as $key => $values) {
+            $pl_report = $this->M_reports->get_profit_loss($_SESSION['company_id'], $values['account_code'], $from_date, $to_date);
+
+            $account_title = (count($pl_report) > 0 ? ($langs == 'en' ? $values['title'] : $values['title_ur']) : '');
+            $pdf->SetFont('DejaVuBold', 'B', 12);
+            $pdf->Cell(150, 9, $account_title, "LR", 0);
+            $pdf->Cell(40, 9, '', "R", 1, "R");
+
+            foreach ($pl_report as $key => $list) {
+                $balance = ($list['debit']) - ($list['credit']);
+
+                $total_expense += $balance;
+                $pdf->SetFont('DejaVu', '', 12);
+                $pdf->Cell(150, 9, ($langs == 'en' ? '   ' . $list['title'] : '   ' . $list['title_ur']), "LR", 0);
+                //$pdf->Cell(40, 9, '', "R", 0, "C");
+                //$pdf->Cell(30, 9, '', "R", 0, "R");
+                $pdf->Cell(40, 9, number_format($balance, 2), "R", 1, "R");
+            }
+        }
+
+        //Display table empty rows
+        for ($i = 0; $i < 0 - count($profit_loss); $i++) {
+            $pdf->Cell(150, 9, "", "LR", 0);
+            //$pdf->Cell(40, 9, "", "R", 0, "L");
+            //$pdf->Cell(30, 9, "", "R", 0, "R");
+            $pdf->Cell(40, 9, "", "R", 1, "R");
+        }
+        //Display table total row
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(150, 9, "Total Expenses", 1, 0, "");
+        //$pdf->Cell(30, 9, '', 1, 0, "R");
+        $pdf->Cell(40, 9, number_format($total_expense, 2), 1, 1, "R");
+
+        //Display table total row
+        $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(150, 9, lang("net_income"), 1, 0, "");
         //$pdf->Cell(30, 9, '', 1, 0, "R");
-        $pdf->Cell(40, 9, number_format($total, 2), 1, 1, "R");
-        ///body
+        $pdf->Cell(40, 9, number_format($gross_total - $total_expense, 2), 1, 1, "R");
 
         $pdf->Output();
     }
