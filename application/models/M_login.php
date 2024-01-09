@@ -77,7 +77,7 @@ class M_login extends CI_Model
                 //$expire_days = ceil(($rows['expire']-time())/60/60/24); 
                 if ($rows['expire'] == 0) {
                     $this->assign_session_values($rows);
-                    
+
                     if (isset($_SESSION['company_id']) && isset($_SESSION['user_id'])) {
                         //for logging
                         $msg = $this->input->post('username', true);
@@ -86,9 +86,7 @@ class M_login extends CI_Model
 
                         redirect('Dashboard/C_dashboard', 'refresh');
                     }
-                }
-                elseif ($rows['locked'] == 1) 
-                {
+                } elseif ($rows['locked'] == 1) {
 
                     if ($rows['expire'] < time()) {
                         $this->updateAppLock($rows['id']); //if expire time is less than cur time than set locked = 0
@@ -97,7 +95,7 @@ class M_login extends CI_Model
                     } else {
 
                         $this->assign_session_values($rows);
-                       
+
                         //////////////////////
 
                         if (isset($_SESSION['company_id']) && isset($_SESSION['user_id'])) {
@@ -120,24 +118,25 @@ class M_login extends CI_Model
         } else {
             $this->session->set_flashdata('error', 'Please username and password and try again!.');
             //redirect('C_login','refresh');
-            echo 'Please username and password and try again!.';
+            //echo 'Please username and password and try again!.';
         }
     }
-    
-    private function assign_session_values($rows){
-        
+
+    private function assign_session_values($rows)
+    {
+
         $_SESSION['company_id'] = $rows['id'];
         $_SESSION['company_name'] = $rows['name'];
         $_SESSION['time_zone'] = $rows['time_zone'];
         $_SESSION['multi_currency'] = $rows['is_multi_currency'];
-        
+
         //GET CURRENCY CODE AND SYMBOL
         $currency_query = $this->db->get_where('pos_currencies', array('id' => $rows['currency_id']));
         $currency = $currency_query->row_array();
         $_SESSION['home_currency_code'] = $currency['code'];
         $_SESSION['home_currency_symbol'] = $currency['symbol'];
         /////
-        
+
 
         //GIVE FINANCIAL YEARS TO SESSION AND THEN 
         //ASSIGN IT TO CONSTANT VARIABLES IN MY_CONTROLLER 

@@ -199,7 +199,7 @@ class m_entries extends CI_Model
         return $query->row()->invoice_no;
     }
 
-    function get_entry_by_invoiceNo($invoiceNo, $company_id, $limit = null)
+    function get_entry_by_invoiceNo($invoiceNo, $company_id, $limit = 1000)
     {
         $this->db->order_by('id', 'desc');
         $this->db->select('ei.*');
@@ -210,16 +210,16 @@ class m_entries extends CI_Model
         return $data;
     }
 
-    function get_entry_by_invoiceNo_1($invoiceNo, $company_id, $limit = null)
+    function get_entry_by_invoiceNo_1($invoiceNo, $company_id, $limit = 1000)
     {
         $this->db->order_by('id', 'desc');
         $this->db->select('ei.*,g.title,g.title_ur,g.title_ar, IFNULL(c.store_name,"") as customer_store_name,IFNULL(s.name,"") as supplier_name,IFNULL(b.bank_name,"") as bank_name');
-        $this->db->join('acc_entries e', 'e.id=ei.entry_id');
+        // $this->db->join('acc_entries e', 'e.id=ei.entry_id');
         $this->db->join('acc_groups g', 'g.account_code=ei.account_code', 'left');
         $this->db->join('pos_customers c', 'c.id=ei.ref_account_id', 'left');
         $this->db->join('pos_supplier s', 's.id=ei.ref_account_id', 'left');
         $this->db->join('pos_banking b', 'b.id=ei.ref_account_id', 'left');
-        $options = array('ei.invoice_no' => $invoiceNo, 'e.company_id' => $company_id, 'g.company_id' => $company_id);
+        $options = array('ei.invoice_no' => $invoiceNo, 'ei.company_id' => $company_id, 'g.company_id' => $company_id);
         $query = $this->db->get_where('acc_entry_items ei', $options, $limit);
         $data = $query->result_array();
         return $data;

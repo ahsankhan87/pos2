@@ -90,8 +90,8 @@ class C_receivings extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = lang('edit') . ' ' . lang('sales');
-        $data['main'] = lang('edit') . ' ' . lang('sales');
+        $data['title'] = lang('edit') . ' ' . lang('purchases');
+        $data['main'] = lang('edit') . ' ' . lang('purchases');
 
         $data['purchaseType'] = "cash"; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
         $data['invoice_no'] = $invoice_no;

@@ -33,13 +33,14 @@
         </div>
         
         </p> -->
-        <?php if ($purchaseType == "cash") {
-            echo anchor('trans/C_receivings/index/' . $purchaseType, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
-        } else {
-            echo anchor('trans/C_bills/index/' . $purchaseType, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
-        }
-        ?>
-
+        <p>
+            <?php if ($purchaseType == "cash") {
+                echo anchor('trans/C_receivings/index/' . $purchaseType, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
+            } else {
+                echo anchor('trans/C_bills/index/' . $purchaseType, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
+            }
+            ?>
+        </p>
 
         <div class="portlet">
             <div class="portlet-title">
@@ -101,13 +102,43 @@
 
                             echo '<td class="text-center"> <span class="' . $label . '">' . lang(strtolower($status)) . '</span></td>';
 
-                            echo '<td class="text-right">';
-                            if ($purchaseType == "credit" && $status != 'Paid') {
-                                echo '<a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/receivePayment/' . $list['supplier_id'] . '/' . $list['invoice_no'] . '">' . lang('payment') . '</a> | ';
-                            }
-                            echo '<a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/edit/' . $list['invoice_no'] . '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>';
-                            echo '| <a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>';
-                            echo '| <a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
+                            echo '<td>';
+                        ?>
+                            <div class="btn-group">
+                                <button id="btnGroupVerticalDrop3" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Action <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop3">
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/edit/' . $list['invoice_no'] . '" title="Edit Sales" >Edit</a>';
+
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php if ($purchaseType == "credit" && $status != 'Paid') {
+                                            echo '<a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/receivePayment/' . $list['supplier_id'] . '/' . $list['invoice_no'] . '">' . lang('payment') . '</a>';
+                                        } ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete">Delete</a>';
+
+                                        ?>
+                                    </li>
+
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/trans/' . ($purchaseType == "cash" ? "C_receivings" : "C_bills") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank">PDF</a>';
+
+
+                                        ?>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        <?php
+
                             echo '</td>';
                             echo '</tr>';
                         }

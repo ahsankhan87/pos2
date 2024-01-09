@@ -1,1 +1,6 @@
 /* here you can put your own css to customize and override the theme */
+.btn-primary {
+    color: #fff;
+    background-color: #003463 !important;
+    border-color: #095faa !important;
+}

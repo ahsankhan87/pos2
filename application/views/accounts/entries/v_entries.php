@@ -88,7 +88,10 @@ if (count(@$entries)) {
                                 echo '<td class="text-right">' . number_format($list['credit'], 2) . '</td>';
                                 echo '<td>' . $list['narration'] . '</td>';
                                 echo '<td>';
-                                echo '<span class="required text-danger"><a href="' . site_url('accounts/C_entries/delete/' . $list['id'] . '/' . $list['entry_id']) . '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete?\')"><i class="fa fa-trash-o fa-fw"></i></a></span>';
+                                echo '<a href="' . site_url($langs . '/accounts/C_entries/edit/' . $list['invoice_no']) . '" title="Edit"><i class="fa fa-pencil fa-fw"></i></a>';
+                                if (ucwords($inv_prefix) !== 'S' && ucwords($inv_prefix) !== 'R' && ucwords($inv_prefix) !== 'I') {
+                                    echo '| <a href="' . site_url($langs . '/accounts/C_entries/delete_by_invoice_no/' . $list['invoice_no']) . '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete?\')"><i class="fa fa-trash-o fa-fw text-danger"></i></a>';
+                                }
                                 echo '</td>';
 
                                 echo '</tr>';

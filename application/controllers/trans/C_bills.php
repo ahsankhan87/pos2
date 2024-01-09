@@ -56,8 +56,8 @@ class C_bills extends MY_Controller
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
-        $data['title'] = lang('edit') . ' ' . lang('sales');
-        $data['main'] = lang('edit') . ' ' . lang('sales');
+        $data['title'] = lang('edit') . ' ' . lang('bills');
+        $data['main'] = lang('edit') . ' ' . lang('bills');
 
         $data['purchaseType'] = "credit"; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
         $data['invoice_no'] = $invoice_no;
@@ -117,6 +117,7 @@ class C_bills extends MY_Controller
 
             if (count((array)$this->input->post('account_id')) > 0) {
                 $this->db->trans_start();
+                // var_dump($_POST);
 
                 //IF EDIT THEN DELETE ALL INVOICES AND INSERT AGAIN
                 if ($edit != null) {
@@ -130,7 +131,7 @@ class C_bills extends MY_Controller
                     $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
                     $new_invoice_no = 'R' . $number;
                 }
-
+                $new_invoice_no;
                 //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
                 $user_id = $_SESSION['user_id'];
                 $company_id = $_SESSION['company_id'];
@@ -474,47 +475,49 @@ class C_bills extends MY_Controller
         echo json_encode($suppliersCurrency);
     }
 
-    public function delete($invoice_no)
+    public function delete($invoice_no, $redirect = true)
     {
         //if entry deleted then all item qty will be reversed
         $this->db->trans_start();
 
-        $receiving_items = $this->M_receivings->get_receiving_items($invoice_no);
-        //var_dump($receiving_items);
+        // $receiving_items = $this->M_receivings->get_receiving_items($invoice_no);
+        // //var_dump($receiving_items);
 
-        foreach ($receiving_items as $values) {
-            $total_stock =  $this->M_items->total_stock($values['item_id'], -1, -1);
-            $quantity = ($total_stock - $values['quantity_purchased']);
+        // foreach ($receiving_items as $values) {
+        //     $total_stock =  $this->M_items->total_stock($values['item_id'], -1, -1);
+        //     $quantity = ($total_stock - $values['quantity_purchased']);
 
-            $option_data = array(
-                'quantity' => $quantity,
-                //'unit_price' =>$values['item_unit_price'],
-                'avg_cost' => $this->M_items->getAvgCost($values['item_id'], $values['item_cost_price'], $values['quantity_purchased'], 0, 0, 'return') //calculate avg cost
+        //     $option_data = array(
+        //         'quantity' => $quantity,
+        //         //'unit_price' =>$values['item_unit_price'],
+        //         'avg_cost' => $this->M_items->getAvgCost($values['item_id'], $values['item_cost_price'], $values['quantity_purchased'], 0, 0, 'return') //calculate avg cost
 
-            );
-            $this->db->update('pos_items_detail', $option_data, array('id' => $values['item_id']));
+        //     );
+        //     $this->db->update('pos_items_detail', $option_data, array('id' => $values['item_id']));
 
 
-            //insert item info into inventory table
-            $data1 = array(
+        //     //insert item info into inventory table
+        //     $data1 = array(
 
-                'trans_item' => $values['item_id'],
-                'trans_comment' => 'KSRECV Deleted',
-                'trans_inventory' => $values['quantity_purchased'],
-                'company_id' => $_SESSION['company_id'],
-                'trans_user' => $_SESSION['user_id'],
-                'invoice_no' => $invoice_no
-            );
+        //         'trans_item' => $values['item_id'],
+        //         'trans_comment' => 'KSRECV Deleted',
+        //         'trans_inventory' => $values['quantity_purchased'],
+        //         'company_id' => $_SESSION['company_id'],
+        //         'trans_user' => $_SESSION['user_id'],
+        //         'invoice_no' => $invoice_no
+        //     );
 
-            $this->db->insert('pos_inventory', $data1);
-        }
+        //     $this->db->insert('pos_inventory', $data1);
+        // }
 
 
         $this->M_receivings->delete($invoice_no);
         $this->db->trans_complete();
 
-        $this->session->set_flashdata('message', 'Entry Deleted');
-        redirect('trans/C_bills/all', 'refresh');
+        if ($redirect === true) {
+            $this->session->set_flashdata('message', 'Entry Deleted');
+            redirect('trans/C_bills/all', 'refresh');
+        }
     }
 
     //Print Invoice in PDF

@@ -51,6 +51,8 @@ class C_login extends CI_Controller
     //verify username and password
     public function verify()
     {
+        $data = array('langs' => $this->session->userdata('lang'));
+
         $data['title'] = lang("login");
         //$data['nav_list'] = $this->M_category->get_category();
         $data['main'] = lang("login");
@@ -68,10 +70,10 @@ class C_login extends CI_Controller
     public function forget_password_email()
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $email = $this->input->post('email_forgot');
-            
+
             $user = $this->M_users->get_users_by_email($email);
 
             if (strlen(@$user[0]['email']) > 0) {
@@ -84,9 +86,9 @@ class C_login extends CI_Controller
                 $this->db->update('users', $data, array('email' => $email));
 
                 $subject = lang('email_subject');
-                $message = lang('first_para'). " " . site_url() . "tr/C_login/forget_password_reset/" . $verification_key . "
-                \n".lang('second_para')."\n".lang('username').":".@$user[0]['username']."\n\n".lang('third_para');
-                
+                $message = lang('first_para') . " " . site_url() . "tr/C_login/forget_password_reset/" . $verification_key . "
+                \n" . lang('second_para') . "\n" . lang('username') . ":" . @$user[0]['username'] . "\n\n" . lang('third_para');
+
                 $this->load->library('email');
 
                 $config['protocol'] = 'sendmail';
@@ -141,7 +143,7 @@ class C_login extends CI_Controller
         $data['forgot_pass_identity'] = $forgot_pass_identity;
 
         //$this->load->view('templates/header', $data);
-        $this->load->view('v_reset_password',$data);
+        $this->load->view('v_reset_password', $data);
         //$this->load->view('templates/footer');
     }
 }

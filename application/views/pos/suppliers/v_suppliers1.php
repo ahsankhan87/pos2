@@ -12,13 +12,11 @@
             echo '</div>';
         }
         ?>
-        <div class="row">
-            <div class="col-md-6">
-                <?php echo anchor('trans/C_suppliers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" id="sample_editable_1_new"'); ?>
-                <!-- <?php echo anchor('trans/C_suppliers/SupplierImport', 'Import Suppliers', 'class="btn btn-success"'); ?> -->
-            </div>
-        </div>
-        <br>
+        <p>
+            <?php echo anchor('trans/C_suppliers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" id=""'); ?>
+            <!-- <?php echo anchor('trans/C_suppliers/SupplierImport', 'Import Suppliers', 'class="btn btn-success"'); ?> -->
+        </p>
+
         <?php
         if (count($suppliers)) {
         ?>
@@ -51,31 +49,30 @@
                             <?php
                             $sno = 1;
                             foreach ($suppliers as $key => $list) {
-                                
+
                                 echo '<tr>';
                                 echo '<td>' . $list['id'] . '</td>';
                                 echo '<td><a href="' . site_url('trans/C_suppliers/supplierDetail/' . $list['id']) . '">' . $list['name'] . ' </a></td>';
                                 // echo '<td>' . $list['name'] . '</td>';
                                 echo '<td>' . $list['email'] . '</td>';
                                 echo '<td>' . $list['contact_no'] . '</td>';
-                                echo '<td>'.$list['address'].'</td>';
+                                echo '<td>' . $list['address'] . '</td>';
 
                                 echo '<td>';
                                 //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                             ?>
                                 <?php echo anchor('trans/C_suppliers/edit/' . $list['id'], '<i class="fa fa-pencil-square-o fa-fw"></i>', 'title="Edit"'); ?>
                                 | <a href="<?php echo site_url('trans/C_suppliers/delete/' . $list['id']) ?>" onclick="return confirm('Are you sure you want to permanent delete supplier and his account transactions?')" title="Permanent Delete"><i class="fa fa-trash-o fa-fw"></i></a>
-                                <!-- | <?php echo anchor('trans/C_suppliers/BS_form_pdf_report/' . $list['id'], 'BS','target="_blank"'); ?> -->
+                                <!-- | <?php echo anchor('trans/C_suppliers/BS_form_pdf_report/' . $list['id'], 'BS', 'target="_blank"'); ?> -->
 
-                          <?php
+                        <?php
                                 echo '</td>';
                                 echo '</tr>';
                             }
-                           
                         }
-                          ?>
+                        ?>
                         </tbody>
-                        </table>
+                    </table>
                 </div>
             </div>
     </div>

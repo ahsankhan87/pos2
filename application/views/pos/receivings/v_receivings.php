@@ -207,7 +207,7 @@
                 '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>' +
                 '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>' +
                 // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
-                '<td class="text-right"><input type="text" class="form-control description" id="description_' + counter + '" name="description[]" value=""  ></td>' +
+                '<td class="text-right"><textarea class="form-control description" id="description_' + counter + '" name="description[]" ></textarea></td>' +
                 '<td class="text-right tax" id="tax_' + counter + '"></td>' +
                 '<td class="text-right total" id="total_' + counter + '"></td>' +
                 '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';

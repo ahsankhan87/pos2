@@ -128,8 +128,10 @@
                             '<td>' + value.narration + '</td>';
 
 
-                        view_journal += '<td><a href="' + site_url + '/accounts/C_entries/edit/' + invoice_no + '" title="Edit"><i class="fa fa-pencil fa-fw"></i></a> |';
-                        view_journal += '<a href="' + site_url + '/accounts/C_entries/delete/' + value.id + '/' + value.entry_id + '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete? All entries associated with this entry will be deleted.\')"><i class="fa fa-trash-o fa-fw"></i></a></td>';
+                        view_journal += '<td><a href="' + site_url + '/accounts/C_entries/edit/' + invoice_no + '" title="Edit"><i class="fa fa-pencil fa-fw"></i></a>';
+                        if (inv_prefix.toUpperCase() !== 'S' && inv_prefix.toUpperCase() !== 'R' && inv_prefix.toUpperCase() !== 'I') {
+                            view_journal += '| <a href="' + site_url + '/accounts/C_entries/delete_by_invoice_no/' + invoice_no + '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete? All entries associated with this entry will be deleted.\')"><i class="fa fa-trash-o fa-fw text-danger"></i></a></td>';
+                        }
                         view_journal += '</tr>';
                         credit += parseFloat(value.debit);
                         debit += parseFloat(value.credit);

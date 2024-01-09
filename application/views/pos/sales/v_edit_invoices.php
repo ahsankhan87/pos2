@@ -13,20 +13,20 @@
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
-            
+
         </div>
         <!-- /.col-sm-12 -->
-        
+
         <div class="col-sm-2 text-right">
-            <div><?php echo lang('grand').' '.lang('total'); ?>:</div>
+            <div><?php echo lang('grand') . ' ' . lang('total'); ?>:</div>
             <div id="top_net_total"></div>
-            
+
         </div>
 
     </div>
     <div class="row">
         <div class="col-sm-10">
-    
+
             <label class="control-label col-sm-2" for=""><?php echo lang('deposit') . ' ' . lang('to') ?>:</label>
             <div class="col-sm-4">
                 <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
@@ -36,12 +36,12 @@
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="due_date" name="due_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
-            
+
         </div>
         <!-- /.col-sm-12 -->
-        
+
         <div class="col-sm-2 text-right">
-            
+
         </div>
 
     </div>
@@ -55,9 +55,9 @@
 
         </div>
         <!-- /.col-sm-12 -->
-        
+
         <div class="col-sm-2 text-right">
-            
+
         </div>
 
     </div>
@@ -72,7 +72,7 @@
                         <th>#</th>
                         <th><?php echo lang('product'); ?></th>
                         <th><?php echo lang('quantity'); ?></th>
-                        <th><?php echo lang('sale').' '.lang('price'); ?></th>
+                        <th><?php echo lang('sale') . ' ' . lang('price'); ?></th>
                         <th><?php echo lang('description'); ?></th>
                         <th><?php echo lang('tax'); ?></th>
                         <th><?php echo lang('sub_total'); ?></th>
@@ -86,43 +86,44 @@
                     <tr>
                         <th colspan="5" rowspan="3">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new"><?php echo lang('add_new'); ?></a>
-                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all"><?php echo lang('clear').' '.lang('all'); ?></a>
+                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all"><?php echo lang('clear') . ' ' . lang('all'); ?></a>
                             <!-- <textarea name="description" id="description" class="form-control" placeholder="Description" cols="5" rows="6"></textarea> -->
                         </th>
                         <th class="text-right"><?php echo lang('sub_total'); ?></th>
                         <th class="text-right" id="sub_total">0.00</th>
                         <th><input type="hidden" name="sub_total" id="sub_total_txt" value=""></th>
                     </tr>
-                    
+
                     <tr>
                         <th class="text-right"><select name="tax_rate" id="tax_rate" class="form-control"></select>
-                        <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value="">
-                        <input type="hidden" name="tax_id" id="tax_id_txt" value="">
+                            <input type="hidden" name="tax_acc_code" id="tax_acc_code_txt" value="">
+                            <input type="hidden" name="tax_id" id="tax_id_txt" value="">
                         </th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th class="text-right" ><?php echo lang('amount').' '.lang('received'); ?></th>
+                        <th class="text-right"><?php echo lang('amount') . ' ' . lang('received'); ?></th>
                         <th class="text-right" id="amount_received">0.00</th>
                         <th><input type="hidden" name="amount_received" id="amount_received_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php //echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); ?>
-                        <?php echo form_submit('', lang('update'), 'id="close" class="btn btn-success"'); ?></th>
-                        <th class="text-right" ><?php echo lang('grand').' '.lang('total'); ?></th>
+                        <th colspan="5"><?php //echo form_submit('', 'Save & New', 'id="new" class="btn btn-success"'); 
+                                        ?>
+                            <?php echo form_submit('', lang('update'), 'id="close" class="btn btn-success"'); ?></th>
+                        <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th>
                             <input type="hidden" name="net_total" id="net_total_txt" value="">
                             <input type="hidden" name="sale_type" id="sale_type" value="<?php echo $saleType; ?>">
-                    
+
                         </th>
                     </tr>
                 </tfoot>
             </table>
 
         </div>
-        
+
     </div><!-- close main_div here -->
 </form>
 <!-- Modal -->
@@ -130,7 +131,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo lang('add_new').' '.lang('customer'); ?></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo lang('add_new') . ' ' . lang('customer'); ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -144,7 +145,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="email"><?php echo lang('store').' '.lang('name'); ?>:</label>
+                        <label class="control-label col-sm-3" for="email"><?php echo lang('store') . ' ' . lang('name'); ?>:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="store_name" id="store_name" placeholder="" required="">
 
@@ -202,12 +203,12 @@
                 '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]"></select></td>' +
                 '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
                 '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" step="0.0001" autocomplete="off">' +
-                '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]">'+
-                '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>'+
-                '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>'+
-                '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>'+
+                '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]">' +
+                '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>' +
+                '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>' +
+                '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>' +
                 // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
-                '<td class="text-right"><input type="text" class="form-control description" id="description_' + counter + '" name="description[]" value=""  ></td>' +
+                '<td class="text-right"><textarea class="form-control description" id="description_' + counter + '" name="description[]" /></td>' +
                 '<td class="text-right tax" id="tax_' + counter + '"></td>' +
                 '<td class="text-right total" id="total_' + counter + '"></td>' +
                 '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
@@ -220,7 +221,7 @@
 
             qty_change();
             unit_price_change();
-            
+
             //GET TOTAL WHEN DISCOUNT CHANGE
             // $(".discount").on("keyup change", function(e) {
             //     var curId = this.id.split("_")[1];
@@ -239,7 +240,7 @@
                 var curId = this.id.split("_")[1];
                 var productid = $(this).val();
                 var qty = parseFloat($('#qty_' + curId).val());
-                var discount = 0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var discount = 0; // (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
                 var tax_rate = 0;
                 var unit_price = 0;
 
@@ -277,13 +278,13 @@
         });
         //$(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
 
-        function qty_change(){
+        function qty_change() {
             //GET TOTAL WHEN QTY CHANGE
             $(".qty").on("keyup change", function(e) {
                 var curId = this.id.split("_")[1];
                 var qty = parseFloat($(this).val());
                 var price = parseFloat($('#unitprice_' + curId).val());
-                var discount = 0;// (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var discount = 0; // (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
                 var total = (qty * price ? qty * price - discount : 0).toFixed(2);
                 $('#total_' + curId).text(total);
 
@@ -291,7 +292,7 @@
             });
         }
 
-        function unit_price_change(){
+        function unit_price_change() {
             //GET TOTAL WHEN UNIT PRICE CHANGE
             $(".unit_price").on("keyup change", function(e) {
                 var curId = this.id.split("_")[1];
@@ -315,11 +316,10 @@
         $(".clear_all").on("click", function() {
             clearall();
         });
-        
-        function clearall()
-        {
+
+        function clearall() {
             counter = 0;
-            const  date = new Date();
+            const date = new Date();
             calc_gtotal();
             $('#sub_total').html(parseFloat('0').toFixed(2));
             $('#total_discount').html(parseFloat('0').toFixed(2));
@@ -334,7 +334,7 @@
             $('#description').val('');
             $('#due_date').val();
 
-            $(".add_new").trigger("click");//add new line
+            $(".add_new").trigger("click"); //add new line
         }
 
         ///////////////////
@@ -371,15 +371,17 @@
         ///////////////////
         ////////////////////////
         //GET Accounts DROPDOWN LIST
-        function accountsDDL(index = 0,selected_acc_code="") {
+        function accountsDDL(index = 0, selected_acc_code = "") {
 
             let accounts_ddl = '';
-            var account_type = ['liability','equity','cos','revenue','expense','asset'];
+            var account_type = ['liability', 'equity', 'cos', 'revenue', 'expense', 'asset'];
             $.ajax({
                 url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
                 type: 'POST',
                 dataType: "JSON",
-                data: {account_types:account_type},
+                data: {
+                    account_types: account_type
+                },
                 cache: true,
                 success: function(data) {
                     //console.log(data);
@@ -388,7 +390,7 @@
 
                     $.each(data, function(index, value) {
 
-                        accounts_ddl += '<option value="' + value.account_code + '" '+(value.account_code == selected_acc_code ? "selected=''": "")+'>' + value.title + '</option>';
+                        accounts_ddl += '<option value="' + value.account_code + '" ' + (value.account_code == selected_acc_code ? "selected=''" : "") + '>' + value.title + '</option>';
 
                     });
 
@@ -416,15 +418,15 @@
 
             var tax_rate = $('#tax_rate').val();
             var amount_received = $('#amount_received_txt').val();
-            
-            total_tax = (tax_rate*total/100);
+
+            total_tax = (tax_rate * total / 100);
             amount_received = (amount_received ? amount_received : 0);
-            
+
             // $('.discount').each(function() {
             //     total_discount += (parseFloat($(this).val()) ? parseFloat($(this).val()) : 0);
             // });
             total_tax = (total_tax ? total_tax : 0);
-            net_total = (total + total_tax-amount_received ? total+total_tax-amount_received : 0);
+            net_total = (total + total_tax - amount_received ? total + total_tax - amount_received : 0);
             // net_total = (total - total_discount + total_tax ? total - total_discount + total_tax : 0);
 
             //ASSIGN VALUE TO TEXTBOXES
@@ -434,7 +436,7 @@
             $('#net_total_txt').val(parseFloat(net_total));
             /////////////
 
-            $('#top_net_total').html('<h2 style="margin:0">'+parseFloat(net_total).toLocaleString('en-US', 2)+'</h2>');
+            $('#top_net_total').html('<h2 style="margin:0">' + parseFloat(net_total).toLocaleString('en-US', 2) + '</h2>');
             $('#net_total').text(parseFloat(net_total).toLocaleString('en-US', 2));
             $('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
             $('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
@@ -448,36 +450,33 @@
             // alert(formValues);
             var submit_btn = document.activeElement.id;
             // return false;
-           
+
             var confirmSale = confirm('Are you absolutely sure you want to sale?');
-           
+
             if (confirmSale) {
-                
-                if(formValues.length > 0)
-                {
-                   $.ajax({
+
+                if (formValues.length > 0) {
+                    $.ajax({
                         type: "POST",
-                        url: site_url + "pos/"+module+"/sale_transaction/"+1+"/"+invoice_no,
+                        url: site_url + "pos/" + module + "/sale_transaction/" + 1 + "/" + invoice_no,
                         data: formValues,
                         success: function(data) {
-                            if(data == '1')
-                            {
-                                toastr.success("Invoice saved successfully",'Success');
-                                if(submit_btn == 'close')
-                                {
-                                    window.location.href = site_url+"pos/"+module+"/all";
+                            if (data == '1') {
+                                toastr.success("Invoice saved successfully", 'Success');
+                                if (submit_btn == 'close') {
+                                    window.location.href = site_url + "pos/" + module + "/all";
                                 }
                                 clearall();
-                                
-                            }else{
-                                toastr.error("Invoice not saved successfully",'Error');
+
+                            } else {
+                                toastr.error("Invoice not saved successfully", 'Error');
                             }
                             console.log(data);
                         }
                     });
-                }else{
-                        toastr.warning("Please select item",'Warning');
-                    }
+                } else {
+                    toastr.warning("Please select item", 'Warning');
+                }
             }
             e.preventDefault();
         });
@@ -486,32 +485,32 @@
         //customerDDL();
         ////////////////////////
         //GET customer DROPDOWN LIST
-        function customerDDL(customer_id='') {
+        function customerDDL(customer_id = '') {
 
-        let customer_ddl = '';
-        $.ajax({
-            url: site_url + "pos/C_customers/get_act_customers_JSON",
-            type: 'GET',
-            dataType: 'json', // added data type
-            success: function(data) {
-                //console.log(data);
-                let i = 0;
-                customer_ddl += '<option value="0">Select Customer</option>';
+            let customer_ddl = '';
+            $.ajax({
+                url: site_url + "pos/C_customers/get_act_customers_JSON",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    customer_ddl += '<option value="0">Select Customer</option>';
 
-                $.each(data, function(index, value) {
+                    $.each(data, function(index, value) {
 
-                    customer_ddl += '<option value="' + value.id + '" '+(value.id == customer_id ? "selected=''": "")+' >' + value.first_name+ '</option>';
+                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
 
-                });
+                    });
 
-                $('#customer_id').html(customer_ddl);
+                    $('#customer_id').html(customer_ddl);
 
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
         }
         ///////////////////
         $("#customerForm").submit(function(event) {
@@ -547,7 +546,7 @@
         //deposit_to_acc_codeDDL();
         ////////////////////////
         //GET deposit_to_acc_code DROPDOWN LIST
-        function deposit_to_acc_codeDDL(deposit_to_acc_code='') {
+        function deposit_to_acc_codeDDL(deposit_to_acc_code = '') {
 
             let deposit_to_acc_code_ddl = '';
             var account_type = ['asset'];
@@ -555,7 +554,9 @@
                 url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
                 type: 'POST',
                 dataType: "JSON",
-                data: {account_types:account_type},
+                data: {
+                    account_types: account_type
+                },
                 //dataType: 'json', // added data type
                 success: function(data) {
                     //console.log(data);
@@ -564,7 +565,7 @@
 
                     $.each(data, function(index, value) {
 
-                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '" '+(value.account_code == deposit_to_acc_code ? "selected=''": "")+'>' + value.title+ '</option>';
+                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '" ' + (value.account_code == deposit_to_acc_code ? "selected=''" : "") + '>' + value.title + '</option>';
 
                     });
 
@@ -581,7 +582,7 @@
         //taxDDL();
         ////////////////////////
         //GET customer DROPDOWN LIST
-        function taxDDL(tax_rate='') {
+        function taxDDL(tax_rate = '') {
 
             let taxDDL = '';
             $.ajax({
@@ -589,13 +590,13 @@
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(data) {
-                    
+
                     let i = 0;
                     taxDDL += '<option value="0">No Tax</option>';
 
                     $.each(data, function(index, value) {
 
-                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" '+(parseFloat(value.rate) == parseFloat(tax_rate) ? "selected=''": "")+' >' + value.name+ '</option>';
+                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" ' + (parseFloat(value.rate) == parseFloat(tax_rate) ? "selected=''" : "") + ' >' + value.name + '</option>';
 
                     });
 
@@ -612,7 +613,7 @@
         ////// LOAD TAX DROPDOWN CHANGE
         $('#tax_rate').on('change', function(event) {
             // event.preventDefault();
-            calc_gtotal();     
+            calc_gtotal();
             var account_code = $("#tax_rate option:selected").attr("account_code");
             var tax_id = $("#tax_rate option:selected").attr("tax_id");
             $("#tax_acc_code_txt").val(account_code);
@@ -620,25 +621,24 @@
             // console.log(account_code);
         });
 
-        function tax_changed(){
-            calc_gtotal();     
+        function tax_changed() {
+            calc_gtotal();
             var account_code = $("#tax_rate option:selected").attr("account_code");
             var tax_id = $("#tax_rate option:selected").attr("tax_id");
             $("#tax_acc_code_txt").val(account_code);
             $("#tax_id_txt").val(tax_id);
             // console.log(account_code);
         }
-        
+
         ///////////////////
         ////UPDATE PORTION
         //////////////////
         get_accounts_updates(invoice_no);
         //counter = 0;
-        function get_accounts_updates(invoice_no)
-        {
+        function get_accounts_updates(invoice_no) {
             //GET SALES 
             $.ajax({
-                url: site_url + "pos/C_invoices/getSalesJSON/"+invoice_no,
+                url: site_url + "pos/C_invoices/getSalesJSON/" + invoice_no,
                 type: 'GET',
                 dataType: "JSON",
                 //data: {account_types:account_type},
@@ -654,10 +654,10 @@
                         $('#sale_date').val(value.sale_date);
                         $('#amount_received').text(parseFloat(value.paid).toFixed(2));
                         $('#amount_received_txt').val(value.paid);
-                        
+
                     });
 
-                    
+
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -668,35 +668,35 @@
 
             //GET SALES ITEMS
             $.ajax({
-                url: site_url + "pos/C_invoices/getSalesItemsJSON/"+invoice_no,
+                url: site_url + "pos/C_invoices/getSalesItemsJSON/" + invoice_no,
                 type: 'GET',
                 dataType: "JSON",
                 //data: {account_types:account_type},
                 dataType: 'json', // added data type
                 success: function(data) {
                     //console.log(data);
-                    
+
                     $.each(data, function(index, value) {
                         counter++;
-                        accountsDDL(counter,value.account_code);
-                        
+                        accountsDDL(counter, value.account_code);
+
                         var div = '<tr><td>' + counter + '</td>' +
-                        // '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
-                        '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]" ></select></td>' +
-                        '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="'+value.quantity_sold+'" autocomplete="off"></td>' +
-                        '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" value="'+value.item_unit_price+'" autocomplete="off">' +
-                        '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]" value="'+value.item_cost_price+'">'+
-                        '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]" value=""></td>'+
-                        '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]" value="'+value.tax_id+'"></td>'+
-                        '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]" value="'+value.tax_rate+'"></td>'+
-                        // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
-                        '<td class="text-right"><input type="text" class="form-control description" id="description_' + counter + '" name="description[]"  value="'+value.description+'"  ></td>' +
-                        '<td class="text-right tax" id="tax_' + counter + '"></td>' +
-                        '<td class="text-right total" id="total_' + counter + '">'+(value.quantity_sold*value.item_unit_price)+'</td>' +
-                        '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
+                            // '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
+                            '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]" ></select></td>' +
+                            '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="' + value.quantity_sold + '" autocomplete="off"></td>' +
+                            '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" value="' + value.item_unit_price + '" autocomplete="off">' +
+                            '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]" value="' + value.item_cost_price + '">' +
+                            '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]" value=""></td>' +
+                            '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]" value="' + value.tax_id + '"></td>' +
+                            '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]" value="' + value.tax_rate + '"></td>' +
+                            // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
+                            '<td class="text-right"><textarea class="form-control description" id="description_' + counter + '" name="description[]"  >' + value.description + '</textarea></td>' +
+                            '<td class="text-right tax" id="tax_' + counter + '"></td>' +
+                            '<td class="text-right total" id="total_' + counter + '">' + (value.quantity_sold * value.item_unit_price) + '</td>' +
+                            '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
                         $('.create_table').append(div);
-                        
-                        
+
+
                         //SELECT 2 DROPDOWN LIST   
                         // $('#productid_' + counter).select2();
                         $('#accountid_' + counter).select2();
@@ -706,7 +706,7 @@
 
                     qty_change();
                     unit_price_change();
-            
+
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -714,9 +714,9 @@
                 }
             });
             /////
-            
+
         }
-        
+
         ///////////////////
     });
 </script>

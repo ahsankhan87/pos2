@@ -13,18 +13,18 @@
         } ?>
         <p>
             <?php
-           
-                if ($stripe_acct_id == "") {
-                    echo '<a href="' . site_url("setting/C_stripePayment/create_account") . '" class="btn btn-primary">Create Stripe Account</a>';
-                }
-           
+
+            if ($stripe_acct_id == "") {
+                echo '<a href="' . site_url("setting/C_stripePayment/create_account") . '" class="btn btn-primary">Create Stripe Account</a>';
+            }
+
             ?>
             <!-- <a href="#" class="btn btn-warning" id="setting-stripe"><i class="fa fa-gear"></i> Stripe API Keys Setting</a> -->
             <!-- <a href="#" style="display: inline-block; background-color: #4caf50; color: white; padding: 5px 15px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 5px; margin-top: 10px;">Pay Now</a> -->
         </p>
-        
+
         <?php
-        
+
         if (count($account)) {
             // echo '<pre>';
             // var_dump($list_all);
@@ -47,7 +47,7 @@
                     <table class="table table-striped table-condensed table-bordered flip-content" id="">
                         <thead class="flip-content">
                             <tr>
-                                <th><?php echo lang('account'). ' ' .lang('id'); ?></th>
+                                <th><?php echo lang('account') . ' ' . lang('id'); ?></th>
                                 <th><?php echo lang('name'); ?></th>
                                 <th><?php echo lang('type'); ?></th>
                                 <th><?php echo lang('status'); ?></th>
@@ -58,31 +58,31 @@
                         <tbody class="flip-content">
                             <?php
                             //foreach ($list_all as $account) {
-                                // echo '<pre>';
-                                // print_r($account); // Output the account object for debugging
-                                // echo '</pre>';
+                            // echo '<pre>';
+                            // print_r($account); // Output the account object for debugging
+                            // echo '</pre>';
 
 
-                                echo '<tr>';
-                                echo '<td>' . $account->id . '</td>';
-                                echo '<td>' . $account->business_profile->name . '</td>';
-                                echo '<td>' . $account->type . '</td>';
+                            echo '<tr>';
+                            echo '<td>' . $account->id . '</td>';
+                            echo '<td>' . $account->business_profile->name . '</td>';
+                            echo '<td>' . $account->type . '</td>';
 
-                                echo '<td>';
-                                if (!$account->details_submitted) {
-                                    echo '<form method="post" action="' . site_url('setting/C_stripePayment/update_link') . '">';
-                                    echo '<input type="hidden" name="account_id" value="' . $account->id . '">';
-                                    echo '<input type="submit"  value="Finish onboarding" class="btn btn-primary">';
+                            echo '<td>';
+                            if (!$account->details_submitted) {
+                                echo '<form method="post" action="' . site_url('setting/C_stripePayment/update_link') . '">';
+                                echo '<input type="hidden" name="account_id" value="' . $account->id . '">';
+                                echo '<input type="submit"  value="Finish onboarding" class="btn btn-primary">';
 
-                                    echo '</form>';
-                                }
+                                echo '</form>';
+                            }
 
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<a href="' . site_url('setting/C_stripePayment/delete_account/' . $account->id) . '">Delete</a>';
-                                echo ' | <a href="' . site_url('setting/C_stripePayment/create_login_link/' . $account->id) . '" target="_blank">Login</a>';
-                                echo '</td>';
-                                echo '</tr>';
+                            echo '</td>';
+                            echo '<td>';
+                            echo '<a href="' . site_url('setting/C_stripePayment/delete_account/' . $account->id) . '" onclick="return confirm(\'Are you sure you want to permanent delete?\')">Delete</a>';
+                            echo ' | <a href="' . site_url('setting/C_stripePayment/create_login_link/' . $account->id) . '" target="_blank">Login</a>';
+                            echo '</td>';
+                            echo '</tr>';
                             //}
                             ?>
                         </tbody>
@@ -112,7 +112,7 @@
                     <p id="modal_message"></p>
                 </div>
                 <div class="modal-footer">
-                    
+
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="stripe_key">Stripe Key:</label>
                         <div class="col-sm-9">
@@ -147,7 +147,7 @@
             $('#settingModal').modal('toggle');
             $('#modal_title').html("Stipe Account Setting");
             // $('#modal_message').html(response.error_message);
-            
+
         });
 
         $("#setting_form").on("submit", function(e) {

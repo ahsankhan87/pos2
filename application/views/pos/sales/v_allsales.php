@@ -31,8 +31,8 @@
                     <?php echo anchor('pos/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="hidden-print"'); ?>
                 </li>
             </ul>
-        </div>
-        </p> -->
+        </div>-->
+
             <?php if ($sale_type == "cash") {
                 echo anchor('pos/C_sales/index/' . $sale_type, lang('new') . ' ' . lang('transaction'), 'class="btn btn-success" id="sample_editable_1_new"');
             } else {
@@ -40,7 +40,7 @@
             }
 
             ?>
-
+        </p>
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
@@ -88,10 +88,37 @@
                             echo '<td class="text-right">' . round($total, 2) . '</td>';
                             //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                             echo '<td>';
-                            echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/editSales/' . $list['invoice_no'] . '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>
-                                    | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>
-                                    | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/send_email_inv/' . $list['customer_id'] . '/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to email invoice?\')"; title="Email Invoice">Email</a>
-                                    | <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
+                        ?>
+                            <div class="btn-group">
+                                <button id="btnGroupVerticalDrop3" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Action <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop3">
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/editSales/' . $list['invoice_no'] . '" title="Edit Sales" >Edit</i></a>';
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete">Delete</a>';
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/send_email_inv/' . $list['customer_id'] . '/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to email invoice?\')"; title="Email Invoice">Email</a>';
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" >PDF</a>';
+                                        ?>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        <?php
+
                             echo '</td>';
                             echo '</tr>';
                         }
