@@ -11,12 +11,12 @@
             <div class="col-sm-4">
                 <input type="date" class="form-control" id="sale_date" name="sale_date" value="<?php echo date("Y-m-d") ?>" />
             </div>
-            
+
         </div>
         <!-- /.col-sm-12 -->
-        
+
         <div class="col-sm-2 text-right">
-            
+
         </div>
 
     </div>
@@ -28,13 +28,13 @@
                 <select name="deposit_to_acc_code" id="deposit_to_acc_code" class="form-control select2me"></select>
             </div>
 
-            
+
         </div>
         <!-- /.col-sm-12 -->
-        
+
         <div class="col-sm-2 text-right">
             <div id="top_net_total"></div>
-            
+
         </div>
 
     </div>
@@ -49,7 +49,7 @@
                         <th>#</th>
                         <th><?php echo lang('product'); ?></th>
                         <th><?php echo lang('quantity'); ?></th>
-                        <th><?php echo lang('sale').' '.lang('price'); ?></th>
+                        <th><?php echo lang('sale') . ' ' . lang('price'); ?></th>
                         <th><?php echo lang('description'); ?></th>
                         <th><?php echo lang('tax'); ?></th>
                         <th><?php echo lang('sub_total'); ?></th>
@@ -64,7 +64,7 @@
                     <tr>
                         <th colspan="5">
                             <a href="#" class="btn btn-info btn-sm add_new" name="add_new"><?php echo lang('add_new'); ?></a>
-                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all"><?php echo lang('clear').' '.lang('all'); ?></a>
+                            <a href="#" class="btn btn-info btn-sm clear_all" name="clear_all"><?php echo lang('clear') . ' ' . lang('all'); ?></a>
                         </th>
                         <th class="text-right"><?php echo lang('sub_total'); ?></th>
                         <th class="text-right" id="sub_total">0.00</th>
@@ -81,8 +81,8 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php echo form_submit('',lang('save'), 'class="btn btn-success"'); ?></th>
-                        <th class="text-right" ><?php echo lang('grand').' '.lang('total'); ?></th>
+                        <th colspan="5"><?php echo form_submit('', lang('save'), 'class="btn btn-success"'); ?></th>
+                        <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
                     </tr>
@@ -92,7 +92,7 @@
             <p></p>
 
         </div>
-        
+
     </div><!-- close main_div here -->
 </form>
 
@@ -115,12 +115,12 @@
                 '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]"></select></td>' +
                 '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="1" autocomplete="off"></td>' +
                 '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" autocomplete="off">' +
-                '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]">'+
-                '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>'+
-                '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>'+
-                '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>'+
+                '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]">' +
+                '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]"></td>' +
+                '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]"></td>' +
+                '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]"></td>' +
                 // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
-                '<td class="text-right"><input type="text" class="form-control description" id="description_' + counter + '" name="description[]" value=""  ></td>' +
+                '<td class="text-right"><textarea class="form-control description" id="description_' + counter + '" name="description[]"></textarea></td>' +
                 '<td class="text-right tax" id="tax_' + counter + '"></td>' +
                 '<td class="text-right total" id="total_' + counter + '"></td>' +
                 '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
@@ -218,9 +218,8 @@
         $(".clear_all").on("click", function() {
             clearall();
         });
-        
-        function clearall()
-        {
+
+        function clearall() {
             counter = 0;
             calc_gtotal();
             $('#sub_total').html(parseFloat('0').toFixed(2));
@@ -228,9 +227,9 @@
             $('#total_tax').html(parseFloat('0').toFixed(2));
             $('#net_total').html(parseFloat('0').toFixed(2));
             $("#sale_table > tbody").empty();
-            
+
             $('#customer_id').val('').trigger('change');
-            $(".add_new").trigger("click");//add new line
+            $(".add_new").trigger("click"); //add new line
         }
 
         ///////////////////
@@ -269,12 +268,14 @@
         function accountsDDL(index = 0) {
 
             let accounts_ddl = '';
-            var account_type = ['liability','equity','cos','revenue','expense','asset'];
+            var account_type = ['liability', 'equity', 'cos', 'revenue', 'expense', 'asset'];
             $.ajax({
                 url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
                 type: 'POST',
                 dataType: "JSON",
-                data: {account_types:account_type},
+                data: {
+                    account_types: account_type
+                },
                 cache: true,
                 success: function(data) {
                     //console.log(data);
@@ -296,7 +297,7 @@
                 }
             });
         }
-        
+
         ///////////////////
         /////////////ADD NEW LINES END HERE
 
@@ -319,7 +320,7 @@
 
             total_tax = (total_tax ? total_tax : 0);
             net_total = (total ? total : 0);
-            
+
             //ASSIGN VALUE TO TEXTBOXES
             $('#sub_total_txt').val(parseFloat(total));
             // $('#total_discount_txt').val(parseFloat(total_discount));
@@ -327,7 +328,7 @@
             $('#net_total_txt').val(parseFloat(net_total));
             /////////////
 
-            $('#top_net_total').html('Grand Total:<h2 style="margin:0">'+parseFloat(net_total).toLocaleString('en-US', 2)+'</h2>');
+            $('#top_net_total').html('Grand Total:<h2 style="margin:0">' + parseFloat(net_total).toLocaleString('en-US', 2) + '</h2>');
             $('#net_total').text(parseFloat(net_total).toLocaleString('en-US', 2));
             $('#sub_total').text(parseFloat(total).toLocaleString('en-US'));
             // $('#total_discount').text(parseFloat(total_discount).toLocaleString('en-US'));
@@ -340,22 +341,20 @@
             //console.log(formValues);
             // alert(formValues);
             // return false;
-           
+
             var confirmSale = confirm('Are you absolutely sure you want to sale?');
-           
+
             if (confirmSale) {
-                
-                if(formValues.length > 0)
-                {
-                   $.ajax({
+
+                if (formValues.length > 0) {
+                    $.ajax({
                         type: "POST",
                         url: site_url + "pos/C_estimate/sale_transaction",
                         data: formValues,
                         success: function(data) {
-                            if(data == '1')
-                            {
-                                toastr.success("Estimate saved successfully",'Success');
-                                window.location.href = site_url+"pos/C_estimate/allestimate";
+                            if (data == '1') {
+                                toastr.success("Estimate saved successfully", 'Success');
+                                window.location.href = site_url + "pos/C_estimate/allestimate";
                             }
                             clearall();
                             console.log(data);
@@ -367,9 +366,9 @@
         });
         ////
         deposit_to_acc_codeDDL();
-            ////////////////////////
-            //GET deposit_to_acc_code DROPDOWN LIST
-            function deposit_to_acc_codeDDL() {
+        ////////////////////////
+        //GET deposit_to_acc_code DROPDOWN LIST
+        function deposit_to_acc_codeDDL() {
 
             let deposit_to_acc_code_ddl = '';
             var account_type = ['asset'];
@@ -377,7 +376,9 @@
                 url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
                 type: 'POST',
                 dataType: "JSON",
-                data: {account_types:account_type},
+                data: {
+                    account_types: account_type
+                },
                 //dataType: 'json', // added data type
                 success: function(data) {
                     console.log(data);
@@ -386,7 +387,7 @@
 
                     $.each(data, function(index, value) {
 
-                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title+ '</option>';
+                        deposit_to_acc_code_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
 
                     });
 
@@ -398,7 +399,7 @@
                     console.log(thrownError);
                 }
             });
-            }
-            ///////////////////
+        }
+        ///////////////////
     });
 </script>

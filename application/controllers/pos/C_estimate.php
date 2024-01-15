@@ -1,54 +1,55 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class C_estimate extends MY_Controller{
-    
+class C_estimate extends MY_Controller
+{
+
     public function __construct()
     {
         parent::__construct();
-        $this->lang->load('index');        
+        $this->lang->load('index');
     }
-    
-    public function index($saleType='',$customer_id='')
+
+    public function index($saleType = '', $customer_id = '')
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+
         $data['title'] = lang('estimates');
         $data['main'] = lang('estimates');
-        
+
         $data['customer_id'] = $customer_id;
         $data['saleType'] = $saleType;
         //when click on sale manu clear the cart first if exist
         //$this->cart->destroy();
-        
+
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
         $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
         $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
         $data['taxes'] = $this->M_taxes->get_activetaxes();
-        
-        $this->load->view('templates/header',$data);
-        $this->load->view('pos/estimate/v_estimate',$data);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pos/estimate/v_estimate', $data);
         $this->load->view('templates/footer');
     }
-    
+
     public function editestimate($invoice_no)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+
         $data['title'] = 'Edit Estimate';
         $data['main'] = 'Edit Estimate';
-        
-        $data['saleType'] = '';//$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
+
+        $data['saleType'] = ''; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
         $data['invoice_no'] = $invoice_no;
         $data['edit'] = true;
-        
+
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
         $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
         $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
-        
-        $this->load->view('templates/header',$data);
-        $this->load->view('pos/estimate/v_editestimateProduct',$data);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pos/estimate/v_editestimateProduct', $data);
         $this->load->view('templates/footer');
     }
 
@@ -76,11 +77,11 @@ class C_estimate extends MY_Controller{
                 $sale_date = $this->input->post("sale_date");
                 $customer_id = $this->input->post("customer_id");
                 $emp_id = ''; //$this->input->post("emp_id");
-                $unit_id = '';//$this->input->post("unit_id");
+                $unit_id = ''; //$this->input->post("unit_id");
                 //$posting_type_code = $this->M_customers->getCustomerPostingTypes($customer_id);
                 $currency_id = ($this->input->post("currency_id") == '' ? 0 : $this->input->post("currency_id"));
                 $discount = ($this->input->post("total_discount") == '' ? 0 : $this->input->post("total_discount"));
-                $narration = '';//($this->input->post("description") == '' ? '' : $this->input->post("description"));
+                $narration = ''; //($this->input->post("description") == '' ? '' : $this->input->post("description"));
                 $register_mode = 'sale'; //$this->input->post("register_mode");
                 $saleType = 'cash';
                 $is_taxable =  1; //$this->input->post("is_taxable");
@@ -94,7 +95,7 @@ class C_estimate extends MY_Controller{
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
                     'customer_id' => $customer_id,
-                    'deposit_to_acc_code'=>$deposit_to_acc_code,
+                    'deposit_to_acc_code' => $deposit_to_acc_code,
                     'employee_id' => $emp_id,
                     'user_id' => $user_id,
                     'sale_date' => $sale_date,
@@ -113,22 +114,22 @@ class C_estimate extends MY_Controller{
 
                 $this->db->insert('pos_estimate', $data);
                 $sale_id = $this->db->insert_id();
-               
+
                 foreach ($this->input->post('account_id') as $key => $value) {
-                    
+
                     if ($value != 0) {
                         $account_code  = htmlspecialchars(trim($value));
                         $qty = $this->input->post('qty')[$key];
                         $unit_price = $this->input->post('unit_price')[$key];
                         $cost_price = $this->input->post('cost_price')[$key];
                         $description = $this->input->post('description')[$key];
-                        $total_amount = (double)($qty*$unit_price);
-                    
+                        $total_amount = (float)($qty * $unit_price);
+
                         $data = array(
                             'sale_id' => $sale_id,
                             'invoice_no' => $new_invoice_no,
                             //'item_id' => 0,//$item_id,
-                            'account_code'=>$account_code,
+                            'account_code' => $account_code,
                             'description' => $narration,
                             'quantity_sold' => ($register_mode == 'sale' ? $qty : -$qty), //if sales return then insert amount in negative
                             'item_cost_price' => ($register_mode == 'sale' ? $cost_price : -$cost_price), //actually its avg cost comming from sale from
@@ -145,156 +146,175 @@ class C_estimate extends MY_Controller{
 
                         $this->db->insert('pos_estimate_items', $data);
 
-                         //for logging
-                         $msg = 'invoice no ' . $new_invoice_no;
-                         $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
-                         // end logging
-                         
+                        //for logging
+                        $msg = 'invoice no ' . $new_invoice_no;
+                        $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
+                        // end logging
+
                     }
                 }
                 $this->db->trans_complete();
                 echo '1';
             } //check product count
-            
+
         }
     }
-    
-    public function updateStatus()
+
+    public function updateStatus($invoice_no, $status)
     {
         $company_id = $_SESSION['company_id'];
-        $invoice_no = $this->input->post('invoice_no');
-        $status = $this->input->post('status');
+        // $invoice_no = $this->input->post('invoice_no');
+        //$status = $this->input->post('status');
+        if ($status == 'accept') {
+            $status = 'approved';
+        } elseif ($status == 'reject') {
+            $status = 'rejected';
+        } else {
+            $status = 'in_progress';
+        }
 
         $data = array(
             'status' => $status,
         );
 
-        if($this->db->update('pos_estimate', $data, array('invoice_no'=>$invoice_no,'company_id'=>$company_id))) {
-            $this->session->set_flashdata('message','Status updated');
-        }else{
-            $this->session->set_flashdata('error','Status not updated');
+        if ($this->db->update('pos_estimate', $data, array('invoice_no' => $invoice_no, 'company_id' => $company_id))) {
+            $this->session->set_flashdata('message', 'Status updated');
+        } else {
+            $this->session->set_flashdata('error', 'Status not updated');
         }
-        redirect('pos/C_estimate/allestimate','refresh');
+        redirect('pos/C_estimate/allestimate', 'refresh');
     }
+
     public function receipt($new_invoice_no)
     {
         $data = array('langs' => $this->session->userdata('lang'));
         $data['estimate_items'] = $this->M_estimate->get_estimate_items($new_invoice_no);
         $estimate_items = $data['estimate_items'];
-        
+
         //////////////////////////////
         // QR Code
         $this->load->library('ciqrcode');
         ///////////////////////
 
-        $data['title'] = strtoupper($estimate_items[0]['register_mode']).' #'.$new_invoice_no;
-        $data['main'] = '';//($estimate_items[0]['register_mode'] == 'sale' ? 'estimate' : 'Return').' Invoice #'.$new_invoice_no;
+        $data['title'] = strtoupper($estimate_items[0]['register_mode']) . ' #' . $new_invoice_no;
+        $data['main'] = ''; //($estimate_items[0]['register_mode'] == 'sale' ? 'estimate' : 'Return').' Invoice #'.$new_invoice_no;
         $data['invoice_no'] = $new_invoice_no;
-        
+
         $company_id = $_SESSION['company_id'];
         $data['Company'] = $this->M_companies->get_companies($company_id);
-            
-        $this->load->view('templates/header',$data);
-        $this->load->view('pos/estimate/v_receipt',$data);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pos/estimate/v_receipt', $data);
         //$this->load->view('pos/estimate/v_receipt',$data);
         $this->load->view('templates/footer');
     }
-    
+
     public function allestimate()
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+
         $data['title'] = lang('estimates');
         $data['main'] = lang('estimates');
-        
+
         $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last month"));
         $to_date = FY_END_DATE; //date("Y-m-d");
-        
-        $data['main_small'] = "(From:".date('d-m-Y',strtotime($start_date)) ." To:" .date('d-m-Y',strtotime($to_date)).")";
-        
-        $data['estimate'] = $this->M_estimate->get_estimate(false,$start_date,$to_date);
-        
-        $this->load->view('templates/header',$data);
-        $this->load->view('pos/estimate/v_allestimate',$data);
+
+        $data['main_small'] = "(From:" . date('d-m-Y', strtotime($start_date)) . " To:" . date('d-m-Y', strtotime($to_date)) . ")";
+
+        $data['estimate'] = $this->M_estimate->get_estimate(false, $start_date, $to_date);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pos/estimate/v_allestimate', $data);
         $this->load->view('templates/footer');
     }
-    
+
     function get_estimate_JSON()
     {
         $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last year"));
         $to_date = FY_END_DATE; //date("Y-m-d");
-        
-        print_r(json_encode($this->M_estimate->get_selected_estimate($start_date,$to_date)));
+
+        print_r(json_encode($this->M_estimate->get_selected_estimate($start_date, $to_date)));
     }
-    
+
+    function getEstimatesItemsJSON($invoice_no)
+    {
+        $data = $this->M_estimate->get_estimates_items_only($invoice_no);
+        print_r(json_encode($data));
+    }
+
+    function getEstimatesJSON($invoice_no)
+    {
+        $data = $this->M_estimate->get_estimates_by_invoice($invoice_no);
+        print_r(json_encode($data));
+    }
+
     public function getCustomerCurrencyJSON($customer_id)
     {
         $customersCurrency = $this->M_customers->get_customerCurrency($customer_id);
         echo json_encode($customersCurrency);
     }
-    
-    public function delete($invoice_no,$redirect = true)
+
+    public function delete($invoice_no, $redirect = true)
     {
-        
+
         $this->db->trans_start();
-          
+
         $this->M_estimate->delete($invoice_no);
-        $this->db->trans_complete();   
-        
-        if($redirect === true)
-        {
-            $this->session->set_flashdata('message','Entry Deleted');
-            redirect('pos/C_estimate/allestimate','refresh');
+        $this->db->trans_complete();
+
+        if ($redirect === true) {
+            $this->session->set_flashdata('message', 'Entry Deleted');
+            redirect('pos/C_estimate/allestimate', 'refresh');
         }
-        
     }
-    
+
     function getEstimateItemsJSON($invoice_no)
     {
         $data = $this->M_estimate->get_estimate_items($invoice_no);
-        
+
         $outp = "";
-        foreach($data as $rs)
-        {
+        foreach ($data as $rs) {
             //$tm =  json_decode($rs["teams_id"]);
             //print_r($tm);
-            
-            if ($outp != "") {$outp .= ",";}
-            
+
+            if ($outp != "") {
+                $outp .= ",";
+            }
+
             $outp .= '{"item_id":"'  . $rs["item_id"] . '",';
-            $outp .= '"size_id":"'   . $rs["size_id"]. '",';
-            $outp .= '"unit_id":"'   . $rs["unit_id"]. '",';
-            $outp .= '"item_cost_price":"'   . $rs["item_cost_price"]. '",';
-            $outp .= '"item_unit_price":"'   . $rs["item_unit_price"]. '",';
-            $outp .= '"quantity_sold":"'   . $rs["quantity_sold"]. '",';
-            $outp .= '"discount_percent":"'   . $rs["discount_percent"]. '",';
-            $outp .= '"discount_value":"'   . $rs["discount_value"]. '",';
-            $outp .= '"sale_date":"'   . $rs["sale_date"]. '",';
-            $outp .= '"register_mode":"'   . $rs["register_mode"]. '",';
-            $outp .= '"discount_value":"'   . $rs["discount_value"]. '",';
-            $outp .= '"customer_id":"'   . $rs["customer_id"]. '",';
-            $outp .= '"employee_id":"'   . $rs["employee_id"]. '",';
-            $outp .= '"description":"'   . $rs["description"]. '",';
-            $outp .= '"account":"'   . $rs["account"]. '",';
-            $outp .= '"tax_id":"'   . $rs["tax_id"]. '",';
-            $outp .= '"tax_rate":"'   . $rs["tax_rate"]. '",';
+            $outp .= '"size_id":"'   . $rs["size_id"] . '",';
+            $outp .= '"unit_id":"'   . $rs["unit_id"] . '",';
+            $outp .= '"item_cost_price":"'   . $rs["item_cost_price"] . '",';
+            $outp .= '"item_unit_price":"'   . $rs["item_unit_price"] . '",';
+            $outp .= '"quantity_sold":"'   . $rs["quantity_sold"] . '",';
+            $outp .= '"discount_percent":"'   . $rs["discount_percent"] . '",';
+            $outp .= '"discount_value":"'   . $rs["discount_value"] . '",';
+            $outp .= '"sale_date":"'   . $rs["sale_date"] . '",';
+            $outp .= '"register_mode":"'   . $rs["register_mode"] . '",';
+            $outp .= '"discount_value":"'   . $rs["discount_value"] . '",';
+            $outp .= '"customer_id":"'   . $rs["customer_id"] . '",';
+            $outp .= '"employee_id":"'   . $rs["employee_id"] . '",';
+            $outp .= '"description":"'   . $rs["description"] . '",';
+            $outp .= '"account":"'   . $rs["account"] . '",';
+            $outp .= '"tax_id":"'   . $rs["tax_id"] . '",';
+            $outp .= '"tax_rate":"'   . $rs["tax_rate"] . '",';
             $outp .= '"tax_name":"",';
             $outp .= '"inventory_acc_code":"",';
-            
-            $outp .= '"exchange_rate":"'   . $rs["exchange_rate"]. '",';
-            $outp .= '"currency_id":"'   . $rs["currency_id"]. '",';
-            $outp .= '"service":"'   . $rs["service"]. '",';
-            
+
+            $outp .= '"exchange_rate":"'   . $rs["exchange_rate"] . '",';
+            $outp .= '"currency_id":"'   . $rs["currency_id"] . '",';
+            $outp .= '"service":"'   . $rs["service"] . '",';
+
             $item_name = $this->M_items->get_ItemName($rs["item_id"]);
             $outp .= '"name":"'   . @$item_name . '",';
-            
+
             $size_name = $this->M_sizes->get_sizeName($rs["size_id"]);
             $outp .= '"size":"'   . @$size_name . '",';
-            
-            $outp .= '"invoice_no":"'. $rs["invoice_no"]     . '"}'; 
+
+            $outp .= '"invoice_no":"' . $rs["invoice_no"]     . '"}';
         }
-            
-        $outp ='['.$outp.']';
+
+        $outp = '[' . $outp . ']';
         echo $outp;
     }
 
@@ -307,28 +327,28 @@ class C_estimate extends MY_Controller{
         $company_id = $_SESSION['company_id'];
         $Company = $this->M_companies->get_companies($company_id);
         $customer =  @$this->M_customers->get_customers(@$sales_items[0]['customer_id']);
-        
+
         // $this->load->library('Pdf_f');
         // $pdf = new Pdf_f("P", 'mm', 'A4');
         $this->load->library('tfpdf/TFPDF');
         $pdf = new TFPDF();
-       
-        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
-        $pdf->AddFont('DejaVuBold','B','DejaVuSansCondensed-Bold.ttf',true);
-        
+
+        $pdf->AddFont('DejaVu', '', 'DejaVuSansCondensed.ttf', true);
+        $pdf->AddFont('DejaVuBold', 'B', 'DejaVuSansCondensed-Bold.ttf', true);
+
         $pdf->AddPage();
         //Display Company Info
-        $pdf->SetFont('DejaVuBold','B', 14);
+        $pdf->SetFont('DejaVuBold', 'B', 14);
         $pdf->Cell(50, 10, $Company[0]['name'], 0, 1);
-        $pdf->SetFont('DejaVu','', 12);
+        $pdf->SetFont('DejaVu', '', 12);
         $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
-        $pdf->Cell(50, 7, "PH : ".$Company[0]['contact_no'], 0, 1);
+        $pdf->Cell(50, 7, "PH : " . $Company[0]['contact_no'], 0, 1);
 
         //Display INVOICE text
         $pdf->SetY(15);
         $pdf->SetX(-60);
-        $pdf->SetFont('DejaVuBold','B', 18);
+        $pdf->SetFont('DejaVuBold', 'B', 18);
         $pdf->Cell(50, 10, strtoupper(lang("estimate")), 0, 1);
 
         //Display Horizontal line
@@ -337,9 +357,9 @@ class C_estimate extends MY_Controller{
         //Billing Details // Body
         $pdf->SetY(49);
         $pdf->SetX(10);
-        $pdf->SetFont('DejaVuBold','B', 12);
-        $pdf->Cell(50, 10, lang('bill').' '.lang('to').": ", 0, 1);
-        $pdf->SetFont('DejaVu','', 12);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
+        $pdf->Cell(50, 10, lang('bill') . ' ' . lang('to') . ": ", 0, 1);
+        $pdf->SetFont('DejaVu', '', 12);
         $pdf->Cell(50, 7, @$customer[0]["first_name"], 0, 1);
         $pdf->Cell(50, 7, @$customer[0]["address"], 0, 1);
         //$pdf->Cell(50, 7, $customer[0]["city"], 0, 1);
@@ -347,23 +367,23 @@ class C_estimate extends MY_Controller{
         //Display Invoice no
         $pdf->SetY(49);
         $pdf->SetX(-80);
-        $pdf->Cell(50, 7, lang('estimate')." No : " . $new_invoice_no);
+        $pdf->Cell(50, 7, lang('estimate') . " No : " . $new_invoice_no);
 
         //Display Invoice date
         $pdf->SetY(57);
         $pdf->SetX(-80);
-        $pdf->Cell(50, 7, lang('estimate').' ' .lang('date').": " . date('m-d-Y',strtotime($sales_items[0]["sale_date"])));
+        $pdf->Cell(50, 7, lang('estimate') . ' ' . lang('date') . ": " . date('m-d-Y', strtotime($sales_items[0]["sale_date"])));
 
         //Display Table headings
         $pdf->SetY(85);
         $pdf->SetX(10);
-        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(80, 9, strtoupper(lang("description")), 1, 0);
         $pdf->Cell(40, 9, strtoupper(lang("price")), 1, 0, "C");
         $pdf->Cell(30, 9, strtoupper(lang("quantity")), 1, 0, "C");
         $pdf->Cell(40, 9, strtoupper(lang("total")), 1, 1, "C");
-        $pdf->SetFont('DejaVu','', 12);
-        
+        $pdf->SetFont('DejaVu', '', 12);
+
         $discount = 0;
         $total_cost = 0;
         $total = 0;
@@ -376,9 +396,9 @@ class C_estimate extends MY_Controller{
             //$account_name = $this->M_groups->get_accountName($row['account_code']);
 
             $pdf->Cell(80, 9, $row['item_desc'], "LR", 0);
-            $pdf->Cell(40, 9, number_format($row["item_unit_price"],2), "R", 0, "R");
-            $pdf->Cell(30, 9, number_format($row["quantity_sold"],2), "R", 0, "C");
-            $pdf->Cell(40, 9, number_format(($row['item_unit_price'] * $row['quantity_sold']),2), "R", 1, "R");
+            $pdf->Cell(40, 9, number_format($row["item_unit_price"], 2), "R", 0, "R");
+            $pdf->Cell(30, 9, number_format($row["quantity_sold"], 2), "R", 0, "C");
+            $pdf->Cell(40, 9, number_format(($row['item_unit_price'] * $row['quantity_sold']), 2), "R", 1, "R");
         }
         //Display table empty rows
         for ($i = 0; $i < 12 - count($sales_items); $i++) {
@@ -388,9 +408,9 @@ class C_estimate extends MY_Controller{
             $pdf->Cell(40, 9, "", "R", 1, "R");
         }
         //Display table total row
-        $pdf->SetFont('DejaVuBold','B', 12);
+        $pdf->SetFont('DejaVuBold', 'B', 12);
         $pdf->Cell(150, 9, strtoupper(lang("total")), 1, 0, "R");
-        $pdf->Cell(40, 9, number_format($total,2), 1, 1, "R");
+        $pdf->Cell(40, 9, number_format($total, 2), 1, 1, "R");
 
         //Display amount in words
         // $pdf->SetY(215);
@@ -407,9 +427,9 @@ class C_estimate extends MY_Controller{
         //$pdf->SetFont('helvetica', 'B', 12);
         //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
         $pdf->Ln(15);
-        $pdf->SetFont('DejaVu','', 12);
+        $pdf->SetFont('DejaVu', '', 12);
         $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
-        $pdf->SetFont('DejaVu','', 10);
+        $pdf->SetFont('DejaVu', '', 10);
 
         //Display Footer Text
         $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");

@@ -71,12 +71,52 @@
                             echo '<td>' . anchor('#', '<span class="' . $label . '">' . lang(strtolower($list['status'])) . '</span>', ' data-toggle="modal" data-target="#status_' . $sno . '"') . '</td>';
 
                             echo '<td>';
-                            //echo '<a href="'.site_url($langs).'/pos/C_estimate/editSales/' . $list['invoice_no'] .'" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | ';
-                            echo '<a href="' . site_url($langs) . '/pos/C_estimate/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a> | ';
-                            echo '<a href="' . site_url($langs) . '/pos/C_estimate/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>';
+
+                        ?>
+                            <div class="btn-group">
+                                <button id="btnGroupVerticalDrop3" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Action <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop3">
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/C_estimate/updateStatus/' . $list['invoice_no'] . '/accept" title="Accept" >Accept</i></a>';
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/C_estimate/updateStatus/' . $list['invoice_no'] . '/reject" title="Reject" >Reject</i></a>';
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/C_estimate/editEstimate/' . $list['invoice_no'] . '" title="Edit Estimate" >Edit</i></a>';
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/C_invoices/index/credit/' . $list['customer_id'] . '/' . $list['invoice_no'] . '" title="Convert to Invoice" >Convert to invoice</a>';
+                                        ?>
+                                    </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/C_estimate/delete/' . $list['invoice_no'] . '" onclick="return confirm(\'Are you sure you want to delete?\')"; title="Permanent Delete">Delete</a>';
+
+                                        ?>
+                                    </li>
+
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . site_url($langs) . '/pos/C_estimate/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" >PDF</a>';
+                                        ?>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <?php
                             echo '</td>';
                             echo '</tr>';
-                        ?>
+                            ?>
 
                             <!--delivery_status_ Modal -->
                             <div class="modal fade" id="status_<?php echo $sno; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

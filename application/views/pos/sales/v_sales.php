@@ -186,6 +186,8 @@
         const date = '<?php echo date("Y-m-d") ?>';
         const curr_symbol = "<?php echo $_SESSION["home_currency_symbol"]; ?>";
         const curr_code = "<?php echo $_SESSION["home_currency_code"]; ?>";
+        const estimate_invoice_no = "<?php echo $estimate_no; ?>";
+
         // console.log(date);
         /////////////ADD NEW LINES
         let counter = 0; //counter is used for id of the debit / credit textbox to enable and disable 8 textboxs already used so start from 8 here
@@ -219,27 +221,9 @@
             ///
 
             //GET TOTAL WHEN QTY CHANGE
-            $(".qty").on("keyup change", function(e) {
-                var curId = this.id.split("_")[1];
-                var qty = parseFloat($(this).val());
-                var price = parseFloat($('#unitprice_' + curId).val());
-                var discount = 0; // (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
-                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
-                $('#total_' + curId).text(total);
+            qty_change();
+            unit_price_change();
 
-                calc_gtotal();
-            });
-            //GET TOTAL WHEN UNIT PRICE CHANGE
-            $(".unit_price").on("keyup change", function(e) {
-                var curId = this.id.split("_")[1];
-                var qty = parseFloat($('#qty_' + curId).val());
-                var discount = 0; //(parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
-                var price = parseFloat($(this).val());
-                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
-                $('#total_' + curId).text(total);
-
-                calc_gtotal();
-            });
             //GET TOTAL WHEN DISCOUNT CHANGE
             // $(".discount").on("keyup change", function(e) {
             //     var curId = this.id.split("_")[1];
@@ -294,8 +278,37 @@
             });
 
         });
-        $(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
+        if (estimate_invoice_no === '') {
+            $(".add_new").trigger("click"); //ADD NEW LINE WHEN PAGE LOAD BY DEFAULT
+        }
 
+        //GET TOTAL WHEN QTY CHANGE
+        function qty_change() {
+            $(".qty").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($(this).val());
+                var price = parseFloat($('#unitprice_' + curId).val());
+                var discount = 0; // (parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+        }
+
+        //GET TOTAL WHEN UNIT PRICE CHANGE
+        function unit_price_change() {
+            $(".unit_price").on("keyup change", function(e) {
+                var curId = this.id.split("_")[1];
+                var qty = parseFloat($('#qty_' + curId).val());
+                var discount = 0; //(parseFloat($('#discount_' + curId).val()) ? parseFloat($('#discount_' + curId).val()) : 0);
+                var price = parseFloat($(this).val());
+                var total = (qty * price ? qty * price - discount : 0).toFixed(2);
+                $('#total_' + curId).text(total);
+
+                calc_gtotal();
+            });
+        }
         /////////////////////////////////
         $("#sale_table").on("click", "#removeItem", function() {
             $(this).closest("tr").remove();
@@ -361,7 +374,7 @@
         ///////////////////
         ////////////////////////
         //GET Accounts DROPDOWN LIST
-        function accountsDDL(index = 0) {
+        function accountsDDL(index = 0, selected_acc_code = "") {
 
             let accounts_ddl = '';
             var account_type = ['liability', 'equity', 'cos', 'revenue', 'expense', 'asset'];
@@ -380,11 +393,11 @@
 
                     $.each(data, function(index, value) {
 
-                        accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
+                        accounts_ddl += '<option value="' + value.account_code + '" ' + (value.account_code == selected_acc_code ? "selected=''" : "") + '>' + value.title + '</option>';
 
                     });
 
-                    $('#accountid_' + index).append(accounts_ddl);
+                    $('#accountid_' + index).html(accounts_ddl);
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -470,7 +483,7 @@
         customerDDL();
         ////////////////////////
         //GET customer DROPDOWN LIST
-        function customerDDL() {
+        function customerDDL(customer_id = '') {
 
             let customer_ddl = '';
             $.ajax({
@@ -484,7 +497,7 @@
 
                     $.each(data, function(index, value) {
 
-                        customer_ddl += '<option value="' + value.id + '">' + value.store_name + '</option>';
+                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
 
                     });
 
@@ -593,7 +606,7 @@
         taxDDL();
         ////////////////////////
         //GET customer DROPDOWN LIST
-        function taxDDL() {
+        function taxDDL(tax_rate = '') {
 
             let taxDDL = '';
             $.ajax({
@@ -607,12 +620,13 @@
 
                     $.each(data, function(index, value) {
 
-                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" >' + value.name + '</option>';
+                        //taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" >' + value.name + '</option>';
+                        taxDDL += '<option value="' + value.rate + '" account_code="' + value.account_code + '" tax_id="' + value.id + '" ' + (parseFloat(value.rate) == parseFloat(tax_rate) ? "selected=''" : "") + ' >' + value.name + '</option>';
 
                     });
 
                     $('#tax_rate').html(taxDDL);
-
+                    tax_changed();
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -633,5 +647,104 @@
             // console.log(account_code);
         });
 
+        function tax_changed() {
+            calc_gtotal();
+            var account_code = $("#tax_rate option:selected").attr("account_code");
+            var tax_id = $("#tax_rate option:selected").attr("tax_id");
+            $("#tax_acc_code_txt").val(account_code);
+            $("#tax_id_txt").val(tax_id);
+            // console.log(account_code);
+        }
+
+        ///////////////////
+        ////ESTIMATE UPDATE PORTION
+        //////////////////
+        if (estimate_invoice_no != '') {
+            get_estimate_accounts_updates(estimate_invoice_no);
+        }
+        //counter = 0;
+        function get_estimate_accounts_updates(estimate_invoice_no) {
+            //GET SALES 
+            $.ajax({
+                url: site_url + "pos/C_estimate/getEstimatesJSON/" + estimate_invoice_no,
+                type: 'GET',
+                dataType: "JSON",
+                //data: {account_types:account_type},
+                dataType: 'json', // added data type
+                success: function(data) {
+                    console.log(data);
+                    $.each(data, function(index, value) {
+                        customerDDL(value.customer_id);
+                        //deposit_to_acc_codeDDL(value.deposit_to_acc_code);
+                        taxDDL(value.tax_rate);
+                        $('#business_address').val(value.business_address);
+                        //$('#due_date').val(value.due_date);
+                        // $('#sale_date').val(value.sale_date);
+                        //$('#amount_received').text(parseFloat(value.paid).toFixed(2));
+                        //$('#amount_received_txt').val(value.paid);
+
+                    });
+
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+            //////
+
+            //GET SALES ITEMS
+            $.ajax({
+                url: site_url + "pos/C_estimate/getEstimatesItemsJSON/" + estimate_invoice_no,
+                type: 'GET',
+                dataType: "JSON",
+                //data: {account_types:account_type},
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+
+                    $.each(data, function(index, value) {
+                        counter++;
+                        accountsDDL(counter, value.account_code);
+
+                        var div = '<tr><td>' + counter + '</td>' +
+                            // '<td width="25%"><select  class="form-control product_id" id="productid_' + counter + '" name="product_id[]"></select></td>' +
+                            '<td width="25%"><select  class="form-control account_id" id="accountid_' + counter + '" name="account_id[]" ></select></td>' +
+                            '<td class="text-right" width="10%"><input type="number" min="1" class="form-control qty" id="qty_' + counter + '" name="qty[]" value="' + value.quantity_sold + '" autocomplete="off"></td>' +
+                            '<td class="text-right"><input type="number" class="form-control unit_price" id="unitprice_' + counter + '" name="unit_price[]" value="' + value.item_unit_price + '" autocomplete="off">' +
+                            '<input type="hidden" cost_price" id="costprice_' + counter + '" name="cost_price[]" value="' + value.item_cost_price + '">' +
+                            '<input type="hidden" item_type" id="itemtype_' + counter + '" name="item_type[]" value=""></td>' +
+                            '<input type="hidden" tax_id" id="taxid_' + counter + '" name="tax_id[]" value="' + value.tax_id + '"></td>' +
+                            '<input type="hidden" tax_rate" id="taxrate_' + counter + '" name="tax_rate[]" value="' + value.tax_rate + '"></td>' +
+                            // '<td class="text-right"><input type="number" class="form-control discount" id="discount_' + counter + '" name="discount[]" value=""  ></td>' +
+                            '<td class="text-right"><textarea class="form-control description" id="description_' + counter + '" name="description[]"  >' + value.description + '</textarea></td>' +
+                            '<td class="text-right tax" id="tax_' + counter + '"></td>' +
+                            '<td class="text-right total" id="total_' + counter + '">' + (value.quantity_sold * value.item_unit_price) + '</td>' +
+                            '<td><i id="removeItem" class="fa fa-trash-o fa-1x"  style="color:red;"></i></td></tr>';
+                        $('.create_table').append(div);
+
+
+                        //SELECT 2 DROPDOWN LIST   
+                        // $('#productid_' + counter).select2();
+                        $('#accountid_' + counter).select2();
+                        ///
+                        calc_gtotal();
+                    });
+
+                    qty_change();
+                    unit_price_change();
+                    calc_gtotal();
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+            /////
+
+        }
+
+        ///////////////////
     });
 </script>
