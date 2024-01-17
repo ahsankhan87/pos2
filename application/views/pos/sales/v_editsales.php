@@ -462,14 +462,14 @@
                         data: formValues,
                         success: function(data) {
                             if (data == '1') {
-                                toastr.success("Invoice saved successfully", 'Success');
+                                toastr.success("Invoice #: " + invoice_no + " successfully", 'Success');
                                 if (submit_btn == 'close') {
                                     window.location.href = site_url + "pos/" + module + "/all";
                                 }
                                 clearall();
 
                             } else {
-                                toastr.error("Invoice not saved successfully", 'Error');
+                                toastr.error("Invoice not updated successfully", 'Error');
                             }
                             console.log(data);
                         }

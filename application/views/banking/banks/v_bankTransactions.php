@@ -14,6 +14,7 @@
         ?>
         <p>
             <?php echo anchor('#', 'Import Transactions' . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" data-toggle="modal" data-target="#importModal"'); ?>
+            <?php echo anchor('banking/C_banking/bankDetail/' . $bank_id, "Categorized", 'class="btn btn-primary"'); ?>
             <button class="btn btn-info" onclick="history.go(-1);">Back </button>
             <!-- <button class="btn btn-success" id="load_transactions" disabled>Load Transactions</button> -->
 

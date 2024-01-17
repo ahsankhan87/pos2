@@ -89,17 +89,26 @@
                             echo '<td class="text-right">' . round($list['total_tax'], 2) . '</td>';
                             echo '<td class="text-right">' . round($total, 2) . '</td>';
 
+                            // if ($paid >= $total) {
+                            //     $label = "label label-success";
+                            //     $status = 'Paid';
+                            // } elseif ($paid < $total && $paid > 0) {
+                            //     $label = "label label-warning";
+                            //     $status = 'Partialy Paid';
+                            // } else {
+                            //     $label = "label label-danger";
+                            //     $status = 'Unpaid';
+                            // }
                             if ($paid >= $total) {
-                                $label = "label label-success";
+                                $label = "btn btn-success btn-sm";
                                 $status = 'Paid';
                             } elseif ($paid < $total && $paid > 0) {
-                                $label = "label label-warning";
+                                $label = "btn btn-warning btn-sm";
                                 $status = 'Partialy Paid';
                             } else {
-                                $label = "label label-danger";
+                                $label = "btn btn-danger btn-sm";
                                 $status = 'Unpaid';
                             }
-
                             echo '<td class="text-center"> <span class="' . $label . '">' . lang(strtolower($status)) . '</span></td>';
 
                             echo '<td>';

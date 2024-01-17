@@ -75,11 +75,11 @@
                         <th class="text-right" id="total_discount">0.00</th>
                         <th><input type="hidden" name="total_discount" id="total_discount_txt" value=""></th>
                     </tr> -->
-                    <tr>
+                    <!-- <tr>
                         <th class="text-right" colspan="6"><?php echo lang('tax'); ?></th>
                         <th class="text-right" id="total_tax">0.00</th>
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th colspan="5"><?php echo form_submit('', lang('save'), 'class="btn btn-success"'); ?></th>
                         <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th>

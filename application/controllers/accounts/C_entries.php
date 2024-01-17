@@ -306,7 +306,7 @@ class C_entries extends MY_Controller
             //    $number = (int) substr($prev_invoice_no,2)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
             //    $new_invoice_no = 'JV'.$number;
             //
-            $this->delete_by_invoice_no($invoice_no,false);
+            $this->delete_by_invoice_no($invoice_no, false);
 
             $tran_date = $this->input->post('tran_date', true);
             $name = $this->input->post('name', true);
@@ -384,5 +384,13 @@ class C_entries extends MY_Controller
             $this->session->set_flashdata('message', 'Journal Entries Deleted Inv#: ' . $invoice_no);
             redirect('accounts/C_entries/', 'refresh');
         }
+    }
+
+    function delete_by_invoice_no_from_viewall_page($invoice_no)
+    {
+        $this->delete_by_invoice_no($invoice_no, false);
+
+        $this->session->set_flashdata('message', 'Journal Entries Deleted Inv#: ' . $invoice_no);
+        redirect('accounts/C_entries/allEntries', 'refresh');
     }
 }

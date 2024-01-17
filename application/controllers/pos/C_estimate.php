@@ -32,7 +32,7 @@ class C_estimate extends MY_Controller
         $this->load->view('templates/footer');
     }
 
-    public function editestimate($invoice_no)
+    public function editEstimate($invoice_no)
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
@@ -40,20 +40,20 @@ class C_estimate extends MY_Controller
         $data['main'] = 'Edit Estimate';
 
         $data['saleType'] = ''; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
-        $data['invoice_no'] = $invoice_no;
+        $data['estimate_no'] = $invoice_no;
         $data['edit'] = true;
 
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
-        $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
-        $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
-        $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+        // $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        //$data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
+        // $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/estimate/v_editestimateProduct', $data);
+        $this->load->view('pos/estimate/v_editEstimate', $data);
         $this->load->view('templates/footer');
     }
 
-    public function sale_transaction()
+    public function sale_transaction($edit = null, $invoice_no = null)
     {
         $total_amount = 0;
         $discount = 0;
@@ -64,12 +64,18 @@ class C_estimate extends MY_Controller
 
             if (count((array)$this->input->post('account_id')) > 0) {
                 $this->db->trans_start();
-                //GET PREVIOISE INVOICE NO  
-                @$prev_invoice_no = $this->M_estimate->getMAXSaleInvoiceNo();
-                //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                //$new_invoice_no = 'POS'.date("Ymd").$number;
-                $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
-                $new_invoice_no = 'E' . $number;
+                //IF EDIT THEN DELETE ALL INVOICES AND INSERT AGAIN
+                if ($edit != null) {
+                    $this->delete($invoice_no, false, true);
+                    $new_invoice_no = $invoice_no;
+                } else {
+                    //GET PREVIOISE INVOICE NO  
+                    @$prev_invoice_no = $this->M_estimate->getMAXSaleInvoiceNo();
+                    //$number = (int) substr($prev_invoice_no,11)+1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                    //$new_invoice_no = 'POS'.date("Ymd").$number;
+                    $number = (int) $prev_invoice_no + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+                    $new_invoice_no = 'E' . $number;
+                }
 
                 //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
                 $user_id = $_SESSION['user_id'];

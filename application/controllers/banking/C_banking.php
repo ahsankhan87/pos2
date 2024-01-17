@@ -34,7 +34,20 @@ class C_banking extends MY_Controller
         print_r(json_encode($this->M_banking->get_activeBanking($id)));
     }
 
+    function bankDetail($bank_id)
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
 
+        $data['title'] = 'Bank Detail';
+        $data['main'] = 'Bank Detail';
+
+        $data['bank'] = $this->M_banking->get_banking($bank_id);
+        $data['bank_entries'] = $this->M_banking->get_bank_Entries($bank_id, FY_START_DATE, FY_END_DATE);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('banking/banks/v_bankDetail', $data);
+        $this->load->view('templates/footer');
+    }
     function create()
     {
         $data = array('langs' => $this->session->userdata('lang'));

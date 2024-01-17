@@ -12,7 +12,10 @@
             echo '</div>';
         }
         ?>
-        <p><?php echo anchor('banking/C_banking/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success"'); ?></p>
+        <p>
+            <?php echo anchor('banking/C_banking/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success"'); ?>
+
+        </p>
 
         <?php
         if (count($banking)) {

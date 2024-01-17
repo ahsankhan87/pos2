@@ -93,13 +93,13 @@
                             //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
 
                             if ($paid >= $total) {
-                                $label = "label label-success";
+                                $label = "btn btn-success btn-sm";
                                 $status = 'Paid';
                             } elseif ($paid < $total && $paid > 0) {
-                                $label = "label label-warning";
+                                $label = "btn btn-warning btn-sm";
                                 $status = 'Partialy Paid';
                             } else {
-                                $label = "label label-danger";
+                                $label = "btn btn-danger btn-sm";
                                 $status = 'Unpaid';
                             }
 

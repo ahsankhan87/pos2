@@ -61,14 +61,14 @@
                             //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
                             if (strtolower($list['status']) == 'in_progress') {
 
-                                $label = "label label-info";
+                                $label = "btn btn-info btn-sm";
                             } else if (strtolower($list['status']) == 'rejected') {
-                                $label = "label label-danger";
+                                $label = "btn btn-danger btn-sm";
                             } else {
-                                $label = "label label-success";
+                                $label = "btn btn-success btn-sm";
                             }
                             // echo '<td><span class="'.$label.'">'.$list['payment_status'].'</span></td>';
-                            echo '<td>' . anchor('#', '<span class="' . $label . '">' . lang(strtolower($list['status'])) . '</span>', ' data-toggle="modal" data-target="#status_' . $sno . '"') . '</td>';
+                            echo '<td class="text-center">' . anchor('#', '<span class="' . $label . '">' . lang(strtolower($list['status'])) . '</span>', ' data-toggle="modal" data-target="#status_' . $sno . '"') . '</td>';
 
                             echo '<td>';
 

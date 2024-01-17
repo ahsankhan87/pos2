@@ -90,7 +90,7 @@ if (count(@$entries)) {
                                 echo '<td>';
                                 echo '<a href="' . site_url($langs . '/accounts/C_entries/edit/' . $list['invoice_no']) . '" title="Edit"><i class="fa fa-pencil fa-fw"></i></a>';
                                 if (ucwords($inv_prefix) !== 'S' && ucwords($inv_prefix) !== 'R' && ucwords($inv_prefix) !== 'I') {
-                                    echo '| <a href="' . site_url($langs . '/accounts/C_entries/delete_by_invoice_no/' . $list['invoice_no']) . '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete?\')"><i class="fa fa-trash-o fa-fw text-danger"></i></a>';
+                                    echo '| <a href="' . site_url($langs . '/accounts/C_entries/delete_by_invoice_no_from_viewall_page/' . $list['invoice_no']) . '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete?\')"><i class="fa fa-trash-o fa-fw text-danger"></i></a>';
                                 }
                                 echo '</td>';
 
