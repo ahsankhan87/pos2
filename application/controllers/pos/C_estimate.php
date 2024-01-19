@@ -22,10 +22,10 @@ class C_estimate extends MY_Controller
         //$this->cart->destroy();
 
         //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
-        $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
-        $data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
-        $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
-        $data['taxes'] = $this->M_taxes->get_activetaxes();
+        // $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
+        //$data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
+        // $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+        //$data['taxes'] = $this->M_taxes->get_activetaxes();
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/estimate/v_estimate', $data);

@@ -778,4 +778,16 @@ class C_sales extends MY_Controller
             redirect('pos/C_sales/all/', 'refresh');
         }
     }
+
+    public function ubl_xml_receipt($new_invoice_no)
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+        $data['sales_items'] = $this->M_sales->get_sales_by_invoice($new_invoice_no);
+        $data['invoice_no'] = $new_invoice_no;
+
+        $data['title'] =  'Sales';
+        $data['main'] = ''; //($sales_items[0]['register_mode'] == 'sale' ? 'Sales' : 'Return').' Invoice #'.$new_invoice_no;
+
+        $this->load->view('pos/sales/receipt_ubl_xml', $data);
+    }
 }

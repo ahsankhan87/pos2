@@ -4,7 +4,8 @@
 
             <label class="control-label col-sm-2" for=""><?php echo lang('select') . ' ' . lang('customer') ?>:</label>
             <div class="col-sm-4">
-                <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?>
+                <select id="customer_id" name="customer_id" class="form-control select2me"></select>
+                <!-- <?php echo form_dropdown('customer_id', $customersDDL, '', 'id="customer_id" class="form-control select2me"'); ?> -->
             </div>
 
             <label class="control-label col-sm-2" for="sale_date"><?php echo lang('sale') . ' ' . lang('date') ?>:</label>
@@ -78,8 +79,9 @@
                     <!-- <tr>
                         <th class="text-right" colspan="6"><?php echo lang('tax'); ?></th>
                         <th class="text-right" id="total_tax">0.00</th>
-                        <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
-                    </tr> -->
+                        <th></th> -->
+                    <input type="hidden" name="total_tax" id="total_tax_txt" value="">
+                    <!-- </tr>  -->
                     <tr>
                         <th colspan="5"><?php echo form_submit('', lang('save'), 'class="btn btn-success"'); ?></th>
                         <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th>
@@ -400,6 +402,38 @@
                 }
             });
         }
+        ///////////////////
+        customerDDL();
+        ////////////////////////
+        //GET customer DROPDOWN LIST
+        function customerDDL(customer_id = '') {
+
+            let customer_ddl = '';
+            $.ajax({
+                url: site_url + "pos/C_customers/get_act_customers_JSON",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    customer_ddl += '<option value="0">Select Customer</option>';
+
+                    $.each(data, function(index, value) {
+
+                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
+
+                    });
+
+                    $('#customer_id').html(customer_ddl);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+
         ///////////////////
     });
 </script>
