@@ -28,8 +28,6 @@
 	?>
 
 	<script>
-		
-
 		///////////////////////////
 		//EXPENSE CHART
 		var title = <?php echo $title; ?>;
@@ -147,7 +145,7 @@
 				</div>
 				<?php echo lang('expenses') ?> <?php echo $_SESSION['home_currency_symbol'] . ' ' . number_format($total_expenses, 2); ?>
 				<div class="progress">
-					<div class="progress-bar progress-bar-danger" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $expense_percent.'%'?>">
+					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $expense_percent . '%' ?>">
 						<span class="sr-only">
 							<?php echo $expense_percent . '% Expense' ?>
 						</span>
@@ -160,69 +158,111 @@
 	</div>
 
 </div>
-<div class="clearfix">
+<div class="clearfix"></div>
 
-	<div class="row">
+<div class="row">
 
-		<div class="col-md-6 col-sm-6">
-			<div class="portlet">
-				<div class="portlet-title">
-					<div class="caption">
-						<i class="fa fa-bank"></i>Current Assets
-					</div>
-					<!--<div class="actions">-->
-					<!--	<div class="btn-group">-->
-					<!--		<a class="btn btn-default btn-sm dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">-->
-					<!--		Filter By <i class="fa fa-angle-down"></i>-->
-					<!--		</a>-->
-					<!--		<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">-->
-					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Finance</label>-->
-					<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> Membership</label>-->
-					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Customer Support</label>-->
-					<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> HR</label>-->
-					<!--			<label><div class="checker"><span><input type="checkbox"></span></div> System</label>-->
-					<!--		</div>-->
-					<!--	</div>-->
-					<!--</div>-->
+	<div class="col-md-6 col-sm-6">
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-bank"></i>Current Assets
 				</div>
-				<div class="portlet-body">
-					<div class="table-scrollable" style="min-height:230px">
-						<table class="table table-striped table-bordered table-hover">
-							<thead>
-								<tr>
-									<th><?php echo lang('account');?></th>
-									<th class="text-right"><?php echo lang('balance');?></th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								foreach ($current_assets as $list) :
-									//OPENING BALANCES
-									$op_balance_dr = (float) $list['op_balance_dr'];
-									$op_balance_cr = (float) $list['op_balance_cr'];
-									$op_balance = ($op_balance_dr - $op_balance_cr);
+				<!--<div class="actions">-->
+				<!--	<div class="btn-group">-->
+				<!--		<a class="btn btn-default btn-sm dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">-->
+				<!--		Filter By <i class="fa fa-angle-down"></i>-->
+				<!--		</a>-->
+				<!--		<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">-->
+				<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Finance</label>-->
+				<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> Membership</label>-->
+				<!--			<label><div class="checker"><span><input type="checkbox"></span></div> Customer Support</label>-->
+				<!--			<label><div class="checker"><span class="checked"><input type="checkbox" checked=""></span></div> HR</label>-->
+				<!--			<label><div class="checker"><span><input type="checkbox"></span></div> System</label>-->
+				<!--		</div>-->
+				<!--	</div>-->
+				<!--</div>-->
+			</div>
+			<div class="portlet-body">
+				<div class="table-scrollable" style="min-height:230px">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th><?php echo lang('account'); ?></th>
+								<th class="text-right"><?php echo lang('balance'); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							foreach ($current_assets as $list) :
+								//OPENING BALANCES
+								$op_balance_dr = (float) $list['op_balance_dr'];
+								$op_balance_cr = (float) $list['op_balance_cr'];
+								$op_balance = ($op_balance_dr - $op_balance_cr);
 
-									//CURRENT BALANCES
-									// $cur_balance = $this->M_banking->get_bank_total_balance($list['id'], FY_START_DATE, FY_END_DATE);
-									$cur_balance = $this->M_groups->get_account_total_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']);
-									// $balance_dr = (double) $cur_balance[0]['dr_balance'];
-									// $balance_cr = (double) $cur_balance[0]['cr_balance'];
+								//CURRENT BALANCES
+								// $cur_balance = $this->M_banking->get_bank_total_balance($list['id'], FY_START_DATE, FY_END_DATE);
+								$cur_balance = $this->M_groups->get_account_total_balance($_SESSION['company_id'], FY_START_DATE, FY_END_DATE, $list['account_code']);
+								// $balance_dr = (double) $cur_balance[0]['dr_balance'];
+								// $balance_cr = (double) $cur_balance[0]['cr_balance'];
 
-									echo '<tr>';
-									echo '<td>';
-									echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $list['account_code']) . '">' . $list['title'] . '</a>';
-									echo '</td>';
+								echo '<tr>';
+								echo '<td>';
+								echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $list['account_code']) . '">' . $list['title'] . '</a>';
+								echo '</td>';
 
-									echo '<td class="text-right">' . number_format(($op_balance_dr - $op_balance_cr) + ($cur_balance), 2) . '</td>';
-									echo '</td></tr>';
-								endforeach;
-								?>
-							</tbody>
-						</table>
-						<div class="pull-right "><a class="margin-bottom-5" href="<?php echo site_url('accounts/C_groups'); ?>">View all</a></div>
-					</div>
-
+								echo '<td class="text-right">' . number_format(($op_balance_dr - $op_balance_cr) + ($cur_balance), 2) . '</td>';
+								echo '</td></tr>';
+							endforeach;
+							?>
+						</tbody>
+					</table>
+					<div class="pull-right "><a class="margin-bottom-5" href="<?php echo site_url('accounts/C_groups'); ?>">View all</a></div>
 				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+	<div class="col-md-6 col-sm-6">
+		<!-- END BUTTONS WITH ICONS PORTLET-->
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-reorder"></i>Quick Actions
+				</div>
+
+			</div>
+			<div class="portlet-body text-center">
+				<a href="<?php echo site_url($langs . '/pos/C_customers') ?>" class="icon-btn">
+					<i class="fa fa-group"></i>
+					<div>
+						Customers
+					</div>
+					<!-- <span class="badge badge-important">
+						2 </span> -->
+				</a>
+				<a href="<?php echo site_url($langs . '/pos/C_invoices/all') ?>" class="icon-btn">
+					<i class="fa fa-barcode"></i>
+					<div>
+						Invoices
+					</div>
+					<!-- <span class="badge badge-success">
+						4 </span> -->
+				</a>
+				<a href="<?php echo site_url($langs . '/pos/C_bills/all') ?>" class="icon-btn">
+					<i class="fa fa-bar-chart-o"></i>
+					<div>
+						Bills
+					</div>
+				</a>
+				<a href="<?php echo site_url($langs . '/trans/C_suppliers') ?>" class="icon-btn">
+					<i class="fa fa-group"></i>
+					<div>
+						Vendors
+					</div>
+				</a>
 
 			</div>
 		</div>
