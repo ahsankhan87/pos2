@@ -225,8 +225,8 @@
 		</div>
 	</div>
 
-	<div class="col-md-6 col-sm-6">
-		<!-- END BUTTONS WITH ICONS PORTLET-->
+	<!-- <div class="col-md-6 col-sm-6">
+		
 		<div class="portlet">
 			<div class="portlet-title">
 				<div class="caption">
@@ -240,16 +240,14 @@
 					<div>
 						Customers
 					</div>
-					<!-- <span class="badge badge-important">
-						2 </span> -->
+					
 				</a>
 				<a href="<?php echo site_url($langs . '/pos/C_invoices/all') ?>" class="icon-btn">
 					<i class="fa fa-barcode"></i>
 					<div>
 						Invoices
 					</div>
-					<!-- <span class="badge badge-success">
-						4 </span> -->
+					
 				</a>
 				<a href="<?php echo site_url($langs . '/pos/C_bills/all') ?>" class="icon-btn">
 					<i class="fa fa-bar-chart-o"></i>
@@ -266,5 +264,5 @@
 
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
