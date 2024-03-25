@@ -85,8 +85,11 @@ class C_connections extends MY_Controller
     public function bank_entry_transaction()
     {
         $total_amount = 0;
+        $content_raw = file_get_contents("php://input"); // THIS IS WHAT YOU NEED
+        $decoded_data = json_decode($content_raw, true); //
+        //var_dump($decoded_data);
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if (count((array)$decoded_data) > 0) {
 
             $this->db->trans_start();
 
@@ -99,13 +102,13 @@ class C_connections extends MY_Controller
             //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
             $user_id = $_SESSION['user_id'];
             $company_id = $_SESSION['company_id'];
-            $sale_date = $this->input->post("date");
+            $sale_date = $decoded_data["date"];
             $emp_id = ''; //$this->input->post("emp_id");
-            $narration = 'Payee: ' . ($this->input->post("payee") == '' ? '' : $this->input->post("payee"));
-            $deposit_to_acc_code = $this->input->post("account_id");
-            $acc_code_2 = $this->input->post("account_id_2");
-            $total_amount = $this->input->post("payment_amount");
-            $plaid_trans_id = $this->input->post("plaid_trans_id");
+            $narration = 'Payee: ' . $decoded_data["payee"];
+            $deposit_to_acc_code = $decoded_data["account_id"];
+            $acc_code_2 = $decoded_data["account_id_2"];
+            $total_amount = $decoded_data["payment_amount"];
+            $plaid_trans_id = $decoded_data["plaid_trans_id"];
 
             ////////
             $data = array(

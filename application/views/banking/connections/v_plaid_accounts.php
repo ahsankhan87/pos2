@@ -75,6 +75,7 @@
                                             echo '<a href="#" class="view_transactions btn btn-default" id="viewTransactions_' . $palid_accounts_values['plaid_account_id'] . '">View Transactions</a>';
                                             echo '</td>';
                                             echo '</tr>';
+
                                             echo '</tbody>';
                                             echo '</table>';
                                             echo '<div class="note note-success trans_note" id="note_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
@@ -200,6 +201,8 @@
         $(".loader").hide();
         $('.note').hide();
 
+
+
         $('.view_transactions').on('click', function(e) {
             var cur_plaidAccountId = this.id.split("_")[1];
             $(".loader").show();
@@ -213,20 +216,20 @@
             }
             $(".loader").hide();
         });
-        ///////////////
 
+        ///////////////
         ////////////////////////
         //GET get_ponto_list_accounts
         function get_transaction_list(account_id) {
             var div = '';
-            $(".loader").show();
+
             $.ajax({
                 url: site_url + "banking/C_connections/retrieveTransactionsByAccountID/" + account_id,
                 type: 'POST',
                 dataType: 'json', // added data type
                 success: function(json_response) {
                     //json_response = JSON.parse(response);
-                    //console.log(json_response);
+                    console.log('result ' + json_response);
                     var grand_total = 0;
 
                     if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
@@ -250,11 +253,13 @@
                             '</thead>' +
                             '<tbody>';
 
+
                         $.each(json_response, function(index, value) {
 
                             grand_total += -value.amount;
                             var d_date = new Date(value.date);
-
+                            accountsDDL();
+                            div += '<form class="form-horizontal">';
                             div += '<tr>' +
                                 '<td>' +
                                 '<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -value.amount + '" id="transID_' + value.plaid_transaction_id + '" ' + (value.posted == 1 ? 'disabled' : '') + '/>' +
@@ -264,12 +269,14 @@
                                 // '<td>' + value.payment_channel + '</td>' +
                                 '<td>' + value.category + '</td>' +
                                 '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>' +
-                                '<td>' + d_date.toLocaleDateString("en-US") + '</td>';
+                                '<td>' + d_date.toLocaleDateString("en-US") + '</td>' +
+                                '<td id="acceptButton' + i + '">';
 
                             if (value.posted == 1) {
-                                div += '<td><a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
+                                div += '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
                             } else {
-                                div += '<td><a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
+                                div += '<a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
+                                div += '<a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + i + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + i + '">Add</a>';
                             }
 
                             div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
@@ -280,10 +287,54 @@
                                 '</td>' +
                                 '</tr>';
 
+                            div += '<tr class="collapse" id="collapseExample_' + i + '">' +
+                                '<td colspan="7">' +
+                                '<div class="row">' +
+                                '<div class="col-sm-6">' +
+
+
+                                '<div class="form-body">' +
+                                '<div class="form-group">' +
+
+                                '<label class="control-label" for="date Name">Date:</label>' +
+                                '<input type="date" name="date_' + i + '" id="date_' + i + '" value="' + value.date + '" class="form-control">' +
+
+                                '<label class="control-label" for="customer">Customer/Vendor:</label>' +
+                                '<select class="form-control " id="customer_or_supplier_id_' + i + '" name="customer_' + i + '"></select>' +
+
+                                '<label class="control-label" for="payment_payee">Payee:</label>' +
+                                '<input type="text" name="payee' + i + '" id="payment_payee_' + i + '" value="' + value.name + '" class="form-control" readonly>' +
+
+                                '<label class="control-label" for="account_id">Bank:</label>' +
+                                '<select class="form-control select2me account_id" id="account_id_' + i + '" name="account_id_' + i + '"></select>' +
+
+                                '<label class="control-label" for="customer Nameaccount_id_2">Category:</label>' +
+                                '<select class="form-control select2me account_id_2" id="account_id_2_' + i + '" name="account_id_2_' + i + '"></select>' +
+
+                                '<label class="control-label" for="payment_amount">Amount:</label>' +
+                                '<input type="text" readonly class="form-control" value="' + -value.amount + '" id="payment_amount_' + i + '" name="payment_amount_' + i + '" autocomplete="off">' +
+                                '<input type="hidden" name="plaid_trans_id_' + i + '" id="plaid_trans_id_' + i + '" value="' + value.plaid_transaction_id + '">' +
+                                '<input type="hidden" name="plaid_account_id_' + i + '" id="plaid_account_id_' + i + '" value="' + value.account_id + '">' +
+
+                                '</div>' +
+                                '</div>' + //form body
+                                '<input type="submit" onClick="return AddEntry(' + i + ')" class="btn btn-primary submit" value="Add"/>' +
+
+                                '</div>' +
+                                '</div>' +
+                                '</form>';
+
+                            '</td>' +
+                            '</tr>';
+
                             i++;
 
+
                         });
+
                         div += '</tbody></table>';
+                        ///////////////////
+
 
                         $(".loader").hide();
                         $('#transactions_table_' + account_id).html(div);
@@ -352,46 +403,6 @@
             });
         }
 
-        ///////////////////
-        $("#payment_entry_form").on("submit", function(e) {
-            var formValues = $(this).serialize();
-            var plaid_account_id = $('input[name=plaid_account_id]').val();
-            //console.log(formValues);
-            // var submit_btn = document.activeElement.id;
-            //return false;
-
-            var confirmSale = confirm('Are you sure you want to accept transaction?');
-
-            if (confirmSale) {
-
-                if (formValues.length > 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: site_url + "/banking/C_connections/bank_entry_transaction",
-                        data: formValues,
-                        success: function(data) {
-                            if (data == '1') {
-                                toastr.success("transaction saved successfully", 'Success');
-                                $('#paymentEntryModal').modal('toggle');
-                                get_transaction_list(plaid_account_id); // load again 
-                                $('#note_' + plaid_account_id).html();
-                                $('#note_' + plaid_account_id).hide();
-                                //console.log('account id ' + plaid_account_id);
-                                //location.reload();
-                            } else {
-                                toastr.error("transaction not saved, please try again.", 'Error');
-                            }
-
-                            //console.log(data);
-                        }
-                    });
-                } else {
-                    toastr.warning("Please select item", 'Warning');
-                }
-            }
-            e.preventDefault();
-        });
-
         //GET get_ponto_list_accounts
         $('.refresh_transactions').on('click', function(e) {
             var cur_plaidItemId = this.id.split("_")[1];
@@ -455,8 +466,8 @@
 
                     });
 
-                    $('#account_id').html(accounts_ddl);
-                    $('#account_id_2').html(accounts_ddl);
+                    $('.account_id').html(accounts_ddl);
+                    $('.account_id_2').html(accounts_ddl);
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -466,7 +477,79 @@
             });
         }
         ///////////////////
+
+
     });
+
+    // Add the counter id as an argument, which we passed in the code above
+    function AddEntry(id) {
+        var confirmSale = confirm('Are you sure you want to accept transaction?');
+        console.log('accept ' + id);
+        $('#collapseExample_' + id).collapse('hide');
+        $('#acceptButton' + id).html('<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>');
+        return;
+        if (confirmSale) {
+            // Append the counter id to the ID to get the correct input
+            var date = document.getElementById('date_' + id).value;
+            var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + id).value;
+            var payment_payee = document.getElementById('payment_payee_' + id).value;
+            var account_id = document.getElementById('account_id_' + id).value;
+            var account_id_2 = document.getElementById('account_id_2_' + id).value;
+            var payment_amount = document.getElementById('payment_amount_' + id).value;
+            var plaid_trans_id = document.getElementById('plaid_trans_id_' + id).value;
+            var plaid_account_id = document.getElementById('plaid_account_id_' + id).value;
+            // var dataString = 'date=' + date + ',customer_or_supplier_id="' + customer_or_supplier_id + '",payee="' + payment_payee + '",account_id="' + account_id + '",account_id_2="' + account_id_2 + '",payment_amount="' + payment_amount + '",plaid_trans_id="' + plaid_trans_id + '"';
+            var dataString = 'account_id' + account_id + ',date:' + date + ''; //,customer_or_supplier_id="' + customer_or_supplier_id + '",payee="' + payment_payee + '",account_id="' + account_id + '",account_id_2="' + account_id_2 + '",payment_amount="' + payment_amount + '",plaid_trans_id="' + plaid_trans_id + '"';
+            var sendInfo = {
+                date: date,
+                account_id: account_id,
+                account_id_2: account_id_2,
+                payment_amount: payment_amount,
+                payee: payment_payee,
+                plaid_trans_id: plaid_trans_id,
+                plaid_account_id: plaid_account_id,
+                customer_or_supplier_id: customer_or_supplier_id
+            };
+            $.ajax({
+                type: "post",
+                url: site_url + "/banking/C_connections/bank_entry_transaction",
+                data: JSON.stringify(sendInfo),
+                cache: false,
+                contentType: 'application/json',
+                success: function(data) {
+                    if (data == '1') {
+                        // Instead of using the class to set the message, use the ID,
+                        // otherwise all elements will get the text. Again, append the counter id.
+                        toastr.success(data + " transaction saved successfully", 'Success');
+                        get_transaction_list(plaid_account_id);
+
+                    } else {
+                        toastr.error("transaction not saved, please try again.", 'Error');
+                    }
+                    console.log(data);
+                }
+
+            });
+        }
+        return false;
+    }
+
+    // $(document).on('click', '.submit', function() {
+    //     var id = this.id.split("_")[1];
+
+    //     var date = document.getElementById('date_' + id).value;
+    //     var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + id).value;
+    //     var payment_payee = document.getElementById('payment_payee_' + id).value;
+    //     var account_id = document.getElementById('account_id_' + id).value;
+    //     var account_id_2 = document.getElementById('account_id_2_' + id).value;
+    //     var payment_amount = document.getElementById('payment_amount_' + id).value;
+    //     var plaid_trans_id = document.getElementById('plaid_trans_id_' + id).value;
+    //     var plaid_account_id = document.getElementById('plaid_account_id_' + id).value;
+
+    //     //get_transaction_list(plaid_account_id);
+    //     alert('<strong>' + id + '</strong>');
+    //     $('#collapseExample_' + id).collapse('hide');
+    // });
 </script>
 <!-- Accept Payment Modal -->
 <div class="modal fade" id="paymentEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -498,7 +581,8 @@
                                 <td><input type="text" name="payee" id="payment_payee" class="form-control" readonly></td>
                                 <td width="25%"><select class="form-control " id="account_id" name="account_id"></select></td>
                                 <td width="25%"><select class="form-control " id="account_id_2" name="account_id_2"></select></td>
-                                <td class=""><input type="text" readonly class="form-control" id="payment_amount" name="payment_amount" autocomplete="off">
+                                <td class="">
+                                    <input type="text" readonly class="form-control" id="payment_amount" name="payment_amount" autocomplete="off">
                                     <input type="hidden" name="plaid_trans_id" id="plaid_trans_id">
                                     <input type="hidden" name="plaid_account_id" id="plaid_account_id">
                                 </td>
