@@ -259,6 +259,8 @@
                             grand_total += -value.amount;
                             var d_date = new Date(value.date);
                             accountsDDL();
+                            customerDDL();
+
                             div += '<form class="form-horizontal">';
                             div += '<tr>' +
                                 '<td>' +
@@ -270,13 +272,13 @@
                                 '<td>' + value.category + '</td>' +
                                 '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>' +
                                 '<td>' + d_date.toLocaleDateString("en-US") + '</td>' +
-                                '<td id="acceptButton' + i + '">';
+                                '<td id="acceptButton_' + value.plaid_transaction_id + '">';
 
                             if (value.posted == 1) {
                                 div += '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
                             } else {
-                                div += '<a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
-                                div += '<a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + i + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + i + '">Add</a>';
+                                //div += '<a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
+                                div += '<a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Add</a>';
                             }
 
                             div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
@@ -287,34 +289,33 @@
                                 '</td>' +
                                 '</tr>';
 
-                            div += '<tr class="collapse" id="collapseExample_' + i + '">' +
+                            div += '<tr class="collapse" id="collapseExample_' + value.plaid_transaction_id + '">' +
                                 '<td colspan="7">' +
                                 '<div class="row">' +
                                 '<div class="col-sm-6">' +
-
 
                                 '<div class="form-body">' +
                                 '<div class="form-group">' +
 
                                 '<label class="control-label" for="date Name">Date:</label>' +
-                                '<input type="date" name="date_' + i + '" id="date_' + i + '" value="' + value.date + '" class="form-control">' +
+                                '<input type="date" name="date_' + value.plaid_transaction_id + '" id="date_' + value.plaid_transaction_id + '" value="' + value.date + '" class="form-control">' +
 
                                 '<label class="control-label" for="customer">Customer/Vendor:</label>' +
-                                '<select class="form-control " id="customer_or_supplier_id_' + i + '" name="customer_' + i + '"></select>' +
+                                '<select class="form-control select2me customer_or_supplier_id" id="customer_or_supplier_id_' + value.plaid_transaction_id + '" name="customer_or_supplier_id_' + value.plaid_transaction_id + '"></select>' +
 
                                 '<label class="control-label" for="payment_payee">Payee:</label>' +
-                                '<input type="text" name="payee' + i + '" id="payment_payee_' + i + '" value="' + value.name + '" class="form-control" readonly>' +
+                                '<input type="text" name="payee' + value.plaid_transaction_id + '" id="payment_payee_' + value.plaid_transaction_id + '" value="' + value.name + '" class="form-control" readonly>' +
 
                                 '<label class="control-label" for="account_id">Bank:</label>' +
-                                '<select class="form-control select2me account_id" id="account_id_' + i + '" name="account_id_' + i + '"></select>' +
+                                '<select class="form-control select2me account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '"></select>' +
 
                                 '<label class="control-label" for="customer Nameaccount_id_2">Category:</label>' +
-                                '<select class="form-control select2me account_id_2" id="account_id_2_' + i + '" name="account_id_2_' + i + '"></select>' +
+                                '<select class="form-control select2me account_id_2" id="account_id_2_' + value.plaid_transaction_id + '" name="account_id_2_' + value.plaid_transaction_id + '"></select>' +
 
                                 '<label class="control-label" for="payment_amount">Amount:</label>' +
-                                '<input type="text" readonly class="form-control" value="' + -value.amount + '" id="payment_amount_' + i + '" name="payment_amount_' + i + '" autocomplete="off">' +
-                                '<input type="hidden" name="plaid_trans_id_' + i + '" id="plaid_trans_id_' + i + '" value="' + value.plaid_transaction_id + '">' +
-                                '<input type="hidden" name="plaid_account_id_' + i + '" id="plaid_account_id_' + i + '" value="' + value.account_id + '">' +
+                                '<input type="text" readonly class="form-control" value="' + -value.amount + '" id="payment_amount_' + value.plaid_transaction_id + '" name="payment_amount_' + value.plaid_transaction_id + '" autocomplete="off">' +
+                                '<input type="hidden" name="plaid_trans_id_' + value.plaid_transaction_id + '" id="plaid_trans_id_' + value.plaid_transaction_id + '" value="' + value.plaid_transaction_id + '">' +
+                                '<input type="hidden" name="plaid_account_id_' + value.plaid_transaction_id + '" id="plaid_account_id_' + value.plaid_transaction_id + '" value="' + value.account_id + '">' +
 
                                 '</div>' +
                                 '</div>' + //form body
@@ -328,7 +329,6 @@
                             '</tr>';
 
                             i++;
-
 
                         });
 
@@ -478,28 +478,53 @@
         }
         ///////////////////
 
+        //GET customer DROPDOWN LIST
+        function customerDDL(customer_id = '') {
+
+            let customer_ddl = '';
+            $.ajax({
+                url: site_url + "pos/C_customers/get_act_customers_JSON",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    //console.log(data);
+                    let i = 0;
+                    customer_ddl += '<option value="0">Select Customer</option>';
+
+                    $.each(data, function(index, value) {
+
+                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
+
+                    });
+
+                    $('.customer_or_supplier_id').html(customer_ddl);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
 
     });
 
     // Add the counter id as an argument, which we passed in the code above
     function AddEntry(id) {
         var confirmSale = confirm('Are you sure you want to accept transaction?');
-        console.log('accept ' + id);
-        $('#collapseExample_' + id).collapse('hide');
-        $('#acceptButton' + id).html('<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>');
-        return;
+        var plaidTransID = document.getElementById('transid_' + id).value
+        console.log('accept ' + plaidTransID);
+
         if (confirmSale) {
             // Append the counter id to the ID to get the correct input
-            var date = document.getElementById('date_' + id).value;
-            var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + id).value;
-            var payment_payee = document.getElementById('payment_payee_' + id).value;
-            var account_id = document.getElementById('account_id_' + id).value;
-            var account_id_2 = document.getElementById('account_id_2_' + id).value;
-            var payment_amount = document.getElementById('payment_amount_' + id).value;
-            var plaid_trans_id = document.getElementById('plaid_trans_id_' + id).value;
-            var plaid_account_id = document.getElementById('plaid_account_id_' + id).value;
-            // var dataString = 'date=' + date + ',customer_or_supplier_id="' + customer_or_supplier_id + '",payee="' + payment_payee + '",account_id="' + account_id + '",account_id_2="' + account_id_2 + '",payment_amount="' + payment_amount + '",plaid_trans_id="' + plaid_trans_id + '"';
-            var dataString = 'account_id' + account_id + ',date:' + date + ''; //,customer_or_supplier_id="' + customer_or_supplier_id + '",payee="' + payment_payee + '",account_id="' + account_id + '",account_id_2="' + account_id_2 + '",payment_amount="' + payment_amount + '",plaid_trans_id="' + plaid_trans_id + '"';
+            var date = document.getElementById('date_' + plaidTransID).value;
+            var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + plaidTransID).value;
+            var payment_payee = document.getElementById('payment_payee_' + plaidTransID).value;
+            var account_id = document.getElementById('account_id_' + plaidTransID).value;
+            var account_id_2 = document.getElementById('account_id_2_' + plaidTransID).value;
+            var payment_amount = document.getElementById('payment_amount_' + plaidTransID).value;
+            var plaid_trans_id = document.getElementById('plaid_trans_id_' + plaidTransID).value;
+            var plaid_account_id = document.getElementById('plaid_account_id_' + plaidTransID).value;
             var sendInfo = {
                 date: date,
                 account_id: account_id,
@@ -521,12 +546,13 @@
                         // Instead of using the class to set the message, use the ID,
                         // otherwise all elements will get the text. Again, append the counter id.
                         toastr.success(data + " transaction saved successfully", 'Success');
-                        get_transaction_list(plaid_account_id);
+                        $('#collapseExample_' + plaidTransID).collapse('hide');
+                        $('#acceptButton_' + plaidTransID).html('<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>');
 
                     } else {
                         toastr.error("transaction not saved, please try again.", 'Error');
                     }
-                    console.log(data);
+                    //console.log(data);
                 }
 
             });
