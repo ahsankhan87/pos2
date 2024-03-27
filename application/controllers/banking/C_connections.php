@@ -149,8 +149,9 @@ class C_connections extends MY_Controller
                 'plaid_trans_id' => $plaid_trans_id,
             );
             $this->db->insert('acc_entry_items', $data);
+
             $entry_id = $this->db->insert_id();
-            
+
             $data = array(
                 'customer_id' => $customer_or_supplier_id,
                 'account_code' => $deposit_to_acc_code,

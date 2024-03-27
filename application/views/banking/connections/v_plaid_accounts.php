@@ -229,7 +229,7 @@
                 dataType: 'json', // added data type
                 success: function(json_response) {
                     //json_response = JSON.parse(response);
-                    console.log('result ' + json_response);
+                    //console.log('result ' + json_response);
                     var grand_total = 0;
 
                     if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
@@ -258,10 +258,7 @@
 
                             grand_total += -value.amount;
                             var d_date = new Date(value.date);
-                            accountsDDL();
-                            customerDDL();
 
-                            div += '<form class="form-horizontal">';
                             div += '<tr>' +
                                 '<td>' +
                                 '<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -value.amount + '" id="transID_' + value.plaid_transaction_id + '" ' + (value.posted == 1 ? 'disabled' : '') + '/>' +
@@ -278,7 +275,7 @@
                                 div += '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
                             } else {
                                 //div += '<a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
-                                div += '<a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Add</a>';
+                                div += '<a class="btn btn-primary btn-sm collapseExample" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Add</a>';
                             }
 
                             div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
@@ -291,35 +288,51 @@
 
                             div += '<tr class="collapse" id="collapseExample_' + value.plaid_transaction_id + '">' +
                                 '<td colspan="7">' +
-                                '<div class="row">' +
-                                '<div class="col-sm-6">' +
+                                '<form class="form-horizontal">' +
+                                '<div class="row" style="background-color:#f4f5f8; padding-bottom:20px">' +
+                                '<div class="col-sm-12">' +
 
-                                '<div class="form-body">' +
-                                '<div class="form-group">' +
-
+                                //'<div class="form-body">' +
+                                //'<div class="form-group">' +
+                                '<div class=" col-sm-4">' +
                                 '<label class="control-label" for="date Name">Date:</label>' +
                                 '<input type="date" name="date_' + value.plaid_transaction_id + '" id="date_' + value.plaid_transaction_id + '" value="' + value.date + '" class="form-control">' +
+                                '</div>' +
 
+                                '<div class=" col-sm-4">' +
                                 '<label class="control-label" for="customer">Customer/Vendor:</label>' +
                                 '<select class="form-control select2me customer_or_supplier_id" id="customer_or_supplier_id_' + value.plaid_transaction_id + '" name="customer_or_supplier_id_' + value.plaid_transaction_id + '"></select>' +
+                                '</div>' +
 
+                                '<div class=" col-sm-4">' +
                                 '<label class="control-label" for="payment_payee">Payee:</label>' +
                                 '<input type="text" name="payee' + value.plaid_transaction_id + '" id="payment_payee_' + value.plaid_transaction_id + '" value="' + value.name + '" class="form-control" readonly>' +
+                                '</div>' +
 
+                                '<div class=" col-sm-4">' +
                                 '<label class="control-label" for="account_id">Bank:</label>' +
-                                '<select class="form-control select2me account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '"></select>' +
+                                '<select class="form-control select2me account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '" required></select>' +
+                                '</div>' +
 
-                                '<label class="control-label" for="customer Nameaccount_id_2">Category:</label>' +
+                                '<div class=" col-sm-4">' +
+                                '<label class="control-label" for="account_id_2">Category:</label>' +
                                 '<select class="form-control select2me account_id_2" id="account_id_2_' + value.plaid_transaction_id + '" name="account_id_2_' + value.plaid_transaction_id + '"></select>' +
+                                '</div>' +
 
+                                '<div class=" col-sm-4">' +
                                 '<label class="control-label" for="payment_amount">Amount:</label>' +
                                 '<input type="text" readonly class="form-control" value="' + -value.amount + '" id="payment_amount_' + value.plaid_transaction_id + '" name="payment_amount_' + value.plaid_transaction_id + '" autocomplete="off">' +
                                 '<input type="hidden" name="plaid_trans_id_' + value.plaid_transaction_id + '" id="plaid_trans_id_' + value.plaid_transaction_id + '" value="' + value.plaid_transaction_id + '">' +
                                 '<input type="hidden" name="plaid_account_id_' + value.plaid_transaction_id + '" id="plaid_account_id_' + value.plaid_transaction_id + '" value="' + value.account_id + '">' +
-
                                 '</div>' +
-                                '</div>' + //form body
-                                '<input type="submit" onClick="return AddEntry(' + i + ')" class="btn btn-primary submit" value="Add"/>' +
+
+                                '<div class=" col-sm-4">' +
+                                '<label class="control-label" for="submit"></label>' +
+                                '<input type="submit" onClick="return AddEntry(' + i + ')" class="btn btn-primary btn-sm submit" value="Add"/>' +
+                                '  <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Close</a>' +
+                                '</div>' +
+                                //'</div>' + //form group
+                                // '</div>' + //form body
 
                                 '</div>' +
                                 '</div>' +
@@ -442,89 +455,148 @@
         ///////////////////
 
         ////////////////////////
-        //GET Accounts DROPDOWN LIST
-        function accountsDDL(index = 0) {
 
-            let accounts_ddl = '';
-            var account_type = ['liability', 'equity', 'cos', 'revenue', 'expense', 'asset'];
-            $.ajax({
-                url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
-                type: 'POST',
-                dataType: "JSON",
-                data: {
-                    account_types: account_type
-                },
-                cache: true,
-                success: function(data) {
-                    //console.log(data);
-                    let i = 0;
-                    accounts_ddl += '<option value="0">Select Account</option>';
 
-                    $.each(data, function(index, value) {
 
-                        accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
+    }); // document.ready
+    //GET Accounts DROPDOWN LIST
+    function accountsDDL(index = 0) {
+        const site_url = '<?php echo site_url($langs); ?>/';
+        let accounts_ddl = '';
+        var account_type = ['liability', 'equity', 'cos', 'revenue', 'expense', 'asset'];
+        $.ajax({
+            url: site_url + "accounts/C_groups/get_detail_accounts_by_type",
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+                account_types: account_type
+            },
+            cache: true,
+            success: function(data) {
+                //console.log(data);
+                let i = 0;
+                accounts_ddl += '<option value="0">Select Account</option>';
 
-                    });
+                $.each(data, function(index, value) {
 
-                    $('.account_id').html(accounts_ddl);
-                    $('.account_id_2').html(accounts_ddl);
+                    accounts_ddl += '<option value="' + value.account_code + '">' + value.title + '</option>';
 
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ///////////////////
+                });
 
-        //GET customer DROPDOWN LIST
-        function customerDDL(customer_id = '') {
+                $('.account_id').html(accounts_ddl);
+                $('.account_id_2').html(accounts_ddl);
 
-            let customer_ddl = '';
-            $.ajax({
-                url: site_url + "pos/C_customers/get_act_customers_JSON",
-                type: 'GET',
-                dataType: 'json', // added data type
-                success: function(data) {
-                    //console.log(data);
-                    let i = 0;
-                    customer_ddl += '<option value="0">Select Customer</option>';
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+    }
+    ///////////////////
 
-                    $.each(data, function(index, value) {
+    //GET customer DROPDOWN LIST
+    function customerDDL(customer_id = '') {
+        const site_url = '<?php echo site_url($langs); ?>/';
+        let customer_ddl = '';
+        $.ajax({
+            url: site_url + "pos/C_customers/get_act_customers_JSON",
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function(data) {
+                //console.log(data);
+                let i = 0;
+                customer_ddl += '<option value="0">Select Customer</option>';
+                customer_ddl += '<option value="ADD_NEW">ADD NEW</option>';
 
-                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
+                $.each(data, function(index, value) {
 
-                    });
+                    customer_ddl += '<option value="' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
 
-                    $('.customer_or_supplier_id').html(customer_ddl);
+                });
 
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                }
-            });
+                $('.customer_or_supplier_id').html(customer_ddl);
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+    }
+
+    //Load customers DDL and Account DDL when click on add button 
+    $(document).on('click', '.collapseExample', function() {
+
+        if (!$(this).hasClass('collapsed')) {
+            customerDDL();
+            accountsDDL();
         }
 
     });
 
+    ////// LOAD add new customer DROPDOWN CHANGE
+    $(document).on('change', '.customer_or_supplier_id', function() {
+
+        var add_new = $(this).val();
+        console.log(add_new);
+        if (add_new == 'ADD_NEW') {
+            $('#customerModal').modal('toggle');
+        }
+    });
+
+    ///////////////////
+    $(document).on('submit', '#customerForm', function(event) {
+        // $("").submit(function(event) {
+        // Stop form from submitting normally
+        event.preventDefault();
+        const site_url = '<?php echo site_url($langs); ?>/';
+        /* Serialize the submitted form control values to be sent to the web server with the request */
+        var formValues = $(this).serialize();
+        var isCustomer = $('input[name=isCustomer]:checked').val();
+        var createPath = (isCustomer == 'supplier' ? "trans/C_suppliers/create/" : "pos/C_customers/create/")
+        // console.log($('input[name=isCustomer]:checked').val());
+        console.log(site_url + createPath);
+        if ($('#first_name').val() == 0) {
+            toastr.error("Please enter name", 'Error!');
+        } else {
+            // Send the form data using post
+            $.post(site_url + createPath, formValues, function(data) {
+                // Display the returned data in browser
+                //$("#result").html(data);
+                toastr.success("Data saved successfully", 'Success');
+                console.log(data);
+                $('#customerModal').modal('toggle');
+                customerDDL();
+                // setTimeout(function() {
+                //     location.reload();
+                // }, 2000);
+
+            });
+        }
+    });
+    /////
     // Add the counter id as an argument, which we passed in the code above
     function AddEntry(id) {
         var confirmSale = confirm('Are you sure you want to accept transaction?');
         var plaidTransID = document.getElementById('transid_' + id).value
-        console.log('accept ' + plaidTransID);
+        //console.log('accept ' + plaidTransID);
+        // Append the counter id to the ID to get the correct input
+        var date = document.getElementById('date_' + plaidTransID).value;
+        var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + plaidTransID).value;
+        var payment_payee = document.getElementById('payment_payee_' + plaidTransID).value;
+        var account_id = document.getElementById('account_id_' + plaidTransID).value;
+        var account_id_2 = document.getElementById('account_id_2_' + plaidTransID).value;
+        var payment_amount = document.getElementById('payment_amount_' + plaidTransID).value;
+        var plaid_trans_id = document.getElementById('plaid_trans_id_' + plaidTransID).value;
+        var plaid_account_id = document.getElementById('plaid_account_id_' + plaidTransID).value;
 
-        if (confirmSale) {
-            // Append the counter id to the ID to get the correct input
-            var date = document.getElementById('date_' + plaidTransID).value;
-            var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + plaidTransID).value;
-            var payment_payee = document.getElementById('payment_payee_' + plaidTransID).value;
-            var account_id = document.getElementById('account_id_' + plaidTransID).value;
-            var account_id_2 = document.getElementById('account_id_2_' + plaidTransID).value;
-            var payment_amount = document.getElementById('payment_amount_' + plaidTransID).value;
-            var plaid_trans_id = document.getElementById('plaid_trans_id_' + plaidTransID).value;
-            var plaid_account_id = document.getElementById('plaid_account_id_' + plaidTransID).value;
+        if (account_id == 0) {
+            toastr.error("Please select account", 'Error');
+            document.getElementById('account_id_' + plaidTransID).focus();
+            return false;
+        } else if (confirmSale) {
+
             var sendInfo = {
                 date: date,
                 account_id: account_id,
@@ -577,6 +649,67 @@
     //     $('#collapseExample_' + id).collapse('hide');
     // });
 </script>
+<!-- Add Customer Modal -->
+<div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo lang('add_new') . ' ' . lang('customer'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="customerForm" action="">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email">Choose:</label>
+                        <div class="col-sm-9">
+                            <label for="isCustomer">Customerr:</label> <input type="radio" class="" name="isCustomer" id="isCustomer" value="customer" checked>
+                            <label for="isSupplier">Suppleir:</label><input type="radio" class="" name="isCustomer" id="isSupplier" value="supplier">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email"><?php echo lang('name'); ?>:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="" required="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email"><?php echo lang('store') . ' ' . lang('name'); ?>:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="store_name" id="store_name" placeholder="" required="">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email"><?php echo lang('email'); ?>:</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="phone_no"><?php echo lang('phone'); ?>:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="phone_no" id="phone_no" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="website"><?php echo lang('website'); ?>:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="website" id="website" placeholder="">
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo lang('close'); ?></button>
+                <button type="submit" class="btn btn-primary"><?php echo lang('save'); ?></button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
 <!-- Accept Payment Modal -->
 <div class="modal fade" id="paymentEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

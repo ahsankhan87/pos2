@@ -298,7 +298,7 @@ class C_suppliers extends MY_Controller
     function create()
     {
         $data = array('langs' => $this->session->userdata('lang'));
-
+        var_dump($_POST);
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
             //form Validation
@@ -342,7 +342,7 @@ class C_suppliers extends MY_Controller
 
                 $this->db->trans_complete();
 
-                redirect('trans/C_suppliers/index', 'refresh');
+                //redirect('trans/C_suppliers/index', 'refresh');
             }
         }
         //else
