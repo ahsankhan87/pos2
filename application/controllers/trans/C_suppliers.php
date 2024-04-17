@@ -298,7 +298,7 @@ class C_suppliers extends MY_Controller
     function create()
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        var_dump($_POST);
+        //var_dump($_POST);
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
             //form Validation
@@ -342,7 +342,7 @@ class C_suppliers extends MY_Controller
 
                 $this->db->trans_complete();
 
-                //redirect('trans/C_suppliers/index', 'refresh');
+                redirect('trans/C_suppliers/index', 'refresh');
             }
         }
         //else
@@ -361,6 +361,43 @@ class C_suppliers extends MY_Controller
         //}
 
     }
+    function JSCreate()
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+        //var_dump($_POST);
+        $data = array(
+            'company_id' => $_SESSION['company_id'],
+            'sale_posting_type_id' => 0, //$this->input->post('sale_posting_type_id', true),
+            'posting_type_id' => 0, //$this->input->post('posting_type_id', true),
+            'name' => $this->input->post('first_name', true),
+            'email' => $this->input->post('email', true),
+            'address' => $this->input->post('address', true),
+            'contact_no' => $this->input->post('phone_no', true),
+            'status' => 'active',
+            // 'currency_id' => $this->input->post('currency_id', true),
+            // 'op_balance_dr' => $this->input->post('op_balance_dr', true),
+            // 'op_balance_cr' => $this->input->post('op_balance_cr', true),
+            // "exchange_rate" => $this->input->post('exchange_rate', true),
+            // "acc_code" => $this->input->post('acc_code', true)
+        );
+
+        if ($this->db->insert('pos_supplier', $data)) {
+
+
+            //for logging
+            $msg = $this->input->post('name');
+            $this->M_logs->add_log($msg, "Supplier", "Added", "POS");
+            // end logging
+
+            return true;
+        } else {
+            $this->session->set_flashdata('error', 'Supplier not updated');
+        }
+        //$this->M_suppliers->addSupplier();
+
+        return false;
+    }
+
     //edit category
     public function edit($id = NULL)
     {

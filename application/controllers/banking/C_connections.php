@@ -110,6 +110,7 @@ class C_connections extends MY_Controller
             $total_amount = $decoded_data["payment_amount"];
             $plaid_trans_id = $decoded_data["plaid_trans_id"];
             $customer_or_supplier_id = $decoded_data["customer_or_supplier_id"];
+            $is_customer_or_supplier = $decoded_data["is_customer_or_supplier"];
 
             ////////
             $data = array(
@@ -152,20 +153,38 @@ class C_connections extends MY_Controller
 
             $entry_id = $this->db->insert_id();
 
-            $data = array(
-                'customer_id' => $customer_or_supplier_id,
-                'account_code' => $deposit_to_acc_code,
-                'dueTo_acc_code' => $acc_code_2,
-                'date' => ($sale_date == null ? date('Y-m-d') : $sale_date),
-                'debit' => ($total_amount > 0 ? $total_amount : 0),
-                'credit' => ($total_amount > 0 ? 0 : $total_amount),
-                'invoice_no' => $new_invoice_no,
-                'entry_id' => $entry_id,
-                'narration' => $narration,
-                'exchange_rate' => 1,
-                'company_id' => $_SESSION['company_id']
-            );
-            $this->db->insert('pos_customer_payments', $data);
+            if ($is_customer_or_supplier == 'customer') {
+                $data = array(
+                    'customer_id' => $customer_or_supplier_id,
+                    'account_code' => $deposit_to_acc_code,
+                    'dueTo_acc_code' => $acc_code_2,
+                    'date' => ($sale_date == null ? date('Y-m-d') : $sale_date),
+                    'debit' => ($total_amount > 0 ? $total_amount : 0),
+                    'credit' => ($total_amount > 0 ? 0 : $total_amount),
+                    'invoice_no' => $new_invoice_no,
+                    'entry_id' => $entry_id,
+                    'narration' => $narration,
+                    'exchange_rate' => 1,
+                    'company_id' => $_SESSION['company_id']
+                );
+                $this->db->insert('pos_customer_payments', $data);
+            } else {
+                // supplier entry
+                $data = array(
+                    'customer_id' => $customer_or_supplier_id,
+                    'account_code' => $deposit_to_acc_code,
+                    'dueTo_acc_code' => $acc_code_2,
+                    'date' => ($sale_date == null ? date('Y-m-d') : $sale_date),
+                    'debit' => ($total_amount < 0 ? $total_amount : 0),
+                    'credit' => ($total_amount < 0 ? 0 : $total_amount),
+                    'invoice_no' => $new_invoice_no,
+                    'entry_id' => $entry_id,
+                    'narration' => $narration,
+                    'exchange_rate' => 1,
+                    'company_id' => $_SESSION['company_id']
+                );
+                $this->db->insert('pos_supplier_payments', $data);
+            }
 
             ///
             $data1 = array(

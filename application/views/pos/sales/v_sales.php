@@ -469,7 +469,7 @@
                                 toastr.error("Invoice not saved successfully", 'Error');
                             }
                             clearall();
-                            console.log(data);
+                            //console.log(data);
                         }
                     });
                 } else {
@@ -541,7 +541,7 @@
             /* Serialize the submitted form control values to be sent to the web server with the request */
             var formValues = $(this).serialize();
 
-            console.log($('#item_id').val());
+            //console.log($('#item_id').val());
 
             if ($('#first_name').val() == 0) {
                 toastr.error("Please enter name", 'Error!');
@@ -581,7 +581,7 @@
                 },
                 //dataType: 'json', // added data type
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     let i = 0;
                     deposit_to_acc_code_ddl += '<option value="0">Select Account</option>';
 

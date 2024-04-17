@@ -100,6 +100,11 @@ class C_customers extends MY_Controller
         print_r(json_encode($this->M_customers->get_actCustomers()));
     }
 
+    function get_act_customers_supplier_JSON()
+    {
+        print_r(json_encode($this->M_customers->get_customers_suppliers()));
+    }
+
     function makePayment()
     {
         $customer_id = $this->input->post('customer_id', true);

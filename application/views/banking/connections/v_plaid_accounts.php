@@ -290,43 +290,43 @@
                                 '<td colspan="7">' +
                                 '<form class="form-horizontal">' +
                                 '<div class="row" style="background-color:#f4f5f8; padding-bottom:20px">' +
-                                '<div class="col-sm-12">' +
+                                '<div class="col-xs-12 col-sm-12">' +
 
                                 //'<div class="form-body">' +
                                 //'<div class="form-group">' +
-                                '<div class=" col-sm-4">' +
+                                '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="date Name">Date:</label>' +
                                 '<input type="date" name="date_' + value.plaid_transaction_id + '" id="date_' + value.plaid_transaction_id + '" value="' + value.date + '" class="form-control">' +
                                 '</div>' +
 
-                                '<div class=" col-sm-4">' +
+                                '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="customer">Customer/Vendor:</label>' +
                                 '<select class="form-control select2me customer_or_supplier_id" id="customer_or_supplier_id_' + value.plaid_transaction_id + '" name="customer_or_supplier_id_' + value.plaid_transaction_id + '"></select>' +
                                 '</div>' +
 
-                                '<div class=" col-sm-4">' +
+                                '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="payment_payee">Payee:</label>' +
                                 '<input type="text" name="payee' + value.plaid_transaction_id + '" id="payment_payee_' + value.plaid_transaction_id + '" value="' + value.name + '" class="form-control" readonly>' +
                                 '</div>' +
 
-                                '<div class=" col-sm-4">' +
+                                '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="account_id">Bank:</label>' +
                                 '<select class="form-control select2me account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '" required></select>' +
                                 '</div>' +
 
-                                '<div class=" col-sm-4">' +
+                                '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="account_id_2">Category:</label>' +
                                 '<select class="form-control select2me account_id_2" id="account_id_2_' + value.plaid_transaction_id + '" name="account_id_2_' + value.plaid_transaction_id + '"></select>' +
                                 '</div>' +
 
-                                '<div class=" col-sm-4">' +
+                                '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="payment_amount">Amount:</label>' +
                                 '<input type="text" readonly class="form-control" value="' + -value.amount + '" id="payment_amount_' + value.plaid_transaction_id + '" name="payment_amount_' + value.plaid_transaction_id + '" autocomplete="off">' +
                                 '<input type="hidden" name="plaid_trans_id_' + value.plaid_transaction_id + '" id="plaid_trans_id_' + value.plaid_transaction_id + '" value="' + value.plaid_transaction_id + '">' +
                                 '<input type="hidden" name="plaid_account_id_' + value.plaid_transaction_id + '" id="plaid_account_id_' + value.plaid_transaction_id + '" value="' + value.account_id + '">' +
                                 '</div>' +
 
-                                '<div class=" col-sm-4">' +
+                                '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="submit"></label>' +
                                 '<input type="submit" onClick="return AddEntry(' + i + ')" class="btn btn-primary btn-sm submit" value="Add"/>' +
                                 '  <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Close</a>' +
@@ -500,18 +500,18 @@
         const site_url = '<?php echo site_url($langs); ?>/';
         let customer_ddl = '';
         $.ajax({
-            url: site_url + "pos/C_customers/get_act_customers_JSON",
+            url: site_url + "pos/C_customers/get_act_customers_supplier_JSON",
             type: 'GET',
             dataType: 'json', // added data type
             success: function(data) {
-                //console.log(data);
+                console.log(data);
                 let i = 0;
                 customer_ddl += '<option value="0">Select Customer</option>';
                 customer_ddl += '<option value="ADD_NEW">ADD NEW</option>';
 
                 $.each(data, function(index, value) {
 
-                    customer_ddl += '<option value="' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
+                    customer_ddl += '<option  value="' + value.customer + '_' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
 
                 });
 
@@ -537,9 +537,9 @@
 
     ////// LOAD add new customer DROPDOWN CHANGE
     $(document).on('change', '.customer_or_supplier_id', function() {
-
         var add_new = $(this).val();
-        console.log(add_new);
+
+        //console.log(add_new);
         if (add_new == 'ADD_NEW') {
             $('#customerModal').modal('toggle');
         }
@@ -554,7 +554,7 @@
         /* Serialize the submitted form control values to be sent to the web server with the request */
         var formValues = $(this).serialize();
         var isCustomer = $('input[name=isCustomer]:checked').val();
-        var createPath = (isCustomer == 'supplier' ? "trans/C_suppliers/create/" : "pos/C_customers/create/")
+        var createPath = (isCustomer == 'supplier' ? "trans/C_suppliers/JSCreate/" : "pos/C_customers/create/")
         // console.log($('input[name=isCustomer]:checked').val());
         console.log(site_url + createPath);
         if ($('#first_name').val() == 0) {
@@ -565,7 +565,7 @@
                 // Display the returned data in browser
                 //$("#result").html(data);
                 toastr.success("Data saved successfully", 'Success');
-                console.log(data);
+                //console.log(data);
                 $('#customerModal').modal('toggle');
                 customerDDL();
                 // setTimeout(function() {
@@ -583,13 +583,20 @@
         //console.log('accept ' + plaidTransID);
         // Append the counter id to the ID to get the correct input
         var date = document.getElementById('date_' + plaidTransID).value;
-        var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + plaidTransID).value;
+        var customer_or_supplier_id = document.getElementById('customer_or_supplier_id_' + plaidTransID).value.split("_")[1];
+        var is_customer_or_supplier = document.getElementById('customer_or_supplier_id_' + plaidTransID).value.split("_")[0];
         var payment_payee = document.getElementById('payment_payee_' + plaidTransID).value;
         var account_id = document.getElementById('account_id_' + plaidTransID).value;
         var account_id_2 = document.getElementById('account_id_2_' + plaidTransID).value;
         var payment_amount = document.getElementById('payment_amount_' + plaidTransID).value;
         var plaid_trans_id = document.getElementById('plaid_trans_id_' + plaidTransID).value;
         var plaid_account_id = document.getElementById('plaid_account_id_' + plaidTransID).value;
+
+        // var data = customer_or_supplier_id.split("_")[1];
+        // var data1 = customer_or_supplier_id.split("_")[0];
+        // console.log(data);
+        // console.log(data1);
+        // return false;
 
         if (account_id == 0) {
             toastr.error("Please select account", 'Error');
@@ -605,7 +612,8 @@
                 payee: payment_payee,
                 plaid_trans_id: plaid_trans_id,
                 plaid_account_id: plaid_account_id,
-                customer_or_supplier_id: customer_or_supplier_id
+                customer_or_supplier_id: customer_or_supplier_id,
+                is_customer_or_supplier: is_customer_or_supplier
             };
             $.ajax({
                 type: "post",
@@ -664,8 +672,8 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="email">Choose:</label>
                         <div class="col-sm-9">
-                            <label for="isCustomer">Customerr:</label> <input type="radio" class="" name="isCustomer" id="isCustomer" value="customer" checked>
-                            <label for="isSupplier">Suppleir:</label><input type="radio" class="" name="isCustomer" id="isSupplier" value="supplier">
+                            <input type="radio" class="" name="isCustomer" id="isCustomer" value="customer" checked><label for="isCustomer">&nbsp;Customer</label></br>
+                            <input type="radio" class="" name="isCustomer" id="isSupplier" value="supplier"><label for="isSupplier">&nbsp;Vendor</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -694,9 +702,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="website"><?php echo lang('website'); ?>:</label>
+                        <label class="control-label col-sm-3" for="address"><?php echo lang('address'); ?>:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="website" id="website" placeholder="">
+                            <input type="text" class="form-control" name="address" id="address" placeholder="">
                         </div>
                     </div>
 
