@@ -201,4 +201,14 @@ class M_invoices extends CI_Model
 
         return array();
     }
+
+    function invoice_summary()
+    {
+        $queryString = 'SUM(CASE WHEN paid >= 0 THEN paid ELSE 0 END) AS "paid", 
+        SUM(CASE WHEN paid < (total_amount+total_tax) THEN (total_amount+total_tax-paid) ELSE 0 END) AS "pending",
+        SUM(CASE WHEN due_date < CURDATE() THEN (total_amount+total_tax-paid) ELSE 0 END) AS "overdue"';
+        $this->db->select($queryString);
+        $query = $this->db->get_where('pos_invoices', array('company_id' => $_SESSION['company_id']));
+        return $query->result_array();
+    }
 }

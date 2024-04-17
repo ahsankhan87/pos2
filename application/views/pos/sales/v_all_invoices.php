@@ -1,5 +1,30 @@
 <div class="row">
     <div class="col-sm-12">
+        <div class="portlet">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-note"></i><span id="print_title">Invoice Summary</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="portlet-body flip-scroll">
+                <?php $invoiceSummary = $this->M_invoices->invoice_summary();
+                //var_dump($invoiceSummary);
+                echo 'Total Collected: ' . number_format($invoiceSummary[0]['paid'], 2);
+                echo '<br/>Total Outstanding: ' . number_format($invoiceSummary[0]['pending'], 2);
+                echo '<br/>Total Overdue: ' . number_format($invoiceSummary[0]['overdue'], 2);
+                ?>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
         <?php
         if ($this->session->flashdata('message')) {
             echo "<div class='alert alert-success fade in'>";
@@ -48,8 +73,7 @@
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse"></a>
-                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                    <a href="javascript:;" class="reload"></a>
+
                     <a href="javascript:;" class="remove"></a>
                 </div>
             </div>
