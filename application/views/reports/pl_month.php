@@ -127,7 +127,8 @@
                         $total += $dec_report = $this->M_reports->get_amount_by_month($_SESSION['company_id'], '12',  $list['account_code']);
                         
                         echo '<tr>';
-                        echo '<td>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</td>';
+                        echo '<td><a href="'.site_url('accounts/C_groups/accountDetail/'. $list['account_code']).'">'.($langs == 'en' ? $list['title'] : $list['title_ur']).'</a></td>';
+                        //echo '<td>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</td>';
                         //$report = $this->M_dashboard->monthlySaleReport($_SESSION["company_id"],$fy_year,$list['name']);
                         echo '<td class="text-right">' . number_format($jan_report,1) . '</td>';
                         echo '<td class="text-right">' . number_format($feb_report,1) . '</td>';

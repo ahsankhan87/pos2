@@ -84,7 +84,8 @@
 
                         echo '<tr><td>';
                         echo '&nbsp;&nbsp;';
-                        echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                        // echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                        echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . ($langs == 'en' ? $values['title'] : $values['title_ur']) . '</a>';
                         echo '</td>';
                         $balance = $values['credit'] - $values['debit'];
                         echo '<td class="text-right">';
@@ -92,7 +93,9 @@
                         echo '</td>';
                         $total += $balance;
                         echo '<td class="text-right">';
-                        echo number_format($total, 2);
+                        // echo number_format($total, 2);
+                        echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . number_format($total, 2) . '</a>';
+
                         echo '</td></tr>';
                     endforeach;
                     /////
@@ -114,7 +117,8 @@
 
                         echo '<tr><td>';
                         echo '&nbsp;&nbsp;';
-                        echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                        //echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                        echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . ($langs == 'en' ? $values['title'] : $values['title_ur']) . '</a>';
                         echo '</td>';
                         $balance = $values['credit'] - $values['debit'];
                         echo '<td class="text-right">';
@@ -123,7 +127,8 @@
                         $expense_total += $balance;
                         $total += $balance;
                         echo '<td class="text-right">';
-                        echo number_format($total, 2);
+                        // echo number_format($total, 2);
+                        echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . number_format($total, 2) . '</a>';
                         echo '</td></tr>';
                     endforeach;
                     /////

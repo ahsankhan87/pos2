@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6 col-sm-offset-3">
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
@@ -13,10 +13,23 @@
             <div class="portlet-body flip-scroll">
                 <?php $invoiceSummary = $this->M_invoices->invoice_summary();
                 //var_dump($invoiceSummary);
-                echo 'Total Collected: ' . number_format($invoiceSummary[0]['paid'], 2);
-                echo '<br/>Total Outstanding: ' . number_format($invoiceSummary[0]['pending'], 2);
-                echo '<br/>Total Overdue: ' . number_format($invoiceSummary[0]['overdue'], 2);
+
                 ?>
+                <table>
+                    <tr class="text-center">
+                        <td colspan="2">
+                            <?php echo '<h5 style="color:#003463;margin-bottom:0">Total Collected</h5> <h2 style="color:#003463;margin-top:0;">' . $_SESSION['home_currency_symbol'] . number_format($invoiceSummary[0]['paid'], 2) . "</h2>"; ?>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>
+                            <?php echo '<h5 style="color:#003463;margin-bottom:0">Total Outstanding:</h5>  <h4 style="margin-top:0;">' . $_SESSION['home_currency_symbol'] . number_format($invoiceSummary[0]['pending'], 2) . "</h4>"; ?>
+                        </td>
+                        <td>
+                            <?php echo '<h5 style="color:#003463;margin-bottom:0">Total Overdue:</h5>  <h4 style="margin-top:0;">' . $_SESSION['home_currency_symbol'] . number_format($invoiceSummary[0]['overdue'], 2) . "</h4>";       ?>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 

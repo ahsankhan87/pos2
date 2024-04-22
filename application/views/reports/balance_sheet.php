@@ -26,12 +26,12 @@
                     <div class="form-group">
 
                         <select class="form-control" id="report_period" name="report_period">
-                            <option value="custom"><?php echo lang('custom');?></option>
-                            <option value="this_month"><?php echo lang('this_month');?></option>
-                            <option value="last_month"><?php echo lang('last_month');?></option>
-                            <option value="last_week"><?php echo lang('last_week');?></option>
-                            <option value="last_year"><?php echo lang('last_year');?></option>
-                            <option value="this_year"><?php echo lang('this_year');?></option>
+                            <option value="custom"><?php echo lang('custom'); ?></option>
+                            <option value="this_month"><?php echo lang('this_month'); ?></option>
+                            <option value="last_month"><?php echo lang('last_month'); ?></option>
+                            <option value="last_week"><?php echo lang('last_week'); ?></option>
+                            <option value="last_year"><?php echo lang('last_year'); ?></option>
+                            <option value="this_year"><?php echo lang('this_year'); ?></option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -75,37 +75,41 @@
 
                 foreach ($parentGroups4Assets as $key => $list) {
                     $bl_report = $this->M_groups->get_GroupsByParent($list['account_code']);
+                    //var_dump($bl_report);
+                    if (count((array)$bl_report) > 0) {
+                        echo '<tr><td colspan="2">';
+                        echo '<strong>' . (count($bl_report) > 0 ? ($langs == 'en' ? $list['title'] : $list['title_ur']) : '') . '</strong>';
+                        echo '</td></tr>';
 
-                    echo '<tr><td colspan="2">';
-                    echo '<strong>' . (count($bl_report) > 0 ? ($langs == 'en' ? $list['title'] : $list['title_ur']) : '') . '</strong>';
-                    echo '</td></tr>';
+                        ///////
+                        //$bl_report = $this->M_reports->get_Assets4BalanceSheet($_SESSION['company_id'],$list['account_code'],$from_date,$to_date);
 
-                    ///////
-                    //$bl_report = $this->M_reports->get_Assets4BalanceSheet($_SESSION['company_id'],$list['account_code'],$from_date,$to_date);
+                        foreach ($bl_report as $key => $values) :
 
-                    foreach ($bl_report as $key => $values) :
+                            $dr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['debit'];
+                            $cr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['credit'];
+                            $balance = ($dr + $values['op_balance_dr']) - ($values['op_balance_cr'] + $cr);
 
-                        $dr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['debit'];
-                        $cr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['credit'];
-                        $balance = ($dr + $values['op_balance_dr']) - ($values['op_balance_cr'] + $cr);
 
-                        //if ($balance != 0) {
-                        echo '<tr><td>';
-                        echo '&nbsp;&nbsp;';
-                        echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
-                        echo '</td>';
+                            echo '<tr><td>';
+                            echo '&nbsp;&nbsp;';
+                            // echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                            echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . ($langs == 'en' ? $values['title'] : $values['title_ur']) . '</a>';
+                            echo '</td>';
 
-                        echo '<td class="text-right">';
-                        echo number_format($balance, 2);
-                        echo '</td>';
+                            echo '<td class="text-right">';
+                            // echo number_format($balance, 2);
+                            echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . number_format($balance, 2) . '</a>';
+                            echo '</td>';
 
-                        //echo '<td>';
-                        $asset_total += $balance;
-                        //echo '</td>
-                        echo '</tr>';
-                    //}
-                    endforeach;
-                    /////
+                            //echo '<td>';
+                            $asset_total += $balance;
+                            //echo '</td>
+                            echo '</tr>';
+
+                        endforeach;
+                        /////
+                    }
                 }
                 ?>
 
@@ -138,36 +142,41 @@
 
                 foreach ($Liability4BalanceSheet as $key => $list) {
                     $bl_report = $this->M_groups->get_GroupsByParent($list['account_code']);
+                    if (count((array)$bl_report) > 0) {
+                        echo '<tr><td colspan="2">';
+                        echo '<strong>' . (count((array)$bl_report) > 0 ? ($langs == 'en' ? $list['title'] : $list['title_ur']) : '') . '</strong>';
+                        echo '</td></tr>';
 
-                    echo '<tr><td colspan="2">';
-                    echo '<strong>' . (count($bl_report) > 0 ? ($langs == 'en' ? $list['title'] : $list['title_ur']) : '') . '</strong>';
-                    echo '</td></tr>';
+                        ///////
+                        //$bl_report = $this->M_reports->get_Liability4BalanceSheet($_SESSION['company_id'],$list['account_code'],$from_date,$to_date);
+                        foreach ($bl_report as $key => $values) :
 
-                    ///////
-                    //$bl_report = $this->M_reports->get_Liability4BalanceSheet($_SESSION['company_id'],$list['account_code'],$from_date,$to_date);
-                    foreach ($bl_report as $key => $values) :
+                            $dr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['debit'];
+                            $cr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['credit'];
+                            $balance = ($values['op_balance_cr'] + $cr) - ($dr + $values['op_balance_dr']);
 
-                        $dr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['debit'];
-                        $cr = $this->M_entries->balanceByAccount($values['account_code'], $from_date, $to_date)[0]['credit'];
-                        $balance = ($values['op_balance_cr'] + $cr) - ($dr + $values['op_balance_dr']);
+                            //if ($balance != 0) {
+                            echo '<tr><td>';
+                            echo '&nbsp;&nbsp;';
+                            // echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
+                            echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . ($langs == 'en' ? $values['title'] : $values['title_ur']) . '</a>';
 
-                        //if ($balance != 0) {
-                        echo '<tr><td>';
-                        echo '&nbsp;&nbsp;';
-                        echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
-                        echo '</td>';
+                            echo '</td>';
 
-                        echo '<td class="text-right">';
-                        echo number_format($balance, 2);
-                        echo '</td>';
+                            echo '<td class="text-right">';
+                            // echo number_format($balance, 2);
+                            echo '<a href="' . site_url('accounts/C_groups/accountDetail/' . $values['account_code']) . '">' . number_format($balance, 2) . '</a>';
 
-                        //echo '<td>';
-                        $total += $balance;
-                        //echo '</td>
-                        echo '</tr>';
-                    //}
-                    endforeach;
-                    /////
+                            echo '</td>';
+
+                            //echo '<td>';
+                            $total += $balance;
+                            //echo '</td>
+                            echo '</tr>';
+                        //}
+                        endforeach;
+                        /////
+                    }
                 }
 
                 echo '<tr><td>';
@@ -188,8 +197,7 @@
             <tfoot>
                 <tr>
                     <td><strong><?php echo lang('total'); ?></strong></td>
-
-                    <td class="text-right"><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><strong><?php echo number_format($total, 2); ?></strong></td>
+                    <td class="text-right"><strong><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><?php echo number_format($total, 2); ?></strong></td>
                 </tr>
             </tfoot>
 

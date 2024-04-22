@@ -301,7 +301,7 @@
 
                                 '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="customer">Customer/Vendor:</label>' +
-                                '<select class="form-control select2me customer_or_supplier_id" id="customer_or_supplier_id_' + value.plaid_transaction_id + '" name="customer_or_supplier_id_' + value.plaid_transaction_id + '"></select>' +
+                                '<select class="form-control customer_or_supplier_id" id="customer_or_supplier_id_' + value.plaid_transaction_id + '" name="customer_or_supplier_id_' + value.plaid_transaction_id + '"></select>' +
                                 '</div>' +
 
                                 '<div class="col-xs-12 col-sm-4">' +
@@ -311,12 +311,12 @@
 
                                 '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="account_id">Bank:</label>' +
-                                '<select class="form-control select2me account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '" required></select>' +
+                                '<select class="form-control account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '" required></select>' +
                                 '</div>' +
 
                                 '<div class="col-xs-12 col-sm-4">' +
                                 '<label class="control-label" for="account_id_2">Category:</label>' +
-                                '<select class="form-control select2me account_id_2" id="account_id_2_' + value.plaid_transaction_id + '" name="account_id_2_' + value.plaid_transaction_id + '"></select>' +
+                                '<select class="form-control account_id_2" id="account_id_2_' + value.plaid_transaction_id + '" name="account_id_2_' + value.plaid_transaction_id + '"></select>' +
                                 '</div>' +
 
                                 '<div class="col-xs-12 col-sm-4">' +
@@ -343,6 +343,9 @@
 
                             i++;
 
+                            $('#customer_or_supplier_id_' + value.plaid_transaction_id).select2();
+                            $('.account_id').select2();
+                            $('#account_id_2_' + value.plaid_transaction_id).select2();
                         });
 
                         div += '</tbody></table>';
@@ -507,11 +510,11 @@
                 console.log(data);
                 let i = 0;
                 customer_ddl += '<option value="0">Select Customer</option>';
-                customer_ddl += '<option value="ADD_NEW">ADD NEW</option>';
+                customer_ddl += '<option value="ADD_NEW" style="color:blue"><i class="fa fa-plus"></i>ADD NEW</option>';
 
                 $.each(data, function(index, value) {
 
-                    customer_ddl += '<option  value="' + value.customer + '_' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + '</option>';
+                    customer_ddl += '<option  value="' + value.customer + '_' + value.id + '" ' + (value.id == customer_id ? "selected=''" : "") + ' >' + value.first_name + ' <div style="color:blue">(' + value.customer + ')</div></option>';
 
                 });
 

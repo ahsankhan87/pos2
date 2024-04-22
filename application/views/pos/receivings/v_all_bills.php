@@ -1,4 +1,40 @@
 <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="portlet">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-note"></i><span id="print_title">Bill Summary</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="portlet-body flip-scroll text-center">
+                <?php $billSummary = $this->M_receivings->bill_summary(); ?>
+
+                <table>
+                    <tr class="text-center">
+                        <td colspan="2">
+                            <?php echo '<h5 style="color:#003463;margin-bottom:0">Total Collected</h5> <h2 style="color:#003463;margin-top:0;font-weight: 900;">' . $_SESSION['home_currency_symbol'] . number_format($billSummary[0]['paid'], 2) . "</h2>"; ?>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>
+                            <?php echo '<h5 style="color:#003463;margin-bottom:0">Total Outstanding:</h5>  <h4 style="font-weight: 900;margin-top:0;">' . $_SESSION['home_currency_symbol'] . number_format($billSummary[0]['pending'], 2) . "</h4>"; ?>
+                        </td>
+                        <td>
+                            <?php echo '<h5 style="color:#003463;margin-bottom:0">Total Overdue:</h5>  <h4 style="font-weight: 900;margin-top:0;">' . $_SESSION['home_currency_symbol'] . number_format($billSummary[0]['overdue'], 2) . "</h4>";       ?>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
     <div class="col-sm-12">
         <?php
         if ($this->session->flashdata('message')) {
