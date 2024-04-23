@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="portlet">
             <div class="portlet-title">
@@ -34,7 +34,7 @@
         </div>
 
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-sm-12">

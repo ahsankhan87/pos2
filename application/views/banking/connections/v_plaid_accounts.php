@@ -15,7 +15,8 @@
         ?>
         <p>
             <button class="btn btn-success" id="link-button">Add bank</button>
-        </p><!-- BEGIN ACCORDION PORTLET-->
+        </p>
+        <!-- BEGIN ACCORDION PORTLET-->
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">

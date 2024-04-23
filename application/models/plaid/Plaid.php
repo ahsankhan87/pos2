@@ -233,7 +233,7 @@ class Plaid extends CI_Model
             "start_date" => $start_date,
             "end_date" => $end_date,
             "options" => [
-                "count" => 500,
+                "count" => 250,
                 "offset" => 0,
                 "include_personal_finance_category" => true
             ]
