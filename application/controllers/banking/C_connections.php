@@ -219,13 +219,24 @@ class C_connections extends MY_Controller
             );
             $this->db->insert('acc_entry_items', $data);
 
+            //update plaid trans status
+            $data1 = array(
+                'posted' => 1,
+                'invoice_no' => $new_invoice_no,
+            );
+
+            $str = explode(", ", $plaid_trans_id); // split trans id into array and save in db
+            foreach ($str as $values) {
+                $this->db->update('pos_plaid_transactions', $data1, array('plaid_transaction_id' =>  $values, 'company_id' => $_SESSION['company_id']));
+            }
+
             //for logging
             $msg = 'invoice no ' . $new_invoice_no;
             $this->M_logs->add_log($msg, "Sale transaction", "created", "trans");
             // end logging
 
             $this->db->trans_complete();
-            echo '1';
+            echo $new_invoice_no;
         } //check product count
 
 
@@ -376,13 +387,24 @@ class C_connections extends MY_Controller
             $this->db->insert('acc_entry_items', $data);
             //////////
 
+            //update plaid trans status
+            $data1 = array(
+                'posted' => 1,
+                'invoice_no' => $new_invoice_no,
+            );
+
+            $str = explode(", ", $plaid_trans_id); // split trans id into array and save in db
+            foreach ($str as $values) {
+                $this->db->update('pos_plaid_transactions', $data1, array('plaid_transaction_id' =>  $values, 'company_id' => $_SESSION['company_id']));
+            }
+
             //for logging
             $msg = 'invoice no ' . $new_invoice_no;
             $this->M_logs->add_log($msg, "Purchase transaction", "created", "trans");
             // end logging
 
             $this->db->trans_complete();
-            echo '1';
+            echo $new_invoice_no;
         }
     }
 
@@ -392,18 +414,10 @@ class C_connections extends MY_Controller
         $content_raw = file_get_contents("php://input"); // THIS IS WHAT YOU NEED
         $decoded_data = json_decode($content_raw, true); //
         //var_dump($decoded_data);
-        $plaid_trans_id = $decoded_data["plaid_trans_id"];
         $is_customer_or_supplier = $decoded_data["is_customer_or_supplier"];
         ($is_customer_or_supplier == 'customer' ? $this->sale_transaction($decoded_data) : $this->purchase_transaction($decoded_data));
 
-        $data1 = array(
-            'posted' => 1,
-        );
 
-        $str = explode(", ", $plaid_trans_id); // split trans id into array and save in db
-        foreach ($str as $values) {
-            $this->db->update('pos_plaid_transactions', $data1, array('plaid_transaction_id' =>  $values, 'company_id' => $_SESSION['company_id']));
-        }
 
         // if (count((array)$decoded_data) > 0) {
 
@@ -523,6 +537,26 @@ class C_connections extends MY_Controller
 
     }
 
+    public function undoPlaidTransAndDeleteSales($invoice_no, $plaid_trans_id)
+    {
+        if ($invoice_no != "") {
+            $this->db->trans_start();
+            $this->M_sales->delete($invoice_no);
+
+            //update plaid trans status
+            $data1 = array(
+                'posted' => 0,
+                'invoice_no' => '',
+            );
+
+            $str = explode(", ", $plaid_trans_id); // split trans id into array and save in db
+            foreach ($str as $values) {
+                $this->db->update('pos_plaid_transactions', $data1, array('plaid_transaction_id' =>  $values, 'company_id' => $_SESSION['company_id']));
+            }
+            $this->db->trans_complete();
+            echo '1';
+        }
+    }
     ////////////////////////
     //API CALL FUNCTION
     function create_link_token()

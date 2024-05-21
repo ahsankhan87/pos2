@@ -2655,3 +2655,5 @@ CREATE TABLE pos_plaid_items ( `id` SERIAL PRIMARY KEY, `user_id` int null, `com
 ALTER TABLE `pos_plaid_items` CHANGE `status` `status` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
 ALTER TABLE `pos_plaid_items` ADD `institution_name` TEXT NULL AFTER `transactions_cursor`;
 ALTER TABLE `pos_plaid_transactions` ADD `posted` TINYINT(1) NOT NULL DEFAULT '0' AFTER `updated_at`;
+
+ALTER TABLE `pos_plaid_transactions` ADD `invoice_no` VARCHAR(100) NULL AFTER `posted`;

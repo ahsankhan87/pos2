@@ -241,7 +241,7 @@
 
                     } else {
                         let i = 0;
-                        div += '<table class="table table-condenced">' +
+                        div += '<table class="table table-condenced" id="sample_1">' +
                             '<thead>' +
                             '<tr>' +
                             '<th></th>' +
@@ -262,7 +262,14 @@
 
                             div += '<tr>' +
                                 '<td>' +
-                                '<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -value.amount + '" id="transID_' + value.plaid_transaction_id + '" ' + (value.posted == 1 ? 'disabled' : '') + '/>' +
+                                '<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -value.amount + '" id="chk_transID_' + value.plaid_transaction_id + '" ' + (value.posted == 1 ? 'disabled' : '') + '/>' +
+
+                                '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
+                                '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
+                                '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
+                                '<input type="hidden" id="invoiceNo_' + i + '" value="' + value.invoice_no + '">' +
+                                '<input type="hidden" id="plaidAccountId_' + i + '" value="' + value.account_id + '">' +
+                                '<input type="hidden" id="date_' + i + '" value="' + value.date + '">' +
                                 '</td>' +
 
                                 '<td>' + value.name + '</td>' +
@@ -274,21 +281,16 @@
 
                             if (value.posted == 1) {
                                 div += '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
+                                div += '<a onClick="return DeleteEntry(' + i + ')" class="btn btn-danger btn-sm" id="undoButton_' + value.plaid_transaction_id + '" href="#">Undo</a>';
+
                             } else {
                                 //div += '<a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
                                 div += '<a class="btn btn-primary btn-sm collapseExample" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Add</a>';
                             }
-
-                            div += '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
-                                '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
-                                '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
-                                '<input type="hidden" id="plaidAccountId_' + i + '" value="' + value.account_id + '">' +
-                                '<input type="hidden" id="date_' + i + '" value="' + value.date + '">' +
-                                '</td>' +
-                                '</tr>';
+                            div += '</td></tr>';
 
                             div += '<tr class="collapse" id="collapseExample_' + value.plaid_transaction_id + '">' +
-                                '<td colspan="7">' +
+                                '<td colspan="6">' +
                                 '<form class="form-horizontal">' +
                                 '<div class="row" style="background-color:#f4f5f8; padding-bottom:20px">' +
                                 '<div class="col-xs-12 col-sm-12">' +
@@ -460,8 +462,6 @@
 
         ////////////////////////
 
-
-
     }); // document.ready
     //GET Accounts DROPDOWN LIST
     function accountsDDL(index = 0) {
@@ -595,6 +595,7 @@
         var payment_amount = document.getElementById('payment_amount_' + plaidTransID).value;
         var plaid_trans_id = document.getElementById('plaid_trans_id_' + plaidTransID).value;
         var plaid_account_id = document.getElementById('plaid_account_id_' + plaidTransID).value;
+        var invoice_no = document.getElementById('invoiceNo_' + id).value;
 
         // var data = customer_or_supplier_id.split("_")[1];
         // var data1 = customer_or_supplier_id.split("_")[0];
@@ -626,17 +627,53 @@
                 cache: false,
                 contentType: 'application/json',
                 success: function(data) {
-                    if (data == '1') {
+                    if (data.length > 0) {
                         // Instead of using the class to set the message, use the ID,
                         // otherwise all elements will get the text. Again, append the counter id.
                         toastr.success(data + " transaction saved successfully", 'Success');
                         $('#collapseExample_' + plaidTransID).collapse('hide');
-                        $('#acceptButton_' + plaidTransID).html('<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>');
+                        $('#acceptButton_' + plaidTransID).html('<a id="" class="btn btn-success btn-sm" href="#">Accepted</a><a onClick="return DeleteEntry(' + id + ')" class="btn btn-danger btn-sm" href="#">Undo</a>');
+                        $('#invoiceNo_' + id).val(data); // return and change invoice no in textbox
+                        $("#chk_transID_" + plaidTransID).attr("disabled", true);
 
                     } else {
                         toastr.error("transaction not saved, please try again.", 'Error');
                     }
                     //console.log(data);
+                }
+
+            });
+        }
+        return false;
+    }
+
+    function DeleteEntry(id) {
+        var confirmSale = confirm('Are you sure you want to undo/delete transaction?');
+        var plaidTransactionId = document.getElementById('transid_' + id).value;
+        var invoice_no = document.getElementById('invoiceNo_' + id).value;
+        //console.log('accept ' + plaidTransID);
+        // Append the counter id to the ID to get the correct input
+
+        if (confirmSale) {
+            $.ajax({
+                type: "post",
+                url: site_url + "/banking/C_connections/undoPlaidTransAndDeleteSales/" + invoice_no + '/' + plaidTransactionId,
+                //data: JSON.stringify(sendInfo),
+                cache: false,
+                contentType: 'application/json',
+                success: function(data) {
+                    if (data == '1') {
+                        // Instead of using the class to set the message, use the ID,
+                        // otherwise all elements will get the text. Again, append the counter id.
+                        toastr.success("Transaction undone successfully", 'Success');
+                        //$('#collapseExample_' + plaidTransID).collapse('hide');
+                        $('#acceptButton_' + plaidTransactionId).html('<a class="btn btn-primary btn-sm collapseExample" data-toggle="collapse" href="#collapseExample_' + plaidTransactionId + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + plaidTransactionId + '">Add</a>');
+                        $('#invoiceNo_' + id).val('');
+                        $("#chk_transID_" + plaidTransactionId).removeAttr("disabled");
+                    } else {
+                        toastr.error("transaction not undone, please try again.", 'Error');
+                    }
+                    console.log(data);
                 }
 
             });
