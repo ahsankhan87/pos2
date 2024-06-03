@@ -133,14 +133,15 @@ if ($this->session->flashdata('message')) {
                 }
                 echo '</td>';
 
-                $account_name = $this->M_groups->get_groups($list['dueTo_acc_code'], $_SESSION['company_id']);
+                //$account_name = $this->M_groups->get_groups($list['dueTo_acc_code'], $_SESSION['company_id']);
                 echo '<td>';
-                echo ($langs == 'en' ? @$account_name[0]['title'] : @$account_name[0]['title_ur']);
+                echo ($langs == 'en' ? @$accounts[0]['title'] : @$accounts[0]['title_ur']);
+
                 if ($list['is_cust'] == 1 && $list['ref_account_id'] != 0) {
                     echo ' <small><a href="' . site_url('pos/C_customers/customerDetail/' . $list['ref_account_id']) . '">(' . trim($this->M_customers->get_CustomerName($list['ref_account_id'])) . ')</a></small>';
                 }
                 if ($list['is_supp'] == 1 && $list['ref_account_id'] != 0) {
-                    echo ' <small><a href="' . site_url('pos/Suppliers/supplierDetail/' . $list['ref_account_id']) . '">(' . trim($this->M_suppliers->get_supplierName($list['ref_account_id'])) . ')</a></small>';
+                    echo ' <small><a href="' . site_url('pos/C_suppliers/supplierDetail/' . $list['ref_account_id']) . '">(' . trim($this->M_suppliers->get_supplierName($list['ref_account_id'])) . ')</a></small>';
                 }
                 if ($list['is_bank'] == 1 && $list['ref_account_id'] != 0) {
                     echo ' <small><a href="' . site_url('pos/C_banking/bankDetail/' . $list['ref_account_id']) . '">(' . trim($this->M_banking->get_bankName($list['ref_account_id'])) . ')</a></small>';

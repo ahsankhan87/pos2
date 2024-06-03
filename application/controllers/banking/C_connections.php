@@ -105,7 +105,7 @@ class C_connections extends MY_Controller
             $narration = 'Payee: ' . $decoded_data["payee"];
             $deposit_to_acc_code = $decoded_data["account_id"];
             $acc_code_2 = $decoded_data["account_id_2"];
-            $total_amount = $decoded_data["payment_amount"];
+            $total_amount = abs($decoded_data["payment_amount"]);
             $plaid_trans_id = $decoded_data["plaid_trans_id"];
             $customer_or_supplier_id = $decoded_data["customer_or_supplier_id"];
             $is_customer_or_supplier = $decoded_data["is_customer_or_supplier"];
@@ -265,7 +265,7 @@ class C_connections extends MY_Controller
             $narration = 'Payee: ' . $decoded_data["payee"];
             $payment_acc_code = $decoded_data["account_id"];
             $acc_code_2 = $decoded_data["account_id_2"];
-            $total_amount = $decoded_data["payment_amount"];
+            $total_amount = abs($decoded_data["payment_amount"]);
             $plaid_trans_id = $decoded_data["plaid_trans_id"];
             $customer_or_supplier_id = $decoded_data["customer_or_supplier_id"];
             $is_customer_or_supplier = $decoded_data["is_customer_or_supplier"];
@@ -541,7 +541,13 @@ class C_connections extends MY_Controller
     {
         if ($invoice_no != "") {
             $this->db->trans_start();
-            $this->M_sales->delete($invoice_no);
+            $inv_prefix = substr($invoice_no, 0, 1);
+            if (ucwords($inv_prefix) === 'R') {
+                $this->M_receivings->delete($invoice_no);
+            }
+            if (ucwords($inv_prefix) === 'S') {
+                $this->M_sales->delete($invoice_no);
+            }
 
             //update plaid trans status
             $data1 = array(

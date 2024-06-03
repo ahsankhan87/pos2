@@ -47,7 +47,7 @@
                                 <div class="portlet">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <i class="fa fa-bank"></i><?php echo $values['institution_name']; ?>
+                                            <i class="fa fa-bank"></i><strong><?php echo $values['institution_name']; ?></strong>
                                         </div>
                                         <div class="tools">
                                             <a href="javascript:;" class="expand"></a>
@@ -62,16 +62,16 @@
                                     <div class="portlet-body display-hide">
                                         <div class="text-center loader"><img src="<?php echo base_url("assets/img/loading-spinner-grey.gif") ?>" alt="loader"></div>
                                         <?php
-
+                                        $i = 0;
                                         foreach ($palid_accounts as $palid_accounts_values) {
-                                            echo '<table class="table">';
+                                            echo '<table class="table" >';
                                             echo '<tbody>';
                                             echo '<tr>';
-                                            echo '<td>';
+                                            echo '<td><strong>';
                                             echo $palid_accounts_values['name'];
                                             echo '</br>';
                                             echo ucfirst($palid_accounts_values['subtype']) . ' • Balance ' . $palid_accounts_values['iso_currency_code'] . ' ' . number_format($palid_accounts_values['current_balance'], 2);
-                                            echo '</td>';
+                                            echo '</strong></td>';
                                             echo '<td class="text-right">';
                                             echo '<a href="#" class="view_transactions btn btn-default" id="viewTransactions_' . $palid_accounts_values['plaid_account_id'] . '">View Transactions</a>';
                                             echo '</td>';
@@ -80,7 +80,21 @@
                                             echo '</tbody>';
                                             echo '</table>';
                                             echo '<div class="note note-success trans_note" id="note_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
-                                            echo '<div id="transactions_table_' . $palid_accounts_values['plaid_account_id'] . '"></div>';
+                                            echo '<div class="text-center loader_2" id="loader_2_' . $palid_accounts_values['plaid_account_id'] . '><img src="' . base_url("assets/img/loading-spinner-grey.gif") . '" alt="loader"></div>';
+                                            //echo '<table class="table table-condenced transactions_table" id="transactions_table_' . $palid_accounts_values['plaid_account_id'] . '">';
+                                            echo '<table id="transactions_table_' . $palid_accounts_values['plaid_account_id'] . '" class="table table-condenced transactions_table display" cellspacing="0" width="100%">';
+                                            echo '<thead>';
+                                            echo '<tr>';
+                                            //echo '<th></th>';
+                                            echo '<th>Name</th>';
+                                            echo '<th>Category</th>';
+                                            echo '<th class="text-right">Amount</th>';
+                                            echo '<th>Date</th>';
+                                            echo '<th></th>';
+                                            echo '</tr>';
+                                            echo '</thead>';
+                                            echo '<tbody id="transactions_table_data_' . $palid_accounts_values['plaid_account_id'] . '">';
+                                            echo '</tbody></table>';
                                         }
 
                                         ?>
@@ -92,6 +106,7 @@
                             $i++;
                         } ?>
                         <!-- END Portlet PORTLET-->
+
                     </div>
                 </div>
             </div>
@@ -200,22 +215,27 @@
         const start_date = '<?php echo date("Y-m-d", strtotime("-3 month")) ?>';
         const end_date = '<?php echo date("Y-m-d") ?>';
         $(".loader").hide();
+        $(".loader_2").hide();
         $('.note').hide();
-
-
+        $('.transactions_table').hide(); //hide table when page load
 
         $('.view_transactions').on('click', function(e) {
             var cur_plaidAccountId = this.id.split("_")[1];
-            $(".loader").show();
+            $(".loader_2_" + cur_plaidAccountId).show();
             if ($(this).text() == 'Hide Transactions') {
                 $(this).text('View Transactions');
+                $('#transactions_table_data_' + cur_plaidAccountId).hide();
                 $('#transactions_table_' + cur_plaidAccountId).hide();
+                $('#transactions_table_' + cur_plaidAccountId + "_wrapper").hide();
             } else {
                 $(this).text('Hide Transactions');
                 get_transaction_list(cur_plaidAccountId);
                 $('#transactions_table_' + cur_plaidAccountId).show();
+                $('#transactions_table_data_' + cur_plaidAccountId).show();
+                $('#transactions_table_' + cur_plaidAccountId + "_wrapper").show();
+
             }
-            $(".loader").hide();
+            $(".loader_2_" + cur_plaidAccountId).hide();
         });
 
         ///////////////
@@ -224,200 +244,271 @@
         function get_transaction_list(account_id) {
             var div = '';
 
-            $.ajax({
-                url: site_url + "banking/C_connections/retrieveTransactionsByAccountID/" + account_id,
-                type: 'POST',
-                dataType: 'json', // added data type
-                success: function(json_response) {
-                    //json_response = JSON.parse(response);
-                    //console.log('result ' + json_response);
-                    var grand_total = 0;
+            // $.ajax({
+            //     url: site_url + "banking/C_connections/retrieveTransactionsByAccountID/" + account_id,
+            //     type: 'POST',
+            //     dataType: 'json', // added data type
+            //     success: function(json_response) {
+            //         //json_response = JSON.parse(response);
+            //         //console.log('result ' + json_response);
+            //         var grand_total = 0;
 
-                    if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
+            //         if (json_response.error_code != undefined && Object.keys(json_response.error_code).length > 0) {
 
-                        $('#popupModal').modal('toggle');
-                        $('#modal_title').html(json_response.error_code);
-                        $('#modal_message').html(json_response.error_message);
+            //             $('#popupModal').modal('toggle');
+            //             $('#modal_title').html(json_response.error_code);
+            //             $('#modal_message').html(json_response.error_message);
 
-                    } else {
-                        let i = 0;
-                        div += '<table class="table table-condenced" id="sample_1">' +
-                            '<thead>' +
-                            '<tr>' +
-                            '<th></th>' +
-                            '<th>Name</th>' +
-                            '<th>Category</th>' +
-                            '<th class="text-right">Amount</th>' +
-                            '<th>Date</th>' +
-                            '<th></th>' +
-                            '</tr>' +
-                            '</thead>' +
-                            '<tbody>';
+            //         } else {
+            //             let i = 0;
+
+            //             // $.each(json_response, function(index, value) {
+
+            //             //     grand_total += -value.amount;
+            //             //     var d_date = new Date(value.date);
 
 
-                        $.each(json_response, function(index, value) {
+            //             //     div += '<tr>' +
+            //             //         '<td>' +
+            //             //         '<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -value.amount + '" id="chk_transID_' + value.plaid_transaction_id + '" ' + (value.posted == 1 ? 'disabled' : '') + '/>' +
 
-                            grand_total += -value.amount;
-                            var d_date = new Date(value.date);
+            //             //         '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
+            //             //         '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
+            //             //         '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
+            //             //         '<input type="hidden" id="invoiceNo_' + i + '" value="' + value.invoice_no + '">' +
+            //             //         '<input type="hidden" id="plaidAccountId_' + i + '" value="' + value.account_id + '">' +
+            //             //         '<input type="hidden" id="date_' + i + '" value="' + value.date + '">' +
+            //             //         '</td>' +
 
-                            div += '<tr>' +
-                                '<td>' +
-                                '<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -value.amount + '" id="chk_transID_' + value.plaid_transaction_id + '" ' + (value.posted == 1 ? 'disabled' : '') + '/>' +
+            //             //         '<td>' + value.name + '</td>' +
+            //             //         // '<td>' + value.payment_channel + '</td>' +
+            //             //         '<td>' + value.category + '</td>' +
+            //             //         '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>' +
+            //             //         '<td>' + d_date.toLocaleDateString("en-US") + '</td>' +
+            //             //         '<td id="acceptButton_' + value.plaid_transaction_id + '">';
 
-                                '<input type="hidden" id="payee_' + i + '" value="' + value.name + '">' +
-                                '<input type="hidden" id="amount_' + i + '" value="' + -value.amount + '">' +
-                                '<input type="hidden" id="transid_' + i + '" value="' + value.plaid_transaction_id + '">' +
-                                '<input type="hidden" id="invoiceNo_' + i + '" value="' + value.invoice_no + '">' +
-                                '<input type="hidden" id="plaidAccountId_' + i + '" value="' + value.account_id + '">' +
-                                '<input type="hidden" id="date_' + i + '" value="' + value.date + '">' +
-                                '</td>' +
+            //             //     if (value.posted == 1) {
+            //             //         div += '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
+            //             //         div += '<a onClick="return DeleteEntry(' + i + ')" class="btn btn-danger btn-sm" id="undoButton_' + value.plaid_transaction_id + '" href="#">Undo</a>';
 
-                                '<td>' + value.name + '</td>' +
-                                // '<td>' + value.payment_channel + '</td>' +
-                                '<td>' + value.category + '</td>' +
-                                '<td class="text-right">' + -value.amount + value.iso_currency_code + '</td>' +
-                                '<td>' + d_date.toLocaleDateString("en-US") + '</td>' +
-                                '<td id="acceptButton_' + value.plaid_transaction_id + '">';
+            //             //     } else {
+            //             //         //div += '<a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
+            //             //         div += '<a class="btn btn-primary btn-sm collapseExample" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Add</a>';
+            //             //     }
+            //             //     div += '</td></tr>';
 
-                            if (value.posted == 1) {
-                                div += '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
-                                div += '<a onClick="return DeleteEntry(' + i + ')" class="btn btn-danger btn-sm" id="undoButton_' + value.plaid_transaction_id + '" href="#">Undo</a>';
+            //             //     div += '<tr role="row" class="collapse" id="collapseExample_' + value.plaid_transaction_id + '">' +
 
-                            } else {
-                                //div += '<a id="paymentEntry_' + i + '" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a>';
-                                div += '<a class="btn btn-primary btn-sm collapseExample" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Add</a>';
-                            }
-                            div += '</td></tr>';
+            //             //         '<td colspan="6">' +
+            //             //         '<form class="form-horizontal">' +
+            //             //         '<div class="row" style="background-color:#f4f5f8; padding-bottom:20px">' +
+            //             //         '<div class="col-xs-12 col-sm-12">' +
 
-                            div += '<tr class="collapse" id="collapseExample_' + value.plaid_transaction_id + '">' +
-                                '<td colspan="6">' +
-                                '<form class="form-horizontal">' +
-                                '<div class="row" style="background-color:#f4f5f8; padding-bottom:20px">' +
-                                '<div class="col-xs-12 col-sm-12">' +
+            //             //         //'<div class="form-body">' +
+            //             //         //'<div class="form-group">' +
+            //             //         '<div class="col-xs-12 col-sm-4">' +
+            //             //         '<label class="control-label" for="date Name">Date:</label>' +
+            //             //         '<input type="date" name="date_' + value.plaid_transaction_id + '" id="date_' + value.plaid_transaction_id + '" value="' + value.date + '" class="form-control">' +
+            //             //         '</div>' +
 
-                                //'<div class="form-body">' +
-                                //'<div class="form-group">' +
-                                '<div class="col-xs-12 col-sm-4">' +
-                                '<label class="control-label" for="date Name">Date:</label>' +
-                                '<input type="date" name="date_' + value.plaid_transaction_id + '" id="date_' + value.plaid_transaction_id + '" value="' + value.date + '" class="form-control">' +
-                                '</div>' +
+            //             //         '<div class="col-xs-12 col-sm-4">' +
+            //             //         '<label class="control-label" for="customer">Customer/Vendor:</label>' +
+            //             //         '<select class="form-control customer_or_supplier_id" id="customer_or_supplier_id_' + value.plaid_transaction_id + '" name="customer_or_supplier_id_' + value.plaid_transaction_id + '"></select>' +
+            //             //         '</div>' +
 
-                                '<div class="col-xs-12 col-sm-4">' +
-                                '<label class="control-label" for="customer">Customer/Vendor:</label>' +
-                                '<select class="form-control customer_or_supplier_id" id="customer_or_supplier_id_' + value.plaid_transaction_id + '" name="customer_or_supplier_id_' + value.plaid_transaction_id + '"></select>' +
-                                '</div>' +
+            //             //         '<div class="col-xs-12 col-sm-4">' +
+            //             //         '<label class="control-label" for="payment_payee">Payee:</label>' +
+            //             //         '<input type="text" name="payee' + value.plaid_transaction_id + '" id="payment_payee_' + value.plaid_transaction_id + '" value="' + value.name + '" class="form-control" readonly>' +
+            //             //         '</div>' +
 
-                                '<div class="col-xs-12 col-sm-4">' +
-                                '<label class="control-label" for="payment_payee">Payee:</label>' +
-                                '<input type="text" name="payee' + value.plaid_transaction_id + '" id="payment_payee_' + value.plaid_transaction_id + '" value="' + value.name + '" class="form-control" readonly>' +
-                                '</div>' +
+            //             //         '<div class="col-xs-12 col-sm-4">' +
+            //             //         '<label class="control-label" for="account_id">Bank:</label>' +
+            //             //         '<select class="form-control account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '" required></select>' +
+            //             //         '</div>' +
 
-                                '<div class="col-xs-12 col-sm-4">' +
-                                '<label class="control-label" for="account_id">Bank:</label>' +
-                                '<select class="form-control account_id" id="account_id_' + value.plaid_transaction_id + '" name="account_id_' + value.plaid_transaction_id + '" required></select>' +
-                                '</div>' +
+            //             //         '<div class="col-xs-12 col-sm-4">' +
+            //             //         '<label class="control-label" for="account_id_2">Category:</label>' +
+            //             //         '<select class="form-control account_id_2" id="account_id_2_' + value.plaid_transaction_id + '" name="account_id_2_' + value.plaid_transaction_id + '"></select>' +
+            //             //         '</div>' +
 
-                                '<div class="col-xs-12 col-sm-4">' +
-                                '<label class="control-label" for="account_id_2">Category:</label>' +
-                                '<select class="form-control account_id_2" id="account_id_2_' + value.plaid_transaction_id + '" name="account_id_2_' + value.plaid_transaction_id + '"></select>' +
-                                '</div>' +
+            //             //         '<div class="col-xs-12 col-sm-4">' +
+            //             //         '<label class="control-label" for="payment_amount">Amount:</label>' +
+            //             //         '<input type="text" readonly class="form-control" value="' + -value.amount + '" id="payment_amount_' + value.plaid_transaction_id + '" name="payment_amount_' + value.plaid_transaction_id + '" autocomplete="off">' +
+            //             //         '<input type="hidden" name="plaid_trans_id_' + value.plaid_transaction_id + '" id="plaid_trans_id_' + value.plaid_transaction_id + '" value="' + value.plaid_transaction_id + '">' +
+            //             //         '<input type="hidden" name="plaid_account_id_' + value.plaid_transaction_id + '" id="plaid_account_id_' + value.plaid_transaction_id + '" value="' + value.account_id + '">' +
+            //             //         '</div>' +
 
-                                '<div class="col-xs-12 col-sm-4">' +
-                                '<label class="control-label" for="payment_amount">Amount:</label>' +
-                                '<input type="text" readonly class="form-control" value="' + -value.amount + '" id="payment_amount_' + value.plaid_transaction_id + '" name="payment_amount_' + value.plaid_transaction_id + '" autocomplete="off">' +
-                                '<input type="hidden" name="plaid_trans_id_' + value.plaid_transaction_id + '" id="plaid_trans_id_' + value.plaid_transaction_id + '" value="' + value.plaid_transaction_id + '">' +
-                                '<input type="hidden" name="plaid_account_id_' + value.plaid_transaction_id + '" id="plaid_account_id_' + value.plaid_transaction_id + '" value="' + value.account_id + '">' +
-                                '</div>' +
+            //             //         '<div class="col-xs-12 col-sm-4">' +
+            //             //         '<label class="control-label" for="submit"></label>' +
+            //             //         '<input type="submit" onClick="return AddEntry(' + i + ')" class="btn btn-primary btn-sm submit" value="Add"/>' +
+            //             //         '  <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Close</a>' +
+            //             //         '</div>' +
+            //             //         //'</div>' + //form group
+            //             //         // '</div>' + //form body
 
-                                '<div class="col-xs-12 col-sm-4">' +
-                                '<label class="control-label" for="submit"></label>' +
-                                '<input type="submit" onClick="return AddEntry(' + i + ')" class="btn btn-primary btn-sm submit" value="Add"/>' +
-                                '  <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + value.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + value.plaid_transaction_id + '">Close</a>' +
-                                '</div>' +
-                                //'</div>' + //form group
-                                // '</div>' + //form body
+            //             //         '</div>' +
+            //             //         '</div>' +
+            //             //         '</form>';
 
-                                '</div>' +
-                                '</div>' +
-                                '</form>';
+            //             //     '</td>' +
+            //             //     '<td style="display: none">dfasdf</td>' +
+            //             //     '<td style="display: none">adsfad</td>' +
+            //             //     '<td style="display: none">asdfas</td>' +
+            //             //     '<td style="display: none">asdfas</td>' +
+            //             //     '<td style="display: none">asdf</td>' +
+            //             //     '</tr>';
 
-                            '</td>' +
-                            '</tr>';
+            //             //     i++;
 
-                            i++;
-
-                            $('#customer_or_supplier_id_' + value.plaid_transaction_id).select2();
-                            $('.account_id').select2();
-                            $('#account_id_2_' + value.plaid_transaction_id).select2();
-                        });
-
-                        div += '</tbody></table>';
-                        ///////////////////
+            //             //     $('#customer_or_supplier_id_' + value.plaid_transaction_id).select2();
+            //             //     $('.account_id').select2();
+            //             //     $('#account_id_2_' + value.plaid_transaction_id).select2();
 
 
-                        $(".loader").hide();
-                        $('#transactions_table_' + account_id).html(div);
 
-                        /////////////
-                        //Accept and do entry of the transaction
-                        $('.payment_entry').on('click', function(e) {
-                            var curId = this.id.split("_")[1];
+            //             // });
 
-                            accountsDDL();
-                            // $('#account_id').select2();
-                            // $('#account_id_2').select2();
-                            $('#paymentEntryModal').modal('toggle');
-                            $('#payment_entry_title').html("Accept Transaction ");
-                            $('#date').val($("#date_" + curId).val());
-                            $('#payment_payee').val($("#payee_" + curId).val());
-                            $('#payment_amount').val($("#amount_" + curId).val());
-                            $('#plaid_trans_id').val($("#transid_" + curId).val());
-                            $('#plaid_account_id').val($("#plaidAccountId_" + curId).val());
+            //             ///////////////////
 
-                        });
+            //             //$('#transactions_table_data_' + account_id).html(div);
+            //             //$('#transactions_table_' + account_id).dataTable();
+            //             $(".loader").hide();
 
-                        //GET transaction Amount from the selected checkboxes
-                        $('.checkboxes').on('click', function(e) {
-                            //var cur_plaidAccountId = $(this).id.split("_")[1];
-                            checkbox_change();
-                        });
-                        ///////////////////
-                        function checkbox_change() {
-                            var arr = [];
-                            var total = 0;
-                            $.each($("input[name='chkbox_plaid_trans_id']:checked"), function() {
-                                arr.push(this.id.split("_")[1]);
-                                total += parseFloat($(this).val());
-                                // $('input[name=""]').val($("#transid_" + curId).val());
-                            });
-                            // console.log(total);
-                            $('#note_' + account_id).show();
-                            $('#note_' + account_id).html('<strong>' + arr.length + ' money out transactions: ' + total.toFixed(3) + ' <a id="group_accept" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a></strong>');
-                            //console.log("Your selected languages are: " + arr.join(", "));
+            //             /////////////
+            //             //Accept and do entry of the transaction
+            //             $('.payment_entry').on('click', function(e) {
+            //                 var curId = this.id.split("_")[1];
 
-                            $('.payment_entry').on('click', function(e) {
-                                var curId = this.id.split("_")[1];
+            //                 accountsDDL();
+            //                 // $('#account_id').select2();
+            //                 // $('#account_id_2').select2();
+            //                 $('#paymentEntryModal').modal('toggle');
+            //                 $('#payment_entry_title').html("Accept Transaction ");
+            //                 $('#date').val($("#date_" + curId).val());
+            //                 $('#payment_payee').val($("#payee_" + curId).val());
+            //                 $('#payment_amount').val($("#amount_" + curId).val());
+            //                 $('#plaid_trans_id').val($("#transid_" + curId).val());
+            //                 $('#plaid_account_id').val($("#plaidAccountId_" + curId).val());
 
-                                accountsDDL();
-                                // $('#account_id').select2();
-                                // $('#account_id_2').select2();
-                                $('#paymentEntryModal').modal('toggle');
-                                $('#payment_entry_title').html("Accept Transaction ");
-                                $('#date').val(end_date);
-                                // $('#payment_payee').val($("#payee_" + curId).val());
-                                $('#payment_amount').val(total.toFixed(3));
-                                $('#plaid_trans_id').val(arr.join(", "));
-                                $('#plaid_account_id').val(account_id);
+            //             });
+
+            //             //GET transaction Amount from the selected checkboxes
+            //             $('.checkboxes').on('click', function(e) {
+            //                 //var cur_plaidAccountId = $(this).id.split("_")[1];
+            //                 checkbox_change();
+            //             });
+            //             ///////////////////
+            //             function checkbox_change() {
+            //                 var arr = [];
+            //                 var total = 0;
+            //                 $.each($("input[name='chkbox_plaid_trans_id']:checked"), function() {
+            //                     arr.push(this.id.split("_")[1]);
+            //                     total += parseFloat($(this).val());
+            //                     // $('input[name=""]').val($("#transid_" + curId).val());
+            //                 });
+            //                 // console.log(total);
+            //                 $('#note_' + account_id).show();
+            //                 $('#note_' + account_id).html('<strong>' + arr.length + ' money out transactions: ' + total.toFixed(3) + ' <a id="group_accept" class="payment_entry btn btn-primary btn-sm" href="#">Accept</a></strong>');
+            //                 //console.log("Your selected languages are: " + arr.join(", "));
+
+            //                 $('.payment_entry').on('click', function(e) {
+            //                     var curId = this.id.split("_")[1];
+
+            //                     accountsDDL();
+            //                     // $('#account_id').select2();
+            //                     // $('#account_id_2').select2();
+            //                     $('#paymentEntryModal').modal('toggle');
+            //                     $('#payment_entry_title').html("Accept Transaction ");
+            //                     $('#date').val(end_date);
+            //                     // $('#payment_payee').val($("#payee_" + curId).val());
+            //                     $('#payment_amount').val(total.toFixed(3));
+            //                     $('#plaid_trans_id').val(arr.join(", "));
+            //                     $('#plaid_account_id').val(account_id);
 
 
-                            });
+            //                 });
+            //             }
+
+            //         }
+
+            //     },
+            //     error: function(xhr, ajaxOptions, thrownError) {
+            //         console.log(xhr.status);
+            //         console.log(thrownError);
+            //     }
+            // });
+
+            if (!$.fn.dataTable.isDataTable('#transactions_table_' + account_id)) {
+
+                var table = $('#transactions_table_' + account_id).DataTable({
+                    "ajax": {
+                        "url": site_url + "banking/C_connections/retrieveTransactionsByAccountID/" + account_id,
+                        "dataSrc": ""
+                    },
+                    'columns': [{
+                            'data': 'name'
+                        },
+                        {
+                            'data': 'category'
+                        },
+                        {
+                            'data': 'amount'
+                        },
+                        {
+                            'data': 'date'
+                        },
+                        {
+                            'className': 'details-control',
+                            'orderable': false,
+                            'data': null,
+                            'defaultContent': ''
                         }
-                    }
+                    ],
+                    "createdRow": function(nRow, aData, iDisplayIndex) {
+                        // 
+                        date = new Date(aData['date']).toLocaleDateString();
+                        $('td:eq(2)', nRow).html(parseFloat(aData['amount']).toFixed(2));
+                        $('td:eq(3)', nRow).html(date);
 
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
+                        if (aData['posted'] == parseInt("1")) {
+
+                            //div += '<a id="" class="btn btn-success btn-sm" href="#">Accepted</a>';
+                            //div += '<a onClick="return DeleteEntry(' + i + ')" class="btn btn-danger btn-sm" id="undoButton_' + value.plaid_transaction_id + '" href="#">Undo</a>';
+
+                            $('td:eq(4)', nRow).html('<button id="" class="btn btn-success btn-sm" >Accepted</button>' +
+                                '<button onClick="return DeleteEntry(' + aData['id'] + ')" class="btn btn-danger btn-sm" id="undoButton_' + aData['id'] + '" type="button" ' +
+                                '" onclick="return confirm(\'Are you sure you want to delete?\')"; title=\'Undo\'>Undo</button>' +
+                                '<input type="hidden" id="transid_' + aData['id'] + '" value="' + aData['plaid_transaction_id'] + '">' +
+                                '<input type="hidden" id="invoiceNo_' + aData['id'] + '" value="' + aData['invoice_no'] + '">');
+                        } else {
+                            $('td:eq(4)', nRow).html('<button class="btn btn-primary btn-sm " id="add_button_' + aData['plaid_transaction_id'] + '"  type="button" >Add</button>');
+                        }
+                        return nRow;
+                    },
+                    'order': [
+                        [3, 'desc']
+                    ],
+
+                });
+            }
+
+            // Add event listener for opening and closing details
+            $('#transactions_table_' + account_id + ' tbody').on('click', 'td.details-control', function() {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                if (row.data().posted == parseInt("1")) {
+                    return;
+                }
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    //AddEntry(row.data());
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
                 }
             });
         }
@@ -460,9 +551,88 @@
         });
         ///////////////////
 
-        ////////////////////////
-
     }); // document.ready
+
+    function format(d) {
+        // `d` is the original data object for the row
+        // console.log(d.posted);
+
+        customerDDL();
+        accountsDDL();
+        return '<table class="table no-border" style="background-color:#f4f5f8; >' +
+            '<form class="form-horizontal">' +
+            '<tr>' +
+            '<td>' +
+            //'<input type="checkbox" class="checkboxes" name="chkbox_plaid_trans_id" value="' + -d.amount + '" id="chk_transID_' + d.plaid_transaction_id + '" ' + (d.posted == 1 ? 'disabled' : '') + '/>' +
+
+            '<input type="hidden" id="payee_' + d.id + '" value="' + d.name + '">' +
+            '<input type="hidden" id="amount_' + d.id + '" value="' + -d.amount + '">' +
+            '<input type="hidden" id="transid_' + d.id + '" value="' + d.plaid_transaction_id + '">' +
+            '<input type="hidden" id="invoiceNo_' + d.id + '" value="' + d.invoice_no + '">' +
+            '<input type="hidden" id="plaidAccountId_' + d.id + '" value="' + d.account_id + '">' +
+            '<input type="hidden" id="date_' + d.id + '" value="' + d.date + '">' +
+
+            '<label class="control-label" for="date Name">Date:</label>' +
+            '<td>' +
+            '<input type="date" name="date_' + d.plaid_transaction_id + '" id="date_' + d.plaid_transaction_id + '" value="' + d.date + '" class="form-control">' +
+            '</td>' +
+
+            '<td>' +
+            '<label class="control-label" for="customer">Customer/Vendor:</label>' +
+            '</td>' +
+            '<td>' +
+            '<select class="form-control customer_or_supplier_id" id="customer_or_supplier_id_' + d.plaid_transaction_id + '" name="customer_or_supplier_id_' + d.plaid_transaction_id + '"></select>' +
+            '</td>' +
+
+            '<td>' +
+            '<label class="control-label" for="payment_payee">Payee:</label>' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" name="payee' + d.plaid_transaction_id + '" id="payment_payee_' + d.plaid_transaction_id + '" value="' + d.name + '" class="form-control" readonly>' +
+            '</td>' +
+            '</tr>' +
+
+            '<tr>' +
+            '<td>' +
+            '<label class="control-label" for="account_id">Bank:</label>' +
+            '</td>' +
+            '<td>' +
+            '<select class="form-control account_id" id="account_id_' + d.plaid_transaction_id + '" name="account_id_' + d.plaid_transaction_id + '" required></select>' +
+            '</td>' +
+
+            '<td>' +
+            '<label class="control-label" for="account_id_2">Category:</label>' +
+            '</td>' +
+            '<td>' +
+            '<select class="form-control account_id_2" id="account_id_2_' + d.plaid_transaction_id + '" name="account_id_2_' + d.plaid_transaction_id + '"></select>' +
+            '</td>' +
+
+            '<td>' +
+            '<label class="control-label" for="payment_amount">Amount:</label>' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" readonly class="form-control" value="' + parseFloat(d.amount).toFixed(2) + '" id="payment_amount_' + d.plaid_transaction_id + '" name="payment_amount_' + d.plaid_transaction_id + '" autocomplete="off">' +
+            '<input type="hidden" name="plaid_trans_id_' + d.plaid_transaction_id + '" id="plaid_trans_id_' + d.plaid_transaction_id + '" value="' + d.plaid_transaction_id + '">' +
+            '<input type="hidden" name="plaid_account_id_' + d.plaid_transaction_id + '" id="plaid_account_id_' + d.plaid_transaction_id + '" value="' + d.account_id + '">' +
+            '</td>' +
+            '</tr>' +
+
+            '<tr>' +
+            '<td>' +
+            '<label class="control-label" for="submit"></label>' +
+            '<input type="submit" onClick="return AddEntry(' + d.id + ')" class="btn btn-primary btn-sm submit" value="Add"/>' +
+            //'  <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample_' + d.plaid_transaction_id + '" role="button" aria-expanded="false" aria-controls="collapseExample_' + d.plaid_transaction_id + '">Close</a>' +
+            // '</div>' +
+            //'</div>' + //form group
+            // '</div>' + //form body
+
+            '</td>' +
+            '</tr>' +
+            '</form>';
+        '</table>';
+
+    }
+
     //GET Accounts DROPDOWN LIST
     function accountsDDL(index = 0) {
         const site_url = '<?php echo site_url($langs); ?>/';
@@ -508,7 +678,7 @@
             type: 'GET',
             dataType: 'json', // added data type
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 let i = 0;
                 customer_ddl += '<option value="0">Select Customer</option>';
                 customer_ddl += '<option value="ADD_NEW" style="color:blue"><i class="fa fa-plus"></i>ADD NEW</option>';
@@ -533,8 +703,8 @@
     $(document).on('click', '.collapseExample', function() {
 
         if (!$(this).hasClass('collapsed')) {
-            customerDDL();
-            accountsDDL();
+            //customerDDL();
+            //accountsDDL();
         }
 
     });
@@ -582,6 +752,7 @@
     /////
     // Add the counter id as an argument, which we passed in the code above
     function AddEntry(id) {
+
         var confirmSale = confirm('Are you sure you want to accept transaction?');
         var plaidTransID = document.getElementById('transid_' + id).value
         //console.log('accept ' + plaidTransID);
@@ -600,11 +771,19 @@
         // var data = customer_or_supplier_id.split("_")[1];
         // var data1 = customer_or_supplier_id.split("_")[0];
         // console.log(data);
-        // console.log(data1);
+        console.log(customer_or_supplier_id);
         // return false;
 
-        if (account_id == 0) {
-            toastr.error("Please select account", 'Error');
+        if (customer_or_supplier_id == undefined) {
+            toastr.error("Please select customer/vendor", 'Error');
+            document.getElementById('account_id_' + plaidTransID).focus();
+            return false;
+        } else if (account_id == 0) {
+            toastr.error("Please select account/bank", 'Error');
+            document.getElementById('account_id_' + plaidTransID).focus();
+            return false;
+        } else if (account_id_2 == 0) {
+            toastr.error("Please select category", 'Error');
             document.getElementById('account_id_' + plaidTransID).focus();
             return false;
         } else if (confirmSale) {
@@ -810,3 +989,22 @@
     </div>
 </div>
 <!--Accept payment modal end -->
+<style>
+    .no-border>thead>tr>th,
+    .no-border>tbody>tr>th,
+    .no-border>tfoot>tr>th,
+    .no-border>thead>tr>td,
+    .no-border>tbody>tr>td,
+    .no-border>tfoot>tr>td {
+        border-top: none;
+    }
+
+    td.details-control {
+        /* background: url(<?php echo base_url('assets/img/addButton.png'); ?>) no-repeat center center; */
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        /* background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center; */
+    }
+</style>
