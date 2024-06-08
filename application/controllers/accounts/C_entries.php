@@ -84,6 +84,91 @@ class C_entries extends MY_Controller
         echo json_encode($this->M_entries->get_entry_by_invoiceNo_1($invoice_no, $_SESSION['company_id']));
     }
 
+    function FetchMaxInvoice()
+    {
+        //GET PREVIOISE INVOICE NO  
+        @$prev_invoice_no = $this->M_entries->getMAXEntryInvoiceNo('JV');
+        $number = (int) substr($prev_invoice_no, 2) + 1; // EXTRACT THE LAST NO AND INCREMENT BY 1
+        echo $new_invoice_no = 'JV' . $number;
+        //
+    }
+
+    function addEntry()
+    {
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            foreach ($this->input->post('account_id') as $key => $value) {
+
+                if ($value != 0) {
+                    $account_id  = htmlspecialchars(trim($value));
+                    $debit    = htmlspecialchars(trim(($this->input->post("debit")[$key] == '' ? 0 : $this->input->post("debit")[$key])));
+                    $credit = htmlspecialchars(trim(($this->input->post("credit")[$key] == '' ? 0 : $this->input->post("credit")[$key])));
+                    $description = htmlspecialchars(trim($this->input->post("description")[$key]));
+                    $journal_no  = htmlspecialchars(trim($this->input->post("journal_no")));
+                    $order_id  = htmlspecialchars(trim(0));
+                    $client_id    = htmlspecialchars(trim(0));
+                    $drive_id = htmlspecialchars(trim(0));
+                    $order_driver_name = htmlspecialchars(trim(''));
+                    $invoice_order_no  = htmlspecialchars(trim(0));
+                    //$accounting_name = $this->M_journals->get_accountName($value);
+                    $accounting_date    = htmlspecialchars($this->input->post("entry_date"));
+                    $accounting_inv_date = htmlspecialchars($this->input->post("entry_date"));
+                    $transfer_purchase = htmlspecialchars(trim(0));
+                    $factoring = htmlspecialchars(trim(''));
+                    $voucher_type = htmlspecialchars(trim('Journal'));
+
+
+                    $data = array(
+                        'account_id' => $account_id,
+                        'accounting_payment' => $debit,
+                        'accounting_receipts' => $credit,
+                        'accounting_description' => $description,
+                        'invoice_no' => $journal_no,
+                        'order_id' => $order_id,
+                        'client_id' => $client_id,
+                        'drive_id' => $drive_id,
+                        'order_driver_name' => $order_driver_name,
+                        'invoice_order_no' => $invoice_order_no,
+                        //'accounting_name' => $accounting_name,
+                        'accounting_date' => $accounting_date,
+                        'accounting_inv_date' => $accounting_inv_date,
+                        'transfer_purchase' => $transfer_purchase,
+                        'factoring' => $factoring,
+                        'voucher_type' => $voucher_type,
+                        'user_id' => $this->session->userdata('user_id'),
+                    );
+
+                    $data = array(
+                        //'entry_id' => $entry_id,
+                        'employee_id' => $_SESSION['user_id'],
+                        //'entry_no' => $entry_no,
+                        //'name' => $name,
+                        'account_code' => $account_id,
+                        'date' => $accounting_date,
+                        //'amount' => $dr_amount,
+                        'dueTo_acc_code' => '',
+                        'ref_account_id' => '',
+                        'debit' => $debit,
+                        'credit' => $credit,
+                        'invoice_no' => $journal_no,
+                        'narration' => $description,
+                        'company_id' => $_SESSION['company_id'],
+                        //'is_cust' => $isCust,
+                        //'is_bank' => $isBank,
+                        //'is_supp' => $isSupp,
+
+                    );
+                    $this->db->insert('acc_entry_items', $data);
+                }
+            }
+
+            echo 1;
+            //$this->session->set_flashdata('message','journal Added');
+            //redirect('journal/index','refresh');
+
+        }
+    }
+
     function saveJournalEntries($is_edit = false, $invoice_no = null)
     {
         // get posted data
@@ -291,7 +376,7 @@ class C_entries extends MY_Controller
             $data['customersDDL'] = $this->M_customers->getCustomerDropDown();
 
             $this->load->view('templates/header', $data);
-            $this->load->view('accounts/entries/create1', $data);
+            $this->load->view('accounts/entries/createNew', $data);
             $this->load->view('templates/footer');
         }
     }
