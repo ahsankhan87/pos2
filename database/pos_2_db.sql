@@ -2657,3 +2657,6 @@ ALTER TABLE `pos_plaid_items` ADD `institution_name` TEXT NULL AFTER `transactio
 ALTER TABLE `pos_plaid_transactions` ADD `posted` TINYINT(1) NOT NULL DEFAULT '0' AFTER `updated_at`;
 
 ALTER TABLE `pos_plaid_transactions` ADD `invoice_no` VARCHAR(100) NULL AFTER `posted`;
+ALTER TABLE `pos_sales` ADD `document` VARCHAR(255) NULL AFTER `tax_id`;
+ALTER TABLE `pos_receivings` ADD `document` VARCHAR(255) NULL AFTER `tax_rate`;
+ALTER TABLE `pos_estimate` ADD `document` VARCHAR(255) NULL AFTER `status`;

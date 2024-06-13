@@ -376,15 +376,18 @@
 
             /* Serialize the submitted form control values to be sent to the web server with the request */
             var formValues = $(this).serialize();
+            console.log(formValues);
 
             if ($('#journal_no').val() == '') {
-                toastr.error("Please Enter Journal No", 'Error!');
+                toastr.error("Please enter journal no.", 'Error!');
             } else if ($('.account_id').val() == 0) {
-                toastr.error("Please Select Account", 'Error!');
+                toastr.error("Please select account", 'Error!');
+            } else if ($('.debit').val() == 0) {
+                toastr.error("Please enter amount", 'Error!');
             } else if ($('.description').val() == '') {
-                toastr.error("Please Enter Description", 'Error!');
+                toastr.error("Please enter description", 'Error!');
             } else if ($('#debit_total').val() !== $('#credit_total').val()) {
-                toastr.error("Debit and Credit total are not equal", 'Error!');
+                toastr.error("Debit and credit total are not equal", 'Error!');
             } else {
                 // Send the form data using post
                 $.post(site_url + "accounts/C_entries/addEntry", formValues, function(data) {

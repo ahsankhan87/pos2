@@ -467,7 +467,8 @@
                     "createdRow": function(nRow, aData, iDisplayIndex) {
                         // 
                         date = new Date(aData['date']).toLocaleDateString();
-                        $('td:eq(2)', nRow).html(parseFloat(aData['amount']).toFixed(2));
+                        $('td:eq(2)', nRow).addClass('text-right');
+                        $('td:eq(2)', nRow).html(-parseFloat(aData['amount']).toFixed(2));
                         $('td:eq(3)', nRow).html(date);
 
                         if (aData['posted'] == parseInt("1")) {

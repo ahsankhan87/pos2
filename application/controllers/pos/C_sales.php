@@ -122,6 +122,15 @@ class C_sales extends MY_Controller
                 $tax_id = $this->input->post('tax_id');
                 $amount_received = ($this->input->post("amount_received") == '' ? 0 : $this->input->post("amount_received"));
 
+                if (isset($_FILES['document']) && $_FILES['document']['error'] == 0) {
+
+                    // uploads image in the folder images
+                    $temp = explode(".", $_FILES["document"]["name"]);
+                    $newfilename = substr(md5(time()), 3, 10) . '.' . end($temp);
+                    move_uploaded_file($_FILES['document']['tmp_name'], 'images/sales/' . $newfilename);
+                    $document = $newfilename;
+                }
+
                 $data = array(
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
@@ -143,6 +152,7 @@ class C_sales extends MY_Controller
                     'business_address' => $business_address,
                     'tax_rate' => $tax_rate,
                     'tax_id' => $tax_id,
+                    'document' => $document,
 
                 );
                 $this->db->insert('pos_sales', $data);

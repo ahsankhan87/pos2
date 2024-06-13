@@ -97,6 +97,15 @@ class C_estimate extends MY_Controller
                 $deposit_to_acc_code = $this->input->post("deposit_to_acc_code");
                 $total_amount = $this->input->post("net_total");
 
+                if (isset($_FILES['document']) && $_FILES['document']['error'] == 0) {
+
+                    // uploads image in the folder images
+                    $temp = explode(".", $_FILES["document"]["name"]);
+                    $newfilename = substr(md5(time()), 3, 10) . '.' . end($temp);
+                    move_uploaded_file($_FILES['document']['tmp_name'], 'images/estimates/' . $newfilename);
+                    $document = $newfilename;
+                }
+
                 $data = array(
                     'company_id' => $company_id,
                     'invoice_no' => $new_invoice_no,
@@ -113,6 +122,7 @@ class C_estimate extends MY_Controller
                     'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     'status' => "in_progress",
+                    'document' => $document,
                     //'is_taxable' => $is_taxable,
                     //'due_date'=>$due_date,
                     //'business_address'=>$business_address,

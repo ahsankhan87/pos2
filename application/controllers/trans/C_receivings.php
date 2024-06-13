@@ -153,6 +153,15 @@ class C_receivings extends MY_Controller
                 $tax_rate = $this->input->post("tax_rate");
                 $tax_id = $this->input->post('tax_id');
 
+                if (isset($_FILES['document']) && $_FILES['document']['error'] == 0) {
+
+                    // uploads image in the folder images
+                    $temp = explode(".", $_FILES["document"]["name"]);
+                    $newfilename = substr(md5(time()), 3, 10) . '.' . end($temp);
+                    move_uploaded_file($_FILES['document']['tmp_name'], 'images/purchases/' . $newfilename);
+                    $document = $newfilename;
+                }
+
                 //if tax amount is checked or 1 then tax will be dedected otherwise not deducted from total amount
                 //total net amount 
                 $net_total =  $this->input->post("net_total");
@@ -179,6 +188,7 @@ class C_receivings extends MY_Controller
                     'business_address' => $business_address,
                     'tax_rate' => $tax_rate,
                     'tax_id' => $tax_id,
+                    'document' => $document,
                 );
                 $this->db->insert('pos_receivings', $data);
                 $receiving_id = $this->db->insert_id();

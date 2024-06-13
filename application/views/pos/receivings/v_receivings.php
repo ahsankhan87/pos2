@@ -107,14 +107,24 @@
                         <th><input type="hidden" name="total_tax" id="total_tax_txt" value=""></th>
                     </tr>
                     <tr>
-                        <th colspan="5"><?php echo form_submit('', lang('save') . ' ' . lang('and') . ' ' . lang('new'), 'id="new" class="btn btn-success"'); ?>
-                            <?php echo form_submit('', lang('save') . ' ' . lang('and') . ' ' . lang('close'), 'id="close" class="btn btn-success"'); ?></th>
+                        <th colspan="5"></th>
                         <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th>
                             <input type="hidden" name="net_total" id="net_total_txt" value="">
                             <input type="hidden" name="purchase_type" id="purchase_type" value="<?php echo $purchaseType; ?>">
                         </th>
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+                            Upload document: <input type="file" id="document" name="document" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+                            <?php echo form_submit('', lang('save') . ' ' . lang('and') . ' ' . lang('new'), 'id="new" class="btn btn-success"'); ?>
+                            <?php echo form_submit('', lang('save') . ' ' . lang('and') . ' ' . lang('close'), 'id="close" class="btn btn-success"'); ?>
+                        </td>
                     </tr>
                 </tfoot>
             </table>
@@ -429,35 +439,40 @@
         }
 
         $("#sale_form").on("submit", function(e) {
-            var formValues = $(this).serialize();
-            console.log(formValues);
+            //var formValues = $(this).serialize();
+            //console.log(formValues);
+
+            var formData = new FormData(this);
+            var files = $('#document')[0].files;
+
+            formData.append('document', files[0]);
+
             var submit_btn = document.activeElement.id;
-            // alert(formValues);
-            // return false;
 
             var confirmSale = confirm('Are you absolutely sure you want to sale?');
 
             if (confirmSale) {
-
-                if (formValues.length > 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: site_url + "trans/" + module + "/purchase_transaction",
-                        data: formValues,
-                        success: function(data) {
-                            if (data == '1') {
-                                toastr.success("Bill saved successfully", 'Success');
-                                if (submit_btn == 'close') {
-                                    window.location.href = site_url + "trans/" + module + "/all";
-                                }
-                            } else {
-                                toastr.error("Bill not saved", 'Error');
+                $.ajax({
+                    type: "POST",
+                    url: site_url + "trans/" + module + "/purchase_transaction",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        if (data == '1') {
+                            toastr.success("Bill saved successfully", 'Success');
+                            if (submit_btn == 'close') {
+                                window.location.href = site_url + "trans/" + module + "/all";
                             }
-                            clearall();
-                            console.log(data);
+                        } else {
+                            toastr.error("Bill not saved", 'Error');
                         }
-                    });
-                }
+                        clearall();
+                        //console.log(data);
+                    }
+                });
+
             }
             e.preventDefault();
         });
