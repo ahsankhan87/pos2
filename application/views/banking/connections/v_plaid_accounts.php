@@ -477,8 +477,8 @@
                             //div += '<a onClick="return DeleteEntry(' + i + ')" class="btn btn-danger btn-sm" id="undoButton_' + value.plaid_transaction_id + '" href="#">Undo</a>';
 
                             $('td:eq(4)', nRow).html('<button id="" class="btn btn-success btn-sm" >Accepted</button>' +
-                                '<button onClick="return DeleteEntry(' + aData['id'] + ')" class="btn btn-danger btn-sm" id="undoButton_' + aData['id'] + '" type="button" ' +
-                                '" onclick="return confirm(\'Are you sure you want to delete?\')"; title=\'Undo\'>Undo</button>' +
+                                // '<button onClick="return DeleteEntry(' + aData['id'] + ')" class="btn btn-danger btn-sm" id="undoButton_' + aData['id'] + '" type="button" ' +
+                                // '" onclick="return confirm(\'Are you sure you want to delete?\')"; title=\'Undo\'>Undo</button>' +
                                 '<input type="hidden" id="transid_' + aData['id'] + '" value="' + aData['plaid_transaction_id'] + '">' +
                                 '<input type="hidden" id="invoiceNo_' + aData['id'] + '" value="' + aData['invoice_no'] + '">');
                         } else {

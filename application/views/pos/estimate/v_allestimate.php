@@ -110,7 +110,11 @@
                                         echo '<a href="' . site_url($langs) . '/pos/C_estimate/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" >PDF</a>';
                                         ?>
                                     </li>
-
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . base_url() . 'images/estimates/' . $list['document'] . '" target="_blank" >Attachment</a>';
+                                        ?>
+                                    </li>
                                 </ul>
                             </div>
                             <?php

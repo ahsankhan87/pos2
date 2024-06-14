@@ -116,7 +116,11 @@
 
                                         ?>
                                     </li>
-
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . base_url() . 'images/purchases/' . $list['document'] . '" target="_blank" >Attachment</a>';
+                                        ?>
+                                    </li>
                                 </ul>
                             </div>
                         <?php

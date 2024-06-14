@@ -83,10 +83,20 @@
                     <input type="hidden" name="total_tax" id="total_tax_txt" value="">
                     <!-- </tr>  -->
                     <tr>
-                        <th colspan="5"><?php echo form_submit('', lang('save'), 'class="btn btn-success"'); ?></th>
+                        <th colspan="5"></th>
                         <th class="text-right"><?php echo lang('grand') . ' ' . lang('total'); ?></th>
                         <th class="text-right lead" id="net_total">0.00</th>
                         <th><input type="hidden" name="net_total" id="net_total_txt" value=""></th>
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+                            Attachment: <input type="file" id="document" name="document" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+                            <?php echo form_submit('', lang('save'), 'class="btn btn-success"'); ?>
+                        </td>
                     </tr>
                 </tfoot>
             </table>
@@ -339,30 +349,33 @@
         }
 
         $("form").on("submit", function(e) {
-            var formValues = $(this).serialize();
-            //console.log(formValues);
-            // alert(formValues);
-            // return false;
+            //var formValues = $(this).serialize();
+            var formData = new FormData(this);
+            var files = $('#document')[0].files;
+
+            formData.append('document', files[0]);
 
             var confirmSale = confirm('Are you absolutely sure you want to sale?');
 
             if (confirmSale) {
 
-                if (formValues.length > 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: site_url + "pos/C_estimate/sale_transaction",
-                        data: formValues,
-                        success: function(data) {
-                            if (data == '1') {
-                                toastr.success("Estimate saved successfully", 'Success');
-                                window.location.href = site_url + "pos/C_estimate/allestimate";
-                            }
-                            clearall();
-                            console.log(data);
+                $.ajax({
+                    type: "POST",
+                    url: site_url + "pos/C_estimate/sale_transaction",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        if (data == '1') {
+                            toastr.success("Estimate saved successfully", 'Success');
+                            window.location.href = site_url + "pos/C_estimate/allestimate";
                         }
-                    });
-                }
+                        clearall();
+                        //console.log(data);
+                    }
+                });
+
             }
             e.preventDefault();
         });

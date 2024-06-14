@@ -117,7 +117,7 @@
                     </tr>
                     <tr>
                         <td colspan="8">
-                            Upload document: <input type="file" id="document" name="document" />
+                            Attachment: <input type="file" id="document" name="document" />
                         </td>
                     </tr>
                     <tr>

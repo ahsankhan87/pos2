@@ -174,6 +174,11 @@
                                         echo '<a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/printReceipt/' . $list['invoice_no'] . '" title="Print Invoice" target="_blank" >PDF</a>';
                                         ?>
                                     </li>
+                                    <li>
+                                        <?php
+                                        echo '<a href="' . base_url() . 'images/sales/invoices/' . $list['document'] . '" target="_blank" >Attachment</a>';
+                                        ?>
+                                    </li>
                                     <!-- <li> -->
                                     <?php
                                     // echo ' <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/ubl_xml_receipt/' . $list['invoice_no'] . '" title="UBL Invoice" target="_blank" >Download UBL</a>';

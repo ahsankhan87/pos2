@@ -2660,3 +2660,4 @@ ALTER TABLE `pos_plaid_transactions` ADD `invoice_no` VARCHAR(100) NULL AFTER `p
 ALTER TABLE `pos_sales` ADD `document` VARCHAR(255) NULL AFTER `tax_id`;
 ALTER TABLE `pos_receivings` ADD `document` VARCHAR(255) NULL AFTER `tax_rate`;
 ALTER TABLE `pos_estimate` ADD `document` VARCHAR(255) NULL AFTER `status`;
+ALTER TABLE `pos_invoices` ADD `document` VARCHAR(255) NULL AFTER `tax_id`;
