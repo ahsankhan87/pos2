@@ -1,4 +1,4 @@
-# pos2
+# khybersoft kasbook
 This is a financial management software. It is designed to help small and medium businesses with:
 
 Tracking sales, purchases, expenses & cash flow
