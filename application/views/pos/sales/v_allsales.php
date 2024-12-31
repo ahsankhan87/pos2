@@ -119,11 +119,11 @@
                                         echo '<a href="' . base_url() . 'images/sales/' . $list['document'] . '" target="_blank" >Attachment</a>';
                                         ?>
                                     </li>
-                                    <!-- <li> -->
+                                    <li>
                                     <?php
-                                    // echo ' <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/ubl_xml_receipt/' . $list['invoice_no'] . '" title="UBL Invoice" target="_blank" >Download UBL</a>';
+                                     echo ' <a href="' . site_url($langs) . '/pos/' . ($sale_type == "cash" ? "C_sales" : "C_invoices") . '/ubl_xml_receipt/' . $list['invoice_no'] . '" title="UBL Invoice" target="_blank" >Download UBL</a>';
                                     ?>
-                                    <!-- </li> -->
+                                    </li>
                                 </ul>
                             </div>
                         <?php
